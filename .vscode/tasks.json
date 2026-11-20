@@ -1,0 +1,180 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "windows": {
+    "options": {
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "CARGO_BUILD_TARGET": "x86_64-pc-windows-gnu"
+      }
+    }
+  },
+  "tasks": [
+    {
+      "label": "Tailnet Link: Run",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "run",
+        "--locked"
+      ],
+      "problemMatcher": "$rustc"
+    },
+    {
+      "label": "Tailnet Link: Run (release)",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "run",
+        "--release",
+        "--locked"
+      ],
+      "problemMatcher": "$rustc"
+    },
+    {
+      "label": "Tailnet Link: Build",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "build",
+        "--workspace",
+        "--locked"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$rustc"
+    },
+    {
+      "label": "Tailnet Link: Build (release)",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "build",
+        "--release",
+        "--locked"
+      ],
+      "group": "build",
+      "problemMatcher": "$rustc"
+    },
+    {
+      "label": "Tailnet Link: Test workspace",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": "$rustc"
+    },
+    {
+      "label": "Tailnet Link: Clippy",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "problemMatcher": "$rustc"
+    },
+    {
+      "label": "Tailnet Link: Format",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "fmt",
+        "--all"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tailnet Link: Check formatting",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tailnet Link: Check all",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Tailnet Link: Check formatting",
+        "Tailnet Link: Clippy",
+        "Tailnet Link: Test workspace"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tailnet Link: Release prepare",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "xtask",
+        "release",
+        "prepare",
+        "${input:releaseVersion}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Tailnet Link: Release validate",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "xtask",
+        "release",
+        "validate",
+        "${input:releaseVersion}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Tailnet Link: Release publish",
+      "type": "process",
+      "command": "cargo",
+      "args": [
+        "xtask",
+        "release",
+        "publish",
+        "${input:releaseVersion}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "releaseVersion",
+      "type": "promptString",
+      "description": "Release version (e.g. 0.1.0 or 0.2.0-rc.1); Publish pushes the version tag"
+    }
+  ]
+}

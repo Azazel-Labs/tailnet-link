@@ -1,0 +1,127 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+  # Build dependencies on Linux: GTK + AppIndicator (tray), xdo, xkbcommon, Wayland.
+  LINUX_DEPS: build-essential libgtk-3-dev libxdo-dev libayatana-appindicator3-dev libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev
+
+# Go builds the vendored libtailscale (tsbridge/) that's linked into the app.
+# On Windows that needs MinGW (preinstalled on the runners), so Windows jobs
+# build the x86_64-pc-windows-gnu target.
+
+jobs:
+  msrv:
+    name: Rust 1.95 (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version-file: tsbridge/go.mod
+          cache-dependency-path: tsbridge/go.sum
+      - name: Install Linux build dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -q && sudo apt-get install -y -q $LINUX_DEPS
+      - name: Use the MinGW target on Windows
+        if: runner.os == 'Windows'
+        shell: bash
+        run: echo "CARGO_BUILD_TARGET=x86_64-pc-windows-gnu" >> "$GITHUB_ENV"
+      - name: Install Rust 1.95
+        shell: bash
+        run: rustup toolchain install 1.95.0 --profile minimal ${CARGO_BUILD_TARGET:+--target "$CARGO_BUILD_TARGET"}
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          key: msrv-1.95
+      - run: cargo +1.95.0 check --workspace --all-targets --locked
+
+  fmt:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install toolchain (from rust-toolchain.toml)
+        run: rustup toolchain install
+      - run: cargo fmt --all --check
+
+  check:
+    name: Clippy + tests (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version-file: tsbridge/go.mod
+          cache-dependency-path: tsbridge/go.sum
+      - name: Install Linux build dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -q && sudo apt-get install -y -q $LINUX_DEPS
+      - name: Use the MinGW target on Windows
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo "CARGO_BUILD_TARGET=x86_64-pc-windows-gnu" >> "$GITHUB_ENV"
+          gcc --version
+      - name: Install toolchain (from rust-toolchain.toml)
+        shell: bash
+        run: |
+          rustup toolchain install
+          if [ -n "${CARGO_BUILD_TARGET:-}" ]; then rustup target add "$CARGO_BUILD_TARGET"; fi
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      # On Windows this includes the real-registry proxy-setting tests.
+      - name: Tests
+        run: cargo test --workspace --locked
+      - name: Smoke test (start the real app and check it comes up)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          cargo build --locked
+          $dir = Join-Path $env:RUNNER_TEMP "tailnet-link"
+          New-Item -ItemType Directory -Force $dir | Out-Null
+          @'
+          {"tailnets":[{"id":"t1","name":"Test","enabled":true,"domain":"","extra_domains":[]}],
+           "forwards":[],"enabled":true,"system_proxy":"off","hostname":"ci-proxy","listen":"127.0.0.1:18055"}
+          '@ | Set-Content (Join-Path $dir "config.json")
+          $env:TAILNET_LINK_CONFIG_DIR = $dir
+          $p = Start-Process -FilePath "target\x86_64-pc-windows-gnu\debug\tailnet-link.exe" -PassThru
+          $ok = $false
+          for ($i = 0; $i -lt 30; $i++) {
+            Start-Sleep 2
+            try {
+              $r = Invoke-WebRequest "http://127.0.0.1:18055/" -UseBasicParsing -NoProxy -TimeoutSec 3
+              if ($r.Content -like "Tailnet Link is running*") { $ok = $true; break }
+            } catch {}
+          }
+          Start-Sleep 5   # let the Tailscale node start
+          $log = Join-Path $dir "tailnet-link.log"
+          if (Test-Path $log) { Get-Content $log }
+          $alive = -not $p.HasExited
+          if ($alive) { Stop-Process $p -Force }
+          if (-not $ok) { throw "the app didn't come up" }
+          if (-not $alive) { throw "the app exited" }
+          if (Select-String -Path $log -Pattern "CRASH" -Quiet) { throw "the app crashed" }
+          if (-not (Select-String -Path $log -Pattern "\[t1\] Tailscale node started" -Quiet)) { throw "the Tailscale node didn't start" }

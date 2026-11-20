@@ -1,0 +1,116 @@
+[workspace]
+members = ["xtask"]
+default-members = ["."]
+
+[workspace.package]
+version = "0.3.0"
+edition = "2024"
+rust-version = "1.95"
+license = "MIT-0"
+repository = "https://github.com/Azazel-Labs/tailnet-link"
+authors = ["Azazel Labs LLC"]
+
+# ---------------------------------------------------------------------------
+# Lints: pedantic clippy with a short, deliberate allow list. CI runs
+# `cargo clippy --all-targets -- -D warnings`, so everything here is enforced.
+# ---------------------------------------------------------------------------
+[workspace.lints.rust]
+rust_2018_idioms = { level = "warn", priority = -1 }
+unsafe_op_in_unsafe_fn = "deny"
+unused_qualifications = "warn"
+unused_lifetimes = "warn"
+unused_macro_rules = "warn"
+trivial_numeric_casts = "warn"
+redundant_lifetimes = "warn"
+missing_unsafe_on_extern = "deny"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+# Pixel, port and byte arithmetic converts between integer and float types
+# constantly; these are checked by tests instead.
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"
+# Style preferences that fight readable UI code.
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+too_many_lines = "allow"
+similar_names = "allow"
+struct_excessive_bools = "allow" # Config and Settings mirror a page full of checkboxes
+items_after_statements = "allow"
+# A few restriction lints worth having.
+dbg_macro = "warn"
+todo = "warn"
+unimplemented = "warn"
+unwrap_used = "warn"
+undocumented_unsafe_blocks = "warn"
+multiple_unsafe_ops_per_block = "warn"
+lossy_float_literal = "warn"
+rc_mutex = "warn"
+str_to_string = "warn"
+string_lit_chars_any = "warn"
+unnecessary_self_imports = "warn"
+verbose_file_reads = "warn"
+
+# ---------------------------------------------------------------------------
+
+[package]
+name = "tailnet-link"
+description = "Reach machines on other tailnets while staying on your own"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+default-run = "tailnet-link"
+keywords = ["tailscale", "tailnet", "proxy", "tray", "gui"]
+categories = ["network-programming", "gui"]
+# Needs Go at build time to compile the vendored libtailscale (tsbridge/), so it
+# ships as release downloads rather than through crates.io.
+publish = false
+
+[features]
+# Fictional tailnets for README screenshots (`cargo xtask screenshots`).
+screenshots = []
+
+[dependencies]
+eframe = "0.37"
+egui = "0.37"
+egui-phosphor = "0.14"
+tray-icon = "0.26"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "io-util", "macros", "time", "sync"] }
+ureq = "3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dirs = "7"
+httparse = "1"
+png = "0.18"
+base64 = "0.23"
+rand = "0.10"
+log = "0.4"
+open = "5"
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.56"
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_System_Console", "Win32_System_Threading", "Win32_Networking_WinInet", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+gtk = "0.18"
+
+[lints]
+workspace = true
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[build-dependencies]
+# Windows icon, version information and application manifest (see build.rs).
+winresource = "0.1.34"
