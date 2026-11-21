@@ -136,7 +136,7 @@ pub fn parse_mac_autoproxy(out: &str) -> (String, bool) {
         if let Some((k, v)) = line.split_once(':') {
             let v = v.trim();
             match k.trim() {
-                "URL" if v != "(null)" => url = v.to_owned(),
+                "URL" if v != "(null)" => v.clone_into(&mut url),
                 "Enabled" => enabled = v.eq_ignore_ascii_case("yes"),
                 _ => {}
             }
