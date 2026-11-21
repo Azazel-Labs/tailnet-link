@@ -1588,7 +1588,7 @@ fn notify_still_running(tray: Option<&Tray>) {
 
 #[cfg(target_os = "linux")]
 mod linux_tray {
-    use super::*;
+    use super::{ActionMap, Arc, Core, Tray};
     use gtk::glib;
 
     pub fn spawn(core: Arc<Core>, actions: ActionMap) {

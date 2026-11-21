@@ -44,7 +44,7 @@ pub fn installed(cmd: &str) -> bool {
     if lock(&RUNNER).is_some() {
         return run("which", &[cmd]).is_ok();
     }
-    std::env::var_os("PATH").map(|p| std::env::split_paths(&p).any(|d| d.join(cmd).is_file())).unwrap_or(false)
+    std::env::var_os("PATH").is_some_and(|p| std::env::split_paths(&p).any(|d| d.join(cmd).is_file()))
 }
 
 pub fn shell_quote(s: &str) -> String {
@@ -66,16 +66,17 @@ impl MacBackend {
         MacBackend { privileged: false.into() }
     }
 
-    fn services(&self) -> Result<Vec<String>, String> {
+    fn services() -> Result<Vec<String>, String> {
         let out = run("networksetup", &["-listallnetworkservices"])?;
         let svcs: Vec<String> = out
             .lines()
             .enumerate()
             .filter(|(i, l)| {
                 let l = l.trim();
-                !l.is_empty() && !l.starts_with('*') && !(*i == 0 && l.to_lowercase().contains("asterisk"))
+                let header = *i == 0 && l.to_lowercase().contains("asterisk");
+                !(l.is_empty() || l.starts_with('*') || header)
             })
-            .map(|(_, l)| l.trim().to_string())
+            .map(|(_, l)| l.trim().to_owned())
             .collect();
         if svcs.is_empty() {
             return Err("no enabled network services found".into());
@@ -83,7 +84,7 @@ impl MacBackend {
         Ok(svcs)
     }
 
-    fn get(&self, svc: &str) -> Result<(String, bool), String> {
+    fn get(svc: &str) -> Result<(String, bool), String> {
         Ok(parse_mac_autoproxy(&run("networksetup", &["-getautoproxyurl", svc])?))
     }
 
@@ -94,7 +95,7 @@ impl MacBackend {
         if !self.privileged.load(Ordering::SeqCst) {
             let mut need_admin = false;
             for c in cmds {
-                let args: Vec<&str> = c[1..].iter().map(|s| s.as_str()).collect();
+                let args: Vec<&str> = c[1..].iter().map(String::as_str).collect();
                 let (out, ok) = match run(&c[0], &args) {
                     Ok(o) => (o, true),
                     Err(o) => (o, false),
@@ -135,7 +136,7 @@ pub fn parse_mac_autoproxy(out: &str) -> (String, bool) {
         if let Some((k, v)) = line.split_once(':') {
             let v = v.trim();
             match k.trim() {
-                "URL" if v != "(null)" => url = v.to_string(),
+                "URL" if v != "(null)" => url = v.to_owned(),
                 "Enabled" => enabled = v.eq_ignore_ascii_case("yes"),
                 _ => {}
             }
@@ -152,26 +153,26 @@ impl PacBackend for MacBackend {
         self.privileged.load(std::sync::atomic::Ordering::SeqCst)
     }
     fn current(&self) -> Result<String, String> {
-        for s in self.services()? {
-            if let Ok((url, true)) = self.get(&s) {
-                if !url.is_empty() {
-                    return Ok(url);
-                }
+        for s in Self::services()? {
+            if let Ok((url, true)) = Self::get(&s)
+                && !url.is_empty()
+            {
+                return Ok(url);
             }
         }
         Ok(String::new())
     }
     fn snapshot(&self) -> Result<serde_json::Value, String> {
         let mut m = serde_json::Map::new();
-        for s in self.services()? {
-            let (url, enabled) = self.get(&s)?;
+        for s in Self::services()? {
+            let (url, enabled) = Self::get(&s)?;
             m.insert(s, serde_json::json!({"url": url, "enabled": enabled}));
         }
         Ok(serde_json::Value::Object(m))
     }
     fn apply(&self, url: &str) -> Result<(), String> {
         let mut cmds = Vec::new();
-        for s in self.services()? {
+        for s in Self::services()? {
             cmds.push(vec!["networksetup".into(), "-setautoproxyurl".into(), s.clone(), url.into()]);
             cmds.push(vec!["networksetup".into(), "-setautoproxystate".into(), s, "on".into()]);
         }
@@ -179,9 +180,9 @@ impl PacBackend for MacBackend {
     }
     fn restore(&self, prev: &serde_json::Value) -> Result<(), String> {
         let mut cmds = Vec::new();
-        for s in self.services()? {
+        for s in Self::services()? {
             let p = prev.get(&s);
-            let url = p.and_then(|p| p["url"].as_str()).unwrap_or("").to_string();
+            let url = p.and_then(|p| p["url"].as_str()).unwrap_or("").to_owned();
             let enabled = p.and_then(|p| p["enabled"].as_bool()).unwrap_or(false);
             if !url.is_empty() {
                 cmds.push(vec!["networksetup".into(), "-setautoproxyurl".into(), s.clone(), url.clone()]);
@@ -214,7 +215,7 @@ fn unquote_gvariant(s: &str) -> String {
     if s.len() >= 2 && s.starts_with('\'') && s.ends_with('\'') {
         s[1..s.len() - 1].replace("\\'", "'")
     } else {
-        s.to_string()
+        s.to_owned()
     }
 }
 
@@ -240,23 +241,23 @@ impl DesktopBackend {
         Ok(DesktopBackend { gnome, kver })
     }
 
-    fn gget(&self, key: &str) -> Result<String, String> {
+    fn gget(key: &str) -> Result<String, String> {
         run("gsettings", &["get", GNOME, key]).map(|o| unquote_gvariant(&o))
     }
-    fn gset(&self, key: &str, val: &str) -> Result<(), String> {
+    fn gset(key: &str, val: &str) -> Result<(), String> {
         run("gsettings", &["set", GNOME, key, &quote_gvariant(val)]).map(|_| ())
     }
     fn kget(&self, key: &str) -> String {
         let v = self.kver.unwrap_or("5");
         run(&format!("kreadconfig{v}"), &["--file", "kioslaverc", "--group", KDE_GROUP, "--key", key])
-            .map(|o| o.trim().to_string())
+            .map(|o| o.trim().to_owned())
             .unwrap_or_default()
     }
     fn kset(&self, key: &str, val: &str) -> Result<(), String> {
         let v = self.kver.unwrap_or("5");
         run(&format!("kwriteconfig{v}"), &["--file", "kioslaverc", "--group", KDE_GROUP, "--key", key, val]).map(|_| ())
     }
-    fn kde_notify(&self) {
+    fn kde_notify() {
         let _ = run(
             "dbus-send",
             &["--type=signal", "/KIO/Scheduler", "org.kde.KIO.Scheduler.reparseSlaveConfiguration", "string:"],
@@ -272,8 +273,8 @@ impl PacBackend for DesktopBackend {
         false
     }
     fn current(&self) -> Result<String, String> {
-        if self.gnome && self.gget("mode")? == "auto" {
-            return self.gget("autoconfig-url");
+        if self.gnome && Self::gget("mode")? == "auto" {
+            return Self::gget("autoconfig-url");
         }
         if self.kver.is_some() && self.kget("ProxyType") == "2" {
             return Ok(self.kget("Proxy Config Script"));
@@ -283,8 +284,8 @@ impl PacBackend for DesktopBackend {
     fn snapshot(&self) -> Result<serde_json::Value, String> {
         let mut v = serde_json::json!({});
         if self.gnome {
-            v["gnome_mode"] = self.gget("mode")?.into();
-            v["gnome_url"] = self.gget("autoconfig-url")?.into();
+            v["gnome_mode"] = Self::gget("mode")?.into();
+            v["gnome_url"] = Self::gget("autoconfig-url")?.into();
         }
         if self.kver.is_some() {
             v["kde_type"] = self.kget("ProxyType").into();
@@ -294,13 +295,13 @@ impl PacBackend for DesktopBackend {
     }
     fn apply(&self, url: &str) -> Result<(), String> {
         if self.gnome {
-            self.gset("autoconfig-url", url)?; // URL first, so nothing points at a stale address
-            self.gset("mode", "auto")?;
+            Self::gset("autoconfig-url", url)?; // URL first, so nothing points at a stale address
+            Self::gset("mode", "auto")?;
         }
         if self.kver.is_some() {
             self.kset("Proxy Config Script", url)?;
             self.kset("ProxyType", "2")?;
-            self.kde_notify();
+            Self::kde_notify();
         }
         Ok(())
     }
@@ -310,15 +311,15 @@ impl PacBackend for DesktopBackend {
             let mode = prev["gnome_mode"].as_str().filter(|s| !s.is_empty()).unwrap_or("none");
             let url = prev["gnome_url"].as_str().unwrap_or("");
             // Mode first, so nothing points at our address once it's gone.
-            errs.extend(self.gset("mode", mode).err());
-            errs.extend(self.gset("autoconfig-url", url).err());
+            errs.extend(Self::gset("mode", mode).err());
+            errs.extend(Self::gset("autoconfig-url", url).err());
         }
         if self.kver.is_some() {
             let typ = prev["kde_type"].as_str().filter(|s| !s.is_empty()).unwrap_or("0");
             let script = prev["kde_script"].as_str().unwrap_or("");
             errs.extend(self.kset("ProxyType", typ).err());
             errs.extend(self.kset("Proxy Config Script", script).err());
-            self.kde_notify();
+            Self::kde_notify();
         }
         if errs.is_empty() { Ok(()) } else { Err(errs.join("; ")) }
     }
@@ -383,7 +384,7 @@ pub(crate) mod tests {
             })
         });
         let m = MacBackend::new();
-        assert_eq!(m.services().unwrap(), vec!["Wi-Fi", "Thunderbolt Bridge"]);
+        assert_eq!(MacBackend::services().unwrap(), vec!["Wi-Fi", "Thunderbolt Bridge"]);
         assert_eq!(m.current().unwrap(), "http://corp.example/proxy.pac");
         let snap = m.snapshot().unwrap();
         assert_eq!(snap["Wi-Fi"]["enabled"], true);
@@ -408,7 +409,7 @@ pub(crate) mod tests {
             } else if c.starts_with("networksetup -set") {
                 Err("** Error: Command requires admin privileges.\n".into())
             } else if let Some(s) = c.strip_prefix("osascript -e ") {
-                *lock(&s2) = s.to_string();
+                *lock(&s2) = s.to_owned();
                 Ok(String::new())
             } else {
                 Ok(String::new())

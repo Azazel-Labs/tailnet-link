@@ -28,7 +28,8 @@ fn read_state() -> Option<State> {
 fn write_state(st: &State) -> Result<(), String> {
     std::fs::create_dir_all(config_dir()).map_err(|e| e.to_string())?;
     let tmp = state_path().with_extension("json.tmp");
-    std::fs::write(&tmp, serde_json::to_string_pretty(st).unwrap()).map_err(|e| e.to_string())?;
+    let json = serde_json::to_string_pretty(st).map_err(|e| e.to_string())?;
+    std::fs::write(&tmp, json).map_err(|e| e.to_string())?;
     std::fs::rename(tmp, state_path()).map_err(|e| e.to_string())
 }
 
@@ -51,13 +52,15 @@ pub struct SystemProxy {
 impl SystemProxy {
     pub fn new(pac_url: &str, force: bool) -> Result<SystemProxy, String> {
         let be = new_backend()?;
-        if let Ok(cur) = be.current() {
-            if !cur.is_empty() && !is_our_pac(&cur, pac_url) && !force {
-                return Err(format!(
-                    "your system already uses a proxy setup script ({cur}); not replacing it. \
-                     Choose \"replace\" in Settings to replace it while running"
-                ));
-            }
+        if let Ok(cur) = be.current()
+            && !cur.is_empty()
+            && !is_our_pac(&cur, pac_url)
+            && !force
+        {
+            return Err(format!(
+                "your system already uses a proxy setup script ({cur}); not replacing it. \
+                 Choose \"replace\" in Settings to replace it while running"
+            ));
         }
         if let Err(e) = super::start_watchdog() {
             log::warn!("crash watchdog not started ({e}); a crash would leave the proxy setting on until next login");
@@ -83,15 +86,15 @@ impl SystemProxy {
                 ..Default::default()
             },
         };
-        st.active = url.clone();
+        st.active.clone_from(&url);
         st.owner_pid = std::process::id();
         st.backend = self.be.name().into();
         write_state(&st).map_err(|e| format!("saving proxy state: {e}"))?;
         // 2. Clean up at next login if everything else fails.
-        if let Ok(exe) = std::env::current_exe() {
-            if let Err(e) = self.be.install_cleanup(&exe.to_string_lossy()) {
-                log::warn!("login cleanup not installed: {e}");
-            }
+        if let Ok(exe) = std::env::current_exe()
+            && let Err(e) = self.be.install_cleanup(&exe.to_string_lossy())
+        {
+            log::warn!("login cleanup not installed: {e}");
         }
         // 3. Turn it on.
         if let Err(e) = self.be.apply(&url) {
@@ -152,14 +155,14 @@ fn restore_with(be: &dyn PacBackend, owner: u32) {
     if owner == 0 && st.owner_pid != 0 && process_alive(st.owner_pid) {
         return; // still running; leave it alone
     }
-    if let Ok(cur) = be.current() {
-        if is_our_pac(&cur, &st.active) {
-            if let Err(e) = be.restore(&st.prev) {
-                log::warn!("restoring proxy setting: {e}");
-                return; // keep the state so a later cleanup can retry
-            }
-            log::info!("System proxy setting turned off.");
+    if let Ok(cur) = be.current()
+        && is_our_pac(&cur, &st.active)
+    {
+        if let Err(e) = be.restore(&st.prev) {
+            log::warn!("restoring proxy setting: {e}");
+            return; // keep the state so a later cleanup can retry
         }
+        log::info!("System proxy setting turned off.");
     }
     let _ = std::fs::remove_file(state_path());
     be.remove_cleanup();
@@ -170,6 +173,7 @@ pub fn cleanup_stale() {
 }
 
 pub fn process_alive(pid: u32) -> bool {
+    // SAFETY: signal 0 only checks that the process exists; nothing is delivered.
     let r = unsafe { libc::kill(pid as libc::pid_t, 0) };
     r == 0 || std::io::Error::last_os_error().raw_os_error() == Some(libc::EPERM)
 }
