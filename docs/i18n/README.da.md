@@ -13,7 +13,7 @@
 
 **Bliv på dit eget tailnet. Nå maskiner på alle de andre, på samme tid.**
 
-Med Tailscale kan du kun være logget ind på ét tailnet ad gangen. Har dit hjemmelab, din arbejdsplads og en kunde hver deres, skifter du konto igen og igen, og det, du var forbundet til, ryger. Det gør Tailnet Link en ende på. Din Tailscale-app bliver lige, hvor den er, og Tailnet Link tilføjer stille og roligt de andre tailnets ved siden af, så både `https://wiki.studio.example/` og `build-pc.home.example` bare åbner.
+Med Tailscale kan du kun være logget ind på ét tailnet ad gangen. Har dit hjemmelab, din arbejdsplads og en kunde hver deres, skifter du konto igen og igen, og det, du var forbundet til, ryger. Det gør Tailnet Link en ende på. Din Tailscale-app bliver lige, hvor den er, og Tailnet Link tilføjer stille og roligt de andre tailnets ved siden af, så både `https://wiki.comet-bebop.ts.net/` og `build-pc.capybara-iguana.ts.net` bare åbner.
 
 **[Hent den nyeste udgivelse](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** til Windows, macOS eller Linux. Gratis og open source.
 
@@ -35,7 +35,7 @@ Med Tailscale kan du kun være logget ind på ét tailnet ad gangen. Har dit hje
 ## Sådan virker det
 
 1. **Tilføj et tailnet.** Tailscales egen login-side åbner i din browser, præcis som med Tailscale-appen.
-2. **Domænet findes automatisk.** Når du har logget ind, læser Tailnet Link tailnettets MagicDNS-navn (f.eks. `example.ts.net`) og dirigerer `*.example.ts.net` gennem det.
+2. **Domænet findes automatisk.** Når du har logget ind, læser Tailnet Link tailnettets MagicDNS-navn (f.eks. `capybara-iguana.ts.net`) og dirigerer `*.capybara-iguana.ts.net` gennem det.
 3. **Åbn dets maskiner.** Skriv et navn i din browser, eller vælg en maskine på listen for at åbne den, kopiere dens adresse eller videresende en port til den.
 
 ## Apps, der ignorerer proxyer

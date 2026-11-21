@@ -13,7 +13,7 @@
 
 **留在你自己的 tailnet，同時連到其他每一個 tailnet 中的裝置。**
 
-Tailscale 一次只能登入一個 tailnet。如果你的家用實驗室、公司和客戶各有自己的 tailnet，你就得不斷切換帳號，而且每次切換，原本的連線就會中斷。Tailnet Link 讓這件事成為過去：你的 Tailscale 應用程式維持原樣，Tailnet Link 在一旁悄悄加入其他 tailnet，`https://wiki.studio.example/` 和 `build-pc.home.example` 都能直接開啟。
+Tailscale 一次只能登入一個 tailnet。如果你的家用實驗室、公司和客戶各有自己的 tailnet，你就得不斷切換帳號，而且每次切換，原本的連線就會中斷。Tailnet Link 讓這件事成為過去：你的 Tailscale 應用程式維持原樣，Tailnet Link 在一旁悄悄加入其他 tailnet，`https://wiki.comet-bebop.ts.net/` 和 `build-pc.capybara-iguana.ts.net` 都能直接開啟。
 
 **[下載最新版本](https://github.com/Azazel-Labs/tailnet-link/releases/latest)**，支援 Windows、macOS 和 Linux，免費且開放原始碼。
 
@@ -35,7 +35,7 @@ Tailscale 一次只能登入一個 tailnet。如果你的家用實驗室、公�
 ## 運作方式
 
 1. **新增 tailnet。** 和 Tailscale 應用程式一樣，Tailscale 自己的登入頁面會在瀏覽器中開啟。
-2. **自動取得網域。** 登入後，Tailnet Link 會讀取該 tailnet 的 MagicDNS 名稱（例如 `example.ts.net`），並透過它路由 `*.example.ts.net`。
+2. **自動取得網域。** 登入後，Tailnet Link 會讀取該 tailnet 的 MagicDNS 名稱（例如 `capybara-iguana.ts.net`），並透過它路由 `*.capybara-iguana.ts.net`。
 3. **開啟裝置。** 在瀏覽器中輸入名稱，或從清單中選擇裝置來開啟、複製位址，或為它轉送連接埠。
 
 ## 忽略代理伺服器的應用程式

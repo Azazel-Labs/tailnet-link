@@ -230,7 +230,8 @@ impl Gui {
             match crate::demo::view() {
                 View::Settings => gui.tab = Tab::Settings,
                 View::Forward => {
-                    gui.dialog = Dialog::ForwardAdded { local: 50321, target: "build-pc.home.example:3389".into() };
+                    gui.dialog =
+                        Dialog::ForwardAdded { local: 50321, target: "build-pc.capybara-iguana.ts.net:3389".into() };
                 }
                 View::Welcome | View::Tailnets | View::SignIn => {}
             }
@@ -761,7 +762,11 @@ impl Gui {
     fn empty_state(&mut self, ui: &mut egui::Ui, ctx: &egui::Context) {
         let steps = [
             (icons::SIGN_IN, tr!("welcome-sign-in"), tr!("welcome-sign-in-detail")),
-            (icons::GLOBE, tr!("welcome-open"), tr!("welcome-open-detail", example = "build-pc.example.ts.net")),
+            (
+                icons::GLOBE,
+                tr!("welcome-open"),
+                tr!("welcome-open-detail", example = "build-pc.capybara-iguana.ts.net"),
+            ),
             (icons::PLUGS_CONNECTED, tr!("welcome-forward"), tr!("welcome-forward-detail")),
         ];
         ui.add_space(20.0);
@@ -1026,7 +1031,7 @@ impl Gui {
                     .desired_rows(3)
                     .desired_width(f32::INFINITY)
                     .margin(Margin::symmetric(10, 8))
-                    .hint_text("auto = build-pc.example.ts.net:3389"),
+                    .hint_text("auto = build-pc.capybara-iguana.ts.net:3389"),
             );
             ui.add(egui::Label::new(muted(tr!("forwards-format-help")).size(12.0)).wrap());
         });
@@ -1101,7 +1106,7 @@ impl Gui {
             ui.horizontal(|ui| {
                 let r = ui.add(
                     egui::TextEdit::singleline(&mut self.check_input)
-                        .hint_text("https://wiki.example.ts.net/")
+                        .hint_text("https://wiki.comet-bebop.ts.net/")
                         .margin(Margin::symmetric(10, 7))
                         .desired_width(ui.available_width() - 84.0),
                 );

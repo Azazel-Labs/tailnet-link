@@ -13,7 +13,7 @@
 
 **Kendi tailnet'inizde kalın. Diğer tüm tailnet'lerdeki makinelere aynı anda erişin.**
 
-Tailscale'de aynı anda yalnızca bir tailnet'te oturum açabilirsiniz. Ev laboratuvarınızın, şirketinizin ve bir müşterinizin ayrı tailnet'leri varsa sürekli hesap değiştirirsiniz ve bağlı olduğunuz her şey kopar. Tailnet Link buna son verir. Tailscale uygulamanız olduğu yerde kalır; Tailnet Link diğer tailnet'leri sessizce yanına ekler. Böylece hem `https://wiki.studio.example/` hem de `build-pc.home.example` doğrudan açılır.
+Tailscale'de aynı anda yalnızca bir tailnet'te oturum açabilirsiniz. Ev laboratuvarınızın, şirketinizin ve bir müşterinizin ayrı tailnet'leri varsa sürekli hesap değiştirirsiniz ve bağlı olduğunuz her şey kopar. Tailnet Link buna son verir. Tailscale uygulamanız olduğu yerde kalır; Tailnet Link diğer tailnet'leri sessizce yanına ekler. Böylece hem `https://wiki.comet-bebop.ts.net/` hem de `build-pc.capybara-iguana.ts.net` doğrudan açılır.
 
 Windows, macOS veya Linux için **[en son sürümü indirin](https://github.com/Azazel-Labs/tailnet-link/releases/latest)**. Ücretsiz ve açık kaynaklıdır.
 
@@ -35,7 +35,7 @@ Windows, macOS veya Linux için **[en son sürümü indirin](https://github.com/
 ## Nasıl çalışır
 
 1. **Bir tailnet ekleyin.** Tailscale'in kendi oturum açma sayfası, tıpkı Tailscale uygulamasında olduğu gibi tarayıcınızda açılır.
-2. **Alan adı otomatik olarak algılanır.** Oturum açtıktan sonra Tailnet Link, tailnet'in MagicDNS adını (örneğin `example.ts.net`) okur ve `*.example.ts.net` adreslerini onun üzerinden yönlendirir.
+2. **Alan adı otomatik olarak algılanır.** Oturum açtıktan sonra Tailnet Link, tailnet'in MagicDNS adını (örneğin `capybara-iguana.ts.net`) okur ve `*.capybara-iguana.ts.net` adreslerini onun üzerinden yönlendirir.
 3. **Makinelerini açın.** Tarayıcınıza bir ad yazın ya da listeden bir makine seçerek açın, adresini kopyalayın veya ona bir port yönlendirin.
 
 ## Proxy'yi yok sayan uygulamalar

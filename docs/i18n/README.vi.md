@@ -13,7 +13,7 @@
 
 **Vẫn ở trên tailnet của bạn, đồng thời truy cập máy trên mọi tailnet khác.**
 
-Tailscale chỉ cho bạn đăng nhập vào một tailnet mỗi lúc. Nếu phòng lab ở nhà, công ty và khách hàng của bạn mỗi nơi có một tailnet riêng, bạn sẽ phải liên tục chuyển tài khoản, và kết nối đang dùng sẽ bị ngắt mỗi lần như vậy. Tailnet Link chấm dứt chuyện đó. Ứng dụng Tailscale của bạn vẫn giữ nguyên, còn Tailnet Link lặng lẽ thêm các tailnet khác bên cạnh, nên cả `https://wiki.studio.example/` lẫn `build-pc.home.example` đều mở được ngay.
+Tailscale chỉ cho bạn đăng nhập vào một tailnet mỗi lúc. Nếu phòng lab ở nhà, công ty và khách hàng của bạn mỗi nơi có một tailnet riêng, bạn sẽ phải liên tục chuyển tài khoản, và kết nối đang dùng sẽ bị ngắt mỗi lần như vậy. Tailnet Link chấm dứt chuyện đó. Ứng dụng Tailscale của bạn vẫn giữ nguyên, còn Tailnet Link lặng lẽ thêm các tailnet khác bên cạnh, nên cả `https://wiki.comet-bebop.ts.net/` lẫn `build-pc.capybara-iguana.ts.net` đều mở được ngay.
 
 **[Tải bản phát hành mới nhất](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** cho Windows, macOS hoặc Linux. Miễn phí và mã nguồn mở.
 
@@ -35,7 +35,7 @@ Tailscale chỉ cho bạn đăng nhập vào một tailnet mỗi lúc. Nếu ph�
 ## Cách hoạt động
 
 1. **Thêm một tailnet.** Trang đăng nhập của chính Tailscale mở trong trình duyệt, giống như với ứng dụng Tailscale.
-2. **Tên miền được nhận tự động.** Sau khi bạn đăng nhập, Tailnet Link đọc tên MagicDNS của tailnet (ví dụ `example.ts.net`) và định tuyến `*.example.ts.net` qua tailnet đó.
+2. **Tên miền được nhận tự động.** Sau khi bạn đăng nhập, Tailnet Link đọc tên MagicDNS của tailnet (ví dụ `capybara-iguana.ts.net`) và định tuyến `*.capybara-iguana.ts.net` qua tailnet đó.
 3. **Mở máy.** Gõ tên vào trình duyệt, hoặc chọn một máy trong danh sách để mở, sao chép địa chỉ hay chuyển tiếp cổng tới máy đó.
 
 ## Ứng dụng bỏ qua proxy

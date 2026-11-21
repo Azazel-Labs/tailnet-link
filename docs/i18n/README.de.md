@@ -13,7 +13,7 @@
 
 **Bleiben Sie in Ihrem eigenen Tailnet. Erreichen Sie gleichzeitig Geräte in allen anderen.**
 
-Mit Tailscale sind Sie immer nur bei einem Tailnet angemeldet. Haben Ihr Homelab, Ihre Firma und ein Kunde jeweils ein eigenes, wechseln Sie ständig das Konto, und jede bestehende Verbindung bricht ab. Tailnet Link macht damit Schluss. Ihre Tailscale-App bleibt genau, wie sie ist, und Tailnet Link fügt die anderen Tailnets unauffällig daneben hinzu: `https://wiki.studio.example/` und `build-pc.home.example` öffnen sich einfach.
+Mit Tailscale sind Sie immer nur bei einem Tailnet angemeldet. Haben Ihr Homelab, Ihre Firma und ein Kunde jeweils ein eigenes, wechseln Sie ständig das Konto, und jede bestehende Verbindung bricht ab. Tailnet Link macht damit Schluss. Ihre Tailscale-App bleibt genau, wie sie ist, und Tailnet Link fügt die anderen Tailnets unauffällig daneben hinzu: `https://wiki.comet-bebop.ts.net/` und `build-pc.capybara-iguana.ts.net` öffnen sich einfach.
 
 **[Neueste Version herunterladen](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** für Windows, macOS oder Linux. Kostenlos und Open Source.
 
@@ -35,7 +35,7 @@ Mit Tailscale sind Sie immer nur bei einem Tailnet angemeldet. Haben Ihr Homelab
 ## So funktioniert es
 
 1. **Tailnet hinzufügen.** Die Anmeldeseite von Tailscale öffnet sich in Ihrem Browser, genau wie bei der Tailscale-App.
-2. **Die Domain wird automatisch erkannt.** Nach der Anmeldung liest Tailnet Link den MagicDNS-Namen des Tailnets (zum Beispiel `example.ts.net`) und leitet `*.example.ts.net` darüber.
+2. **Die Domain wird automatisch erkannt.** Nach der Anmeldung liest Tailnet Link den MagicDNS-Namen des Tailnets (zum Beispiel `capybara-iguana.ts.net`) und leitet `*.capybara-iguana.ts.net` darüber.
 3. **Geräte öffnen.** Geben Sie einen Namen im Browser ein oder wählen Sie ein Gerät aus der Liste, um es zu öffnen, seine Adresse zu kopieren oder einen Port dorthin weiterzuleiten.
 
 ## Apps, die Proxys ignorieren

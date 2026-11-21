@@ -13,7 +13,7 @@
 
 **Mantenha-se na sua tailnet. Aceda a máquinas em todas as outras, ao mesmo tempo.**
 
-O Tailscale só permite ter sessão iniciada numa tailnet de cada vez. Se o seu laboratório doméstico, a sua empresa e um cliente têm cada um a sua, está sempre a trocar de conta, e tudo aquilo a que estava ligado cai. O Tailnet Link acaba com isso. A sua aplicação Tailscale fica exatamente onde está, e o Tailnet Link junta discretamente as outras tailnets ao lado dela: `https://wiki.studio.example/` e `build-pc.home.example` abrem simplesmente.
+O Tailscale só permite ter sessão iniciada numa tailnet de cada vez. Se o seu laboratório doméstico, a sua empresa e um cliente têm cada um a sua, está sempre a trocar de conta, e tudo aquilo a que estava ligado cai. O Tailnet Link acaba com isso. A sua aplicação Tailscale fica exatamente onde está, e o Tailnet Link junta discretamente as outras tailnets ao lado dela: `https://wiki.comet-bebop.ts.net/` e `build-pc.capybara-iguana.ts.net` abrem simplesmente.
 
 **[Transfira a versão mais recente](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** para Windows, macOS ou Linux. É gratuito e de código aberto.
 
@@ -35,7 +35,7 @@ O Tailscale só permite ter sessão iniciada numa tailnet de cada vez. Se o seu 
 ## Como funciona
 
 1. **Adicione uma tailnet.** A própria página de início de sessão do Tailscale abre no seu browser, tal como na aplicação Tailscale.
-2. **O domínio é detetado automaticamente.** Depois de iniciar sessão, o Tailnet Link lê o nome MagicDNS da tailnet (por exemplo `example.ts.net`) e encaminha `*.example.ts.net` através dela.
+2. **O domínio é detetado automaticamente.** Depois de iniciar sessão, o Tailnet Link lê o nome MagicDNS da tailnet (por exemplo `capybara-iguana.ts.net`) e encaminha `*.capybara-iguana.ts.net` através dela.
 3. **Abra as respetivas máquinas.** Escreva um nome no browser, ou escolha uma máquina na lista para a abrir, copiar o endereço ou reencaminhar-lhe uma porta.
 
 ## Aplicações que ignoram proxies

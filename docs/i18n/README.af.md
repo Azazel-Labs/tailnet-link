@@ -13,7 +13,7 @@
 
 **Bly op jou eie tailnet. Bereik masjiene op al die ander, terselfdertyd.**
 
-Met Tailscale kan jy net by een tailnet op 'n slag aangemeld wees. As jou tuislab, jou maatskappy en 'n kliënt elk hul eie het, wissel jy aanhoudend van rekening, en wat jy ook al aan gekoppel was, val weg. Tailnet Link maak daar 'n einde aan. Jou Tailscale-app bly presies waar dit is, en Tailnet Link voeg die ander tailnets stilletjies langsaan by, sodat `https://wiki.studio.example/` en `build-pc.home.example` albei sommer net oopmaak.
+Met Tailscale kan jy net by een tailnet op 'n slag aangemeld wees. As jou tuislab, jou maatskappy en 'n kliënt elk hul eie het, wissel jy aanhoudend van rekening, en wat jy ook al aan gekoppel was, val weg. Tailnet Link maak daar 'n einde aan. Jou Tailscale-app bly presies waar dit is, en Tailnet Link voeg die ander tailnets stilletjies langsaan by, sodat `https://wiki.comet-bebop.ts.net/` en `build-pc.capybara-iguana.ts.net` albei sommer net oopmaak.
 
 **[Laai die nuutste weergawe af](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** vir Windows, macOS of Linux. Dit is gratis en oopbron.
 
@@ -35,7 +35,7 @@ Met Tailscale kan jy net by een tailnet op 'n slag aangemeld wees. As jou tuisla
 ## Hoe dit werk
 
 1. **Voeg 'n tailnet by.** Tailscale se eie aanmeldbladsy maak in jou blaaier oop, net soos met die Tailscale-app.
-2. **Sy domein word outomaties opgespoor.** Nadat jy aangemeld het, lees Tailnet Link die tailnet se MagicDNS-naam (byvoorbeeld `example.ts.net`) en roeteer `*.example.ts.net` daardeur.
+2. **Sy domein word outomaties opgespoor.** Nadat jy aangemeld het, lees Tailnet Link die tailnet se MagicDNS-naam (byvoorbeeld `capybara-iguana.ts.net`) en roeteer `*.capybara-iguana.ts.net` daardeur.
 3. **Maak sy masjiene oop.** Tik 'n naam in jou blaaier, of kies 'n masjien uit die lys om dit oop te maak, sy adres te kopieer of 'n poort daarheen aan te stuur.
 
 ## Apps wat instaanbedieners ignoreer

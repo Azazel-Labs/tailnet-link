@@ -13,7 +13,7 @@
 
 **내 tailnet에 그대로 머문 채, 다른 모든 tailnet의 머신에도 동시에 접속하세요.**
 
-Tailscale에서는 한 번에 하나의 tailnet에만 로그인할 수 있습니다. 홈 랩, 회사, 고객사가 각자 tailnet을 쓰고 있다면 계정을 계속 바꿔야 하고, 그때마다 연결돼 있던 것이 끊깁니다. Tailnet Link가 이 번거로움을 없애 줍니다. Tailscale 앱은 지금 그대로 두고, Tailnet Link가 다른 tailnet을 조용히 옆에 추가하므로 `https://wiki.studio.example/`도 `build-pc.home.example`도 그냥 열립니다.
+Tailscale에서는 한 번에 하나의 tailnet에만 로그인할 수 있습니다. 홈 랩, 회사, 고객사가 각자 tailnet을 쓰고 있다면 계정을 계속 바꿔야 하고, 그때마다 연결돼 있던 것이 끊깁니다. Tailnet Link가 이 번거로움을 없애 줍니다. Tailscale 앱은 지금 그대로 두고, Tailnet Link가 다른 tailnet을 조용히 옆에 추가하므로 `https://wiki.comet-bebop.ts.net/`도 `build-pc.capybara-iguana.ts.net`도 그냥 열립니다.
 
 Windows, macOS, Linux용 **[최신 릴리스 다운로드](https://github.com/Azazel-Labs/tailnet-link/releases/latest)**. 무료 오픈 소스입니다.
 
@@ -35,7 +35,7 @@ Windows, macOS, Linux용 **[최신 릴리스 다운로드](https://github.com/Az
 ## 작동 방식
 
 1. **tailnet을 추가합니다.** Tailscale 앱과 마찬가지로 Tailscale의 로그인 페이지가 브라우저에서 열립니다.
-2. **도메인은 자동으로 감지됩니다.** 로그인하면 Tailnet Link가 tailnet의 MagicDNS 이름(예: `example.ts.net`)을 읽고 `*.example.ts.net`을 그 tailnet으로 라우팅합니다.
+2. **도메인은 자동으로 감지됩니다.** 로그인하면 Tailnet Link가 tailnet의 MagicDNS 이름(예: `capybara-iguana.ts.net`)을 읽고 `*.capybara-iguana.ts.net`을 그 tailnet으로 라우팅합니다.
 3. **머신을 엽니다.** 브라우저에 이름을 입력하거나, 목록에서 머신을 골라 열거나, 주소를 복사하거나, 포트를 포워딩하세요.
 
 ## 프록시를 무시하는 앱

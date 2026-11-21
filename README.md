@@ -18,7 +18,8 @@ English · [Afrikaans](docs/i18n/README.af.md) · [Català](docs/i18n/README.ca.
 Tailscale lets you be signed in to one tailnet at a time. If your home lab, your company and a client
 each have their own, you keep switching accounts, and whatever you were connected to drops. Tailnet
 Link ends that. Your Tailscale app stays exactly where it is, and Tailnet Link quietly adds the other
-tailnets beside it, so `https://wiki.studio.example/` and `build-pc.home.example` both just open.
+tailnets beside it, so `https://wiki.comet-bebop.ts.net/` and `build-pc.capybara-iguana.ts.net` both
+just open.
 
 **[Download the latest release](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** for
 Windows, macOS or Linux. It's free and open source.
@@ -50,7 +51,7 @@ Windows, macOS or Linux. It's free and open source.
 1. **Add a tailnet.** Tailscale's own sign-in page opens in your browser, just like with the
    Tailscale app.
 2. **Its domain is picked up automatically.** After you sign in, Tailnet Link reads the tailnet's
-   MagicDNS name (for example `example.ts.net`) and routes `*.example.ts.net` through it.
+   MagicDNS name (for example `capybara-iguana.ts.net`) and routes `*.capybara-iguana.ts.net` through it.
 3. **Open its machines.** Type a name in your browser, or pick a machine from the list to open it,
    copy its address or forward a port to it.
 
@@ -78,7 +79,7 @@ their own **Open Remote Desktop** button.
 ![The dialog after forwarding Remote Desktop: a local address to copy and a button to open Remote Desktop](docs/images/forward.png)
 
 You can also edit forwards by hand in Settings, one per line, for example
-`auto = build-pc.example.ts.net:3389`.
+`auto = build-pc.capybara-iguana.ts.net:3389`.
 
 ## Everything at a glance
 

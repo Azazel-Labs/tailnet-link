@@ -13,7 +13,7 @@
 
 **Pysy omassa tailnetissäsi. Käytä kaikkien muiden koneita samaan aikaan.**
 
-Tailscalessa voit olla kirjautuneena vain yhteen tailnetiin kerrallaan. Jos kotilaboratoriollasi, työpaikallasi ja asiakkaallasi on kullakin omansa, vaihdat tiliä jatkuvasti, ja yhteys siihen, mitä juuri käytit, katkeaa. Tailnet Link lopettaa sen. Tailscale-sovelluksesi pysyy juuri siinä missä on, ja Tailnet Link lisää muut tailnetit huomaamattomasti sen rinnalle, joten sekä `https://wiki.studio.example/` että `build-pc.home.example` yksinkertaisesti avautuvat.
+Tailscalessa voit olla kirjautuneena vain yhteen tailnetiin kerrallaan. Jos kotilaboratoriollasi, työpaikallasi ja asiakkaallasi on kullakin omansa, vaihdat tiliä jatkuvasti, ja yhteys siihen, mitä juuri käytit, katkeaa. Tailnet Link lopettaa sen. Tailscale-sovelluksesi pysyy juuri siinä missä on, ja Tailnet Link lisää muut tailnetit huomaamattomasti sen rinnalle, joten sekä `https://wiki.comet-bebop.ts.net/` että `build-pc.capybara-iguana.ts.net` yksinkertaisesti avautuvat.
 
 **[Lataa uusin julkaisu](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** Windowsille, macOS:lle tai Linuxille. Ilmainen ja avointa lähdekoodia.
 
@@ -35,7 +35,7 @@ Tailscalessa voit olla kirjautuneena vain yhteen tailnetiin kerrallaan. Jos koti
 ## Näin se toimii
 
 1. **Lisää tailnet.** Tailscalen oma kirjautumissivu avautuu selaimessa, aivan kuten Tailscale-sovelluksessa.
-2. **Verkkotunnus haetaan automaattisesti.** Kun olet kirjautunut, Tailnet Link lukee tailnetin MagicDNS-nimen (esimerkiksi `example.ts.net`) ja reitittää osoitteet `*.example.ts.net` sen kautta.
+2. **Verkkotunnus haetaan automaattisesti.** Kun olet kirjautunut, Tailnet Link lukee tailnetin MagicDNS-nimen (esimerkiksi `capybara-iguana.ts.net`) ja reitittää osoitteet `*.capybara-iguana.ts.net` sen kautta.
 3. **Avaa sen koneet.** Kirjoita nimi selaimeen tai valitse kone listasta: avaa se, kopioi sen osoite tai ohjaa siihen portti.
 
 ## Sovellukset, jotka ohittavat välityspalvelimen

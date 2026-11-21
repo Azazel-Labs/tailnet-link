@@ -13,7 +13,7 @@
 
 **Zostań we własnej sieci tailnet. Jednocześnie korzystaj z urządzeń we wszystkich pozostałych.**
 
-Tailscale pozwala być zalogowanym tylko do jednej sieci tailnet naraz. Jeśli domowe laboratorium, firma i klient mają każde swoją, ciągle przełączasz konta, a wszystko, z czym było połączenie, się rozłącza. Tailnet Link kończy z tym. Aplikacja Tailscale zostaje dokładnie tam, gdzie była, a Tailnet Link po cichu dodaje obok pozostałe sieci tailnet, więc zarówno `https://wiki.studio.example/`, jak i `build-pc.home.example` po prostu się otwierają.
+Tailscale pozwala być zalogowanym tylko do jednej sieci tailnet naraz. Jeśli domowe laboratorium, firma i klient mają każde swoją, ciągle przełączasz konta, a wszystko, z czym było połączenie, się rozłącza. Tailnet Link kończy z tym. Aplikacja Tailscale zostaje dokładnie tam, gdzie była, a Tailnet Link po cichu dodaje obok pozostałe sieci tailnet, więc zarówno `https://wiki.comet-bebop.ts.net/`, jak i `build-pc.capybara-iguana.ts.net` po prostu się otwierają.
 
 **[Pobierz najnowsze wydanie](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** dla systemu Windows, macOS lub Linux. Za darmo i z otwartym kodem źródłowym.
 
@@ -35,7 +35,7 @@ Tailscale pozwala być zalogowanym tylko do jednej sieci tailnet naraz. Jeśli d
 ## Jak to działa
 
 1. **Dodaj sieć tailnet.** W przeglądarce otworzy się strona logowania Tailscale, tak samo jak w aplikacji Tailscale.
-2. **Domena zostaje wykryta automatycznie.** Po zalogowaniu Tailnet Link odczytuje nazwę MagicDNS sieci tailnet (na przykład `example.ts.net`) i kieruje przez nią ruch do `*.example.ts.net`.
+2. **Domena zostaje wykryta automatycznie.** Po zalogowaniu Tailnet Link odczytuje nazwę MagicDNS sieci tailnet (na przykład `capybara-iguana.ts.net`) i kieruje przez nią ruch do `*.capybara-iguana.ts.net`.
 3. **Otwieraj jej urządzenia.** Wpisz nazwę w przeglądarce albo wybierz urządzenie z listy, aby je otworzyć, skopiować jego adres lub przekierować do niego port.
 
 Pod spodem każda sieć tailnet działa jako osobny węzeł Tailscale, jeden lokalny port obsługuje je wszystkie, a systemowe ustawienie proxy wskazuje plik PAC zawierający tylko domeny tych sieci. HTTPS działa end-to-end z prawdziwymi certyfikatami.

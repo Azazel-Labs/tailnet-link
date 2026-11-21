@@ -13,7 +13,7 @@
 
 **自分の tailnet に接続したまま、他のすべての tailnet のマシンにも同時にアクセス。**
 
-Tailscale では、一度にサインインできる tailnet は 1 つだけです。自宅のラボ、会社、取引先がそれぞれ tailnet を持っていると、そのたびにアカウントを切り替えることになり、接続中だったものは切れてしまいます。Tailnet Link はこの手間をなくします。Tailscale アプリはそのままに、Tailnet Link が他の tailnet をそっと横に追加するので、`https://wiki.studio.example/` も `build-pc.home.example` も、そのまま開けます。
+Tailscale では、一度にサインインできる tailnet は 1 つだけです。自宅のラボ、会社、取引先がそれぞれ tailnet を持っていると、そのたびにアカウントを切り替えることになり、接続中だったものは切れてしまいます。Tailnet Link はこの手間をなくします。Tailscale アプリはそのままに、Tailnet Link が他の tailnet をそっと横に追加するので、`https://wiki.comet-bebop.ts.net/` も `build-pc.capybara-iguana.ts.net` も、そのまま開けます。
 
 Windows、macOS、Linux 向けの **[最新リリースをダウンロード](https://github.com/Azazel-Labs/tailnet-link/releases/latest)**。無料のオープンソースです。
 
@@ -35,7 +35,7 @@ Windows、macOS、Linux 向けの **[最新リリースをダウンロード](ht
 ## しくみ
 
 1. **tailnet を追加する。** Tailscale アプリと同じように、Tailscale 自身のサインイン ページがブラウザーで開きます。
-2. **ドメインは自動で取得。** サインインすると、Tailnet Link が tailnet の MagicDNS 名 (例: `example.ts.net`) を読み取り、`*.example.ts.net` をその tailnet 経由でルーティングします。
+2. **ドメインは自動で取得。** サインインすると、Tailnet Link が tailnet の MagicDNS 名 (例: `capybara-iguana.ts.net`) を読み取り、`*.capybara-iguana.ts.net` をその tailnet 経由でルーティングします。
 3. **マシンを開く。** ブラウザーに名前を入力するか、一覧からマシンを選んで開く、アドレスをコピーする、ポートを転送する、のいずれかを選ぶだけです。
 
 ## プロキシを無視するアプリ

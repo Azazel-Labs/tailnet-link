@@ -13,7 +13,7 @@
 
 **Maradjon a saját tailnetjén. Érje el az összes többi tailnet gépeit – egyszerre.**
 
-A Tailscale-lel egyszerre csak egy tailnetbe lehet bejelentkezni. Ha az otthoni labornak, a cégnek és egy ügyfélnek is saját tailnetje van, folyton fiókot kell váltania, és ami éppen kapcsolódva volt, megszakad. A Tailnet Link véget vet ennek. A Tailscale alkalmazás pontosan ott marad, ahol van, a Tailnet Link pedig csendben mellé teszi a többi tailnetet, így a `https://wiki.studio.example/` és a `build-pc.home.example` is egyszerűen megnyílik.
+A Tailscale-lel egyszerre csak egy tailnetbe lehet bejelentkezni. Ha az otthoni labornak, a cégnek és egy ügyfélnek is saját tailnetje van, folyton fiókot kell váltania, és ami éppen kapcsolódva volt, megszakad. A Tailnet Link véget vet ennek. A Tailscale alkalmazás pontosan ott marad, ahol van, a Tailnet Link pedig csendben mellé teszi a többi tailnetet, így a `https://wiki.comet-bebop.ts.net/` és a `build-pc.capybara-iguana.ts.net` is egyszerűen megnyílik.
 
 **[Töltse le a legújabb kiadást](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** Windowsra, macOS-re vagy Linuxra. Ingyenes és nyílt forráskódú.
 
@@ -35,7 +35,7 @@ A Tailscale-lel egyszerre csak egy tailnetbe lehet bejelentkezni. Ha az otthoni 
 ## Hogyan működik?
 
 1. **Adjon hozzá egy tailnetet.** A Tailscale saját bejelentkezési oldala nyílik meg a böngészőben, ugyanúgy, mint a Tailscale alkalmazásnál.
-2. **A tartományt a program automatikusan felismeri.** Bejelentkezés után a Tailnet Link kiolvassa a tailnet MagicDNS-nevét (például `example.ts.net`), és a `*.example.ts.net` címeket rajta keresztül irányítja.
+2. **A tartományt a program automatikusan felismeri.** Bejelentkezés után a Tailnet Link kiolvassa a tailnet MagicDNS-nevét (például `capybara-iguana.ts.net`), és a `*.capybara-iguana.ts.net` címeket rajta keresztül irányítja.
 3. **Nyissa meg a gépeit.** Írjon be egy nevet a böngészőbe, vagy válasszon gépet a listából: megnyithatja, kimásolhatja a címét, vagy portot továbbíthat hozzá.
 
 ## Proxyt figyelmen kívül hagyó alkalmazások

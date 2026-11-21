@@ -13,7 +13,7 @@
 
 **Quédate en tu propio tailnet. Accede a los equipos de todos los demás, al mismo tiempo.**
 
-Tailscale solo te permite tener la sesión iniciada en un tailnet a la vez. Si tu laboratorio en casa, tu empresa y un cliente tienen cada uno el suyo, vives cambiando de cuenta, y todo lo que tenías conectado se corta. Tailnet Link termina con eso. Tu aplicación de Tailscale se queda exactamente como está y Tailnet Link agrega discretamente los demás tailnets a su lado, así que `https://wiki.studio.example/` y `build-pc.home.example` simplemente se abren.
+Tailscale solo te permite tener la sesión iniciada en un tailnet a la vez. Si tu laboratorio en casa, tu empresa y un cliente tienen cada uno el suyo, vives cambiando de cuenta, y todo lo que tenías conectado se corta. Tailnet Link termina con eso. Tu aplicación de Tailscale se queda exactamente como está y Tailnet Link agrega discretamente los demás tailnets a su lado, así que `https://wiki.comet-bebop.ts.net/` y `build-pc.capybara-iguana.ts.net` simplemente se abren.
 
 **[Descarga la versión más reciente](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** para Windows, macOS o Linux. Es gratuita y de código abierto.
 
@@ -35,7 +35,7 @@ Tailscale solo te permite tener la sesión iniciada en un tailnet a la vez. Si t
 ## Cómo funciona
 
 1. **Agrega un tailnet.** La página de inicio de sesión de Tailscale se abre en tu navegador, igual que con la aplicación de Tailscale.
-2. **Su dominio se detecta automáticamente.** Después de iniciar sesión, Tailnet Link lee el nombre MagicDNS del tailnet (por ejemplo, `example.ts.net`) y enruta `*.example.ts.net` a través de él.
+2. **Su dominio se detecta automáticamente.** Después de iniciar sesión, Tailnet Link lee el nombre MagicDNS del tailnet (por ejemplo, `capybara-iguana.ts.net`) y enruta `*.capybara-iguana.ts.net` a través de él.
 3. **Abre sus equipos.** Escribe un nombre en el navegador, o elige un equipo de la lista para abrirlo, copiar su dirección o redirigirle un puerto.
 
 ## Apps que ignoran el proxy

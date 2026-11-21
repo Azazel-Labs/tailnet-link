@@ -13,7 +13,7 @@
 
 **Rămâi în propriul tailnet. Ajungi la mașinile din toate celelalte, în același timp.**
 
-Tailscale te lasă să fii autentificat într-un singur tailnet odată. Dacă laboratorul de acasă, compania și un client au fiecare tailnetul lor, schimbi mereu conturile, iar tot ce era conectat se întrerupe. Tailnet Link pune capăt acestui lucru. Aplicația Tailscale rămâne exact unde este, iar Tailnet Link adaugă discret celelalte tailneturi alături, astfel încât `https://wiki.studio.example/` și `build-pc.home.example` se deschid pur și simplu.
+Tailscale te lasă să fii autentificat într-un singur tailnet odată. Dacă laboratorul de acasă, compania și un client au fiecare tailnetul lor, schimbi mereu conturile, iar tot ce era conectat se întrerupe. Tailnet Link pune capăt acestui lucru. Aplicația Tailscale rămâne exact unde este, iar Tailnet Link adaugă discret celelalte tailneturi alături, astfel încât `https://wiki.comet-bebop.ts.net/` și `build-pc.capybara-iguana.ts.net` se deschid pur și simplu.
 
 **[Descarcă cea mai recentă versiune](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** pentru Windows, macOS sau Linux. Este gratuită și open source.
 
@@ -35,7 +35,7 @@ Tailscale te lasă să fii autentificat într-un singur tailnet odată. Dacă la
 ## Cum funcționează
 
 1. **Adaugă un tailnet.** Pagina de autentificare Tailscale se deschide în browser, la fel ca în aplicația Tailscale.
-2. **Domeniul este preluat automat.** După autentificare, Tailnet Link citește numele MagicDNS al tailnetului (de exemplu `example.ts.net`) și rutează `*.example.ts.net` prin el.
+2. **Domeniul este preluat automat.** După autentificare, Tailnet Link citește numele MagicDNS al tailnetului (de exemplu `capybara-iguana.ts.net`) și rutează `*.capybara-iguana.ts.net` prin el.
 3. **Deschide-i mașinile.** Tastează un nume în browser sau alege o mașină din listă ca s-o deschizi, să-i copiezi adresa sau să-i redirecționezi un port.
 
 ## Aplicații care ignoră proxyul

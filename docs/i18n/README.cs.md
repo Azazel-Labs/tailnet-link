@@ -13,7 +13,7 @@
 
 **Zůstaňte ve své síti tailnet. A zároveň se dostaňte k zařízením ve všech ostatních.**
 
-Tailscale vám dovolí být přihlášeni jen k jedné síti tailnet najednou. Pokud má vlastní síť vaše domácí laboratoř, firma i klient, neustále přepínáte účty a všechno, k čemu jste byli připojeni, spadne. Tailnet Link tomu dělá konec. Aplikace Tailscale zůstane přesně tam, kde je, a Tailnet Link vedle ní nenápadně přidá ostatní sítě tailnet, takže `https://wiki.studio.example/` i `build-pc.home.example` se prostě otevřou.
+Tailscale vám dovolí být přihlášeni jen k jedné síti tailnet najednou. Pokud má vlastní síť vaše domácí laboratoř, firma i klient, neustále přepínáte účty a všechno, k čemu jste byli připojeni, spadne. Tailnet Link tomu dělá konec. Aplikace Tailscale zůstane přesně tam, kde je, a Tailnet Link vedle ní nenápadně přidá ostatní sítě tailnet, takže `https://wiki.comet-bebop.ts.net/` i `build-pc.capybara-iguana.ts.net` se prostě otevřou.
 
 **[Stáhněte si nejnovější vydání](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** pro Windows, macOS nebo Linux. Je zdarma a s otevřeným zdrojovým kódem.
 
@@ -35,7 +35,7 @@ Tailscale vám dovolí být přihlášeni jen k jedné síti tailnet najednou. P
 ## Jak to funguje
 
 1. **Přidejte síť tailnet.** V prohlížeči se otevře přihlašovací stránka Tailscale, stejně jako u aplikace Tailscale.
-2. **Doména se zjistí automaticky.** Po přihlášení Tailnet Link načte název MagicDNS sítě tailnet (například `example.ts.net`) a směruje přes ni `*.example.ts.net`.
+2. **Doména se zjistí automaticky.** Po přihlášení Tailnet Link načte název MagicDNS sítě tailnet (například `capybara-iguana.ts.net`) a směruje přes ni `*.capybara-iguana.ts.net`.
 3. **Otevírejte její zařízení.** Napište název do prohlížeče nebo vyberte zařízení ze seznamu, abyste ho otevřeli, zkopírovali jeho adresu nebo na něj přesměrovali port.
 
 Pod kapotou běží pro každou síť tailnet samostatný uzel Tailscale, jeden místní port obsluhuje všechny a systémové nastavení proxy ukazuje na soubor PAC jen s doménami těchto sítí. HTTPS funguje end-to-end se skutečnými certifikáty.

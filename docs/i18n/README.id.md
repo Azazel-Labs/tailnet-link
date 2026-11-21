@@ -13,7 +13,7 @@
 
 **Tetap di tailnet Anda sendiri. Jangkau mesin di semua tailnet lain, pada saat yang sama.**
 
-Tailscale hanya mengizinkan Anda masuk ke satu tailnet dalam satu waktu. Jika lab rumahan, kantor, dan klien Anda masing-masing punya tailnet sendiri, Anda harus terus berganti akun, dan apa pun yang sedang terhubung akan terputus. Tailnet Link mengakhiri itu. Aplikasi Tailscale Anda tetap seperti apa adanya, sementara Tailnet Link diam-diam menambahkan tailnet lain di sampingnya, sehingga `https://wiki.studio.example/` dan `build-pc.home.example` sama-sama langsung terbuka.
+Tailscale hanya mengizinkan Anda masuk ke satu tailnet dalam satu waktu. Jika lab rumahan, kantor, dan klien Anda masing-masing punya tailnet sendiri, Anda harus terus berganti akun, dan apa pun yang sedang terhubung akan terputus. Tailnet Link mengakhiri itu. Aplikasi Tailscale Anda tetap seperti apa adanya, sementara Tailnet Link diam-diam menambahkan tailnet lain di sampingnya, sehingga `https://wiki.comet-bebop.ts.net/` dan `build-pc.capybara-iguana.ts.net` sama-sama langsung terbuka.
 
 **[Unduh rilis terbaru](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** untuk Windows, macOS, atau Linux. Gratis dan sumber terbuka.
 
@@ -35,7 +35,7 @@ Tailscale hanya mengizinkan Anda masuk ke satu tailnet dalam satu waktu. Jika la
 ## Cara kerjanya
 
 1. **Tambahkan tailnet.** Halaman masuk Tailscale sendiri terbuka di browser Anda, sama seperti dengan aplikasi Tailscale.
-2. **Domainnya dideteksi otomatis.** Setelah Anda masuk, Tailnet Link membaca nama MagicDNS tailnet tersebut (misalnya `example.ts.net`) dan merutekan `*.example.ts.net` melaluinya.
+2. **Domainnya dideteksi otomatis.** Setelah Anda masuk, Tailnet Link membaca nama MagicDNS tailnet tersebut (misalnya `capybara-iguana.ts.net`) dan merutekan `*.capybara-iguana.ts.net` melaluinya.
 3. **Buka mesin-mesinnya.** Ketik nama di browser, atau pilih mesin dari daftar untuk membukanya, menyalin alamatnya, atau meneruskan port ke mesin itu.
 
 ## Aplikasi yang mengabaikan proksi

@@ -41,11 +41,11 @@ pub fn view() -> View {
     }
 }
 
-const HOME: &str = "home.example";
-const STUDIO: &str = "studio.example";
+const HOME: &str = "capybara-iguana.ts.net";
+const STUDIO: &str = "comet-bebop.ts.net";
 
-pub const FORWARDS: &str = "50321 = build-pc.home.example:3389\n\
-                            54320 = db-staging.studio.example:5432";
+pub const FORWARDS: &str = "50321 = build-pc.capybara-iguana.ts.net:3389\n\
+                            54320 = db-staging.comet-bebop.ts.net:5432";
 
 /// The settings the demo window starts with.
 pub fn config() -> Config {
@@ -88,7 +88,7 @@ fn studio() -> TailnetStatus {
         id: "studio".into(),
         name: "Lantern Studio".into(),
         backend: "Running".into(),
-        tailnet: "lantern-studio.example".into(),
+        tailnet: "lantern-studio@example.com".into(),
         self_name: format!("ana-laptop.{STUDIO}"),
         domains: vec![STUDIO.into()],
         connected: true,
