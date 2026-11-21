@@ -10,6 +10,12 @@ publish = false
 [dependencies]
 clap = { version = "4.6", features = ["derive"] }
 toml_edit = "0.25.17"
+fluent-syntax = "0.12"
+unic-langid = "0.9"
+proc-macro2 = "1"
+syn = { version = "3", features = ["full", "visit"] }
+sha2 = "0.11"
+png = "0.18.1"
 
 [lints]
 workspace = true

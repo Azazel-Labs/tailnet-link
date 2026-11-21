@@ -14,6 +14,7 @@ mod config;
 mod core;
 #[cfg(feature = "screenshots")]
 mod demo;
+mod i18n;
 mod icon;
 mod logging;
 mod proxy;

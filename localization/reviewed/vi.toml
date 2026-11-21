@@ -1,0 +1,885 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "479d07b4bd375204e92d231a6c9a6a5c2fd892ba6fb3d7f6a583603743f65123"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · proxy cục bộ { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Thêm chuyển tiếp"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Không thể thêm chuyển tiếp cổng:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Thêm tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Không thể thêm tailnet:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Tiếng Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Hệ thống này không hỗ trợ khởi động khi đăng nhập."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Hủy"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Tiếng Catalan"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: đó không phải là cổng hợp lệ."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Hãy nhập tên máy hoặc địa chỉ web."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } được định tuyến qua { $tailnet }, nhưng không thể kết nối tới cổng { $port }: { $error }
+    Hãy kiểm tra xem máy có trực tuyến không và có dịch vụ nào đang lắng nghe trên cổng đó không."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Tailnet đó vừa biến mất."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ $host } không được { -app-name } định tuyến: nó không kết thúc bằng tên miền của tailnet nào đang định tuyến, nên sẽ đi trực tiếp (qua mạng thông thường và Tailscale của riêng bạn).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } không chạy."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } hoạt động: đã kết nối qua { $tailnet } trong { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } được định tuyến qua { $tailnet }, nhưng cổng { $port } không phản hồi trong vòng 10 giây."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Tiếng Trung giản thể"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Tiếng Trung phồn thể"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Xóa tìm kiếm"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Đã sao chép { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Đã sao chép liên kết đăng nhập"
+
+[messages.copy]
+source = "Copy"
+translation = "Sao chép"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Sao chép { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Tiếng Séc"
+
+[messages.danish]
+source = "Danish"
+translation = "Tiếng Đan Mạch"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Sự cố"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Tuyến"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Máy tính này"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "“{ $domain }” chứa ký tự không được phép trong tên miền."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $domain } cũng được { $tailnet } định tuyến; tailnet đó được ưu tiên."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "“{ $domain }” không phải tên miền; hãy dùng dạng như example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Xong"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Tiếng Hà Lan"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Sửa chuyển tiếp"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Đổi tên hoặc thêm tên miền…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Sửa { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Tiếng Anh"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Chi tiết nằm trong { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Đã xảy ra lỗi"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Tên miền bổ sung (tùy chọn)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Tên miền riêng của tailnet được định tuyến tự động. Thêm mỗi dòng một tên miền."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Tiếng Phần Lan"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Không thể lắng nghe: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Tạo một cổng trên máy tính này dẫn tới { $host }. Bạn muốn dùng cổng nào trên máy đó?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Chuyển tiếp cổng"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Không có tailnet đang định tuyến nào có tên này"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Cổng sẽ được chọn khi bạn lưu"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Chuyển tiếp cổng: dành cho ứng dụng bỏ qua cài đặt proxy, như Máy tính Từ xa hoặc trình khách cơ sở dữ liệu"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Cổng sẽ không đổi. Bạn có thể tìm lại trong Cài đặt."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Trỏ ứng dụng của bạn tới địa chỉ này để truy cập { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Chuyển tiếp cổng đã sẵn sàng"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "qua { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Mỗi dòng một mục: LOCALPORT = host:port, hoặc auto = host:port để tự chọn một cổng trống. Tên máy chủ quyết định tailnet nào sẽ chuyển nó. Để thêm nhanh, dùng nút phích cắm trên một máy trong thẻ Tailnet."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Chuyển tiếp cổng"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Dành cho ứng dụng bỏ qua cài đặt proxy, như Máy tính Từ xa, SSH và trình khách cơ sở dữ liệu. Mỗi chuyển tiếp là một cổng trên máy tính này dẫn tới một máy trong tailnet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Dòng { $line }: cổng cục bộ { $port } bị dùng hai lần."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Dòng { $line }: hãy viết LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Dòng { $line }: “{ $value }” không phải số cổng (hoặc auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Dòng { $line }: “{ $value }” phải có dạng host:port."
+
+[messages.french]
+source = "French"
+translation = "Tiếng Pháp"
+
+[messages.general-heading]
+source = "General"
+translation = "Chung"
+
+[messages.german]
+source = "German"
+translation = "Tiếng Đức"
+
+[messages.greek]
+source = "Greek"
+translation = "Tiếng Hy Lạp"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Đang kết nối tới các tailnet của bạn."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Hãy hoàn tất việc đăng nhập vào { $tailnet } trong trình duyệt."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Hiện không có gì đi qua các tailnet khác. Mạng và tailnet của riêng bạn vẫn hoạt động như bình thường."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Các địa chỉ trong những tailnet này mở được ngay trong trình duyệt. Mọi thứ khác vẫn đi trực tiếp."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Mở { $address } hoặc bất kỳ địa chỉ nào khác trong các tailnet này. Mọi thứ khác vẫn đi trực tiếp."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Đăng nhập vào { $tailnet } để truy cập các máy trong đó."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Đang khởi động…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (sau khi bạn đăng nhập)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Tiếng Hungary"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Tiếng Indonesia"
+
+[messages.italian]
+source = "Italian"
+translation = "Tiếng Ý"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Tiếng Nhật"
+
+[messages.korean]
+source = "Korean"
+translation = "Tiếng Hàn"
+
+[messages.language]
+source = "Language"
+translation = "Ngôn ngữ"
+
+[messages.log-out]
+source = "Log out"
+translation = "Đăng xuất"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Đăng xuất…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Đăng xuất khỏi { $tailnet }? Các địa chỉ của nó sẽ ngừng hoạt động trên máy này cho đến khi bạn đăng nhập lại."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Đăng xuất?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (ngoại tuyến)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Tìm máy theo tên, hệ điều hành hoặc địa chỉ"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Máy · { $shown }/{ $total } khớp"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Máy · { $online }/{ $total } trực tuyến"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Thao tác khác"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Tailnet mới"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Không tìm thấy cổng cục bộ nào còn trống."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Không có máy nào khớp với tìm kiếm."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Không thấy máy nào khác trong tailnet này."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Tiếng Na Uy Bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "“{ $value }” không phải số cổng (1-65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Tailnet này hiện không định tuyến. Có phải nó đang tạm dừng?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Mở { $url } trong trình duyệt"
+
+[messages.open-log]
+source = "Open log"
+translation = "Mở nhật ký"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Mở Máy tính Từ xa"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Mở Máy tính Từ xa tới { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Mở thư mục cài đặt"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Tạm dừng tất cả"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Tạm ngừng định tuyến qua các tailnet khác"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Tạm dừng tailnet này"
+
+[messages.polish]
+source = "Polish"
+translation = "Tiếng Ba Lan"
+
+[messages.port]
+source = "Port"
+translation = "Cổng"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "vd: 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Máy tính Từ xa"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Cổng { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Tiếng Bồ Đào Nha (Brasil)"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Tiếng Bồ Đào Nha (Bồ Đào Nha)"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Bật, và thay thế tập lệnh proxy do công ty đặt trong khi chạy"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Cài đặt proxy hệ thống"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "“Bật” thay đổi cài đặt proxy của GNOME hoặc KDE khi ứng dụng đang chạy và định tuyến, rồi khôi phục lại sau đó. Trong Firefox, hãy bật Cài đặt > Cài đặt mạng > “Sử dụng cài đặt proxy của hệ thống”."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "“Bật” đặt proxy cho các dịch vụ mạng của bạn khi ứng dụng đang chạy và khôi phục lại sau đó. Nếu máy Mac cần mật khẩu quản trị viên để làm việc này, bạn sẽ được hỏi khi bắt đầu định tuyến và khi thoát."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "“Bật” khiến Windows chỉ dùng quy tắc của ứng dụng này khi ứng dụng đang chạy và định tuyến, rồi khôi phục lại khi ứng dụng dừng, tạm dừng, ngắt kết nối hoặc gặp sự cố."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Tắt: tôi sẽ tự thiết lập ứng dụng"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Bật (khuyên dùng)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Không thể khởi động Máy tính Từ xa: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Máy tính Từ xa chỉ được tích hợp sẵn trên Windows."
+
+[messages.remove]
+source = "Remove"
+translation = "Gỡ bỏ"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Gỡ bỏ…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } sẽ đăng xuất khỏi { $tailnet } và xóa nó khỏi máy tính này. Bạn có thể thêm lại sau.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Gỡ bỏ tailnet này?"
+
+[messages.resume]
+source = "Resume"
+translation = "Tiếp tục"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Tiếp tục tailnet này"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Định tuyến lại qua các tailnet khác"
+
+[messages.revert]
+source = "Revert"
+translation = "Hoàn nguyên"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Hủy các thay đổi"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Tiếng Romania"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Sẽ có sau khi bạn đăng nhập"
+
+[messages.russian]
+source = "Russian"
+translation = "Tiếng Nga"
+
+[messages.save]
+source = "Save"
+translation = "Lưu"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Tiếng Serbia, Kirin"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Cài đặt nằm trong { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Đã lưu cài đặt"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Đăng nhập"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Sao chép liên kết"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Dán vào trình duyệt hoặc hồ sơ trình duyệt mà bạn dùng cho tailnet này"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Trình duyệt đang mở trang đăng nhập của Tailscale. Trang có thể hiện ra phía sau cửa sổ này.
+    
+    Hãy đăng nhập bằng tài khoản của tailnet đó, rồi quay lại đây. Tên miền của nó sẽ được nhận tự động."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Đăng nhập vào tailnet mới"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Trình duyệt không mở, hoặc mở nhầm hồ sơ?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Mở lại trang đăng nhập"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Tiếng Tây Ban Nha (Mỹ Latinh)"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Tiếng Tây Ban Nha (Tây Ban Nha)"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Khởi động { -app-name } khi tôi đăng nhập
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } không thể khởi động:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Đang kết nối"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Chưa có tên miền"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Không định tuyến"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Đã tạm dừng"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Có sự cố"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Đang định tuyến"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Đã đăng xuất"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Đang chờ đăng nhập"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Ứng dụng vẫn tiếp tục định tuyến trong nền. Bạn có thể tìm thấy nó trong khay hệ thống."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Ứng dụng vẫn tiếp tục định tuyến trong nền. Bạn có thể tìm thấy nó trên thanh menu."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } vẫn đang chạy
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Ứng dụng vẫn tiếp tục định tuyến trong nền. Bạn có thể tìm thấy nó trong khay hệ thống; Windows có thể ẩn nó dưới mũi tên ^ cạnh đồng hồ."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Đang kết nối…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Chưa có tailnet nào"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Đã tạm dừng"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Sự cố: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = "Đang định tuyến qua { $count } tailnet"
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Đang định tuyến qua { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = "Đang định tuyến qua { $routing }/{ $count } tailnet"
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Chưa đăng nhập"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Tiếng Thụy Điển"
+
+[messages.system-default]
+source = "System default"
+translation = "Mặc định hệ thống"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Cài đặt"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnet"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Tên"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Hiển thị trong ứng dụng này và menu khay hệ thống"
+
+[messages.test]
+source = "Test"
+translation = "Kiểm tra"
+
+[messages.testing]
+source = "Testing…"
+translation = "Đang kiểm tra…"
+
+[messages.thai]
+source = "Thai"
+translation = "Tiếng Thái"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Thêm tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Mở { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Thoát"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Định tuyến qua các tailnet khác"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: đăng nhập…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Khắc phục sự cố"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Kiểm tra một địa chỉ web hoặc tên:cổng để xem tailnet nào chuyển nó và có kết nối được không."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Tiếng Thổ Nhĩ Kỳ"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Tiếng Ukraina"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Bạn có thay đổi chưa lưu."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Tiếng Việt"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Chuyển tiếp cổng khi ứng dụng cần"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Máy tính Từ xa, SSH và ứng dụng cơ sở dữ liệu sẽ có một cổng cục bộ dẫn tới máy."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Mở máy theo tên"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Các địa chỉ như { $example } dùng được ngay trong trình duyệt."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Đăng nhập vào một tailnet khác"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Trang đăng nhập của Tailscale sẽ mở trong trình duyệt."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Vẫn ở trên tailnet của bạn mà đồng thời mở được các máy ở tailnet khác. Ứng dụng Tailscale của bạn vẫn hoạt động như bình thường."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Truy cập máy trên các tailnet khác"

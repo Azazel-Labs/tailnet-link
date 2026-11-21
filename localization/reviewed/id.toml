@@ -1,0 +1,891 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "3fb3230d961942d63ed8d611cc5e64bec1fe2a0b26ef283cd7db84c01efbfbf8"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · proksi lokal { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Tambahkan penerusan"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Tidak dapat menambahkan penerusan port:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Tambahkan tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Tidak dapat menambahkan tailnet:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Bahasa Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Memulai saat masuk tidak didukung di sistem ini."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Batal"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Bahasa Katala"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: itu bukan port yang valid."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Ketik nama mesin atau alamat web."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } dirutekan melalui { $tailnet }, tetapi koneksi ke port { $port } gagal: { $error }
+    Pastikan mesin sedang daring dan ada yang mendengarkan di port tersebut."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Tailnet itu baru saja hilang."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ $host } tidak dirutekan oleh { -app-name }: alamat ini tidak berakhiran domain tailnet mana pun yang sedang merutekan, jadi lalu lintasnya berjalan langsung (melalui jaringan biasa dan Tailscale Anda sendiri).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } tidak berjalan."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } berfungsi: terhubung melalui { $tailnet } dalam { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } dirutekan melalui { $tailnet }, tetapi port { $port } tidak menjawab dalam 10 detik."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Bahasa Tionghoa Sederhana"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Bahasa Tionghoa Tradisional"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Hapus pencarian"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "{ $address } disalin"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Tautan masuk disalin"
+
+[messages.copy]
+source = "Copy"
+translation = "Salin"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Salin { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Bahasa Ceko"
+
+[messages.danish]
+source = "Danish"
+translation = "Bahasa Denmark"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Masalah"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Rute"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Komputer ini"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "“{ $domain }” berisi karakter yang tidak boleh ada dalam domain."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $domain } juga dirutekan oleh { $tailnet }; tailnet itulah yang dipakai."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "“{ $domain }” bukan domain; gunakan sesuatu seperti example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Selesai"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Bahasa Belanda"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Edit penerusan"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Ganti nama atau tambahkan domain…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Edit { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Bahasa Inggris"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Detail ada di { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Terjadi kesalahan"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Domain tambahan (opsional)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Domain milik tailnet itu sendiri dirutekan secara otomatis. Tambahkan satu per baris."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Bahasa Finlandia"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Tidak dapat mendengarkan: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Dapatkan port di komputer ini yang mengarah ke { $host }. Port mana di mesin itu?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Teruskan port"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Tidak ada tailnet yang sedang merutekan dengan nama ini"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Port dipilih saat Anda menyimpan"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Teruskan port: untuk aplikasi yang mengabaikan pengaturan proksi, seperti Desktop Jarak Jauh atau klien basis data"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Port-nya tetap sama. Anda dapat menemukannya di Pengaturan."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Arahkan aplikasi Anda ke alamat ini untuk menjangkau { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Penerusan port siap"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "melalui { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Satu per baris: LOCALPORT = host:port, atau auto = host:port agar port kosong dipilihkan. Nama host menentukan tailnet mana yang membawanya. Untuk menambahkan dengan cepat, gunakan tombol colokan pada mesin di tab Tailnet."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Penerusan port"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Untuk aplikasi yang mengabaikan pengaturan proksi, seperti Desktop Jarak Jauh, SSH, dan klien basis data. Setiap penerusan adalah port di komputer ini yang mengarah ke sebuah mesin di tailnet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Baris { $line }: port lokal { $port } digunakan dua kali."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Baris { $line }: tulis LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Baris { $line }: “{ $value }” bukan nomor port (atau auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Baris { $line }: “{ $value }” seharusnya host:port."
+
+[messages.french]
+source = "French"
+translation = "Bahasa Prancis"
+
+[messages.general-heading]
+source = "General"
+translation = "Umum"
+
+[messages.german]
+source = "German"
+translation = "Bahasa Jerman"
+
+[messages.greek]
+source = "Greek"
+translation = "Bahasa Yunani"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Menghubungkan ke tailnet Anda."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Selesaikan proses masuk ke { $tailnet } di browser Anda."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Saat ini tidak ada yang melewati tailnet lain. Jaringan dan tailnet Anda sendiri berfungsi seperti biasa."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Alamat di tailnet ini terbuka di browser Anda. Selebihnya berjalan langsung."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Buka { $address } atau alamat lain di tailnet ini. Selebihnya berjalan langsung."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Masuk ke { $tailnet } untuk menjangkau mesin-mesinnya."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Memulai…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (setelah Anda masuk)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Bahasa Hungaria"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Bahasa Indonesia"
+
+[messages.italian]
+source = "Italian"
+translation = "Bahasa Italia"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Bahasa Jepang"
+
+[messages.korean]
+source = "Korean"
+translation = "Bahasa Korea"
+
+[messages.language]
+source = "Language"
+translation = "Bahasa"
+
+[messages.log-out]
+source = "Log out"
+translation = "Keluar"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Keluar…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Keluar dari { $tailnet }? Alamat-alamatnya berhenti berfungsi di sini sampai Anda masuk lagi."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Keluar?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (luring)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Cari mesin berdasarkan nama, OS, atau alamat"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Mesin · { $shown } dari { $total } cocok"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Mesin · { $online } dari { $total } daring"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Tindakan lainnya"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Tailnet baru"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Tidak dapat menemukan port lokal yang kosong."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Tidak ada mesin yang cocok dengan pencarian Anda."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Tidak ada mesin lain yang terlihat di tailnet ini."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Bahasa Norwegia Bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "“{ $value }” bukan nomor port (1-65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Tailnet ini sedang tidak merutekan. Apakah sedang dijeda?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Buka { $url } di browser Anda"
+
+[messages.open-log]
+source = "Open log"
+translation = "Buka log"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Buka Desktop Jarak Jauh"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Buka Desktop Jarak Jauh ke { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Buka folder pengaturan"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Jeda semua"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Hentikan perutean melalui tailnet lain untuk sementara"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Jeda tailnet ini"
+
+[messages.polish]
+source = "Polish"
+translation = "Bahasa Polandia"
+
+[messages.port]
+source = "Port"
+translation = "Port"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "mis. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Desktop Jarak Jauh"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Port { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Bahasa Portugis Brasil"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Bahasa Portugis Eropa"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Aktif, dan ganti skrip proksi dari perusahaan Anda selama berjalan"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Pengaturan proksi sistem"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = '"Aktif" mengatur proksi GNOME atau KDE selama aplikasi berjalan dan merutekan, lalu mengembalikannya setelahnya. Di Firefox, aktifkan Pengaturan > Setelan Jaringan > "Gunakan pengaturan proksi dari sistem".'
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = '"Aktif" mengatur proksi untuk layanan jaringan Anda selama aplikasi berjalan, lalu mengembalikannya setelahnya. Jika Mac Anda memerlukan kata sandi admin untuk itu, Anda akan dimintai kata sandi saat perutean dimulai dan saat Anda keluar.'
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = '"Aktif" mengarahkan Windows ke aturan aplikasi ini hanya selama aplikasi berjalan dan merutekan, lalu mengembalikan semuanya saat aplikasi berhenti, dijeda, terputus, atau mogok.'
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Nonaktif: saya akan mengatur aplikasi sendiri"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Aktif (disarankan)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Tidak dapat memulai Desktop Jarak Jauh: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Desktop Jarak Jauh hanya tersedia bawaan di Windows."
+
+[messages.remove]
+source = "Remove"
+translation = "Hapus"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Hapus…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } akan keluar dari { $tailnet } dan melupakannya di komputer ini. Anda dapat menambahkannya lagi nanti.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Hapus tailnet ini?"
+
+[messages.resume]
+source = "Resume"
+translation = "Lanjutkan"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Lanjutkan tailnet ini"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Mulai lagi perutean melalui tailnet lain"
+
+[messages.revert]
+source = "Revert"
+translation = "Kembalikan"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Batalkan perubahan"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Bahasa Rumania"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Ditemukan setelah Anda masuk"
+
+[messages.russian]
+source = "Russian"
+translation = "Bahasa Rusia"
+
+[messages.save]
+source = "Save"
+translation = "Simpan"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Bahasa Serbia, Sirilik"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Pengaturan di { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Pengaturan disimpan"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Masuk"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Salin tautan"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Tempelkan ke browser, atau profil browser, yang Anda gunakan untuk tailnet ini"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Browser Anda sedang membuka halaman masuk Tailscale. Halaman itu mungkin terbuka di belakang jendela ini.
+    
+    Masuk dengan akun Anda untuk tailnet tersebut, lalu kembali ke sini. Domainnya dideteksi secara otomatis."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Masuk ke tailnet baru"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Browser tidak terbuka, atau terbuka di profil yang salah?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Buka lagi halaman masuk"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Bahasa Spanyol Amerika Latin"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Bahasa Spanyol dari Spanyol"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Jalankan { -app-name } saat saya masuk
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } tidak dapat dimulai:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Menghubungkan"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Belum ada domain"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Tidak merutekan"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Dijeda"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Masalah"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Merutekan"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Sudah keluar"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Menunggu masuk"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Aplikasi tetap merutekan di latar belakang. Temukan di baki sistem."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Aplikasi tetap merutekan di latar belakang. Temukan di bilah menu."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } masih berjalan
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Aplikasi tetap merutekan di latar belakang. Temukan di baki sistem; Windows mungkin menyembunyikannya di bawah panah ^ di dekat jam."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Menghubungkan…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Belum ada tailnet"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Dijeda"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Masalah: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+       *[other] Merutekan melalui { $count } tailnet
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Merutekan melalui { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+       *[other] Merutekan melalui { $routing } dari { $count } tailnet
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Belum masuk"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Bahasa Swedia"
+
+[messages.system-default]
+source = "System default"
+translation = "Bawaan sistem"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Pengaturan"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnet"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Nama"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Ditampilkan di aplikasi ini dan menu baki"
+
+[messages.test]
+source = "Test"
+translation = "Uji"
+
+[messages.testing]
+source = "Testing…"
+translation = "Menguji…"
+
+[messages.thai]
+source = "Thai"
+translation = "Bahasa Thai"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Tambahkan tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Buka { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Keluar"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Rutekan melalui tailnet lain"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: masuk…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Pemecahan masalah"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Uji alamat web atau nama:port untuk melihat tailnet mana yang membawanya dan apakah koneksinya berhasil."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Bahasa Turki"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Bahasa Ukraina"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Ada perubahan yang belum disimpan."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Bahasa Vietnam"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Teruskan port saat aplikasi membutuhkannya"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Desktop Jarak Jauh, SSH, dan aplikasi basis data mendapat port lokal yang mengarah ke sebuah mesin."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Buka mesinnya berdasarkan nama"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Alamat seperti { $example } berfungsi di browser Anda."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Masuk ke tailnet lain"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Halaman masuk Tailscale terbuka di browser Anda."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Tetap di tailnet Anda sendiri sambil membuka mesin di tailnet lain secara bersamaan. Aplikasi Tailscale Anda tetap berfungsi seperti biasa."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Jangkau mesin di tailnet lain"

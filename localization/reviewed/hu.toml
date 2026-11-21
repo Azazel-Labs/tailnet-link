@@ -1,0 +1,893 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "2fa96cd91e2ce46da168b1f2cc34a4b0d55e6e5bc966b37c032ac5e632819730"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · helyi proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Továbbítás hozzáadása"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Nem sikerült hozzáadni a porttovábbítást:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Tailnet hozzáadása"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Nem sikerült tailnetet hozzáadni:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "A bejelentkezéskori indítás ezen a rendszeren nem támogatott."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Mégse"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Katalán"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: ez nem érvényes port."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Írjon be egy gépnevet vagy webcímet."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } a(z) { $tailnet } tailneten át van irányítva, de a(z) { $port } portra nem sikerült csatlakozni: { $error }
+    Ellenőrizze, hogy a gép online van-e, és figyel-e valami azon a porton."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Ez a tailnet épp eltűnt."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ $host }: a { -app-name } nem irányítja át, mert egyik éppen útválasztást végző tailnet tartományára sem végződik. Ezért közvetlenül halad (a szokásos hálózatán és a saját Tailscale-kapcsolatán át).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "A(z) { $tailnet } tailnet nem fut."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } működik: kapcsolódva a(z) { $tailnet } tailneten át, { $ms } ms alatt."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } a(z) { $tailnet } tailneten át van irányítva, de a(z) { $port } port 10 másodpercen belül nem válaszolt."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Egyszerűsített kínai"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Hagyományos kínai"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Keresés törlése"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Másolva: { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "A bejelentkezési hivatkozás másolva"
+
+[messages.copy]
+source = "Copy"
+translation = "Másolás"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Másolás: { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Cseh"
+
+[messages.danish]
+source = "Danish"
+translation = "Dán"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Hiba"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Útvonalak"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Ez a számítógép"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "„{ $domain }” olyan karaktereket tartalmaz, amelyek tartománynévben nem fordulhatnak elő."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "A(z) { $domain } tartományt a(z) { $tailnet } tailnet is irányítja; az utóbbi érvényes."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "„{ $domain }” nem tartomány; adjon meg ilyesmit: example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Kész"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Holland"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Továbbítások szerkesztése"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Átnevezés vagy tartományok hozzáadása…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Szerkesztés: { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Angol"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Részletek: { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Hiba történt"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "További tartományok (nem kötelező)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "A tailnet saját tartománya automatikusan át van irányítva. Soronként egyet adjon meg."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Finn"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Nem lehet figyelni: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Kapjon egy portot ezen a számítógépen, amely ide vezet: { $host }. A gép melyik portjára?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Porttovábbítás"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Nincs ilyen nevű, útválasztást végző tailnet"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "A port kiválasztása mentéskor történik"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Porttovábbítás: a proxybeállítást figyelmen kívül hagyó alkalmazásokhoz, például a Távoli asztalhoz vagy egy adatbázis-klienshez"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "A port nem változik. A Beállításokban megtalálja."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Erre a címre irányítsa az alkalmazást a(z) { $target } eléréséhez:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "A porttovábbítás kész"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "{ $tailnet } útján"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Soronként egy: LOCALPORT = host:port, vagy auto = host:port, ha a program válasszon szabad portot. A gép neve dönti el, melyik tailnet viszi a forgalmat. Gyors hozzáadáshoz használja a csatlakozó gombot egy gép mellett a Tailnetek lapon."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Porttovábbítások"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "A proxybeállítást figyelmen kívül hagyó alkalmazásokhoz, például a Távoli asztalhoz, az SSH- és az adatbázis-kliensekhez. Minden továbbítás egy port ezen a számítógépen, amely egy tailnet egyik gépéhez vezet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "{ $line }. sor: a(z) { $port } helyi port kétszer szerepel."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "{ $line }. sor: írja így: LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "{ $line }. sor: „{ $value }” nem portszám (és nem auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "{ $line }. sor: „{ $value }” helyett host:port formátum kell."
+
+[messages.french]
+source = "French"
+translation = "Francia"
+
+[messages.general-heading]
+source = "General"
+translation = "Általános"
+
+[messages.german]
+source = "German"
+translation = "Német"
+
+[messages.greek]
+source = "Greek"
+translation = "Görög"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Csatlakozás a tailnetekhez."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Fejezze be a böngészőben a bejelentkezést a(z) { $tailnet } tailnetbe."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Most semmi sem halad át más tailneteken. A saját hálózata és tailnetje a szokásos módon működik."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Ezeknek a tailneteknek a címei megnyílnak a böngészőben. Minden más forgalom közvetlenül halad."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Nyissa meg a(z) { $address } címet vagy bármely más címet ezekben a tailnetekben. Minden más forgalom közvetlenül halad."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Jelentkezzen be a(z) { $tailnet } tailnetbe, hogy elérje a gépeit."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Indítás…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (bejelentkezés után)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Magyar"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Indonéz"
+
+[messages.italian]
+source = "Italian"
+translation = "Olasz"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Japán"
+
+[messages.korean]
+source = "Korean"
+translation = "Koreai"
+
+[messages.language]
+source = "Language"
+translation = "Nyelv"
+
+[messages.log-out]
+source = "Log out"
+translation = "Kijelentkezés"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Kijelentkezés…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Kijelentkezik a(z) { $tailnet } tailnetből? A címei itt nem működnek, amíg újra be nem jelentkezik."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Kijelentkezik?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (offline)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Gép keresése név, operációs rendszer vagy cím szerint"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Gépek · { $shown } találat, összesen { $total }"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Gépek · { $online } online, összesen { $total }"
+
+[messages.more-actions]
+source = "More actions"
+translation = "További műveletek"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Új tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Nem található szabad helyi port."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Egy gép sem felel meg a keresésnek."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Ebben a tailnetben nem látható más gép."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Norvég bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "„{ $value }” nem portszám (1–65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Ez a tailnet most nem végez útválasztást. Talán szüneteltetve van?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Megnyitás a böngészőben: { $url }"
+
+[messages.open-log]
+source = "Open log"
+translation = "Napló megnyitása"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Távoli asztal megnyitása"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Távoli asztal megnyitása: { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Beállításmappa megnyitása"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Összes szüneteltetése"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Az útválasztás ideiglenes leállítása a többi tailneten át"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "A tailnet szüneteltetése"
+
+[messages.polish]
+source = "Polish"
+translation = "Lengyel"
+
+[messages.port]
+source = "Port"
+translation = "Port"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "pl. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Távoli asztal"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Port: { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Brazil portugál"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Európai portugál"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Be, és futás közben a cége által beállított proxyszkript cseréje"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Rendszer proxybeállítása"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "A „Be” az alkalmazás futása és útválasztása alatt beállítja a GNOME vagy a KDE proxybeállítását, utána pedig visszaállítja. A Firefoxban kapcsolja be ezt: Beállítások > Hálózati beállítások > „Rendszerbeállítások használata”."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "A „Be” az alkalmazás futása alatt beállítja a proxyt a hálózati szolgáltatásokhoz, utána pedig visszaállítja. Ha a Mac ehhez rendszergazdai jelszót kér, az útválasztás indításakor és kilépéskor kell megadnia."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "A „Be” csak akkor irányítja a Windowst az alkalmazás szabályaira, amikor az fut és útválasztást végez, és mindent visszaállít, amikor leáll, szünetel, megszakad a kapcsolata vagy összeomlik."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Ki: az alkalmazásaimat magam állítom be"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Be (ajánlott)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "A Távoli asztal nem indítható el: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "A Távoli asztal csak a Windowsba van beépítve."
+
+[messages.remove]
+source = "Remove"
+translation = "Eltávolítás"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Eltávolítás…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } kijelentkezik a(z) { $tailnet } tailnetből, és elfelejti ezen a számítógépen. Később újra hozzáadhatja.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Eltávolítja ezt a tailnetet?"
+
+[messages.resume]
+source = "Resume"
+translation = "Folytatás"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "A tailnet folytatása"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Az útválasztás újraindítása a többi tailneten át"
+
+[messages.revert]
+source = "Revert"
+translation = "Visszaállítás"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "A módosítások visszavonása"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Román"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Bejelentkezés után derül ki"
+
+[messages.russian]
+source = "Russian"
+translation = "Orosz"
+
+[messages.save]
+source = "Save"
+translation = "Mentés"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Szerb, cirill"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Beállítások helye: { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Beállítások mentve"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Bejelentkezés"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Hivatkozás másolása"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Illessze be abba a böngészőbe vagy böngészőprofilba, amelyet ehhez a tailnethez használ"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+A böngészőben megnyílik a Tailscale bejelentkezési oldala. Lehet, hogy ez mögött az ablak mögött jelenik meg.
+    
+    Jelentkezzen be az adott tailnethez tartozó fiókjával, majd térjen vissza ide. A tailnet tartományát a program automatikusan felismeri."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Bejelentkezés az új tailnetbe"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Nem nyílt meg a böngésző, vagy rossz profilban nyílt meg?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "A bejelentkezési oldal újbóli megnyitása"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Latin-amerikai spanyol"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Spanyolországi spanyol"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } indítása bejelentkezéskor
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } nem tud elindulni:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Csatlakozás"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Még nincs tartomány"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Nincs útválasztás"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Szüneteltetve"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Hiba"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Útválasztás aktív"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Kijelentkezve"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Bejelentkezésre vár"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "A háttérben folytatja az útválasztást. A rendszertálcán találja."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "A háttérben folytatja az útválasztást. A menüsorban találja."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } továbbra is fut
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "A háttérben folytatja az útválasztást. Az értesítési területen találja; a Windows elrejtheti az óra melletti ^ nyíl alá."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Csatlakozás…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Még nincs tailnet"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Szüneteltetve"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Hiba: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Útválasztás { $count } tailneten át
+       *[other] Útválasztás { $count } tailneten át
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Útválasztás: { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Útválasztás { $routing } tailneten át (összesen { $count })
+       *[other] Útválasztás { $routing } tailneten át (összesen { $count })
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Nincs bejelentkezve"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Svéd"
+
+[messages.system-default]
+source = "System default"
+translation = "Rendszer alapértelmezése"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Beállítások"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnetek"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Név"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Ebben az alkalmazásban és a tálcamenüben jelenik meg"
+
+[messages.test]
+source = "Test"
+translation = "Teszt"
+
+[messages.testing]
+source = "Testing…"
+translation = "Tesztelés…"
+
+[messages.thai]
+source = "Thai"
+translation = "Thai"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Tailnet hozzáadása…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } megnyitása…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Kilépés"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Útválasztás más tailneteken át"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: bejelentkezés…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Hibaelhárítás"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Teszteljen egy webcímet vagy név:port párost, hogy lássa, melyik tailnet viszi, és létrejön-e a kapcsolat."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Török"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ukrán"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Nem mentett módosításai vannak."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Vietnámi"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Továbbítson portot, ha egy alkalmazásnak szüksége van rá"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "A Távoli asztal, az SSH és az adatbázis-alkalmazások egy helyi portot kapnak, amely egy géphez vezet."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Nyissa meg a gépeit név szerint"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Az olyan címek, mint { $example }, működnek a böngészőben."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Jelentkezzen be egy másik tailnetbe"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "A Tailscale bejelentkezési oldala megnyílik a böngészőben."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Maradjon a saját tailnetjén, és közben nyissa meg a többi tailnet gépeit is. A Tailscale alkalmazás a szokásos módon működik tovább."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Érje el más tailnetek gépeit"

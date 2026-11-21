@@ -52,6 +52,8 @@ pub fn config() -> Config {
     Config {
         forwards: parse_forwards(FORWARDS).unwrap_or_default(),
         hostname: "ana-laptop".into(),
+        // English unless asked, so screenshots don't follow this computer's language.
+        language: std::env::var("TAILNET_LINK_DEMO_LANGUAGE").unwrap_or_else(|_| "en".into()),
         ..Config::default()
     }
 }
@@ -126,7 +128,7 @@ pub fn status() -> Status {
         enabled: true,
         routing,
         problem: String::new(),
-        listen: "127.0.0.1:41080".into(),
+        listen: "127.0.0.1:1055".into(),
         forwards: vec![
             ForwardStatus {
                 local_port: 50321,

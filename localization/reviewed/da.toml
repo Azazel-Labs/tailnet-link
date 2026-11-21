@@ -1,0 +1,893 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "aa768f7e48e9e1267b4ea8213f5f92d4674b3606101d7aaab849ef38ac97c36c"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · lokal proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Tilføj videresendelse"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Kunne ikke tilføje portvideresendelsen:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Tilføj et tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Kunne ikke tilføje et tailnet:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Start ved login understøttes ikke på dette system."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Annuller"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Catalansk"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: det er ikke en gyldig port."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Skriv et maskinnavn eller en webadresse."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } dirigeres gennem { $tailnet }, men forbindelsen til port { $port } mislykkedes: { $error }
+    Tjek, at maskinen er online, og at noget lytter på den port."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Det tailnet forsvandt lige."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ $host } dirigeres ikke af { -app-name }: den ender ikke på domænet for noget tailnet, der dirigerer lige nu, så den går direkte (gennem dit normale netværk og dit eget Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } kører ikke."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } virker: forbundet gennem { $tailnet } på { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } dirigeres gennem { $tailnet }, men port { $port } svarede ikke inden for 10 sekunder."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Forenklet kinesisk"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Traditionel kinesisk"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Ryd søgningen"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Kopierede { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Login-linket er kopieret"
+
+[messages.copy]
+source = "Copy"
+translation = "Kopiér"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Kopiér { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Tjekkisk"
+
+[messages.danish]
+source = "Danish"
+translation = "Dansk"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Problem"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Ruter"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Denne computer"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = '"{ $domain }" indeholder tegn, som et domæne ikke kan have.'
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $domain } dirigeres også af { $tailnet }, som har forrang."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = '"{ $domain }" er ikke et domæne; brug noget i stil med example.ts.net.'
+
+[messages.done]
+source = "Done"
+translation = "Færdig"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Hollandsk"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Rediger videresendelser"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Omdøb eller tilføj domæner…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Rediger { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Engelsk"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Detaljerne findes i { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Noget gik galt"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Ekstra domæner (valgfrit)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Tailnettets eget domæne dirigeres automatisk. Tilføj ét pr. linje."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Finsk"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Kan ikke lytte: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Få en port på denne computer, der fører til { $host }. Hvilken port på den maskine?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Videresend en port"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Intet dirigerende tailnet har dette navn"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Der vælges en port, når du gemmer"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Videresend en port: til apps, der ignorerer proxyindstillingen, f.eks. Fjernskrivebord eller en databaseklient"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Porten forbliver den samme. Du finder den under Indstillinger."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Peg din app mod denne adresse for at nå { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Portvideresendelsen er klar"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "via { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Én pr. linje: LOCALPORT = host:port, eller auto = host:port for at få valgt en ledig port. Værtens navn afgør, hvilket tailnet der bærer den. Du tilføjer hurtigt en med stikknappen ved en maskine på fanen Tailnets."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Portvideresendelser"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Til apps, der ignorerer proxyindstillingen, f.eks. Fjernskrivebord, SSH og databaseklienter. Hver videresendelse er en port på denne computer, der fører til en maskine på et tailnet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Linje { $line }: den lokale port { $port } bruges to gange."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Linje { $line }: skriv LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = 'Linje { $line }: "{ $value }" er ikke et portnummer (eller auto).'
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = 'Linje { $line }: "{ $value }" skal være host:port.'
+
+[messages.french]
+source = "French"
+translation = "Fransk"
+
+[messages.general-heading]
+source = "General"
+translation = "Generelt"
+
+[messages.german]
+source = "German"
+translation = "Tysk"
+
+[messages.greek]
+source = "Greek"
+translation = "Græsk"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Forbinder til dine tailnets."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Gør login på { $tailnet } færdigt i din browser."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Intet går gennem andre tailnets lige nu. Dit eget netværk og tailnet fungerer som normalt."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Adresser i disse tailnets åbner i din browser. Alt andet går direkte."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Åbn { $address } eller en hvilken som helst anden adresse i disse tailnets. Alt andet går direkte."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Log ind på { $tailnet } for at nå dets maskiner."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Starter…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (når du har logget ind)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Ungarsk"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Indonesisk"
+
+[messages.italian]
+source = "Italian"
+translation = "Italiensk"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Japansk"
+
+[messages.korean]
+source = "Korean"
+translation = "Koreansk"
+
+[messages.language]
+source = "Language"
+translation = "Sprog"
+
+[messages.log-out]
+source = "Log out"
+translation = "Log ud"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Log ud…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Log ud af { $tailnet }? Dets adresser holder op med at virke her, indtil du logger ind igen."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Log ud?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (offline)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Find en maskine efter navn, styresystem eller adresse"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Maskiner · { $shown } af { $total } matcher"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Maskiner · { $online } af { $total } online"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Flere handlinger"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Nyt tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Kunne ikke finde en ledig lokal port."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Ingen maskine matcher din søgning."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Ingen andre maskiner er synlige på dette tailnet."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Norsk bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = '"{ $value }" er ikke et portnummer (1-65535).'
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Dette tailnet dirigerer ikke lige nu. Er det sat på pause?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Åbn { $url } i din browser"
+
+[messages.open-log]
+source = "Open log"
+translation = "Åbn log"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Åbn Fjernskrivebord"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Åbn Fjernskrivebord til { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Åbn mappen med indstillinger"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Sæt alle på pause"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Stop dirigering gennem andre tailnets indtil videre"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Sæt dette tailnet på pause"
+
+[messages.polish]
+source = "Polish"
+translation = "Polsk"
+
+[messages.port]
+source = "Port"
+translation = "Port"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "f.eks. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Fjernskrivebord"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Port { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Brasiliansk portugisisk"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Europæisk portugisisk"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Til, og erstat et proxyscript fra din arbejdsplads, mens appen kører"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Systemets proxyindstilling"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = '"Til" indstiller GNOME- eller KDE-proxyindstillingen, mens appen kører og dirigerer, og sætter den tilbage bagefter. I Firefox skal du slå Indstillinger > Netværksindstillinger > "Brug systemets proxyindstillinger" til.'
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = '"Til" indstiller proxyen for dine netværkstjenester, mens appen kører, og sætter den tilbage bagefter. Hvis din Mac kræver en administratoradgangskode til det, bliver du spurgt, når dirigeringen starter, og når du afslutter.'
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = '"Til" peger kun Windows mod denne apps regler, mens den kører og dirigerer, og sætter alt tilbage, når den stopper, sættes på pause, mister forbindelsen eller går ned.'
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Fra: jeg sætter selv mine apps op"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Til (anbefales)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Kunne ikke starte Fjernskrivebord: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Fjernskrivebord er kun indbygget i Windows."
+
+[messages.remove]
+source = "Remove"
+translation = "Fjern"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Fjern…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } logger ud af { $tailnet } og glemmer det på denne computer. Du kan tilføje det igen senere.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Fjern dette tailnet?"
+
+[messages.resume]
+source = "Resume"
+translation = "Genoptag"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Genoptag dette tailnet"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Begynd at dirigere gennem andre tailnets igen"
+
+[messages.revert]
+source = "Revert"
+translation = "Fortryd"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Fortryd ændringerne"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Rumænsk"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Findes, når du har logget ind"
+
+[messages.russian]
+source = "Russian"
+translation = "Russisk"
+
+[messages.save]
+source = "Save"
+translation = "Gem"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Serbisk, kyrillisk"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Indstillinger i { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Indstillingerne er gemt"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Log ind"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Kopiér linket"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Indsæt det i den browser eller browserprofil, du bruger til dette tailnet"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Din browser åbner Tailscales login-side. Den kan åbne bag dette vindue.
+    
+    Log ind med din konto til det tailnet, og vend så tilbage hertil. Domænet findes automatisk."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Log ind på det nye tailnet"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Åbnede browseren ikke, eller åbnede den den forkerte profil?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Åbn login-siden igen"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Latinamerikansk spansk"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Spansk fra Spanien"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Start { -app-name }, når jeg logger ind
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } kan ikke starte:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Forbinder"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Intet domæne endnu"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Dirigerer ikke"
+
+[messages.state-paused]
+source = "Paused"
+translation = "På pause"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Problem"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Dirigerer"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Logget ud"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Venter på login"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Den bliver ved med at dirigere i baggrunden. Du finder den i statusområdet."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Den bliver ved med at dirigere i baggrunden. Du finder den på menulinjen."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } kører stadig
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Den bliver ved med at dirigere i baggrunden. Du finder den i meddelelsesområdet; Windows gemmer den måske under pilen ^ ved uret."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Forbinder…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Ingen tailnets endnu"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "På pause"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Problem: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Dirigerer via { $count } tailnet
+       *[other] Dirigerer via { $count } tailnets
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Dirigerer via { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Dirigerer via { $routing } af { $count } tailnet
+       *[other] Dirigerer via { $routing } af { $count } tailnets
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Ikke logget ind"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Svensk"
+
+[messages.system-default]
+source = "System default"
+translation = "Systemstandard"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Indstillinger"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnets"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Navn"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Vises i denne app og i menuen i meddelelsesområdet"
+
+[messages.test]
+source = "Test"
+translation = "Test"
+
+[messages.testing]
+source = "Testing…"
+translation = "Tester…"
+
+[messages.thai]
+source = "Thai"
+translation = "Thailandsk"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Tilføj et tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Åbn { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Afslut"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Dirigér gennem andre tailnets"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: log ind…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Fejlfinding"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Test en webadresse eller navn:port for at se, hvilket tailnet der bærer den, og om der er forbindelse."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Tyrkisk"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ukrainsk"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Du har ændringer, der ikke er gemt."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Vietnamesisk"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Videresend en port, når en app har brug for det"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Fjernskrivebord, SSH og databaseapps får en lokal port, der fører til en maskine."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Åbn dets maskiner ved navn"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Adresser som { $example } virker i din browser."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Log ind på et andet tailnet"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Tailscales login-side åbner i din browser."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Bliv på dit eget tailnet, og åbn samtidig maskiner på andre. Din Tailscale-app fungerer som normalt."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Nå maskiner på andre tailnets"

@@ -1,6 +1,8 @@
 use clap::{Parser, Subcommand};
 use std::{env, error::Error, path::Path, process::Command};
 mod release;
+mod screenshots;
+mod translations;
 
 type Result<T> = std::result::Result<T, Box<dyn Error>>;
 
@@ -16,6 +18,11 @@ struct Cli {
 enum Task {
     /// Bump, validate or publish a release version
     Release(release::Args),
+    /// Capture the README screenshots from the app's fictional demo data
+    Screenshots(screenshots::Args),
+    /// Check, format or review the Fluent translations
+    #[command(subcommand)]
+    Translations(translations::Action),
 }
 
 fn main() {
@@ -31,6 +38,8 @@ fn run(task: Task) -> Result<()> {
     env::set_current_dir(root)?;
     match task {
         Task::Release(args) => release::run(root, &args),
+        Task::Screenshots(args) => screenshots::run(root, &args),
+        Task::Translations(action) => translations::run(root, action),
     }
 }
 
@@ -39,6 +48,15 @@ fn cargo(root: &Path) -> Command {
     let mut command = Command::new(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
     command.current_dir(root);
     command
+}
+
+/// Run with inherited output; a failure reports `failure` and the exit status.
+fn run_checked(command: &mut Command, failure: &str) -> Result<()> {
+    let status = command.status()?;
+    if !status.success() {
+        return Err(format!("{failure} ({status})").into());
+    }
+    Ok(())
 }
 
 /// Run quietly and return trimmed stdout; a failure reports the command and its stderr.
@@ -72,7 +90,20 @@ mod cli_tests {
     /// Every invocation in the workflows, VS Code tasks and docs must keep parsing.
     #[test]
     fn documented_invocations_parse() {
-        for line in ["release prepare 0.1.0", "release validate v0.1.0", "release publish 0.1.0"] {
+        for line in [
+            "release prepare 0.1.0",
+            "release validate v0.1.0",
+            "release publish 0.1.0",
+            "screenshots",
+            "screenshots --language fr",
+            "screenshots --render-only",
+            "translations check",
+            "translations fmt",
+            "translations fmt --check",
+            "translations review fr --all",
+            "translations review fr --readme",
+            "translations review fr cancel save",
+        ] {
             if let Err(error) = parse(line) {
                 panic!("{line}: {error}");
             }
@@ -84,7 +115,8 @@ mod cli_tests {
 
     #[test]
     fn rejects_malformed_invocations() {
-        for line in ["", "bogus", "release ship 1.0.0", "release prepare"] {
+        for line in ["", "bogus", "release ship 1.0.0", "release prepare", "translations", "translations check --check"]
+        {
             assert!(parse(line).is_err(), "{line}");
         }
     }

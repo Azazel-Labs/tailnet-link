@@ -1,0 +1,893 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "c8bef4b5ac1c22a2a8829c181f7ec3179e6d922d0191a55609f55e9d3601a2b1"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · paikallinen välityspalvelin { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Lisää edelleenohjaus"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Portin edelleenohjauksen lisääminen epäonnistui:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Lisää tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Tailnetin lisääminen epäonnistui:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Käynnistystä sisäänkirjautumisen yhteydessä ei tueta tässä järjestelmässä."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Peruuta"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Katalaani"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: portti ei kelpaa."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Kirjoita koneen nimi tai verkko-osoite."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+Kohde { $host } reititetään tailnetin { $tailnet } kautta, mutta yhteys porttiin { $port } epäonnistui: { $error }
+    Tarkista, että kone on verkossa ja että jokin kuuntelee kyseistä porttia."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Tuo tailnet katosi juuri."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ei reititä kohdetta { $host }: se ei pääty minkään juuri nyt reitittävän tailnetin verkkotunnukseen, joten se kulkee suoraan (tavallisen verkkosi ja oman Tailscalesi kautta).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "Tailnet { $tailnet } ei ole käynnissä."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } toimii: yhteys tailnetin { $tailnet } kautta, { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "Kohde { $host } reititetään tailnetin { $tailnet } kautta, mutta portti { $port } ei vastannut 10 sekunnin kuluessa."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Yksinkertaistettu kiina"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Perinteinen kiina"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Tyhjennä haku"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Kopioitu: { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Kirjautumislinkki kopioitu"
+
+[messages.copy]
+source = "Copy"
+translation = "Kopioi"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Kopioi { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Tšekki"
+
+[messages.danish]
+source = "Danish"
+translation = "Tanska"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Ongelma"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Reitit"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Tämä tietokone"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "”{ $domain }” sisältää merkkejä, joita verkkotunnuksessa ei voi olla."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "Myös tailnet { $tailnet } reitittää verkkotunnuksen { $domain }, ja se on etusijalla."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "”{ $domain }” ei ole verkkotunnus; käytä esimerkiksi muotoa example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Valmis"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Hollanti"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Muokkaa edelleenohjauksia"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Nimeä uudelleen tai lisää verkkotunnuksia…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Muokkaa: { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Englanti"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Lisätiedot: { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Jokin meni vikaan"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Lisäverkkotunnukset (valinnainen)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Tailnetin oma verkkotunnus reititetään automaattisesti. Lisää yksi riviä kohden."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Suomi"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Kuuntelu ei onnistu: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Saat tähän tietokoneeseen portin, joka johtaa kohteeseen { $host }. Mikä portti kyseisessä koneessa?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Ohjaa portti edelleen"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Millään reitittävällä tailnetillä ei ole tätä nimeä"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Portti valitaan, kun tallennat"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Ohjaa portti edelleen: sovelluksille, jotka ohittavat välityspalvelinasetuksen, kuten Etätyöpöytä tai tietokantaohjelma"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Portti pysyy samana. Löydät sen asetuksista."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Osoita sovelluksesi tähän osoitteeseen, niin pääset kohteeseen { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Portin edelleenohjaus on valmis"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "tailnetin { $tailnet } kautta"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Yksi riviä kohden: LOCALPORT = host:port, tai auto = host:port, jolloin vapaa portti valitaan puolestasi. Isäntänimi ratkaisee, mikä tailnet välittää yhteyden. Nopeimmin lisäät edelleenohjauksen koneen pistokepainikkeella Tailnetit-välilehdellä."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Portin edelleenohjaukset"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Sovelluksille, jotka ohittavat välityspalvelinasetuksen, kuten Etätyöpöytä, SSH ja tietokantaohjelmat. Jokainen edelleenohjaus on tämän tietokoneen portti, joka johtaa koneeseen jossakin tailnetissä."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Rivi { $line }: paikallinen portti { $port } on käytössä kahdesti."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Rivi { $line }: kirjoita LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Rivi { $line }: ”{ $value }” ei ole porttinumero (eikä auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Rivi { $line }: ”{ $value }” pitää olla muotoa host:port."
+
+[messages.french]
+source = "French"
+translation = "Ranska"
+
+[messages.general-heading]
+source = "General"
+translation = "Yleiset"
+
+[messages.german]
+source = "German"
+translation = "Saksa"
+
+[messages.greek]
+source = "Greek"
+translation = "Kreikka"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Yhdistetään tailneteihisi."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Viimeistele kirjautuminen tailnetiin { $tailnet } selaimessa."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Muiden tailnetien kautta ei kulje juuri nyt mitään. Oma verkkosi ja tailnetisi toimivat tavalliseen tapaan."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Näiden tailnetien osoitteet avautuvat selaimessa. Kaikki muu kulkee suoraan."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Avaa { $address } tai mikä tahansa muu näiden tailnetien osoite. Kaikki muu kulkee suoraan."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Kirjaudu tailnetiin { $tailnet }, niin pääset sen koneisiin."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Käynnistetään…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (kirjautumisen jälkeen)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Unkari"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Indonesia"
+
+[messages.italian]
+source = "Italian"
+translation = "Italia"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Japani"
+
+[messages.korean]
+source = "Korean"
+translation = "Korea"
+
+[messages.language]
+source = "Language"
+translation = "Kieli"
+
+[messages.log-out]
+source = "Log out"
+translation = "Kirjaudu ulos"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Kirjaudu ulos…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Kirjaudutaanko ulos tailnetistä { $tailnet }? Sen osoitteet lakkaavat toimimasta täällä, kunnes kirjaudut uudelleen."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Kirjaudutaanko ulos?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (ei verkossa)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Etsi konetta nimen, käyttöjärjestelmän tai osoitteen perusteella"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Koneet · { $shown }/{ $total } vastaa hakua"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Koneet · { $online }/{ $total } verkossa"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Lisää toimintoja"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Uusi tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Vapaata paikallista porttia ei löytynyt."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Mikään kone ei vastaa hakua."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Tässä tailnetissä ei näy muita koneita."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Norjan bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "”{ $value }” ei ole porttinumero (1–65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Tämä tailnet ei reititä juuri nyt. Onko se keskeytetty?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Avaa { $url } selaimessa"
+
+[messages.open-log]
+source = "Open log"
+translation = "Avaa loki"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Avaa Etätyöpöytä"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Avaa Etätyöpöytä-yhteys kohteeseen { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Avaa asetuskansio"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Keskeytä kaikki"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Lopeta reititys muiden tailnetien kautta toistaiseksi"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Keskeytä tämä tailnet"
+
+[messages.polish]
+source = "Polish"
+translation = "Puola"
+
+[messages.port]
+source = "Port"
+translation = "Portti"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "esim. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Etätyöpöytä"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Portti { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Brasilian portugali"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Euroopan portugali"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Käytössä, ja korvaa yrityksesi asettama välityspalvelinskripti sovelluksen ollessa käynnissä"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Järjestelmän välityspalvelinasetus"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "”Käytössä” asettaa GNOMEn tai KDE:n välityspalvelinasetuksen, kun sovellus on käynnissä ja reitittää, ja palauttaa sen jälkeenpäin. Ota Firefoxissa käyttöön Asetukset > Verkkoasetukset > ”Käytä järjestelmän välityspalvelinasetuksia”."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "”Käytössä” asettaa välityspalvelimen verkkopalveluillesi sovelluksen ollessa käynnissä ja palauttaa sen jälkeenpäin. Jos Macisi vaatii tähän järjestelmänvalvojan salasanan, sitä kysytään reitityksen alkaessa ja sovelluksesta poistuttaessa."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "”Käytössä” ohjaa Windowsin tämän sovelluksen sääntöihin vain, kun sovellus on käynnissä ja reitittää, ja palauttaa kaiken ennalleen, kun se pysähtyy, keskeytetään, menettää yhteyden tai kaatuu."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Ei käytössä: määritän sovellukseni itse"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Käytössä (suositus)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Etätyöpöydän käynnistäminen epäonnistui: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Etätyöpöytä on sisäänrakennettuna vain Windowsissa."
+
+[messages.remove]
+source = "Remove"
+translation = "Poista"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Poista…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } kirjautuu ulos tailnetistä { $tailnet } ja unohtaa sen tällä tietokoneella. Voit lisätä sen myöhemmin uudelleen.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Poistetaanko tämä tailnet?"
+
+[messages.resume]
+source = "Resume"
+translation = "Jatka"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Jatka tätä tailnetiä"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Jatka reititystä muiden tailnetien kautta"
+
+[messages.revert]
+source = "Revert"
+translation = "Palauta"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Kumoa muutokset"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Romania"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Selviää kirjautumisen jälkeen"
+
+[messages.russian]
+source = "Russian"
+translation = "Venäjä"
+
+[messages.save]
+source = "Save"
+translation = "Tallenna"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Serbia, kyrillinen"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Asetukset: { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Asetukset tallennettu"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Kirjaudu sisään"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Kopioi linkki"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Liitä se selaimeen tai selainprofiiliin, jota käytät tälle tailnetille"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Selain avaa Tailscalen kirjautumissivun. Se voi avautua tämän ikkunan taakse.
+    
+    Kirjaudu sisään kyseisen tailnetin tililläsi ja palaa sitten tänne. Tailnetin verkkotunnus haetaan automaattisesti."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Kirjaudu uuteen tailnetiin"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Eikö selain avautunut, tai avautuiko väärä profiili?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Avaa kirjautumissivu uudelleen"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Latinalaisen Amerikan espanja"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Espanjan espanja"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Käynnistä { -app-name }, kun kirjaudun sisään
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ei käynnisty:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Yhdistetään"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Ei vielä verkkotunnusta"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Ei reititä"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Keskeytetty"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Ongelma"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Reitittää"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Kirjautunut ulos"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Odottaa kirjautumista"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Se jatkaa reititystä taustalla. Löydät sen ilmaisinalueelta."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Se jatkaa reititystä taustalla. Löydät sen valikkoriviltä."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } on yhä käynnissä
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Se jatkaa reititystä taustalla. Löydät sen ilmaisinalueelta; Windows saattaa piilottaa sen kellon vieressä olevan ^-nuolen alle."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Yhdistetään…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Ei vielä tailnetejä"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Keskeytetty"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Ongelma: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Reititetään { $count } tailnetin kautta
+       *[other] Reititetään { $count } tailnetin kautta
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Reititetään tailnetin { $tailnet } kautta"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Reititetään { $routing }/{ $count } tailnetin kautta
+       *[other] Reititetään { $routing }/{ $count } tailnetin kautta
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Ei kirjautunut"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Ruotsi"
+
+[messages.system-default]
+source = "System default"
+translation = "Järjestelmän oletus"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Asetukset"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnetit"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Nimi"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Näkyy tässä sovelluksessa ja ilmaisinalueen valikossa"
+
+[messages.test]
+source = "Test"
+translation = "Testaa"
+
+[messages.testing]
+source = "Testing…"
+translation = "Testataan…"
+
+[messages.thai]
+source = "Thai"
+translation = "Thai"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Lisää tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Avaa { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Lopeta"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Reititä muiden tailnetien kautta"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: kirjaudu sisään…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Vianmääritys"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Testaa verkko-osoite tai nimi:portti nähdäksesi, mikä tailnet välittää sen ja saako siihen yhteyden."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Turkki"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ukraina"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Sinulla on tallentamattomia muutoksia."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Vietnam"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Ohjaa portti edelleen, kun sovellus tarvitsee sitä"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Etätyöpöytä, SSH ja tietokantasovellukset saavat paikallisen portin, joka johtaa koneeseen."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Avaa sen koneet nimellä"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Osoitteet, kuten { $example }, toimivat selaimessa."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Kirjaudu toiseen tailnetiin"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Tailscalen kirjautumissivu avautuu selaimessa."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Pysy omassa tailnetissäsi ja avaa samalla koneita muissa. Tailscale-sovelluksesi toimii tavalliseen tapaan."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Käytä muiden tailnetien koneita"

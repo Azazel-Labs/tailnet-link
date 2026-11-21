@@ -80,7 +80,7 @@ pub fn enabled() -> bool {
 }
 #[cfg(not(any(windows, target_os = "macos", target_os = "linux")))]
 pub fn set(_: bool) -> Result<(), String> {
-    Err("start at login isn't supported on this system".into())
+    Err(crate::i18n::tr!("autostart-unsupported"))
 }
 
 fn remove_if_exists(p: PathBuf) -> Result<(), String> {

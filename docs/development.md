@@ -37,6 +37,8 @@ cargo build --release --locked                                  # release build
 cargo test --workspace --locked                                 # tests
 cargo clippy --workspace --all-targets --locked -- -D warnings  # strict lints
 cargo fmt --all                                                 # format
+cargo xtask translations check                                  # Fluent lint, coverage and reviews
+cargo xtask screenshots                                         # README screenshots
 ```
 
 The tests start a real libtailscale node (no sign-in needed). On Windows they also
@@ -86,9 +88,53 @@ code panics with "incoherent Windows version" when a node starts.
 | `src/tsnet.rs` | Safe wrapper over libtailscale's C API |
 | `src/config.rs` | Settings, the config folder and migration from the old name |
 | `src/icon.rs` | The app and tray icons, drawn in code |
+| `src/theme.rs`, `src/theme/` | Colours, widgets and the fonts each language needs |
+| `src/i18n.rs`, `src/i18n/` | Language selection, the `tr!` macro and system-locale detection |
+| `src/demo.rs` | Made-up tailnets for screenshots (`--features screenshots`) |
+| `locales/<code>/tailnet-link.ftl` | Fluent catalogs; `en` is the source |
+| `localization/` | Catalog validation shared by `build.rs` and xtask, and review records |
+| `docs/i18n/` | Localized READMEs |
+| `docs/images/` | Screenshots, the hero image and the GitHub social preview |
 | `tsbridge/` | Vendored libtailscale (Go) |
 | `packaging/` | Installer and package scripts per platform |
-| `xtask/` | Release tooling (`cargo xtask release …`) |
+| `xtask/` | Release, translation and screenshot tooling (`cargo xtask …`) |
+
+### Translations
+
+Every string in the interface comes from `locales/<code>/tailnet-link.ftl` through
+`tr!("message-id", …)`, which checks the ID against the English catalog at compile
+time. `build.rs` embeds every catalog and fails if one is missing an English
+message, has an unknown ID or adds a variable. The language follows the system
+unless one is picked in Settings, and switching applies immediately. Engine errors
+from libtailscale and the system stay in English.
+
+egui's bundled fonts cover Latin, Greek and Cyrillic. Thai is bundled in
+`assets/fonts/`; Chinese, Japanese and Korean use the operating system's fonts
+(`src/theme/system_fonts.rs`), so the binary doesn't grow by tens of megabytes.
+
+[translations.md](translations.md) has the conventions and the review workflow.
+
+### Screenshots
+
+The README screenshots come from the app itself, built with
+`--features screenshots`, which draws the fictional tailnets in `src/demo.rs`
+instead of starting the engine, the system proxy or the tray:
+
+```sh
+cargo xtask screenshots                  # docs/images/<view>.png
+cargo xtask screenshots --language fr    # docs/images/<view>.fr.png
+cargo xtask screenshots --render-only    # re-encode the last captures
+```
+
+Captures need a graphical session. Each run uses an empty settings folder under
+`target/`, so nothing from your own logins appears. Never put real tailnet names,
+hostnames or accounts in `src/demo.rs`.
+
+`docs/images/hero.svg` and `social-preview.png` come from `docs/images/src/hero.py`,
+which builds on the Azazel Labs card generator in the organisation's `.github`
+repository and converts all text to outlines; its docstring has the commands. The
+social preview has to be uploaded by hand under the repository's
+**Settings → General → Social preview**.
 
 ### libtailscale (`tsbridge/`)
 

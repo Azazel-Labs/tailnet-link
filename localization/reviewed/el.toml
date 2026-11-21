@@ -1,0 +1,893 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "ba10e9203df324105ed0da0f20afab57fea904f60c3400fd972da9f76fe324ae"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · τοπικός διακομιστής μεσολάβησης { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Προσθήκη προώθησης"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Δεν ήταν δυνατή η προσθήκη της προώθησης θύρας:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Προσθήκη tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Δεν ήταν δυνατή η προσθήκη tailnet:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Αφρικάανς"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Η εκκίνηση κατά τη σύνδεση δεν υποστηρίζεται σε αυτό το σύστημα."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Ακύρωση"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Καταλανικά"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: δεν είναι έγκυρη θύρα."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Πληκτρολογήστε ένα όνομα μηχανήματος ή μια διεύθυνση web."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+Το { $host } δρομολογείται μέσω { $tailnet }, αλλά η σύνδεση στη θύρα { $port } απέτυχε: { $error }
+    Ελέγξτε ότι το μηχάνημα είναι συνδεδεμένο και ότι κάτι ακούει σε αυτή τη θύρα."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Αυτό το tailnet μόλις εξαφανίστηκε."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Το { $host } δεν δρομολογείται από το { -app-name }: δεν τελειώνει στον τομέα κανενός tailnet που δρομολογεί αυτή τη στιγμή, οπότε πηγαίνει απευθείας (μέσω του κανονικού σας δικτύου και του δικού σας Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "Το { $tailnet } δεν εκτελείται."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "Το { $address } λειτουργεί: συνδέθηκε μέσω { $tailnet } σε { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "Το { $host } δρομολογείται μέσω { $tailnet }, αλλά η θύρα { $port } δεν απάντησε μέσα σε 10 δευτερόλεπτα."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Απλοποιημένα Κινέζικα"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Παραδοσιακά Κινέζικα"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Εκκαθάριση αναζήτησης"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Αντιγράφηκε: { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Ο σύνδεσμος σύνδεσης αντιγράφηκε"
+
+[messages.copy]
+source = "Copy"
+translation = "Αντιγραφή"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Αντιγραφή { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Τσέχικα"
+
+[messages.danish]
+source = "Danish"
+translation = "Δανικά"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Πρόβλημα"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Διαδρομές"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Αυτός ο υπολογιστής"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "Το «{ $domain }» περιέχει χαρακτήρες που δεν επιτρέπονται σε τομέα."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "Το { $domain } δρομολογείται και από το { $tailnet }· εκείνο υπερισχύει."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "Το «{ $domain }» δεν είναι τομέας· χρησιμοποιήστε κάτι σαν example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Τέλος"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Ολλανδικά"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Επεξεργασία προωθήσεων"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Μετονομασία ή προσθήκη τομέων…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Επεξεργασία: { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Αγγλικά"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Λεπτομέρειες στο { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Κάτι πήγε στραβά"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Επιπλέον τομείς (προαιρετικά)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Ο τομέας του ίδιου του tailnet δρομολογείται αυτόματα. Προσθέστε έναν ανά γραμμή."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Φινλανδικά"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Αδυναμία ακρόασης: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Αποκτήστε μια θύρα σε αυτόν τον υπολογιστή που οδηγεί στο { $host }. Ποια θύρα σε εκείνο το μηχάνημα;"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Προώθηση θύρας"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Κανένα tailnet με ενεργή δρομολόγηση δεν έχει αυτό το όνομα"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Μια θύρα επιλέγεται κατά την αποθήκευση"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Προώθηση θύρας: για εφαρμογές που αγνοούν τη ρύθμιση διακομιστή μεσολάβησης, όπως η Απομακρυσμένη επιφάνεια εργασίας ή ένα πρόγραμμα-πελάτης βάσης δεδομένων"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Η θύρα παραμένει ίδια. Θα τη βρείτε στις Ρυθμίσεις."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Ρυθμίστε την εφαρμογή σας σε αυτή τη διεύθυνση για πρόσβαση στο { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Η προώθηση θύρας είναι έτοιμη"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "μέσω { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Μία ανά γραμμή: LOCALPORT = host:port, ή auto = host:port για να επιλεγεί μια ελεύθερη θύρα. Το όνομα του μηχανήματος καθορίζει ποιο tailnet τη μεταφέρει. Για γρήγορη προσθήκη, χρησιμοποιήστε το κουμπί με το βύσμα δίπλα σε ένα μηχάνημα στην καρτέλα Tailnet."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Προωθήσεις θυρών"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Για εφαρμογές που αγνοούν τη ρύθμιση διακομιστή μεσολάβησης, όπως η Απομακρυσμένη επιφάνεια εργασίας, το SSH και τα προγράμματα-πελάτες βάσεων δεδομένων. Κάθε προώθηση είναι μια θύρα σε αυτόν τον υπολογιστή που οδηγεί σε ένα μηχάνημα ενός tailnet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Γραμμή { $line }: η τοπική θύρα { $port } χρησιμοποιείται δύο φορές."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Γραμμή { $line }: γράψτε LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Γραμμή { $line }: το «{ $value }» δεν είναι αριθμός θύρας (ούτε auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Γραμμή { $line }: το «{ $value }» πρέπει να έχει τη μορφή host:port."
+
+[messages.french]
+source = "French"
+translation = "Γαλλικά"
+
+[messages.general-heading]
+source = "General"
+translation = "Γενικά"
+
+[messages.german]
+source = "German"
+translation = "Γερμανικά"
+
+[messages.greek]
+source = "Greek"
+translation = "Ελληνικά"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Γίνεται σύνδεση με τα tailnet σας."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Ολοκληρώστε τη σύνδεση στο { $tailnet } στο πρόγραμμα περιήγησης."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Τίποτα δεν περνά από άλλα tailnet αυτή τη στιγμή. Το δικό σας δίκτυο και το tailnet σας λειτουργούν κανονικά."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Οι διευθύνσεις σε αυτά τα tailnet ανοίγουν στο πρόγραμμα περιήγησης. Όλα τα υπόλοιπα πηγαίνουν απευθείας."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Ανοίξτε το { $address } ή οποιαδήποτε άλλη διεύθυνση σε αυτά τα tailnet. Όλα τα υπόλοιπα πηγαίνουν απευθείας."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Συνδεθείτε στο { $tailnet } για πρόσβαση στα μηχανήματά του."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Εκκίνηση…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (μετά τη σύνδεση)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Ουγγρικά"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Ινδονησιακά"
+
+[messages.italian]
+source = "Italian"
+translation = "Ιταλικά"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Ιαπωνικά"
+
+[messages.korean]
+source = "Korean"
+translation = "Κορεάτικα"
+
+[messages.language]
+source = "Language"
+translation = "Γλώσσα"
+
+[messages.log-out]
+source = "Log out"
+translation = "Αποσύνδεση"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Αποσύνδεση…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Αποσύνδεση από το { $tailnet }; Οι διευθύνσεις του σταματούν να λειτουργούν εδώ μέχρι να συνδεθείτε ξανά."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Αποσύνδεση;"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (εκτός σύνδεσης)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Εύρεση μηχανήματος με όνομα, ΛΣ ή διεύθυνση"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Μηχανήματα · { $shown } από { $total } ταιριάζουν"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Μηχανήματα · { $online } από { $total } συνδεδεμένα"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Περισσότερες ενέργειες"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Νέο tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Δεν βρέθηκε ελεύθερη τοπική θύρα."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Κανένα μηχάνημα δεν ταιριάζει με την αναζήτησή σας."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Δεν είναι ορατά άλλα μηχανήματα σε αυτό το tailnet."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Νορβηγικά Μπόκμαλ"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "Το «{ $value }» δεν είναι αριθμός θύρας (1-65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Αυτό το tailnet δεν δρομολογεί αυτή τη στιγμή. Μήπως είναι σε παύση;"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Άνοιγμα του { $url } στο πρόγραμμα περιήγησης"
+
+[messages.open-log]
+source = "Open log"
+translation = "Άνοιγμα αρχείου καταγραφής"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Άνοιγμα Απομακρυσμένης επιφάνειας εργασίας"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Άνοιγμα Απομακρυσμένης επιφάνειας εργασίας προς { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Άνοιγμα φακέλου ρυθμίσεων"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Παύση όλων"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Προσωρινή διακοπή της δρομολόγησης μέσω άλλων tailnet"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Παύση αυτού του tailnet"
+
+[messages.polish]
+source = "Polish"
+translation = "Πολωνικά"
+
+[messages.port]
+source = "Port"
+translation = "Θύρα"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "π.χ. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Απομακρυσμένη επιφάνεια εργασίας"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Θύρα { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Πορτογαλικά Βραζιλίας"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Ευρωπαϊκά Πορτογαλικά"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Ενεργή, με αντικατάσταση του σεναρίου διακομιστή μεσολάβησης της εταιρείας σας όσο εκτελείται"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Ρύθμιση διακομιστή μεσολάβησης συστήματος"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "Η επιλογή «Ενεργή» ορίζει τη ρύθμιση διακομιστή μεσολάβησης του GNOME ή του KDE όσο η εφαρμογή εκτελείται και δρομολογεί, και την επαναφέρει μετά. Στο Firefox, ενεργοποιήστε: Ρυθμίσεις > Ρυθμίσεις δικτύου > «Χρήση ρυθμίσεων διακομιστή μεσολάβησης συστήματος»."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "Η επιλογή «Ενεργή» ορίζει τον διακομιστή μεσολάβησης για τις υπηρεσίες δικτύου σας όσο εκτελείται η εφαρμογή και τον επαναφέρει μετά. Αν το Mac σας χρειάζεται κωδικό διαχειριστή γι' αυτό, θα σας ζητηθεί κατά την έναρξη της δρομολόγησης και κατά την έξοδο."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "Η επιλογή «Ενεργή» κατευθύνει τα Windows στους κανόνες αυτής της εφαρμογής μόνο όσο εκτελείται και δρομολογεί, και επαναφέρει τα πάντα όταν σταματά, τίθεται σε παύση, αποσυνδέεται ή καταρρέει."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Ανενεργή: θα ρυθμίσω τις εφαρμογές μου χειροκίνητα"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Ενεργή (συνιστάται)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Δεν ήταν δυνατή η εκκίνηση της Απομακρυσμένης επιφάνειας εργασίας: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Η Απομακρυσμένη επιφάνεια εργασίας είναι ενσωματωμένη μόνο στα Windows."
+
+[messages.remove]
+source = "Remove"
+translation = "Κατάργηση"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Κατάργηση…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Το { -app-name } αποσυνδέεται από το { $tailnet } και το ξεχνά σε αυτόν τον υπολογιστή. Μπορείτε να το προσθέσετε ξανά αργότερα.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Κατάργηση αυτού του tailnet;"
+
+[messages.resume]
+source = "Resume"
+translation = "Συνέχιση"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Συνέχιση αυτού του tailnet"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Επανέναρξη της δρομολόγησης μέσω άλλων tailnet"
+
+[messages.revert]
+source = "Revert"
+translation = "Επαναφορά"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Αναίρεση των αλλαγών"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Ρουμανικά"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Θα εντοπιστούν μετά τη σύνδεση"
+
+[messages.russian]
+source = "Russian"
+translation = "Ρωσικά"
+
+[messages.save]
+source = "Save"
+translation = "Αποθήκευση"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Σερβικά, κυριλλικά"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Ρυθμίσεις στο { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Οι ρυθμίσεις αποθηκεύτηκαν"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Σύνδεση"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Αντιγραφή συνδέσμου"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Επικολλήστε τον στο πρόγραμμα περιήγησης ή στο προφίλ που χρησιμοποιείτε για αυτό το tailnet"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Το πρόγραμμα περιήγησης ανοίγει τη σελίδα σύνδεσης του Tailscale. Μπορεί να ανοίξει πίσω από αυτό το παράθυρο.
+    
+    Συνδεθείτε με τον λογαριασμό σας για εκείνο το tailnet και, στη συνέχεια, επιστρέψτε εδώ. Ο τομέας του εντοπίζεται αυτόματα."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Σύνδεση στο νέο tailnet"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Δεν άνοιξε το πρόγραμμα περιήγησης ή άνοιξε σε λάθος προφίλ;"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Ξανά άνοιγμα της σελίδας σύνδεσης"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Ισπανικά Λατινικής Αμερικής"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Ισπανικά από Ισπανία"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Εκκίνηση του { -app-name } κατά τη σύνδεσή μου
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Το { -app-name } δεν μπορεί να ξεκινήσει:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Γίνεται σύνδεση"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Χωρίς τομέα ακόμη"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Χωρίς δρομολόγηση"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Σε παύση"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Πρόβλημα"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Δρομολόγηση"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Αποσυνδεδεμένο"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Αναμονή για σύνδεση"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Συνεχίζει τη δρομολόγηση στο παρασκήνιο. Θα το βρείτε στην περιοχή ειδοποιήσεων του συστήματος."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Συνεχίζει τη δρομολόγηση στο παρασκήνιο. Θα το βρείτε στη γραμμή μενού."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Το { -app-name } εξακολουθεί να εκτελείται
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Συνεχίζει τη δρομολόγηση στο παρασκήνιο. Θα το βρείτε στην περιοχή ειδοποιήσεων· τα Windows μπορεί να το κρύψουν κάτω από το βέλος ^ δίπλα στο ρολόι."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Γίνεται σύνδεση…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Κανένα tailnet ακόμη"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Σε παύση"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Πρόβλημα: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Δρομολόγηση μέσω { $count } tailnet
+       *[other] Δρομολόγηση μέσω { $count } tailnet
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Δρομολόγηση μέσω { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Δρομολόγηση μέσω { $routing } από { $count } tailnet
+       *[other] Δρομολόγηση μέσω { $routing } από { $count } tailnet
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Δεν έχετε συνδεθεί"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Σουηδικά"
+
+[messages.system-default]
+source = "System default"
+translation = "Προεπιλογή συστήματος"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Ρυθμίσεις"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnet"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Όνομα"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Εμφανίζεται σε αυτή την εφαρμογή και στο μενού της περιοχής ειδοποιήσεων"
+
+[messages.test]
+source = "Test"
+translation = "Δοκιμή"
+
+[messages.testing]
+source = "Testing…"
+translation = "Δοκιμή…"
+
+[messages.thai]
+source = "Thai"
+translation = "Ταϊλανδικά"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Προσθήκη tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Άνοιγμα του { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Έξοδος"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Δρομολόγηση μέσω άλλων tailnet"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: σύνδεση…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Αντιμετώπιση προβλημάτων"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Δοκιμάστε μια διεύθυνση web ή ένα όνομα:θύρα για να δείτε ποιο tailnet τη μεταφέρει και αν συνδέεται."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Τουρκικά"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ουκρανικά"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Έχετε μη αποθηκευμένες αλλαγές."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Βιετναμικά"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Προωθήστε μια θύρα όταν τη χρειάζεται μια εφαρμογή"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Η Απομακρυσμένη επιφάνεια εργασίας, το SSH και οι εφαρμογές βάσεων δεδομένων αποκτούν μια τοπική θύρα που οδηγεί σε ένα μηχάνημα."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Ανοίξτε τα μηχανήματά του με το όνομά τους"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Διευθύνσεις όπως { $example } λειτουργούν στο πρόγραμμα περιήγησης."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Συνδεθείτε σε άλλο tailnet"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Η σελίδα σύνδεσης του Tailscale ανοίγει στο πρόγραμμα περιήγησης."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Μείνετε στο δικό σας tailnet και ανοίξτε ταυτόχρονα μηχανήματα σε άλλα. Η εφαρμογή Tailscale συνεχίζει να λειτουργεί κανονικά."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Πρόσβαση σε μηχανήματα άλλων tailnet"

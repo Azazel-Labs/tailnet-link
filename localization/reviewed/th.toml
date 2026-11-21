@@ -1,0 +1,891 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "c380e0841a86505ba58735b9708dcc793bac8c03af58fdc1d7a81e9f28e03389"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · พร็อกซีในเครื่อง { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "เพิ่มการส่งต่อ"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+เพิ่มการส่งต่อพอร์ตไม่ได้:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "เพิ่ม tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+เพิ่ม tailnet ไม่ได้:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "แอฟริกานส์"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "ระบบนี้ไม่รองรับการเริ่มเมื่อเข้าสู่ระบบ"
+
+[messages.cancel]
+source = "Cancel"
+translation = "ยกเลิก"
+
+[messages.catalan]
+source = "Catalan"
+translation = "คาตาลัน"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: พอร์ตไม่ถูกต้อง"
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "พิมพ์ชื่อเครื่องหรือที่อยู่เว็บ"
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } ถูกกำหนดเส้นทางผ่าน { $tailnet } แต่เชื่อมต่อกับพอร์ต { $port } ไม่สำเร็จ: { $error }
+    ตรวจสอบว่าเครื่องออนไลน์อยู่และมีโปรแกรมรอรับการเชื่อมต่อที่พอร์ตนั้น"""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "tailnet นั้นเพิ่งหายไป"
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ไม่ได้กำหนดเส้นทางให้ { $host } เพราะไม่ได้ลงท้ายด้วยโดเมนของ tailnet ใดที่กำลังกำหนดเส้นทางอยู่ จึงไปโดยตรง (ผ่านเครือข่ายปกติและ Tailscale ของคุณเอง)
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } ไม่ได้ทำงานอยู่"
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } ใช้งานได้: เชื่อมต่อผ่าน { $tailnet } ใน { $ms } ms"
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } ถูกกำหนดเส้นทางผ่าน { $tailnet } แต่พอร์ต { $port } ไม่ตอบสนองภายใน 10 วินาที"
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "จีนตัวย่อ"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "จีนตัวเต็ม"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "ล้างการค้นหา"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "คัดลอก { $address } แล้ว"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "คัดลอกลิงก์ลงชื่อเข้าใช้แล้ว"
+
+[messages.copy]
+source = "Copy"
+translation = "คัดลอก"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "คัดลอก { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "เช็ก"
+
+[messages.danish]
+source = "Danish"
+translation = "เดนมาร์ก"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "ปัญหา"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "เส้นทาง"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "คอมพิวเตอร์เครื่องนี้"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = '"{ $domain }" มีอักขระที่ใช้ในโดเมนไม่ได้'
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $tailnet } ก็กำหนดเส้นทาง { $domain } ด้วย และจะใช้ tailnet นั้น"
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = '"{ $domain }" ไม่ใช่โดเมน ให้ใช้รูปแบบอย่าง example.ts.net'
+
+[messages.done]
+source = "Done"
+translation = "เสร็จสิ้น"
+
+[messages.dutch]
+source = "Dutch"
+translation = "ดัตช์"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "แก้ไขการส่งต่อ"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "เปลี่ยนชื่อหรือเพิ่มโดเมน…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "แก้ไข { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "อังกฤษ"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "ดูรายละเอียดได้ใน { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "เกิดข้อผิดพลาด"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "โดเมนเพิ่มเติม (ไม่บังคับ)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "โดเมนของ tailnet เองจะถูกกำหนดเส้นทางโดยอัตโนมัติ เพิ่มบรรทัดละหนึ่งโดเมน"
+
+[messages.finnish]
+source = "Finnish"
+translation = "ฟินแลนด์"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "รอรับการเชื่อมต่อไม่ได้: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "รับพอร์ตบนคอมพิวเตอร์เครื่องนี้ที่นำไปยัง { $host } จะใช้พอร์ตใดบนเครื่องนั้น"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "ส่งต่อพอร์ต"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "ไม่มี tailnet ที่กำลังกำหนดเส้นทางซึ่งใช้ชื่อนี้"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "จะเลือกพอร์ตเมื่อคุณบันทึก"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "ส่งต่อพอร์ต: สำหรับแอปที่ไม่ทำตามการตั้งค่าพร็อกซี เช่น เดสก์ท็อประยะไกลหรือไคลเอ็นต์ฐานข้อมูล"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "พอร์ตจะคงเดิม คุณดูได้ในการตั้งค่า"
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "ตั้งค่าแอปของคุณให้ใช้ที่อยู่นี้เพื่อเข้าถึง { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "การส่งต่อพอร์ตพร้อมแล้ว"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "ผ่าน { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "บรรทัดละหนึ่งรายการ: LOCALPORT = host:port หรือ auto = host:port เพื่อให้เลือกพอร์ตว่างให้ ชื่อโฮสต์เป็นตัวกำหนดว่า tailnet ใดรับส่งข้อมูล หากต้องการเพิ่มอย่างรวดเร็ว ให้ใช้ปุ่มปลั๊กที่เครื่องในแท็บ Tailnet"
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "การส่งต่อพอร์ต"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "สำหรับแอปที่ไม่ทำตามการตั้งค่าพร็อกซี เช่น เดสก์ท็อประยะไกล SSH และไคลเอ็นต์ฐานข้อมูล การส่งต่อแต่ละรายการคือพอร์ตบนคอมพิวเตอร์เครื่องนี้ที่นำไปยังเครื่องใน tailnet"
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "บรรทัด { $line }: พอร์ตในเครื่อง { $port } ถูกใช้สองครั้ง"
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "บรรทัด { $line }: เขียนเป็น LOCALPORT = host:port"
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = 'บรรทัด { $line }: "{ $value }" ไม่ใช่หมายเลขพอร์ต (หรือ auto)'
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = 'บรรทัด { $line }: "{ $value }" ควรเป็น host:port'
+
+[messages.french]
+source = "French"
+translation = "ฝรั่งเศส"
+
+[messages.general-heading]
+source = "General"
+translation = "ทั่วไป"
+
+[messages.german]
+source = "German"
+translation = "เยอรมัน"
+
+[messages.greek]
+source = "Greek"
+translation = "กรีก"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "กำลังเชื่อมต่อกับ tailnet ของคุณ"
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "ลงชื่อเข้าใช้ { $tailnet } ในเบราว์เซอร์ให้เสร็จ"
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "ขณะนี้ไม่มีข้อมูลใดผ่าน tailnet อื่น เครือข่ายและ tailnet ของคุณเองยังทำงานตามปกติ"
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "ที่อยู่ใน tailnet เหล่านี้เปิดได้ในเบราว์เซอร์ ส่วนการเชื่อมต่ออื่นทั้งหมดจะไปโดยตรง"
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "เปิด { $address } หรือที่อยู่อื่นใดใน tailnet เหล่านี้ได้ ส่วนการเชื่อมต่ออื่นทั้งหมดจะไปโดยตรง"
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "ลงชื่อเข้าใช้ { $tailnet } เพื่อเข้าถึงเครื่องในนั้น"
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "กำลังเริ่ม…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (หลังจากลงชื่อเข้าใช้)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "ฮังการี"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "อินโดนีเซีย"
+
+[messages.italian]
+source = "Italian"
+translation = "อิตาลี"
+
+[messages.japanese]
+source = "Japanese"
+translation = "ญี่ปุ่น"
+
+[messages.korean]
+source = "Korean"
+translation = "เกาหลี"
+
+[messages.language]
+source = "Language"
+translation = "ภาษา"
+
+[messages.log-out]
+source = "Log out"
+translation = "ออกจากระบบ"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "ออกจากระบบ…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "ออกจากระบบ { $tailnet } ใช่ไหม ที่อยู่ของ tailnet นี้จะใช้ที่นี่ไม่ได้จนกว่าคุณจะลงชื่อเข้าใช้อีกครั้ง"
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "ออกจากระบบใช่ไหม"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (ออฟไลน์)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "ค้นหาเครื่องตามชื่อ ระบบปฏิบัติการ หรือที่อยู่"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "เครื่อง · ตรงกัน { $shown } จาก { $total }"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "เครื่อง · ออนไลน์ { $online } จาก { $total }"
+
+[messages.more-actions]
+source = "More actions"
+translation = "การดำเนินการเพิ่มเติม"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "tailnet ใหม่"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "ไม่พบพอร์ตในเครื่องที่ว่างอยู่"
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "ไม่มีเครื่องที่ตรงกับการค้นหา"
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "ไม่เห็นเครื่องอื่นใน tailnet นี้"
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "นอร์เวย์บุคมอล"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = '"{ $value }" ไม่ใช่หมายเลขพอร์ต (1-65535)'
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "tailnet นี้ไม่ได้กำหนดเส้นทางอยู่ในขณะนี้ หยุดชั่วคราวอยู่หรือเปล่า"
+
+[messages.ok]
+source = "OK"
+translation = "ตกลง"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "เปิด { $url } ในเบราว์เซอร์"
+
+[messages.open-log]
+source = "Open log"
+translation = "เปิดไฟล์บันทึก"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "เปิดเดสก์ท็อประยะไกล"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "เปิดเดสก์ท็อประยะไกลไปยัง { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "เปิดโฟลเดอร์การตั้งค่า"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "หยุดทั้งหมดชั่วคราว"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "หยุดกำหนดเส้นทางผ่าน tailnet อื่นไว้ก่อน"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "หยุด tailnet นี้ชั่วคราว"
+
+[messages.polish]
+source = "Polish"
+translation = "โปแลนด์"
+
+[messages.port]
+source = "Port"
+translation = "พอร์ต"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "เช่น 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "เดสก์ท็อประยะไกล"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "พอร์ต { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "โปรตุเกสแบบบราซิล"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "โปรตุเกสแบบโปรตุเกส"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "เปิด และแทนที่สคริปต์พร็อกซีที่บริษัทของคุณตั้งไว้ขณะทำงาน"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "การตั้งค่าพร็อกซีของระบบ"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = '"เปิด" จะตั้งค่าพร็อกซีของ GNOME หรือ KDE ขณะที่แอปทำงานและกำหนดเส้นทางอยู่ และคืนค่าเดิมหลังจากนั้น ใน Firefox ให้เปิด การตั้งค่า > การตั้งค่าเครือข่าย > "ใช้การตั้งค่าพร็อกซีของระบบ"'
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = '"เปิด" จะตั้งค่าพร็อกซีสำหรับบริการเครือข่ายของคุณขณะที่แอปทำงาน และคืนค่าเดิมหลังจากนั้น หาก Mac ของคุณต้องใช้รหัสผ่านผู้ดูแลระบบในการนี้ ระบบจะขอเมื่อเริ่มกำหนดเส้นทางและเมื่อคุณออกจากแอป'
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = '"เปิด" จะชี้ Windows ไปยังกฎของแอปนี้เฉพาะขณะที่แอปทำงานและกำหนดเส้นทางอยู่ และจะคืนค่าเดิมเมื่อแอปหยุด หยุดชั่วคราว ตัดการเชื่อมต่อ หรือขัดข้อง'
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "ปิด: ฉันจะตั้งค่าแอปต่างๆ เอง"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "เปิด (แนะนำ)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "เริ่มเดสก์ท็อประยะไกลไม่ได้: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "เดสก์ท็อประยะไกลมีในตัวเฉพาะบน Windows"
+
+[messages.remove]
+source = "Remove"
+translation = "นำออก"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "นำออก…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } จะออกจากระบบ { $tailnet } และลืม tailnet นี้บนคอมพิวเตอร์เครื่องนี้ คุณเพิ่มกลับได้ภายหลัง
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "นำ tailnet นี้ออกใช่ไหม"
+
+[messages.resume]
+source = "Resume"
+translation = "ทำต่อ"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "ใช้ tailnet นี้ต่อ"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "กลับมากำหนดเส้นทางผ่าน tailnet อื่นอีกครั้ง"
+
+[messages.revert]
+source = "Revert"
+translation = "ย้อนกลับ"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "เลิกทำการเปลี่ยนแปลง"
+
+[messages.romanian]
+source = "Romanian"
+translation = "โรมาเนีย"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "จะพบหลังจากลงชื่อเข้าใช้"
+
+[messages.russian]
+source = "Russian"
+translation = "รัสเซีย"
+
+[messages.save]
+source = "Save"
+translation = "บันทึก"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "เซอร์เบีย ซีริลลิก"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "การตั้งค่าอยู่ใน { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "บันทึกการตั้งค่าแล้ว"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "ลงชื่อเข้าใช้"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "คัดลอกลิงก์"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "วางลงในเบราว์เซอร์หรือโปรไฟล์เบราว์เซอร์ที่คุณใช้กับ tailnet นี้"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+เบราว์เซอร์กำลังเปิดหน้าลงชื่อเข้าใช้ของ Tailscale ซึ่งอาจเปิดอยู่หลังหน้าต่างนี้
+    
+    ลงชื่อเข้าใช้ด้วยบัญชีของคุณสำหรับ tailnet นั้น แล้วกลับมาที่นี่ ระบบจะตรวจหาโดเมนให้โดยอัตโนมัติ"""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "ลงชื่อเข้าใช้ tailnet ใหม่"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "เบราว์เซอร์ไม่เปิด หรือเปิดผิดโปรไฟล์ใช่ไหม"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "เปิดหน้าลงชื่อเข้าใช้อีกครั้ง"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "สเปนแบบลาตินอเมริกา"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "สเปนแบบสเปน"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+เริ่ม { -app-name } เมื่อฉันเข้าสู่ระบบ
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } เริ่มทำงานไม่ได้:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "กำลังเชื่อมต่อ"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "ยังไม่มีโดเมน"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "ไม่ได้กำหนดเส้นทาง"
+
+[messages.state-paused]
+source = "Paused"
+translation = "หยุดชั่วคราว"
+
+[messages.state-problem]
+source = "Problem"
+translation = "มีปัญหา"
+
+[messages.state-routing]
+source = "Routing"
+translation = "กำลังกำหนดเส้นทาง"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "ออกจากระบบแล้ว"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "รอการลงชื่อเข้าใช้"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "แอปยังกำหนดเส้นทางอยู่เบื้องหลัง ดูได้ในถาดระบบ"
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "แอปยังกำหนดเส้นทางอยู่เบื้องหลัง ดูได้ในแถบเมนู"
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ยังทำงานอยู่
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "แอปยังกำหนดเส้นทางอยู่เบื้องหลัง ดูได้ในถาดระบบ ซึ่ง Windows อาจซ่อนไว้ใต้ลูกศร ^ ข้างนาฬิกา"
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "กำลังเชื่อมต่อ…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "ยังไม่มี tailnet"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "หยุดชั่วคราว"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "ปัญหา: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+       *[other] กำหนดเส้นทางผ่าน { $count } tailnet
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "กำหนดเส้นทางผ่าน { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+       *[other] กำหนดเส้นทางผ่าน { $routing } จาก { $count } tailnet
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "ยังไม่ได้ลงชื่อเข้าใช้"
+
+[messages.swedish]
+source = "Swedish"
+translation = "สวีเดน"
+
+[messages.system-default]
+source = "System default"
+translation = "ค่าเริ่มต้นของระบบ"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "การตั้งค่า"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnet"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "ชื่อ"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "แสดงในแอปนี้และเมนูถาด"
+
+[messages.test]
+source = "Test"
+translation = "ทดสอบ"
+
+[messages.testing]
+source = "Testing…"
+translation = "กำลังทดสอบ…"
+
+[messages.thai]
+source = "Thai"
+translation = "ไทย"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "เพิ่ม tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+เปิด { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "ออก"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "กำหนดเส้นทางผ่าน tailnet อื่น"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: ลงชื่อเข้าใช้…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "การแก้ไขปัญหา"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "ทดสอบที่อยู่เว็บหรือ ชื่อ:พอร์ต เพื่อดูว่า tailnet ใดรับส่งข้อมูลและเชื่อมต่อได้หรือไม่"
+
+[messages.turkish]
+source = "Turkish"
+translation = "ตุรกี"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "ยูเครน"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก"
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "เวียดนาม"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "ส่งต่อพอร์ตเมื่อแอปต้องใช้"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "เดสก์ท็อประยะไกล SSH และแอปฐานข้อมูลจะได้พอร์ตในเครื่องที่นำไปยังเครื่องปลายทาง"
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "เปิดเครื่องต่างๆ ด้วยชื่อ"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "ที่อยู่อย่าง { $example } ใช้งานได้ในเบราว์เซอร์"
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "ลงชื่อเข้าใช้ tailnet อื่น"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "หน้าลงชื่อเข้าใช้ของ Tailscale จะเปิดในเบราว์เซอร์"
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "อยู่ใน tailnet ของคุณเองและเปิดเครื่องใน tailnet อื่นได้ในเวลาเดียวกัน แอป Tailscale ของคุณยังทำงานตามปกติ"
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "เข้าถึงเครื่องใน tailnet อื่น"

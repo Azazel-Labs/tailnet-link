@@ -7,6 +7,9 @@
 
 use std::{env, path::PathBuf, process::Command};
 
+#[path = "localization/catalog.rs"]
+mod catalog;
+
 fn var(name: &str) -> String {
     env::var(name).unwrap_or_else(|_| panic!("Cargo sets {name} for build scripts"))
 }
@@ -16,6 +19,18 @@ fn main() {
     println!("cargo:rerun-if-env-changed=GO");
 
     let out = PathBuf::from(var("OUT_DIR"));
+
+    // Validate the Fluent catalogs and list them for src/i18n.rs.
+    println!("cargo:rerun-if-changed=locales");
+    println!("cargo:rerun-if-changed=i18n.toml");
+    println!("cargo:rerun-if-changed=localization/catalog.rs");
+    let catalogs = catalog::load(std::path::Path::new("locales")).expect("Invalid translation catalogs");
+    let languages = format!(
+        "static LANGUAGES: &[&str] = &{:?};
+",
+        catalogs.keys().collect::<Vec<_>>()
+    );
+    std::fs::write(out.join("translations.rs"), languages).expect("Write the language list");
     let target = var("TARGET");
     let target_os = var("CARGO_CFG_TARGET_OS");
     let target_arch = var("CARGO_CFG_TARGET_ARCH");

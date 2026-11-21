@@ -15,6 +15,7 @@ use tray_icon::{TrayIcon, TrayIconBuilder, TrayIconEvent};
 
 use crate::config::{self, forwards_text, parse_domains, parse_forwards};
 use crate::core::{Core, ForwardStatus, Machine, Status, TailnetStatus};
+use crate::i18n::{self, tr};
 use crate::icon;
 use crate::sync::lock;
 use crate::theme::{self, Tone, icons, muted, with_icon};
@@ -73,18 +74,22 @@ enum Done {
     Check(Result<String, String>),
 }
 
-/// Common ports offered when forwarding to a machine.
+/// Common ports offered when forwarding to a machine. Only Remote Desktop's
+/// name is translated (see `preset_name`); the others are product names.
 const PORT_PRESETS: [(&str, u16); 6] =
     [("Remote Desktop", 3389), ("SSH", 22), ("VNC", 5900), ("PostgreSQL", 5432), ("MySQL", 3306), ("SQL Server", 1433)];
 
 /// How long a toast ("Copied …") stays up.
 const TOAST_FOR: std::time::Duration = std::time::Duration::from_millis(1800);
 
-const SYS_LABELS: [&str; 3] = [
-    "On (recommended)",
-    "On, and replace a proxy script set by your company while running",
-    "Off: I'll set up my apps myself",
-];
+fn preset_name(name: &str, port: u16) -> String {
+    if port == 3389 { tr!("port-preset-remote-desktop") } else { name.to_owned() }
+}
+
+/// The system proxy choices, in the order of `SYS_VALUES`.
+fn sys_labels() -> [String; 3] {
+    [tr!("proxy-on"), tr!("proxy-force"), tr!("proxy-off")]
+}
 const SYS_VALUES: [&str; 3] = ["on", "force", "off"];
 
 pub struct Gui {
@@ -97,6 +102,8 @@ pub struct Gui {
     forwards: String,
     sys_mode: usize,
     autostart: bool,
+    /// The language setting: a catalog code, or "auto". Applied as soon as it's picked.
+    language: String,
     // "Test a name or address" (Settings)
     check_input: String,
     check_result: Option<Result<String, String>>,
@@ -123,7 +130,8 @@ impl Gui {
     /// `start_hidden`: launched at login (--background): stay in the tray.
     pub fn new(cc: &eframe::CreationContext<'_>, core: Arc<Core>, start_hidden: bool) -> Gui {
         let ctx = cc.egui_ctx.clone();
-        theme::apply(&ctx);
+        let cfg = core.config();
+        theme::apply(&ctx, i18n::set_language(&cfg.language));
 
         // Background changes (status, tray clicks, second launch) wake the UI.
         let c2 = ctx.clone();
@@ -159,7 +167,6 @@ impl Gui {
         #[cfg(target_os = "linux")]
         linux_tray::spawn(core.clone(), actions.clone());
 
-        let cfg = core.config();
         let (done_tx, done_rx) = channel();
 
         // Start the engine in the background (starting tailnets takes a moment).
@@ -169,7 +176,7 @@ impl Gui {
                 let r = core2.start();
                 let _ = tx2.send(match r {
                     Ok(()) => Done::Started,
-                    Err(e) => Done::Error(format!("Tailnet Link can't start:\n{e}")),
+                    Err(e) => Done::Error(tr!("start-failed", error = e)),
                 });
                 c6.request_repaint();
             });
@@ -191,6 +198,7 @@ impl Gui {
             forwards: forwards_text(&cfg.forwards),
             sys_mode: SYS_VALUES.iter().position(|v| *v == cfg.system_proxy).unwrap_or(0),
             autostart: crate::autostart::enabled(),
+            language: cfg.language.clone(),
             check_input: String::new(),
             check_result: None,
             checking: false,
@@ -272,9 +280,10 @@ impl Gui {
         self.toast = Some((text.into(), std::time::Instant::now()));
     }
 
-    fn copy(&mut self, ctx: &egui::Context, text: &str, what: &str) {
-        ctx.copy_text(text.to_owned());
-        self.toast(format!("Copied {what}"));
+    /// Copies an address and says so.
+    fn copy(&mut self, ctx: &egui::Context, address: &str) {
+        ctx.copy_text(address.to_owned());
+        self.toast(tr!("copied-address", address = address));
     }
 
     /// The Settings tab has edits that aren't saved yet.
@@ -309,7 +318,7 @@ impl Gui {
                 }
                 self.dialog = Dialog::ForwardAdded { local, target };
             }
-            Err(e) => self.dialog = Dialog::Error(format!("Couldn't add the port forward:\n{e}")),
+            Err(e) => self.dialog = Dialog::Error(tr!("add-forward-failed", error = e)),
         }
     }
 
@@ -330,17 +339,11 @@ impl Gui {
         let (core, tx, c) = (self.core.clone(), self.done_tx.clone(), ctx.clone());
         std::thread::spawn(move || {
             if let Err(e) = core.add_tailnet() {
-                let _ = tx.send(Done::Error(format!("Couldn't add a tailnet:\n{e}")));
+                let _ = tx.send(Done::Error(tr!("add-tailnet-failed", error = e)));
                 c.request_repaint();
             }
         });
-        self.dialog = Dialog::Info(
-            "Sign in to the new tailnet".into(),
-            "Your browser is opening Tailscale's sign-in page. It may open behind this window.\n\n\
-             Sign in with your account for that tailnet, then come back here. Its domain is \
-             picked up automatically."
-                .into(),
-        );
+        self.dialog = Dialog::Info(tr!("sign-in-dialog-title"), tr!("sign-in-dialog-text"));
     }
 }
 
@@ -468,11 +471,11 @@ impl Gui {
                             ui.spacing_mut().item_spacing.x = 2.0;
                             // Right to left: Settings is added first so it sits on the right.
                             for (tab, symbol, label) in [
-                                (Tab::Settings, icons::GEAR_SIX, "Settings"),
-                                (Tab::Tailnets, icons::SHARE_NETWORK, "Tailnets"),
+                                (Tab::Settings, icons::GEAR_SIX, tr!("tab-settings")),
+                                (Tab::Tailnets, icons::SHARE_NETWORK, tr!("tab-tailnets")),
                             ] {
                                 let selected = self.tab == tab;
-                                let text = RichText::new(with_icon(symbol, label)).color(if selected {
+                                let text = RichText::new(with_icon(symbol, &label)).color(if selected {
                                     theme::STRONG
                                 } else {
                                     theme::MUTED
@@ -503,10 +506,11 @@ impl Gui {
             .show(ui, |ui| {
                 ui.horizontal(|ui| {
                     ui.label(RichText::new(icons::INFO).size(16.0).color(theme::ACCENT));
-                    ui.label("You have unsaved changes.");
+                    ui.label(tr!("unsaved-changes"));
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                        save |= ui.add(theme::primary_button("Save")).on_hover_text("Ctrl+S").clicked();
-                        if ui.add(theme::secondary_button("Revert")).on_hover_text("Undo the changes").clicked() {
+                        save |= ui.add(theme::primary_button(tr!("save"))).on_hover_text("Ctrl+S").clicked();
+                        if ui.add(theme::secondary_button(tr!("revert"))).on_hover_text(tr!("revert-tooltip")).clicked()
+                        {
                             self.revert_settings();
                         }
                     });
@@ -561,6 +565,15 @@ fn demo() -> bool {
     }
 }
 
+/// Where the settings live, as Troubleshooting shows it. Screenshots show a made-up user's folder.
+fn settings_dir_text() -> String {
+    if demo() {
+        r"C:\Users\ana\AppData\Roaming\Tailnet Link".to_owned()
+    } else {
+        config::config_dir().display().to_string()
+    }
+}
+
 /// Remote Desktop to 127.0.0.1:port (Windows only).
 fn remote_desktop(local: u16) -> Result<(), String> {
     #[cfg(windows)]
@@ -569,12 +582,12 @@ fn remote_desktop(local: u16) -> Result<(), String> {
             .arg(format!("/v:127.0.0.1:{local}"))
             .spawn()
             .map(|_| ())
-            .map_err(|e| format!("couldn't start Remote Desktop: {e}"))
+            .map_err(|e| tr!("remote-desktop-failed", error = e.to_string()))
     }
     #[cfg(not(windows))]
     {
         let _ = local;
-        Err("Remote Desktop is only built in on Windows".into())
+        Err(tr!("remote-desktop-windows-only"))
     }
 }
 
@@ -610,43 +623,39 @@ fn status_tone(s: &Status) -> Tone {
 }
 
 /// One tailnet's state as a short label.
-fn tailnet_state(t: &TailnetStatus) -> (Tone, &'static str) {
+fn tailnet_state(t: &TailnetStatus) -> (Tone, String) {
     if t.needs_login() && t.login_wait {
-        (Tone::Warn, "Waiting for sign-in")
+        (Tone::Warn, tr!("state-waiting-sign-in"))
     } else if t.needs_login() {
-        (Tone::Warn, "Signed out")
+        (Tone::Warn, tr!("state-signed-out"))
     } else if !t.problem.is_empty() && !t.connected {
-        (Tone::Bad, "Problem")
+        (Tone::Bad, tr!("state-problem"))
     } else if !t.connected {
-        (Tone::Idle, "Connecting")
+        (Tone::Idle, tr!("state-connecting"))
     } else if !t.enabled {
-        (Tone::Idle, "Paused")
+        (Tone::Idle, tr!("state-paused"))
     } else if t.domains.is_empty() {
-        (Tone::Idle, "No domain yet")
+        (Tone::Idle, tr!("state-no-domain"))
     } else if !t.routing {
-        (Tone::Idle, "Not routing")
+        (Tone::Idle, tr!("state-not-routing"))
     } else {
-        (Tone::Good, "Routing")
+        (Tone::Good, tr!("state-routing"))
     }
 }
 
 /// The status card's title and explanation.
 fn hero_text(s: &Status, started: bool) -> (Tone, String, String) {
     if !started {
-        return (Tone::Idle, "Starting…".into(), "Connecting to your tailnets.".into());
+        return (Tone::Idle, tr!("hero-starting"), tr!("hero-connecting"));
     }
     if !s.enabled {
-        return (
-            Tone::Idle,
-            "Paused".into(),
-            "Nothing goes through other tailnets right now. Your own network and tailnet work as usual.".into(),
-        );
+        return (Tone::Idle, tr!("summary-paused"), tr!("hero-paused"));
     }
     if let Some(t) = s.tailnets.iter().find(|t| t.needs_login()) {
         let detail = if t.login_wait {
-            format!("Finish signing in to {} in your browser.", t.label())
+            tr!("hero-finish-sign-in", tailnet = t.label())
         } else {
-            format!("Sign in to {} to reach its machines.", t.label())
+            tr!("hero-sign-in", tailnet = t.label())
         };
         return (Tone::Warn, s.summary(), detail);
     }
@@ -662,12 +671,12 @@ fn hero_text(s: &Status, started: bool) -> (Tone, String, String) {
                     s.tailnets.iter().find(|t| t.routing).and_then(|t| t.domains.first()).map(|d| format!("*.{d}"))
                 });
             match example {
-                Some(e) => format!("Open {e} or any other address in these tailnets. Everything else goes direct."),
-                None => "Addresses in these tailnets open in your browser. Everything else goes direct.".into(),
+                Some(e) => tr!("hero-routing-example", address = e),
+                None => tr!("hero-routing"),
             }
         }
         Tone::Bad => s.problem.clone(),
-        _ => "Connecting to your tailnets.".into(),
+        _ => tr!("hero-connecting"),
     };
     (tone, s.summary(), detail)
 }
@@ -688,11 +697,11 @@ impl Gui {
                 let w = ui.available_width() - if clear { 38.0 } else { 0.0 };
                 ui.add(
                     egui::TextEdit::singleline(&mut self.machine_query)
-                        .hint_text(with_icon(icons::MAGNIFYING_GLASS, "Find a machine by name, OS or address"))
+                        .hint_text(with_icon(icons::MAGNIFYING_GLASS, &tr!("machine-search-hint")))
                         .margin(Margin::symmetric(10, 7))
                         .desired_width(w),
                 );
-                if clear && ui.add(theme::icon_button(icons::X)).on_hover_text("Clear the search").clicked() {
+                if clear && ui.add(theme::icon_button(icons::X)).on_hover_text(tr!("clear-search")).clicked() {
                     self.machine_query.clear();
                 }
             });
@@ -714,38 +723,42 @@ impl Gui {
             ui.horizontal(|ui| {
                 ui.label(RichText::new(tone.symbol()).size(30.0).color(tone.color()));
                 ui.add_space(2.0);
-                let actions_w = 250.0;
+                // The buttons' width from the last frame, so the text wraps beside them in
+                // every language rather than under them.
+                let actions_id = egui::Id::unique("status-actions-width");
+                let actions_w = ui.data(|d| d.get_temp::<f32>(actions_id)).unwrap_or(250.0);
                 ui.vertical(|ui| {
-                    ui.set_max_width((ui.available_width() - actions_w).max(160.0));
+                    ui.set_max_width((ui.available_width() - actions_w - 12.0).max(160.0));
                     ui.label(RichText::new(title).size(18.0).strong().color(theme::STRONG));
                     ui.add(egui::Label::new(muted(detail)).wrap());
                 });
-                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if ui.add(theme::primary_button(with_icon(icons::PLUS, "Add a tailnet"))).clicked() {
+                let actions = ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    if ui.add(theme::primary_button(with_icon(icons::PLUS, &tr!("add-tailnet")))).clicked() {
                         self.add_tailnet(ctx);
                     }
                     let (symbol, label, tip) = if s.enabled {
-                        (icons::PAUSE_CIRCLE, "Pause all", "Stop routing through other tailnets for now")
+                        (icons::PAUSE_CIRCLE, tr!("pause-all"), tr!("pause-all-tooltip"))
                     } else {
-                        (icons::PLAY_CIRCLE, "Resume", "Start routing through other tailnets again")
+                        (icons::PLAY_CIRCLE, tr!("resume"), tr!("resume-tooltip"))
                     };
-                    if ui.add(theme::secondary_button(with_icon(symbol, label))).on_hover_text(tip).clicked() {
+                    if ui.add(theme::secondary_button(with_icon(symbol, &label))).on_hover_text(tip).clicked() {
                         self.core.set_enabled(!s.enabled);
                     }
                 });
+                let width = actions.response.rect.width();
+                if (width - actions_w).abs() > 0.5 {
+                    ui.data_mut(|d| d.insert_temp(actions_id, width));
+                    ui.ctx().request_repaint();
+                }
             });
         });
     }
 
     fn empty_state(&mut self, ui: &mut egui::Ui, ctx: &egui::Context) {
-        const STEPS: [(&str, &str, &str); 3] = [
-            (icons::SIGN_IN, "Sign in to another tailnet", "Tailscale's sign-in page opens in your browser."),
-            (icons::GLOBE, "Open its machines by name", "Addresses like build-pc.example.ts.net work in your browser."),
-            (
-                icons::PLUGS_CONNECTED,
-                "Forward a port when an app needs one",
-                "Remote Desktop, SSH and database apps get a local port that leads to a machine.",
-            ),
+        let steps = [
+            (icons::SIGN_IN, tr!("welcome-sign-in"), tr!("welcome-sign-in-detail")),
+            (icons::GLOBE, tr!("welcome-open"), tr!("welcome-open-detail", example = "build-pc.example.ts.net")),
+            (icons::PLUGS_CONNECTED, tr!("welcome-forward"), tr!("welcome-forward-detail")),
         ];
         ui.add_space(20.0);
         ui.vertical_centered(|ui| {
@@ -753,18 +766,10 @@ impl Gui {
             theme::card().inner_margin(24).show(ui, |ui| {
                 ui.with_layout(egui::Layout::top_down(egui::Align::Min), |ui| {
                     ui.set_width(ui.available_width());
-                    ui.label(
-                        RichText::new("Reach machines on other tailnets").size(20.0).strong().color(theme::STRONG),
-                    );
-                    ui.add(
-                        egui::Label::new(muted(
-                            "Stay on your own tailnet and open machines in others at the same time. \
-                             Your Tailscale app keeps working as usual.",
-                        ))
-                        .wrap(),
-                    );
+                    ui.label(RichText::new(tr!("welcome-title")).size(20.0).strong().color(theme::STRONG));
+                    ui.add(egui::Label::new(muted(tr!("welcome-text"))).wrap());
                     ui.add_space(10.0);
-                    for (symbol, title, text) in STEPS {
+                    for (symbol, title, text) in steps {
                         ui.horizontal(|ui| {
                             let (rect, _) = ui.allocate_exact_size(vec2(34.0, 34.0), egui::Sense::hover());
                             ui.painter().circle_filled(rect.center(), 17.0, theme::NOTE_BG);
@@ -786,7 +791,10 @@ impl Gui {
                     }
                     ui.add_space(10.0);
                     if ui
-                        .add(theme::primary_button(with_icon(icons::PLUS, "Add a tailnet")).min_size(vec2(160.0, 38.0)))
+                        .add(
+                            theme::primary_button(with_icon(icons::PLUS, &tr!("add-tailnet")))
+                                .min_size(vec2(160.0, 38.0)),
+                        )
                         .clicked()
                     {
                         self.add_tailnet(ctx);
@@ -802,12 +810,12 @@ impl Gui {
             ui.set_width(ui.available_width());
             ui.horizontal(|ui| {
                 ui.label(RichText::new(t.label()).size(16.0).strong().color(theme::STRONG));
-                theme::pill(ui, tone, state);
+                theme::pill(ui, tone, &state);
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     egui::containers::menu::MenuButton::from_button(theme::icon_button(icons::DOTS_THREE))
                         .ui(ui, |ui| {
                             ui.set_min_width(200.0);
-                            if ui.button(with_icon(icons::PENCIL_SIMPLE, "Rename or add domains…")).clicked() {
+                            if ui.button(with_icon(icons::PENCIL_SIMPLE, &tr!("edit-tailnet-menu"))).clicked() {
                                 self.dialog = Dialog::Edit {
                                     id: t.id.clone(),
                                     label: t.label(),
@@ -816,27 +824,29 @@ impl Gui {
                                     enabled: t.enabled,
                                 };
                             }
-                            if t.connected && ui.button(with_icon(icons::SIGN_OUT, "Log out…")).clicked() {
+                            if t.connected && ui.button(with_icon(icons::SIGN_OUT, &tr!("log-out-menu"))).clicked() {
                                 self.dialog = Dialog::ConfirmLogout { id: t.id.clone(), label: t.label() };
                             }
                             if ui
-                                .button(RichText::new(with_icon(icons::TRASH, "Remove…")).color(theme::DANGER))
+                                .button(
+                                    RichText::new(with_icon(icons::TRASH, &tr!("remove-menu"))).color(theme::DANGER),
+                                )
                                 .clicked()
                             {
                                 self.dialog = Dialog::ConfirmRemove { id: t.id.clone(), label: t.label() };
                             }
                         })
                         .0
-                        .on_hover_text("More actions");
+                        .on_hover_text(tr!("more-actions"));
                     if t.needs_login() {
-                        if ui.add(theme::primary_button(with_icon(icons::SIGN_IN, "Sign in"))).clicked() {
+                        if ui.add(theme::primary_button(with_icon(icons::SIGN_IN, &tr!("sign-in")))).clicked() {
                             self.core.login(&t.id);
                         }
                     } else if t.connected {
                         let (symbol, tip) = if t.enabled {
-                            (icons::PAUSE_CIRCLE, "Pause this tailnet")
+                            (icons::PAUSE_CIRCLE, tr!("pause-tailnet"))
                         } else {
-                            (icons::PLAY_CIRCLE, "Resume this tailnet")
+                            (icons::PLAY_CIRCLE, tr!("resume-tailnet"))
                         };
                         if ui.add(theme::icon_button(symbol)).on_hover_text(tip).clicked() {
                             let _ = self.core.set_tailnet_enabled(&t.id, !t.enabled);
@@ -846,31 +856,31 @@ impl Gui {
             });
 
             let routes = if t.domains.is_empty() {
-                "Found after you sign in".to_owned()
+                tr!("routes-after-sign-in")
             } else {
                 t.domains.iter().map(|d| format!("*.{d}")).collect::<Vec<_>>().join(", ")
             };
             let self_name = if t.self_name.is_empty() {
-                format!("{} (after you sign in)", self.core.config().hostname)
+                tr!("hostname-after-sign-in", hostname = self.core.config().hostname)
             } else {
                 t.self_name.clone()
             };
+            // (label, value, is a problem)
             let mut rows = Vec::new();
             if !t.name.is_empty() && !t.tailnet.is_empty() && t.name != t.tailnet {
-                rows.push(("Tailnet", t.tailnet.clone()));
+                rows.push((tr!("detail-tailnet"), t.tailnet.clone(), false));
             }
-            rows.push(("Routes", routes));
-            rows.push(("This computer", self_name));
+            rows.push((tr!("detail-routes"), routes, false));
+            rows.push((tr!("detail-this-computer"), self_name, false));
             if !t.problem.is_empty() && !t.connected {
-                rows.push(("Problem", t.problem.clone()));
+                rows.push((tr!("detail-problem"), t.problem.clone(), true));
             }
             egui::Grid::new(("details", &t.id)).num_columns(2).spacing([16.0, 2.0]).min_row_height(20.0).show(
                 ui,
                 |ui| {
-                    for (k, v) in rows {
+                    for (k, v, problem) in rows {
                         ui.label(muted(k));
-                        let text =
-                            if k == "Problem" { RichText::new(v).color(Tone::Bad.color()) } else { RichText::new(v) };
+                        let text = if problem { RichText::new(v).color(Tone::Bad.color()) } else { RichText::new(v) };
                         ui.add(egui::Label::new(text).wrap());
                         ui.end_row();
                     }
@@ -883,17 +893,13 @@ impl Gui {
                     ui.set_width(ui.available_width());
                     ui.horizontal_wrapped(|ui| {
                         ui.label(RichText::new(icons::INFO).color(theme::ACCENT));
-                        ui.label("Browser didn't open, or opened the wrong profile?");
-                        if ui.link("Open the sign-in page again").clicked() {
+                        ui.label(tr!("sign-in-help"));
+                        if ui.link(tr!("sign-in-open-again")).clicked() {
                             let _ = open::that_detached(&t.auth_url);
                         }
-                        if ui
-                            .link("Copy the link")
-                            .on_hover_text("Paste it into the browser, or browser profile, you use for this tailnet")
-                            .clicked()
-                        {
-                            let url = t.auth_url.clone();
-                            self.copy(ui.ctx(), &url, "the sign-in link");
+                        if ui.link(tr!("sign-in-copy-link")).on_hover_text(tr!("sign-in-copy-link-tooltip")).clicked() {
+                            ui.ctx().copy_text(t.auth_url.clone());
+                            self.toast(tr!("copied-sign-in-link"));
                         }
                     });
                 });
@@ -909,9 +915,9 @@ impl Gui {
         let shown: Vec<&Machine> = t.machines.iter().filter(|m| m.matches(&self.machine_query)).collect();
         let online = t.machines.iter().filter(|m| m.online).count();
         let title = if searching {
-            format!("Machines · {} of {} match", shown.len(), t.machines.len())
+            tr!("machines-matching", shown = shown.len(), total = t.machines.len())
         } else {
-            format!("Machines · {online} of {} online", t.machines.len())
+            tr!("machines-online", online = online, total = t.machines.len())
         };
         egui::CollapsingHeader::new(RichText::new(title).strong().color(theme::MUTED))
             .id_salt(("machines", &t.id))
@@ -919,11 +925,11 @@ impl Gui {
             .open(searching.then_some(!shown.is_empty()))
             .show(ui, |ui| {
                 if t.machines.is_empty() {
-                    ui.label(muted("No other machines are visible in this tailnet."));
+                    ui.label(muted(tr!("no-machines")));
                     return;
                 }
                 if shown.is_empty() {
-                    ui.label(muted("No machine matches your search."));
+                    ui.label(muted(tr!("no-machine-matches")));
                     return;
                 }
                 egui::ScrollArea::vertical()
@@ -945,26 +951,31 @@ impl Gui {
             ui.horizontal(|ui| {
                 theme::dot(ui, if m.online { Tone::Good } else { Tone::Idle });
                 let name = RichText::new(&m.name).strong();
-                ui.label(if m.online { name.color(theme::STRONG) } else { name.color(theme::MUTED) })
-                    .on_hover_text(if m.online { m.dns_name.clone() } else { format!("{} (offline)", m.dns_name) });
+                ui.label(if m.online { name.color(theme::STRONG) } else { name.color(theme::MUTED) }).on_hover_text(
+                    if m.online { m.dns_name.clone() } else { tr!("machine-offline", name = m.dns_name.as_str()) },
+                );
                 ui.label(muted(format!("{}  {}", os_name(&m.os), m.ip)).size(12.0));
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     ui.spacing_mut().item_spacing.x = 2.0;
                     if ui
                         .add(theme::icon_button(icons::PLUGS_CONNECTED))
-                        .on_hover_text("Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client")
+                        .on_hover_text(tr!("forward-port-tooltip"))
                         .clicked()
                     {
                         self.dialog = Dialog::AddForward { host: m.dns_name.clone(), port: String::new() };
                     }
-                    if ui.add(theme::icon_button(icons::COPY)).on_hover_text(format!("Copy {}", m.dns_name)).clicked() {
-                        self.copy(ui.ctx(), &m.dns_name, &m.dns_name);
+                    if ui
+                        .add(theme::icon_button(icons::COPY))
+                        .on_hover_text(tr!("copy-address", address = m.dns_name.as_str()))
+                        .clicked()
+                    {
+                        self.copy(ui.ctx(), &m.dns_name);
                     }
                     let url = format!("https://{}/", m.dns_name);
                     if ui
                         .add_enabled(t.routing, theme::icon_button(icons::ARROW_SQUARE_OUT))
-                        .on_hover_text(format!("Open {url} in your browser"))
-                        .on_disabled_hover_text("This tailnet isn't routing right now. Is it paused?")
+                        .on_hover_text(tr!("open-in-browser", url = url.as_str()))
+                        .on_disabled_hover_text(tr!("not-routing-tooltip"))
                         .clicked()
                     {
                         let _ = open::that_detached(&url);
@@ -995,15 +1006,7 @@ impl Gui {
     fn forwards_section(&mut self, ui: &mut egui::Ui, s: &Status) {
         theme::card().show(ui, |ui| {
             ui.set_width(ui.available_width());
-            theme::section_heading(
-                ui,
-                icons::PLUGS_CONNECTED,
-                "Port forwards",
-                Some(
-                    "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. \
-                     Each forward is a port on this computer that leads to a machine in a tailnet.",
-                ),
-            );
+            theme::section_heading(ui, icons::PLUGS_CONNECTED, &tr!("forwards-heading"), Some(&tr!("forwards-help")));
             if !s.forwards.is_empty() {
                 ui.spacing_mut().item_spacing.y = 4.0;
                 for f in &s.forwards {
@@ -1012,7 +1015,7 @@ impl Gui {
                 ui.spacing_mut().item_spacing.y = 8.0;
                 ui.add_space(4.0);
             }
-            ui.label(RichText::new("Edit forwards").strong());
+            ui.label(RichText::new(tr!("edit-forwards")).strong());
             ui.add(
                 egui::TextEdit::multiline(&mut self.forwards)
                     .code_editor()
@@ -1021,27 +1024,17 @@ impl Gui {
                     .margin(Margin::symmetric(10, 8))
                     .hint_text("auto = build-pc.example.ts.net:3389"),
             );
-            ui.add(
-                egui::Label::new(
-                    muted(
-                        "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. \
-                         The host's name decides which tailnet carries it. To add one quickly, use the plug \
-                         button on a machine in the Tailnets tab.",
-                    )
-                    .size(12.0),
-                )
-                .wrap(),
-            );
+            ui.add(egui::Label::new(muted(tr!("forwards-format-help")).size(12.0)).wrap());
         });
     }
 
     fn proxy_section(&mut self, ui: &mut egui::Ui) {
         theme::card().show(ui, |ui| {
             ui.set_width(ui.available_width());
-            theme::section_heading(ui, icons::GLOBE_SIMPLE, "System proxy setting", Some(proxy_help()));
+            theme::section_heading(ui, icons::GLOBE_SIMPLE, &tr!("proxy-heading"), Some(&proxy_help()));
             ui.spacing_mut().item_spacing.y = 2.0;
-            for (i, label) in SYS_LABELS.iter().enumerate() {
-                ui.radio_value(&mut self.sys_mode, i, *label);
+            for (i, label) in sys_labels().into_iter().enumerate() {
+                ui.radio_value(&mut self.sys_mode, i, label);
             }
         });
     }
@@ -1049,13 +1042,14 @@ impl Gui {
     fn general_section(&mut self, ui: &mut egui::Ui) {
         theme::card().show(ui, |ui| {
             ui.set_width(ui.available_width());
-            theme::section_heading(ui, icons::GEAR_SIX, "General", None);
+            theme::section_heading(ui, icons::GEAR_SIX, &tr!("general-heading"), None);
             let before = self.autostart;
+            let start_at_login = tr!("start-at-login");
             ui.horizontal(|ui| {
                 ui.add_enabled_ui(crate::autostart::supported(), |ui| {
-                    theme::toggle(ui, &mut self.autostart, "Start Tailnet Link when I log in");
+                    theme::toggle(ui, &mut self.autostart, &start_at_login);
                 });
-                ui.label("Start Tailnet Link when I log in");
+                ui.label(&start_at_login);
             });
             if self.autostart != before
                 && let Err(e) = crate::autostart::set(self.autostart)
@@ -1063,7 +1057,32 @@ impl Gui {
                 self.autostart = before;
                 self.dialog = Dialog::Error(e);
             }
+            ui.add_space(4.0);
+            self.language_picker(ui);
         });
+    }
+
+    /// Applies the new language straight away, like the toggle above it.
+    fn language_picker(&mut self, ui: &mut egui::Ui) {
+        let before = self.language.clone();
+        ui.horizontal(|ui| {
+            ui.label(tr!("language"));
+            let name = |code: &str| if code == "auto" { tr!("system-default") } else { i18n::language_name(code) };
+            egui::ComboBox::from_id_salt("language").selected_text(name(&self.language)).width(260.0).show_ui(
+                ui,
+                |ui| {
+                    for code in std::iter::once("auto").chain(i18n::languages()) {
+                        ui.selectable_value(&mut self.language, code.to_owned(), name(code));
+                    }
+                },
+            );
+        });
+        if self.language != before {
+            theme::set_fonts(ui.ctx(), i18n::set_language(&self.language));
+            if let Err(e) = self.core.set_language(&self.language) {
+                self.dialog = Dialog::Error(e);
+            }
+        }
     }
 
     fn troubleshooting_section(&mut self, ui: &mut egui::Ui, s: &Status) {
@@ -1072,8 +1091,8 @@ impl Gui {
             theme::section_heading(
                 ui,
                 icons::STETHOSCOPE,
-                "Troubleshooting",
-                Some("Test a web address or name:port to see which tailnet carries it and whether it connects."),
+                &tr!("troubleshooting-heading"),
+                Some(&tr!("troubleshooting-help")),
             );
             ui.horizontal(|ui| {
                 let r = ui.add(
@@ -1087,7 +1106,7 @@ impl Gui {
                 if ui
                     .add_enabled(
                         !self.checking && !self.check_input.trim().is_empty(),
-                        egui::Button::new("Test").min_size(vec2(76.0, 30.0)),
+                        egui::Button::new(tr!("test")).min_size(vec2(76.0, 30.0)),
                     )
                     .clicked()
                     || enter
@@ -1098,7 +1117,7 @@ impl Gui {
             if self.checking {
                 ui.horizontal(|ui| {
                     ui.spinner();
-                    ui.label("Testing…");
+                    ui.label(tr!("testing"));
                 });
             } else if let Some(r) = &self.check_result {
                 let (symbol, text, tone) = match r {
@@ -1109,21 +1128,24 @@ impl Gui {
             }
             ui.add_space(4.0);
             ui.horizontal(|ui| {
-                if ui.button(with_icon(icons::FILE_TEXT, "Open log")).clicked() {
+                if ui.button(with_icon(icons::FILE_TEXT, &tr!("open-log"))).clicked() {
                     let _ = open::that_detached(config::log_path());
                 }
-                if ui.button(with_icon(icons::FOLDER_OPEN, "Open settings folder")).clicked() {
+                if ui.button(with_icon(icons::FOLDER_OPEN, &tr!("open-settings-folder"))).clicked() {
                     let _ = open::that_detached(config::config_dir());
                 }
             });
             ui.add(
                 egui::Label::new(
                     muted(format!(
-                        "Tailnet Link {} · local proxy {} · PAC {}\nSettings in {}",
-                        env!("CARGO_PKG_VERSION"),
-                        s.listen,
-                        self.core.pac_url(),
-                        config::config_dir().display()
+                        "{}\n{}",
+                        tr!(
+                            "about-line",
+                            version = env!("CARGO_PKG_VERSION"),
+                            proxy = s.listen.as_str(),
+                            pac = self.core.pac_url()
+                        ),
+                        tr!("settings-location", path = settings_dir_text())
                     ))
                     .size(12.0),
                 )
@@ -1135,13 +1157,14 @@ impl Gui {
     fn forward_row(&mut self, ui: &mut egui::Ui, f: &ForwardStatus) {
         let addr = format!("127.0.0.1:{}", f.local_port);
         let (tone, note) = if !f.error.is_empty() {
-            (Tone::Bad, format!("Can't listen: {}", f.error))
+            (Tone::Bad, tr!("forward-cant-listen", error = f.error.as_str()))
         } else if f.local_port == 0 {
-            (Tone::Idle, "A port is picked when you save".to_owned())
+            (Tone::Idle, tr!("forward-port-on-save"))
         } else if f.via.is_empty() {
-            (Tone::Warn, "No routing tailnet has this name".to_owned())
+            (Tone::Warn, tr!("forward-no-tailnet"))
         } else {
-            (Tone::Good, format!("Through {}", f.via))
+            // Shown beside the target instead ("via …").
+            (Tone::Good, String::new())
         };
         theme::row_frame(false).show(ui, |ui| {
             ui.set_width(ui.available_width());
@@ -1154,14 +1177,18 @@ impl Gui {
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     ui.spacing_mut().item_spacing.x = 2.0;
                     if f.local_port != 0 {
-                        if ui.add(theme::icon_button(icons::COPY)).on_hover_text(format!("Copy {addr}")).clicked() {
-                            self.copy(ui.ctx(), &addr, &addr);
+                        if ui
+                            .add(theme::icon_button(icons::COPY))
+                            .on_hover_text(tr!("copy-address", address = addr.as_str()))
+                            .clicked()
+                        {
+                            self.copy(ui.ctx(), &addr);
                         }
                         if cfg!(windows)
                             && target_port(&f.target) == 3389
                             && ui
                                 .add(theme::icon_button(icons::MONITOR))
-                                .on_hover_text(format!("Open Remote Desktop to {addr}"))
+                                .on_hover_text(tr!("open-remote-desktop-to", address = addr.as_str()))
                                 .clicked()
                             && let Err(e) = remote_desktop(f.local_port)
                         {
@@ -1170,7 +1197,7 @@ impl Gui {
                     }
                     if tone == Tone::Good {
                         ui.add_space(8.0);
-                        ui.label(muted(format!("via {}", f.via)).size(12.0));
+                        ui.label(muted(tr!("forward-via", tailnet = f.via.as_str())).size(12.0));
                     }
                     ui.with_layout(egui::Layout::left_to_right(egui::Align::Center), |ui| {
                         ui.add(egui::Label::new(RichText::new(&f.target).monospace()).truncate());
@@ -1195,7 +1222,7 @@ impl Gui {
                 } else {
                     // "auto" ports were just assigned: show them.
                     self.forwards = forwards_text(&self.core.config().forwards);
-                    self.toast("Settings saved");
+                    self.toast(tr!("settings-saved"));
                 }
             }
         }
@@ -1218,47 +1245,46 @@ impl Gui {
                 dialog(ctx, Some((icons::INFO, Tone::Good)), title, |ui| {
                     ui.add(egui::Label::new(text.as_str()).wrap());
                     actions(ui, |ui| {
-                        close |=
-                            ui.add(theme::primary_button("OK").min_size(vec2(88.0, theme::BUTTON_HEIGHT))).clicked();
+                        close |= ui
+                            .add(theme::primary_button(tr!("ok")).min_size(vec2(88.0, theme::BUTTON_HEIGHT)))
+                            .clicked();
                     });
                 });
             }
             Dialog::Error(text) => {
-                dialog(ctx, Some((icons::WARNING_CIRCLE, Tone::Bad)), "Something went wrong", |ui| {
+                dialog(ctx, Some((icons::WARNING_CIRCLE, Tone::Bad)), &tr!("error-title"), |ui| {
                     ui.add(egui::Label::new(text.as_str()).wrap());
                     ui.add(
-                        egui::Label::new(muted(format!("Details are in {}", config::log_path().display())).size(12.0))
-                            .wrap(),
+                        egui::Label::new(
+                            muted(tr!("error-details", path = config::log_path().display().to_string())).size(12.0),
+                        )
+                        .wrap(),
                     );
                     actions(ui, |ui| {
-                        close |=
-                            ui.add(theme::primary_button("OK").min_size(vec2(88.0, theme::BUTTON_HEIGHT))).clicked();
-                        if ui.add(theme::secondary_button("Open log")).clicked() {
+                        close |= ui
+                            .add(theme::primary_button(tr!("ok")).min_size(vec2(88.0, theme::BUTTON_HEIGHT)))
+                            .clicked();
+                        if ui.add(theme::secondary_button(tr!("open-log"))).clicked() {
                             let _ = open::that_detached(config::log_path());
                         }
                     });
                 });
             }
             Dialog::Edit { id, label, name, extra, enabled } => {
-                let title = format!("Edit {label}");
+                let title = tr!("edit-title", tailnet = label.as_str());
                 let mut save = false;
                 dialog(ctx, None, &title, |ui| {
-                    ui.label(RichText::new("Name").strong());
+                    ui.label(RichText::new(tr!("tailnet-name")).strong());
                     let r = ui.add(
                         egui::TextEdit::singleline(name)
                             .desired_width(f32::INFINITY)
                             .margin(Margin::symmetric(10, 7))
-                            .hint_text("Shown in this app and the tray menu"),
+                            .hint_text(tr!("tailnet-name-hint")),
                     );
                     save |= r.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter));
                     ui.add_space(4.0);
-                    ui.label(RichText::new("Extra domains (optional)").strong());
-                    ui.add(
-                        egui::Label::new(
-                            muted("The tailnet's own domain is routed automatically. Add one per line.").size(12.0),
-                        )
-                        .wrap(),
-                    );
+                    ui.label(RichText::new(tr!("extra-domains")).strong());
+                    ui.add(egui::Label::new(muted(tr!("extra-domains-help")).size(12.0)).wrap());
                     ui.add(
                         egui::TextEdit::multiline(extra)
                             .desired_rows(3)
@@ -1267,9 +1293,10 @@ impl Gui {
                             .hint_text("internal.example.com"),
                     );
                     actions(ui, |ui| {
-                        save |=
-                            ui.add(theme::primary_button("Save").min_size(vec2(88.0, theme::BUTTON_HEIGHT))).clicked();
-                        close |= ui.add(theme::secondary_button("Cancel")).clicked();
+                        save |= ui
+                            .add(theme::primary_button(tr!("save")).min_size(vec2(88.0, theme::BUTTON_HEIGHT)))
+                            .clicked();
+                        close |= ui.add(theme::secondary_button(tr!("cancel"))).clicked();
                     });
                 });
                 if save {
@@ -1281,19 +1308,14 @@ impl Gui {
             }
             Dialog::AddForward { host, port } => {
                 let mut add = false;
-                dialog(ctx, Some((icons::PLUGS_CONNECTED, Tone::Good)), "Forward a port", |ui| {
-                    ui.add(
-                        egui::Label::new(format!(
-                            "Get a port on this computer that leads to {host}. Which port on that machine?"
-                        ))
-                        .wrap(),
-                    );
+                dialog(ctx, Some((icons::PLUGS_CONNECTED, Tone::Good)), &tr!("forward-dialog-title"), |ui| {
+                    ui.add(egui::Label::new(tr!("forward-dialog-text", host = host.as_str())).wrap());
                     ui.horizontal_wrapped(|ui| {
-                        for (label, p) in PORT_PRESETS {
+                        for (name, p) in PORT_PRESETS {
                             let on = port.trim() == p.to_string();
                             if ui
-                                .add(egui::Button::selectable(on, label).corner_radius(14))
-                                .on_hover_text(format!("Port {p}"))
+                                .add(egui::Button::selectable(on, preset_name(name, p)).corner_radius(14))
+                                .on_hover_text(tr!("port-tooltip", port = p.to_string()))
                                 .clicked()
                             {
                                 *port = p.to_string();
@@ -1301,53 +1323,53 @@ impl Gui {
                         }
                     });
                     ui.horizontal(|ui| {
-                        ui.label("Port");
+                        ui.label(tr!("port"));
                         let r = ui.add(
                             egui::TextEdit::singleline(port)
                                 .desired_width(90.0)
                                 .margin(Margin::symmetric(10, 7))
-                                .hint_text("e.g. 8080"),
+                                .hint_text(tr!("port-hint")),
                         );
                         add |= r.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter));
                     });
                     actions(ui, |ui| {
-                        add |= ui.add_enabled(!port.trim().is_empty(), theme::primary_button("Add forward")).clicked();
-                        close |= ui.add(theme::secondary_button("Cancel")).clicked();
+                        add |= ui
+                            .add_enabled(!port.trim().is_empty(), theme::primary_button(tr!("add-forward")))
+                            .clicked();
+                        close |= ui.add(theme::secondary_button(tr!("cancel"))).clicked();
                     });
                 });
                 if add {
                     match port.trim().parse::<u16>() {
                         Ok(p) if p > 0 => add_forward = Some(format!("{host}:{p}")),
-                        _ => next = Some(Dialog::Error(format!("{:?} isn't a port number (1-65535).", port.trim()))),
+                        _ => next = Some(Dialog::Error(tr!("not-a-port", value = port.trim()))),
                     }
                 }
             }
             Dialog::ForwardAdded { local, target } => {
                 let addr = format!("127.0.0.1:{local}");
-                dialog(ctx, Some((icons::CHECK_CIRCLE, Tone::Good)), "Port forward ready", |ui| {
-                    ui.add(egui::Label::new(format!("Point your app at this address to reach {target}:")).wrap());
+                dialog(ctx, Some((icons::CHECK_CIRCLE, Tone::Good)), &tr!("forward-ready-title"), |ui| {
+                    ui.add(egui::Label::new(tr!("forward-ready-text", target = target.as_str())).wrap());
                     theme::row_frame(false).show(ui, |ui| {
                         ui.set_width(ui.available_width());
                         ui.horizontal(|ui| {
                             ui.label(RichText::new(&addr).monospace().size(16.0).strong().color(theme::STRONG));
                             ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                                if ui.add(theme::icon_button(icons::COPY)).on_hover_text("Copy").clicked() {
+                                if ui.add(theme::icon_button(icons::COPY)).on_hover_text(tr!("copy")).clicked() {
                                     copy = Some(addr.clone());
                                 }
                             });
                         });
                     });
-                    ui.add(
-                        egui::Label::new(muted("The port stays the same. You'll find it in Settings.").size(12.0))
-                            .wrap(),
-                    );
+                    ui.add(egui::Label::new(muted(tr!("forward-ready-note")).size(12.0)).wrap());
                     actions(ui, |ui| {
-                        close |=
-                            ui.add(theme::primary_button("Done").min_size(vec2(88.0, theme::BUTTON_HEIGHT))).clicked();
+                        close |= ui
+                            .add(theme::primary_button(tr!("done")).min_size(vec2(88.0, theme::BUTTON_HEIGHT)))
+                            .clicked();
                         if cfg!(windows)
                             && target_port(target) == 3389
                             && ui
-                                .add(theme::secondary_button(with_icon(icons::MONITOR, "Open Remote Desktop")))
+                                .add(theme::secondary_button(with_icon(icons::MONITOR, &tr!("open-remote-desktop"))))
                                 .clicked()
                         {
                             match remote_desktop(*local) {
@@ -1359,15 +1381,10 @@ impl Gui {
                 });
             }
             Dialog::ConfirmRemove { id, label } => {
-                dialog(ctx, Some((icons::TRASH, Tone::Bad)), "Remove this tailnet?", |ui| {
-                    ui.add(
-                        egui::Label::new(format!(
-                            "Tailnet Link logs out of {label} and forgets it on this computer. You can add it again later."
-                        ))
-                        .wrap(),
-                    );
+                dialog(ctx, Some((icons::TRASH, Tone::Bad)), &tr!("remove-title"), |ui| {
+                    ui.add(egui::Label::new(tr!("remove-text", tailnet = label.as_str())).wrap());
                     actions(ui, |ui| {
-                        if ui.add(theme::danger_button("Remove")).clicked() {
+                        if ui.add(theme::danger_button(tr!("remove"))).clicked() {
                             let (core, id, tx) = (self.core.clone(), id.clone(), self.done_tx.clone());
                             std::thread::spawn(move || {
                                 if let Err(e) = core.remove_tailnet(&id) {
@@ -1376,31 +1393,26 @@ impl Gui {
                             });
                             close = true;
                         }
-                        close |= ui.add(theme::secondary_button("Cancel")).clicked();
+                        close |= ui.add(theme::secondary_button(tr!("cancel"))).clicked();
                     });
                 });
             }
             Dialog::ConfirmLogout { id, label } => {
-                dialog(ctx, Some((icons::SIGN_OUT, Tone::Warn)), "Log out?", |ui| {
-                    ui.add(
-                        egui::Label::new(format!(
-                            "Log out of {label}? Its addresses stop working here until you sign in again."
-                        ))
-                        .wrap(),
-                    );
+                dialog(ctx, Some((icons::SIGN_OUT, Tone::Warn)), &tr!("log-out-title"), |ui| {
+                    ui.add(egui::Label::new(tr!("log-out-text", tailnet = label.as_str())).wrap());
                     actions(ui, |ui| {
-                        if ui.add(theme::primary_button("Log out")).clicked() {
+                        if ui.add(theme::primary_button(tr!("log-out"))).clicked() {
                             let (core, id) = (self.core.clone(), id.clone());
                             std::thread::spawn(move || core.logout(&id));
                             close = true;
                         }
-                        close |= ui.add(theme::secondary_button("Cancel")).clicked();
+                        close |= ui.add(theme::secondary_button(tr!("cancel"))).clicked();
                     });
                 });
             }
         }
         if let Some(addr) = copy {
-            self.copy(ctx, &addr, &addr);
+            self.copy(ctx, &addr);
         }
         if let Some(n) = next {
             self.dialog = n;
@@ -1438,13 +1450,13 @@ fn actions(ui: &mut egui::Ui, add: impl FnOnce(&mut egui::Ui)) {
     );
 }
 
-fn proxy_help() -> &'static str {
+fn proxy_help() -> String {
     if cfg!(windows) {
-        "\"On\" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."
+        tr!("proxy-help-windows")
     } else if cfg!(target_os = "macos") {
-        "\"On\" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."
+        tr!("proxy-help-macos")
     } else {
-        "\"On\" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > \"Use system proxy settings\"."
+        tr!("proxy-help-linux")
     }
 }
 
@@ -1510,23 +1522,23 @@ impl Tray {
         let _ = menu.append(&PredefinedMenuItem::separator());
         for t in &s.tailnets {
             let label = if t.needs_login() {
-                format!("{}: sign in…", t.label())
+                tr!("tray-sign-in", tailnet = t.label())
             } else {
-                format!("{}: {}", t.label(), tailnet_state(t).1.to_lowercase())
+                tr!("tray-tailnet", tailnet = t.label(), state = tailnet_state(t).1)
             };
             let item = CheckMenuItem::new(label, true, t.routing, None);
             map.insert(item.id().clone(), if t.needs_login() { Action::Login(t.id.clone()) } else { Action::Open });
             let _ = menu.append(&item);
         }
-        let add = MenuItem::new("Add a tailnet…", true, None);
+        let add = MenuItem::new(tr!("tray-add-tailnet"), true, None);
         map.insert(add.id().clone(), Action::Add);
         let _ = menu.append(&add);
         let _ = menu.append(&PredefinedMenuItem::separator());
-        let route = CheckMenuItem::new("Route through other tailnets", true, s.enabled, None);
+        let route = CheckMenuItem::new(tr!("tray-route"), true, s.enabled, None);
         map.insert(route.id().clone(), Action::ToggleMaster);
-        let open = MenuItem::new("Open Tailnet Link…", true, None);
+        let open = MenuItem::new(tr!("tray-open"), true, None);
         map.insert(open.id().clone(), Action::Open);
-        let quit = MenuItem::new("Quit", true, None);
+        let quit = MenuItem::new(tr!("tray-quit"), true, None);
         map.insert(quit.id().clone(), Action::Quit);
         for i in [&route as &dyn tray_icon::menu::IsMenuItem, &open, &PredefinedMenuItem::separator(), &quit] {
             let _ = menu.append(i);
@@ -1539,37 +1551,31 @@ impl Tray {
             self.tone = tone;
             let _ = self.icon.set_icon(Some(tray_image(tone)));
         }
-        let _ = self.icon.set_tooltip(Some(format!("Tailnet Link: {}", s.summary())));
+        let _ = self.icon.set_tooltip(Some(tr!("tray-tooltip", summary = s.summary())));
     }
 }
 
 /// Linux: the tray needs its own GTK main loop on its own thread.
 /// Tells the user, once, that closing the window left the app running.
 fn notify_still_running(tray: Option<&Tray>) {
-    const TITLE: &str = "Tailnet Link is still running";
+    let title = tr!("still-running-title");
     #[cfg(windows)]
     {
-        let text = "It keeps routing in the background. Find it in the system tray; \
-                    Windows may tuck it under the ^ arrow by the clock.";
-        if !tray.is_some_and(|t| t.notify(TITLE, text)) {
+        if !tray.is_some_and(|t| t.notify(&title, &tr!("still-running-windows"))) {
             log::warn!("couldn't show the still-running notification");
         }
     }
     #[cfg(not(windows))]
     {
         let _ = tray;
-        let text = if cfg!(target_os = "macos") {
-            "It keeps routing in the background. Find it in the menu bar."
-        } else {
-            "It keeps routing in the background. Find it in the system tray."
-        };
+        let text = if cfg!(target_os = "macos") { tr!("still-running-macos") } else { tr!("still-running-linux") };
         let mut cmd = if cfg!(target_os = "macos") {
             let mut c = std::process::Command::new("osascript");
-            c.arg("-e").arg(format!("display notification {text:?} with title {TITLE:?}"));
+            c.arg("-e").arg(format!("display notification {text:?} with title {title:?}"));
             c
         } else {
             let mut c = std::process::Command::new("notify-send");
-            c.args(["--app-name=Tailnet Link", "--expire-time=6000", TITLE, text]);
+            c.args(["--app-name=Tailnet Link", "--expire-time=6000", &title, &text]);
             c
         };
         std::thread::spawn(move || {

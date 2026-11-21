@@ -1,0 +1,893 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "4d5b47a4925b7e74322a723d1811b137e15ba89f8cfdc565d4f9f87b52286562"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · yerel proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Yönlendirme ekle"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Port yönlendirmesi eklenemedi:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Tailnet ekle"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Tailnet eklenemedi:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Afrikaanca"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Oturum açıldığında başlatma bu sistemde desteklenmiyor."
+
+[messages.cancel]
+source = "Cancel"
+translation = "İptal"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Katalanca"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: bu geçerli bir port değil."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Bir makine adı veya web adresi yazın."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host }, { $tailnet } üzerinden yönlendiriliyor ancak { $port } numaralı porta bağlanılamadı: { $error }
+    Makinenin çevrimiçi olduğunu ve o portu dinleyen bir şey bulunduğunu kontrol edin."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Bu tailnet az önce kayboldu."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ $host }, { -app-name } tarafından yönlendirilmiyor: şu anda yönlendirme yapan hiçbir tailnet'in alan adıyla bitmiyor, bu yüzden doğrudan gidiyor (normal ağınız ve kendi Tailscale'iniz üzerinden).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } adlı tailnet çalışmıyor."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } çalışıyor: { $tailnet } üzerinden { $ms } ms içinde bağlandı."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host }, { $tailnet } üzerinden yönlendiriliyor ancak { $port } numaralı port 10 saniye içinde yanıt vermedi."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Basitleştirilmiş Çince"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Geleneksel Çince"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Aramayı temizle"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Kopyalandı: { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Oturum açma bağlantısı kopyalandı"
+
+[messages.copy]
+source = "Copy"
+translation = "Kopyala"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "{ $address } adresini kopyala"
+
+[messages.czech]
+source = "Czech"
+translation = "Çekçe"
+
+[messages.danish]
+source = "Danish"
+translation = "Danca"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Sorun"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Rotalar"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Bu bilgisayar"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "“{ $domain }” bir alan adında bulunamayacak karakterler içeriyor."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $domain } alan adı { $tailnet } tarafından da yönlendiriliyor; geçerli olan o."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "“{ $domain }” bir alan adı değil; example.ts.net gibi bir şey kullanın."
+
+[messages.done]
+source = "Done"
+translation = "Bitti"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Felemenkçe"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Yönlendirmeleri düzenle"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Yeniden adlandır veya alan adı ekle…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Düzenle: { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "İngilizce"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Ayrıntılar: { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Bir sorun oluştu"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Ek alan adları (isteğe bağlı)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Tailnet'in kendi alan adı otomatik olarak yönlendirilir. Her satıra bir tane ekleyin."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Fince"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Dinlenemiyor: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Bu bilgisayarda { $host } makinesine giden bir port alın. O makinedeki hangi port?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Port yönlendir"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Bu ada sahip, yönlendirme yapan bir tailnet yok"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Kaydettiğinizde bir port seçilir"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Port yönlendir: Uzak Masaüstü veya bir veritabanı istemcisi gibi proxy ayarını yok sayan uygulamalar için"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Port aynı kalır. Ayarlar'da bulabilirsiniz."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "{ $target } hedefine ulaşmak için uygulamanızı bu adrese yönlendirin:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Port yönlendirmesi hazır"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "{ $tailnet } üzerinden"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Her satıra bir tane: LOCALPORT = host:port veya boş bir port seçilmesi için auto = host:port. Hangi tailnet'in taşıyacağını makinenin adı belirler. Hızlıca eklemek için Tailnet'ler sekmesinde bir makinenin yanındaki fiş düğmesini kullanın."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Port yönlendirmeleri"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Uzak Masaüstü, SSH ve veritabanı istemcileri gibi proxy ayarını yok sayan uygulamalar için. Her yönlendirme, bu bilgisayarda bir tailnet'teki bir makineye giden bir porttur."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Satır { $line }: { $port } yerel portu iki kez kullanılmış."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Satır { $line }: LOCALPORT = host:port biçiminde yazın."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Satır { $line }: “{ $value }” bir port numarası (veya auto) değil."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Satır { $line }: “{ $value }” host:port biçiminde olmalı."
+
+[messages.french]
+source = "French"
+translation = "Fransızca"
+
+[messages.general-heading]
+source = "General"
+translation = "Genel"
+
+[messages.german]
+source = "German"
+translation = "Almanca"
+
+[messages.greek]
+source = "Greek"
+translation = "Yunanca"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Tailnet'lerinize bağlanılıyor."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "{ $tailnet } adlı tailnet'te oturum açmayı tarayıcınızda tamamlayın."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Şu anda diğer tailnet'ler üzerinden hiçbir şey geçmiyor. Kendi ağınız ve tailnet'iniz her zamanki gibi çalışır."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Bu tailnet'lerdeki adresler tarayıcınızda açılır. Geri kalan her şey doğrudan gider."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "{ $address } adresini veya bu tailnet'lerdeki başka herhangi bir adresi açın. Geri kalan her şey doğrudan gider."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Makinelerine erişmek için { $tailnet } adlı tailnet'te oturum açın."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Başlatılıyor…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (oturum açtıktan sonra)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Macarca"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Endonezce"
+
+[messages.italian]
+source = "Italian"
+translation = "İtalyanca"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Japonca"
+
+[messages.korean]
+source = "Korean"
+translation = "Korece"
+
+[messages.language]
+source = "Language"
+translation = "Dil"
+
+[messages.log-out]
+source = "Log out"
+translation = "Oturumu kapat"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Oturumu kapat…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "{ $tailnet } adlı tailnet'teki oturum kapatılsın mı? Yeniden oturum açana kadar adresleri burada çalışmaz."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Oturum kapatılsın mı?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (çevrimdışı)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Ada, işletim sistemine veya adrese göre makine bulun"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Makineler · { $shown }/{ $total } eşleşiyor"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Makineler · { $online }/{ $total } çevrimiçi"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Diğer işlemler"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Yeni tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Boş bir yerel port bulunamadı."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Aramanızla eşleşen makine yok."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Bu tailnet'te başka makine görünmüyor."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Norveççe Bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "“{ $value }” bir port numarası (1-65535) değil."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Bu tailnet şu anda yönlendirme yapmıyor. Duraklatılmış olabilir mi?"
+
+[messages.ok]
+source = "OK"
+translation = "Tamam"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "{ $url } adresini tarayıcınızda açın"
+
+[messages.open-log]
+source = "Open log"
+translation = "Günlüğü aç"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Uzak Masaüstü'nü aç"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "{ $address } adresine Uzak Masaüstü bağlantısı aç"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Ayarlar klasörünü aç"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Tümünü duraklat"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Diğer tailnet'ler üzerinden yönlendirmeyi şimdilik durdur"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Bu tailnet'i duraklat"
+
+[messages.polish]
+source = "Polish"
+translation = "Lehçe"
+
+[messages.port]
+source = "Port"
+translation = "Port"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "ör. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Uzak Masaüstü"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Port { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Brezilya Portekizcesi"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Portekiz Portekizcesi"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Açık; çalışırken şirketinizin ayarladığı proxy betiğinin de yerine geç"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Sistem proxy ayarı"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "“Açık” seçeneği, uygulama çalışıp yönlendirme yaparken GNOME veya KDE proxy ayarını yapar ve sonrasında eski haline getirir. Firefox'ta Ayarlar > Ağ ayarları > “Sistem vekil sunucu ayarlarını kullan” seçeneğini açın."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "“Açık” seçeneği, uygulama çalışırken ağ hizmetleriniz için proxy'yi ayarlar ve sonrasında eski haline getirir. Mac'iniz bunun için yönetici parolası gerektiriyorsa, yönlendirme başladığında ve çıkış yaptığınızda parola istenir."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "“Açık” seçeneği Windows'u yalnızca uygulama çalışıp yönlendirme yaparken bu uygulamanın kurallarına yönlendirir; uygulama durduğunda, duraklatıldığında, bağlantısı kesildiğinde veya çöktüğünde her şeyi eski haline getirir."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Kapalı: uygulamalarımı kendim ayarlayacağım"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Açık (önerilen)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Uzak Masaüstü başlatılamadı: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Uzak Masaüstü yalnızca Windows'ta yerleşik olarak bulunur."
+
+[messages.remove]
+source = "Remove"
+translation = "Kaldır"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Kaldır…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }, { $tailnet } adlı tailnet'teki oturumu kapatır ve onu bu bilgisayarda unutur. Daha sonra yeniden ekleyebilirsiniz.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Bu tailnet kaldırılsın mı?"
+
+[messages.resume]
+source = "Resume"
+translation = "Sürdür"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Bu tailnet'i sürdür"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Diğer tailnet'ler üzerinden yönlendirmeyi yeniden başlat"
+
+[messages.revert]
+source = "Revert"
+translation = "Geri döndür"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Değişiklikleri geri al"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Rumence"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Oturum açtıktan sonra bulunur"
+
+[messages.russian]
+source = "Russian"
+translation = "Rusça"
+
+[messages.save]
+source = "Save"
+translation = "Kaydet"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Sırpça, Kiril"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Ayarların konumu: { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Ayarlar kaydedildi"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Oturum aç"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Bağlantıyı kopyala"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Bu tailnet için kullandığınız tarayıcıya veya tarayıcı profiline yapıştırın"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Tarayıcınız Tailscale'in oturum açma sayfasını açıyor. Sayfa bu pencerenin arkasında açılabilir.
+    
+    O tailnet'e ait hesabınızla oturum açın, ardından buraya dönün. Alan adı otomatik olarak algılanır."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Yeni tailnet'te oturum açın"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Tarayıcı açılmadı mı, yoksa yanlış profilde mi açıldı?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Oturum açma sayfasını yeniden aç"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Latin Amerika İspanyolcası"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "İspanya İspanyolcası"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Oturum açtığımda { -app-name } uygulamasını başlat
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } başlatılamıyor:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Bağlanıyor"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Henüz alan adı yok"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Yönlendirmiyor"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Duraklatıldı"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Sorun"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Yönlendiriyor"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Oturum kapalı"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Oturum açılması bekleniyor"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Arka planda yönlendirmeye devam ediyor. Sistem tepsisinde bulabilirsiniz."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Arka planda yönlendirmeye devam ediyor. Menü çubuğunda bulabilirsiniz."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } hâlâ çalışıyor
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Arka planda yönlendirmeye devam ediyor. Sistem tepsisinde bulabilirsiniz; Windows onu saatin yanındaki ^ okunun altına gizleyebilir."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Bağlanıyor…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Henüz tailnet yok"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Duraklatıldı"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Sorun: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] { $count } tailnet üzerinden yönlendiriliyor
+       *[other] { $count } tailnet üzerinden yönlendiriliyor
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "{ $tailnet } üzerinden yönlendiriliyor"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] { $count } tailnet'ten { $routing } tanesi üzerinden yönlendiriliyor
+       *[other] { $count } tailnet'ten { $routing } tanesi üzerinden yönlendiriliyor
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Oturum açılmadı"
+
+[messages.swedish]
+source = "Swedish"
+translation = "İsveççe"
+
+[messages.system-default]
+source = "System default"
+translation = "Sistem varsayılanı"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Ayarlar"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnet'ler"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Ad"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Bu uygulamada ve tepsi menüsünde gösterilir"
+
+[messages.test]
+source = "Test"
+translation = "Test et"
+
+[messages.testing]
+source = "Testing…"
+translation = "Test ediliyor…"
+
+[messages.thai]
+source = "Thai"
+translation = "Tayca"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Tailnet ekle…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } uygulamasını aç…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Çık"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Diğer tailnet'ler üzerinden yönlendir"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: oturum aç…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Sorun giderme"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Hangi tailnet'in taşıdığını ve bağlantı kurulup kurulmadığını görmek için bir web adresini veya ad:port bilgisini test edin."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Türkçe"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ukraynaca"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Kaydedilmemiş değişiklikleriniz var."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Vietnamca"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Bir uygulama ihtiyaç duyduğunda port yönlendirin"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Uzak Masaüstü, SSH ve veritabanı uygulamaları bir makineye giden yerel bir port alır."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Makinelerini adlarıyla açın"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "{ $example } gibi adresler tarayıcınızda çalışır."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Başka bir tailnet'te oturum açın"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Tailscale'in oturum açma sayfası tarayıcınızda açılır."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Kendi tailnet'inizde kalırken aynı anda diğerlerindeki makineleri açın. Tailscale uygulamanız her zamanki gibi çalışmaya devam eder."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Diğer tailnet'lerdeki makinelere erişin"

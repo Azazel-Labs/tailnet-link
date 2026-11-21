@@ -1,0 +1,897 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "13bf544ac5faa6dc20eee881f567ed45f6750883bd887cf151eb6972e564f264"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · lokalne proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Dodaj przekierowanie"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Nie udało się dodać przekierowania portu:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Dodaj sieć tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Nie udało się dodać sieci tailnet:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Uruchamianie po zalogowaniu nie jest obsługiwane w tym systemie."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Anuluj"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Kataloński"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: to nie jest prawidłowy port."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Wpisz nazwę urządzenia lub adres internetowy."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+Ruch do { $host } idzie przez { $tailnet }, ale połączenie z portem { $port } nie powiodło się: { $error }
+    Sprawdź, czy urządzenie jest online i czy coś nasłuchuje na tym porcie."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Ta sieć tailnet właśnie zniknęła."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } nie obsługuje { $host }: adres nie kończy się domeną żadnej aktywnej teraz sieci tailnet, więc idzie bezpośrednio (przez zwykłą sieć i własny Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "Sieć { $tailnet } nie działa."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } działa: połączono przez { $tailnet } w { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "Ruch do { $host } idzie przez { $tailnet }, ale port { $port } nie odpowiedział w ciągu 10 sekund."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Chiński uproszczony"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Chiński tradycyjny"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Wyczyść wyszukiwanie"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "Skopiowano { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "Skopiowano link logowania"
+
+[messages.copy]
+source = "Copy"
+translation = "Kopiuj"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Skopiuj { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Czeski"
+
+[messages.danish]
+source = "Danish"
+translation = "Duński"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Problem"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Trasy"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Sieć tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Ten komputer"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "„{ $domain }” zawiera znaki niedozwolone w domenie."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "Domenę { $domain } obsługuje też sieć { $tailnet } i to ona ma pierwszeństwo."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "„{ $domain }” nie jest domeną; użyj czegoś w rodzaju example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Gotowe"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Niderlandzki"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Edytuj przekierowania"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Zmień nazwę lub dodaj domeny…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Edytuj sieć { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Angielski"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Szczegóły w { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Coś poszło nie tak"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Dodatkowe domeny (opcjonalnie)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Własna domena sieci tailnet jest obsługiwana automatycznie. Dodaj po jednej w wierszu."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Fiński"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Nie można nasłuchiwać: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Uzyskaj port na tym komputerze prowadzący do { $host }. Który port na tamtym urządzeniu?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Przekieruj port"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Żadna aktywna sieć tailnet nie ma tej nazwy"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Port zostanie wybrany przy zapisie"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Przekieruj port: dla aplikacji, które ignorują ustawienie proxy, takich jak Pulpit zdalny czy klient bazy danych"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Port się nie zmienia. Znajdziesz go w Ustawieniach."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Skieruj aplikację na ten adres, aby połączyć się z { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Przekierowanie portu gotowe"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "przez { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Jedno w wierszu: LOCALPORT = host:port lub auto = host:port, aby wolny port został wybrany automatycznie. Nazwa hosta decyduje, która sieć tailnet przeniesie ruch. Aby szybko dodać przekierowanie, użyj przycisku z wtyczką przy urządzeniu na karcie „Sieci tailnet”."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Przekierowania portów"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Dla aplikacji, które ignorują ustawienie proxy, takich jak Pulpit zdalny, SSH i klienty baz danych. Każde przekierowanie to port na tym komputerze prowadzący do urządzenia w sieci tailnet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Wiersz { $line }: port lokalny { $port } występuje dwa razy."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Wiersz { $line }: wpisz LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Wiersz { $line }: „{ $value }” nie jest numerem portu (ani auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Wiersz { $line }: „{ $value }” powinno mieć postać host:port."
+
+[messages.french]
+source = "French"
+translation = "Francuski"
+
+[messages.general-heading]
+source = "General"
+translation = "Ogólne"
+
+[messages.german]
+source = "German"
+translation = "Niemiecki"
+
+[messages.greek]
+source = "Greek"
+translation = "Grecki"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Łączenie z sieciami tailnet."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Dokończ logowanie do { $tailnet } w przeglądarce."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Teraz nic nie przechodzi przez inne sieci tailnet. Twoja sieć lokalna i własna sieć tailnet działają jak zwykle."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Adresy w tych sieciach tailnet otwierają się w przeglądarce. Cała reszta idzie bezpośrednio."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Otwórz { $address } lub dowolny inny adres w tych sieciach tailnet. Cała reszta idzie bezpośrednio."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Zaloguj się do { $tailnet }, aby otwierać urządzenia tej sieci."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Uruchamianie…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (po zalogowaniu)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Węgierski"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Indonezyjski"
+
+[messages.italian]
+source = "Italian"
+translation = "Włoski"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Japoński"
+
+[messages.korean]
+source = "Korean"
+translation = "Koreański"
+
+[messages.language]
+source = "Language"
+translation = "Język"
+
+[messages.log-out]
+source = "Log out"
+translation = "Wyloguj"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Wyloguj…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Wylogować się z sieci { $tailnet }? Jej adresy przestaną tu działać, dopóki nie zalogujesz się ponownie."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Wylogować się?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (offline)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Znajdź urządzenie po nazwie, systemie lub adresie"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Urządzenia · pasuje: { $shown } z { $total }"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Urządzenia · online: { $online } z { $total }"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Więcej działań"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Nowa sieć tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Nie znaleziono wolnego portu lokalnego."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Żadne urządzenie nie pasuje do wyszukiwania."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "W tej sieci tailnet nie widać innych urządzeń."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Norweski bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "„{ $value }” nie jest numerem portu (1–65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Ta sieć tailnet nie przekazuje teraz ruchu. Czy jest wstrzymana?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Otwórz { $url } w przeglądarce"
+
+[messages.open-log]
+source = "Open log"
+translation = "Otwórz dziennik"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Otwórz Pulpit zdalny"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Połącz z { $address } przez Pulpit zdalny"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Otwórz folder ustawień"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Wstrzymaj wszystko"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Tymczasowo zatrzymaj routing przez inne sieci tailnet"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Wstrzymaj tę sieć tailnet"
+
+[messages.polish]
+source = "Polish"
+translation = "Polski"
+
+[messages.port]
+source = "Port"
+translation = "Port"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "np. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Pulpit zdalny"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Port { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Portugalski brazylijski"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Portugalski europejski"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Włączone, z zastąpieniem firmowego skryptu proxy na czas działania"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Systemowe ustawienie proxy"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "„Włączone” ustawia proxy w GNOME lub KDE, gdy aplikacja działa i przekazuje ruch, a potem przywraca poprzedni stan. W przeglądarce Firefox włącz Ustawienia > Ustawienia sieci > „Używaj systemowych ustawień serwerów proxy”."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "„Włączone” ustawia proxy dla usług sieciowych, gdy aplikacja działa, a potem przywraca poprzedni stan. Jeśli Mac wymaga do tego hasła administratora, poprosi o nie przy starcie routingu i przy zamykaniu aplikacji."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "„Włączone” kieruje Windows na reguły tej aplikacji tylko wtedy, gdy działa i przekazuje ruch, a przywraca poprzedni stan, gdy się zatrzyma, wstrzyma, rozłączy lub ulegnie awarii."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Wyłączone: skonfiguruję aplikacje ręcznie"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Włączone (zalecane)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Nie udało się uruchomić Pulpitu zdalnego: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Pulpit zdalny jest wbudowany tylko w system Windows."
+
+[messages.remove]
+source = "Remove"
+translation = "Usuń"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Usuń…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } wyloguje się z sieci { $tailnet } i zapomni o niej na tym komputerze. Możesz ją później dodać ponownie.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Usunąć tę sieć tailnet?"
+
+[messages.resume]
+source = "Resume"
+translation = "Wznów"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Wznów tę sieć tailnet"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Wznów routing przez inne sieci tailnet"
+
+[messages.revert]
+source = "Revert"
+translation = "Przywróć"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Cofnij zmiany"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Rumuński"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Pojawią się po zalogowaniu"
+
+[messages.russian]
+source = "Russian"
+translation = "Rosyjski"
+
+[messages.save]
+source = "Save"
+translation = "Zapisz"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Serbski, cyrylica"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Ustawienia są w { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Zapisano ustawienia"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Zaloguj się"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Skopiuj link"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Wklej go do przeglądarki lub profilu przeglądarki, którego używasz dla tej sieci tailnet"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Przeglądarka otwiera stronę logowania Tailscale. Może się ona otworzyć za tym oknem.
+    
+    Zaloguj się na konto tej sieci tailnet, a potem wróć tutaj. Jej domena zostanie wykryta automatycznie."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Zaloguj się do nowej sieci tailnet"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Przeglądarka się nie otworzyła lub otworzyła zły profil?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Otwórz ponownie stronę logowania"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Hiszpański latynoamerykański"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Hiszpański z Hiszpanii"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Uruchamiaj aplikację { -app-name } po zalogowaniu
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Nie można uruchomić aplikacji { -app-name }:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Łączenie"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Brak domeny"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Routing nieaktywny"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Wstrzymano"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Problem"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Routing aktywny"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Wylogowano"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Czeka na zalogowanie"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Routing działa dalej w tle. Ikona jest w zasobniku systemowym."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Routing działa dalej w tle. Ikona jest na pasku menu."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } nadal działa
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Routing działa dalej w tle. Ikona jest w zasobniku systemowym; Windows może ukryć ją pod strzałką ^ obok zegara."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Łączenie…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Brak sieci tailnet"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Wstrzymano"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Problem: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Routing przez { $count } sieć tailnet
+        [few] Routing przez { $count } sieci tailnet
+        [many] Routing przez { $count } sieci tailnet
+       *[other] Routing przez { $count } sieci tailnet
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Routing przez { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Routing przez { $routing } z { $count } sieci tailnet
+        [few] Routing przez { $routing } z { $count } sieci tailnet
+        [many] Routing przez { $routing } z { $count } sieci tailnet
+       *[other] Routing przez { $routing } z { $count } sieci tailnet
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Nie zalogowano"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Szwedzki"
+
+[messages.system-default]
+source = "System default"
+translation = "Domyślny język systemu"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Ustawienia"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Sieci tailnet"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Nazwa"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Wyświetlana w tej aplikacji i w menu w zasobniku"
+
+[messages.test]
+source = "Test"
+translation = "Testuj"
+
+[messages.testing]
+source = "Testing…"
+translation = "Testowanie…"
+
+[messages.thai]
+source = "Thai"
+translation = "Tajski"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Dodaj sieć tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Otwórz { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Zakończ"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Kieruj ruch przez inne sieci tailnet"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: zaloguj się…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Rozwiązywanie problemów"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Przetestuj adres internetowy lub nazwa:port, aby sprawdzić, która sieć tailnet go obsługuje i czy połączenie działa."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Turecki"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ukraiński"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Masz niezapisane zmiany."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Wietnamski"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Przekieruj port, gdy aplikacja go potrzebuje"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Pulpit zdalny, SSH i klienty baz danych dostają lokalny port prowadzący do urządzenia."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Otwieraj jej urządzenia po nazwie"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Adresy takie jak { $example } działają w przeglądarce."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Zaloguj się do innej sieci tailnet"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Strona logowania Tailscale otworzy się w przeglądarce."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Zostań we własnej sieci tailnet i jednocześnie otwieraj urządzenia w innych. Aplikacja Tailscale działa jak zwykle."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Dostęp do urządzeń w innych sieciach tailnet"

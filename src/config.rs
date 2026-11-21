@@ -1,6 +1,7 @@
 //! Settings: which tailnets to join, port forwards, and how to behave.
 //! Saved as JSON in the per-user config folder.
 
+use crate::i18n::tr;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
@@ -76,6 +77,8 @@ pub struct Config {
     /// Whether closing the window has shown the "still running" notification.
     /// It only shows the first time.
     pub background_hint_shown: bool,
+    /// UI language: a catalog code like "fr", or "auto" to follow the OS.
+    pub language: String,
 }
 
 /// Reads `null` as an empty list. Older versions wrote `null` for empty lists,
@@ -98,6 +101,7 @@ impl Default for Config {
             hostname: default_hostname(),
             listen: "127.0.0.1:1055".into(),
             background_hint_shown: false,
+            language: "auto".into(),
         }
     }
 }
@@ -233,10 +237,10 @@ pub fn parse_domains(text: &str) -> Result<Vec<String>, String> {
             continue;
         }
         if !d.contains('.') {
-            return Err(format!("{d:?} isn't a domain; use something like example.ts.net"));
+            return Err(tr!("domain-invalid", domain = d));
         }
         if !d.chars().all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '-' || c == '.') {
-            return Err(format!("{d:?} contains characters a domain can't have"));
+            return Err(tr!("domain-characters", domain = d));
         }
         if !out.contains(&d) {
             out.push(d);
@@ -254,23 +258,23 @@ pub fn parse_forwards(text: &str) -> Result<Vec<Forward>, String> {
             continue;
         }
         let n = i + 1;
-        let (left, right) = line.split_once('=').ok_or_else(|| format!("line {n}: want LOCALPORT = host:port"))?;
+        let (left, right) = line.split_once('=').ok_or_else(|| tr!("forwards-line-format", line = n))?;
         let left = left.trim();
         let port = if left.eq_ignore_ascii_case("auto") {
             0
         } else {
             match left.parse::<u16>() {
                 Ok(p) if p > 0 => p,
-                _ => return Err(format!("line {n}: {left:?} isn't a port number (or \"auto\")")),
+                _ => return Err(tr!("forwards-line-port", line = n, value = left)),
             }
         };
         let target = right.trim().to_owned();
         match target.rsplit_once(':') {
             Some((h, p)) if !h.is_empty() && p.parse::<u16>().is_ok() => {}
-            _ => return Err(format!("line {n}: {target:?} should be host:port")),
+            _ => return Err(tr!("forwards-line-target", line = n, value = target)),
         }
         if port != 0 && out.iter().any(|f| f.local_port == port) {
-            return Err(format!("line {n}: local port {port} is used twice"));
+            return Err(tr!("forwards-line-duplicate", line = n, port = port.to_string()));
         }
         out.push(Forward { local_port: port, target });
     }

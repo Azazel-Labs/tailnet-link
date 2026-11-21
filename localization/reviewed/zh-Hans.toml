@@ -1,0 +1,885 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "3b63e15c87702b63f97c3145c50b973ef5b89d7605eb79cbf2b49e53f9134c91"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · 本地代理 { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "添加转发"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+无法添加端口转发：
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "添加 tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+无法添加 tailnet：
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "南非荷兰语"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "此系统不支持登录时启动。"
+
+[messages.cancel]
+source = "Cancel"
+translation = "取消"
+
+[messages.catalan]
+source = "Catalan"
+translation = "加泰罗尼亚语"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }：不是有效的端口。"
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "请输入设备名称或网址。"
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } 经由 { $tailnet } 路由，但连接端口 { $port } 失败：{ $error }
+    请检查该设备是否在线，以及是否有程序在监听该端口。"""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "该 tailnet 刚刚消失了。"
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } 不会路由 { $host }：它不以任何正在路由的 tailnet 的域名结尾，因此会直连（经过你的普通网络和你自己的 Tailscale）。
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } 未在运行。"
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } 可用：已经由 { $tailnet } 连接，用时 { $ms } 毫秒。"
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } 经由 { $tailnet } 路由，但端口 { $port } 在 10 秒内没有响应。"
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "简体中文"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "繁体中文"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "清除搜索"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "已复制 { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "已复制登录链接"
+
+[messages.copy]
+source = "Copy"
+translation = "复制"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "复制 { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "捷克语"
+
+[messages.danish]
+source = "Danish"
+translation = "丹麦语"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "问题"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "路由"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "本机"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "“{ $domain }”包含域名中不允许的字符。"
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $domain } 也由 { $tailnet } 路由；以后者为准。"
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "“{ $domain }”不是域名；请使用类似 example.ts.net 的格式。"
+
+[messages.done]
+source = "Done"
+translation = "完成"
+
+[messages.dutch]
+source = "Dutch"
+translation = "荷兰语"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "编辑转发"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "重命名或添加域名…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "编辑 { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "英语"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "详细信息位于 { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "出错了"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "额外域名（可选）"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "tailnet 自身的域名会自动路由。每行添加一个。"
+
+[messages.finnish]
+source = "Finnish"
+translation = "芬兰语"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "无法监听：{ $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "在本机上获得一个通往 { $host } 的端口。要连接那台设备的哪个端口？"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "转发端口"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "没有正在路由的 tailnet 使用此名称"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "保存时选择端口"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "转发端口：适用于忽略代理设置的应用，例如远程桌面或数据库客户端"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "端口保持不变，你可以在“设置”中找到它。"
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "在应用中使用此地址即可访问 { $target }："
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "端口转发已就绪"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "经由 { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "每行一个：LOCALPORT = host:port，或写 auto = host:port 自动选择空闲端口。主机名决定经过哪个 tailnet。要快速添加，请在“Tailnet”选项卡中使用设备旁的插头按钮。"
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "端口转发"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "适用于忽略代理设置的应用，例如远程桌面、SSH 和数据库客户端。每个转发都是本机上的一个端口，通往某个 tailnet 中的设备。"
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "第 { $line } 行：本地端口 { $port } 被使用了两次。"
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "第 { $line } 行：请写成 LOCALPORT = host:port。"
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "第 { $line } 行：“{ $value }”不是端口号（或 auto）。"
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "第 { $line } 行：“{ $value }”应为 host:port。"
+
+[messages.french]
+source = "French"
+translation = "法语"
+
+[messages.general-heading]
+source = "General"
+translation = "常规"
+
+[messages.german]
+source = "German"
+translation = "德语"
+
+[messages.greek]
+source = "Greek"
+translation = "希腊语"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "正在连接到你的 tailnet。"
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "请在浏览器中完成 { $tailnet } 的登录。"
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "目前没有流量经过其他 tailnet。你自己的网络和 tailnet 照常工作。"
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "这些 tailnet 中的地址可直接在浏览器中打开。其他流量一律直连。"
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "可以打开 { $address } 或这些 tailnet 中的任何其他地址。其他流量一律直连。"
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "登录 { $tailnet } 即可访问其中的设备。"
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "正在启动…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname }（登录后）"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "匈牙利语"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "印度尼西亚语"
+
+[messages.italian]
+source = "Italian"
+translation = "意大利语"
+
+[messages.japanese]
+source = "Japanese"
+translation = "日语"
+
+[messages.korean]
+source = "Korean"
+translation = "韩语"
+
+[messages.language]
+source = "Language"
+translation = "语言"
+
+[messages.log-out]
+source = "Log out"
+translation = "退出登录"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "退出登录…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "要退出 { $tailnet } 的登录吗？重新登录之前，它的地址在本机上将无法使用。"
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "退出登录？"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name }（离线）"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "按名称、操作系统或地址查找设备"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "设备 · { $total } 台中 { $shown } 台匹配"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "设备 · { $total } 台中 { $online } 台在线"
+
+[messages.more-actions]
+source = "More actions"
+translation = "更多操作"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "新 tailnet"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "找不到空闲的本地端口。"
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "没有与搜索匹配的设备。"
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "此 tailnet 中没有其他可见设备。"
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "书面挪威语"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "“{ $value }”不是端口号（1-65535）。"
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "此 tailnet 目前未在路由。是否已暂停？"
+
+[messages.ok]
+source = "OK"
+translation = "确定"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "在浏览器中打开 { $url }"
+
+[messages.open-log]
+source = "Open log"
+translation = "打开日志"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "打开远程桌面"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "打开到 { $address } 的远程桌面"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "打开设置文件夹"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "全部暂停"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "暂时停止通过其他 tailnet 路由"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "暂停此 tailnet"
+
+[messages.polish]
+source = "Polish"
+translation = "波兰语"
+
+[messages.port]
+source = "Port"
+translation = "端口"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "例如 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "远程桌面"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "端口 { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "葡萄牙语（巴西）"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "葡萄牙葡萄牙语"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "开启，并在运行时替换公司设置的代理脚本"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "系统代理设置"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "“开启”后，会在应用运行并路由期间设置 GNOME 或 KDE 的代理，之后再恢复原设置。在 Firefox 中，请开启“设置 > 网络设置 > 使用系统代理设置”。"
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "“开启”后，会在应用运行期间为你的网络服务设置代理，之后再恢复原设置。如果你的 Mac 需要管理员密码才能更改，会在开始路由和退出时提示你输入。"
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "“开启”后，仅在本应用运行并路由时让 Windows 使用本应用的规则；当它停止、暂停、断开连接或崩溃时，会恢复原设置。"
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "关闭：我自己配置应用"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "开启（推荐）"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "无法启动远程桌面：{ $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "只有 Windows 内置远程桌面。"
+
+[messages.remove]
+source = "Remove"
+translation = "移除"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "移除…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } 将退出 { $tailnet } 的登录，并在本机上删除它。之后你可以重新添加。
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "移除此 tailnet？"
+
+[messages.resume]
+source = "Resume"
+translation = "恢复"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "恢复此 tailnet"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "重新开始通过其他 tailnet 路由"
+
+[messages.revert]
+source = "Revert"
+translation = "还原"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "撤消更改"
+
+[messages.romanian]
+source = "Romanian"
+translation = "罗马尼亚语"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "登录后获取"
+
+[messages.russian]
+source = "Russian"
+translation = "俄语"
+
+[messages.save]
+source = "Save"
+translation = "保存"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "塞尔维亚语（西里尔文）"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "设置位于 { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "设置已保存"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "登录"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "复制链接"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "粘贴到你用于此 tailnet 的浏览器或浏览器配置文件中"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+浏览器正在打开 Tailscale 的登录页面，它可能出现在此窗口后面。
+    
+    请用该 tailnet 的账户登录，然后回到这里。其域名会自动获取。"""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "登录新的 tailnet"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "浏览器没有打开，或打开了错误的配置文件？"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "重新打开登录页面"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "西班牙语（拉丁美洲）"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "西班牙语（西班牙）"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+登录时启动 { -app-name }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } 无法启动：
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "正在连接"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "尚无域名"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "未路由"
+
+[messages.state-paused]
+source = "Paused"
+translation = "已暂停"
+
+[messages.state-problem]
+source = "Problem"
+translation = "有问题"
+
+[messages.state-routing]
+source = "Routing"
+translation = "路由中"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "已退出登录"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "等待登录"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "它会在后台继续路由。可以在系统托盘中找到它。"
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "它会在后台继续路由。可以在菜单栏中找到它。"
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } 仍在运行
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "它会在后台继续路由。可以在系统托盘中找到它；Windows 可能会把它收在时钟旁的 ^ 箭头里。"
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "正在连接…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "还没有 tailnet"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "已暂停"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "问题：{ $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = "正在通过 { $count } 个 tailnet 路由"
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "正在通过 { $tailnet } 路由"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = "正在通过 { $count } 个 tailnet 中的 { $routing } 个路由"
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "未登录"
+
+[messages.swedish]
+source = "Swedish"
+translation = "瑞典语"
+
+[messages.system-default]
+source = "System default"
+translation = "跟随系统"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "设置"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailnet"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "名称"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "显示在此应用和托盘菜单中"
+
+[messages.test]
+source = "Test"
+translation = "测试"
+
+[messages.testing]
+source = "Testing…"
+translation = "正在测试…"
+
+[messages.thai]
+source = "Thai"
+translation = "泰语"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "添加 tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+打开 { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "退出"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "通过其他 tailnet 路由"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }：登录…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }：{ $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }：{ $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "故障排除"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "测试一个网址或“名称:端口”，查看它经过哪个 tailnet 以及能否连接。"
+
+[messages.turkish]
+source = "Turkish"
+translation = "土耳其语"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "乌克兰语"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "有未保存的更改。"
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "越南语"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "应用需要时转发端口"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "远程桌面、SSH 和数据库应用会获得一个通往设备的本地端口。"
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "按名称打开设备"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "像 { $example } 这样的地址可以直接在浏览器中使用。"
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "登录另一个 tailnet"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Tailscale 的登录页面会在浏览器中打开。"
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "留在你自己的 tailnet 上，同时打开其他 tailnet 中的设备。你的 Tailscale 应用照常工作。"
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "访问其他 tailnet 中的设备"

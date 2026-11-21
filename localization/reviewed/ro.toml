@@ -1,0 +1,895 @@
+version = 2
+
+[readme]
+source = "a45f16266a5cb35d2176fd10d14ce87343068cd518c314a97fe9c8a503912f9e"
+translation = "2c839f84e2371e60024168ca4e824aff45852af07570d49affa7b7ee79baa75c"
+
+[messages.about-line]
+source = """
+{ -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } · proxy local { $proxy } · PAC { $pac }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.add-forward]
+source = "Add forward"
+translation = "Adaugă redirecționarea"
+
+[messages.add-forward-failed]
+source = """
+Couldn't add the port forward:
+    { $error }"""
+translation = """
+Nu s-a putut adăuga redirecționarea de port:
+    { $error }"""
+
+[messages.add-tailnet]
+source = "Add a tailnet"
+translation = "Adaugă un tailnet"
+
+[messages.add-tailnet-failed]
+source = """
+Couldn't add a tailnet:
+    { $error }"""
+translation = """
+Nu s-a putut adăuga un tailnet:
+    { $error }"""
+
+[messages.afrikaans]
+source = "Afrikaans"
+translation = "Afrikaans"
+
+[messages.autostart-unsupported]
+source = "Starting at login isn't supported on this system."
+translation = "Pornirea la conectare nu este acceptată pe acest sistem."
+
+[messages.cancel]
+source = "Cancel"
+translation = "Anulează"
+
+[messages.catalan]
+source = "Catalan"
+translation = "Catalană"
+
+[messages.check-bad-port]
+source = "{ $input }: that's not a valid port."
+translation = "{ $input }: acesta nu este un port valid."
+
+[messages.check-empty]
+source = "Type a machine name or a web address."
+translation = "Tastează numele unei mașini sau o adresă web."
+
+[messages.check-failed]
+source = """
+{ $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }
+    Check the machine is online and something is listening on that port."""
+translation = """
+{ $host } este rutat prin { $tailnet }, dar conectarea la portul { $port } a eșuat: { $error }
+    Verifică dacă mașina este online și dacă ceva ascultă pe acel port."""
+
+[messages.check-gone]
+source = "That tailnet just went away."
+translation = "Acel tailnet tocmai a dispărut."
+
+[messages.check-not-routed]
+source = """
+{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ $host } nu este rutat de { -app-name }: nu se termină cu domeniul niciunui tailnet care rutează acum, așa că merge direct (prin rețeaua obișnuită și prin propriul Tailscale).
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.check-not-running]
+source = "{ $tailnet } isn't running."
+translation = "{ $tailnet } nu rulează."
+
+[messages.check-ok]
+source = "{ $address } works: connected through { $tailnet } in { $ms } ms."
+translation = "{ $address } funcționează: conectat prin { $tailnet } în { $ms } ms."
+
+[messages.check-timeout]
+source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
+translation = "{ $host } este rutat prin { $tailnet }, dar portul { $port } nu a răspuns în 10 secunde."
+
+[messages.chinese-simplified]
+source = "Simplified Chinese"
+translation = "Chineză simplificată"
+
+[messages.chinese-traditional]
+source = "Traditional Chinese"
+translation = "Chineză tradițională"
+
+[messages.clear-search]
+source = "Clear the search"
+translation = "Șterge căutarea"
+
+[messages.copied-address]
+source = "Copied { $address }"
+translation = "S-a copiat { $address }"
+
+[messages.copied-sign-in-link]
+source = "Copied the sign-in link"
+translation = "S-a copiat linkul de autentificare"
+
+[messages.copy]
+source = "Copy"
+translation = "Copiază"
+
+[messages.copy-address]
+source = "Copy { $address }"
+translation = "Copiază { $address }"
+
+[messages.czech]
+source = "Czech"
+translation = "Cehă"
+
+[messages.danish]
+source = "Danish"
+translation = "Daneză"
+
+[messages.detail-problem]
+source = "Problem"
+translation = "Problemă"
+
+[messages.detail-routes]
+source = "Routes"
+translation = "Rute"
+
+[messages.detail-tailnet]
+source = "Tailnet"
+translation = "Tailnet"
+
+[messages.detail-this-computer]
+source = "This computer"
+translation = "Acest computer"
+
+[messages.domain-characters]
+source = "“{ $domain }” contains characters a domain can't have."
+translation = "„{ $domain }” conține caractere pe care un domeniu nu le poate avea."
+
+[messages.domain-conflict]
+source = "{ $domain } is also routed by { $tailnet }; that one wins."
+translation = "{ $domain } este rutat și de { $tailnet }; acela are prioritate."
+
+[messages.domain-invalid]
+source = "“{ $domain }” isn't a domain; use something like example.ts.net."
+translation = "„{ $domain }” nu este un domeniu; folosește ceva de genul example.ts.net."
+
+[messages.done]
+source = "Done"
+translation = "Gata"
+
+[messages.dutch]
+source = "Dutch"
+translation = "Neerlandeză"
+
+[messages.edit-forwards]
+source = "Edit forwards"
+translation = "Editează redirecționările"
+
+[messages.edit-tailnet-menu]
+source = "Rename or add domains…"
+translation = "Redenumește sau adaugă domenii…"
+
+[messages.edit-title]
+source = "Edit { $tailnet }"
+translation = "Editează { $tailnet }"
+
+[messages.english]
+source = "English"
+translation = "Engleză"
+
+[messages.error-details]
+source = "Details are in { $path }"
+translation = "Detaliile sunt în { $path }"
+
+[messages.error-title]
+source = "Something went wrong"
+translation = "Ceva nu a mers bine"
+
+[messages.extra-domains]
+source = "Extra domains (optional)"
+translation = "Domenii suplimentare (opțional)"
+
+[messages.extra-domains-help]
+source = "The tailnet's own domain is routed automatically. Add one per line."
+translation = "Domeniul propriu al tailnetului este rutat automat. Adaugă câte unul pe linie."
+
+[messages.finnish]
+source = "Finnish"
+translation = "Finlandeză"
+
+[messages.forward-cant-listen]
+source = "Can't listen: { $error }"
+translation = "Nu se poate asculta: { $error }"
+
+[messages.forward-dialog-text]
+source = "Get a port on this computer that leads to { $host }. Which port on that machine?"
+translation = "Primește un port pe acest computer care duce la { $host }. Ce port de pe acea mașină?"
+
+[messages.forward-dialog-title]
+source = "Forward a port"
+translation = "Redirecționează un port"
+
+[messages.forward-no-tailnet]
+source = "No routing tailnet has this name"
+translation = "Niciun tailnet cu rutare activă nu are acest nume"
+
+[messages.forward-port-on-save]
+source = "A port is picked when you save"
+translation = "Portul se alege la salvare"
+
+[messages.forward-port-tooltip]
+source = "Forward a port: for apps that ignore the proxy setting, like Remote Desktop or a database client"
+translation = "Redirecționează un port: pentru aplicații care ignoră setarea proxy, cum ar fi Desktop la distanță sau un client de baze de date"
+
+[messages.forward-ready-note]
+source = "The port stays the same. You'll find it in Settings."
+translation = "Portul rămâne același. Îl găsești în Setări."
+
+[messages.forward-ready-text]
+source = "Point your app at this address to reach { $target }:"
+translation = "Configurează aplicația să folosească această adresă ca să ajungi la { $target }:"
+
+[messages.forward-ready-title]
+source = "Port forward ready"
+translation = "Redirecționarea de port este gata"
+
+[messages.forward-via]
+source = "via { $tailnet }"
+translation = "prin { $tailnet }"
+
+[messages.forwards-format-help]
+source = "One per line: LOCALPORT = host:port, or auto = host:port to have a free port picked. The host's name decides which tailnet carries it. To add one quickly, use the plug button on a machine in the Tailnets tab."
+translation = "Câte una pe linie: LOCALPORT = host:port sau auto = host:port pentru a alege un port liber. Numele gazdei decide ce tailnet o transportă. Pentru a adăuga rapid una, folosește butonul cu ștecher de lângă o mașină din fila Tailneturi."
+
+[messages.forwards-heading]
+source = "Port forwards"
+translation = "Redirecționări de porturi"
+
+[messages.forwards-help]
+source = "For apps that ignore the proxy setting, like Remote Desktop, SSH and database clients. Each forward is a port on this computer that leads to a machine in a tailnet."
+translation = "Pentru aplicații care ignoră setarea proxy, cum ar fi Desktop la distanță, SSH și clienții de baze de date. Fiecare redirecționare este un port pe acest computer care duce la o mașină dintr-un tailnet."
+
+[messages.forwards-line-duplicate]
+source = "Line { $line }: local port { $port } is used twice."
+translation = "Linia { $line }: portul local { $port } este folosit de două ori."
+
+[messages.forwards-line-format]
+source = "Line { $line }: write LOCALPORT = host:port."
+translation = "Linia { $line }: scrie LOCALPORT = host:port."
+
+[messages.forwards-line-port]
+source = "Line { $line }: “{ $value }” isn't a port number (or auto)."
+translation = "Linia { $line }: „{ $value }” nu este un număr de port (sau auto)."
+
+[messages.forwards-line-target]
+source = "Line { $line }: “{ $value }” should be host:port."
+translation = "Linia { $line }: „{ $value }” trebuie să fie host:port."
+
+[messages.french]
+source = "French"
+translation = "Franceză"
+
+[messages.general-heading]
+source = "General"
+translation = "General"
+
+[messages.german]
+source = "German"
+translation = "Germană"
+
+[messages.greek]
+source = "Greek"
+translation = "Greacă"
+
+[messages.hero-connecting]
+source = "Connecting to your tailnets."
+translation = "Se conectează la tailneturile tale."
+
+[messages.hero-finish-sign-in]
+source = "Finish signing in to { $tailnet } in your browser."
+translation = "Finalizează autentificarea în { $tailnet } din browser."
+
+[messages.hero-paused]
+source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
+translation = "Acum nu trece nimic prin alte tailneturi. Rețeaua și tailnetul tău funcționează ca de obicei."
+
+[messages.hero-routing]
+source = "Addresses in these tailnets open in your browser. Everything else goes direct."
+translation = "Adresele din aceste tailneturi se deschid în browser. Restul traficului merge direct."
+
+[messages.hero-routing-example]
+source = "Open { $address } or any other address in these tailnets. Everything else goes direct."
+translation = "Deschide { $address } sau orice altă adresă din aceste tailneturi. Restul traficului merge direct."
+
+[messages.hero-sign-in]
+source = "Sign in to { $tailnet } to reach its machines."
+translation = "Autentifică-te în { $tailnet } ca să ajungi la mașinile lui."
+
+[messages.hero-starting]
+source = "Starting…"
+translation = "Se pornește…"
+
+[messages.hostname-after-sign-in]
+source = "{ $hostname } (after you sign in)"
+translation = "{ $hostname } (după autentificare)"
+
+[messages.hungarian]
+source = "Hungarian"
+translation = "Maghiară"
+
+[messages.indonesian]
+source = "Indonesian"
+translation = "Indoneziană"
+
+[messages.italian]
+source = "Italian"
+translation = "Italiană"
+
+[messages.japanese]
+source = "Japanese"
+translation = "Japoneză"
+
+[messages.korean]
+source = "Korean"
+translation = "Coreeană"
+
+[messages.language]
+source = "Language"
+translation = "Limbă"
+
+[messages.log-out]
+source = "Log out"
+translation = "Deconectează-te"
+
+[messages.log-out-menu]
+source = "Log out…"
+translation = "Deconectează-te…"
+
+[messages.log-out-text]
+source = "Log out of { $tailnet }? Its addresses stop working here until you sign in again."
+translation = "Te deconectezi de la { $tailnet }? Adresele lui nu vor mai funcționa aici până te autentifici din nou."
+
+[messages.log-out-title]
+source = "Log out?"
+translation = "Te deconectezi?"
+
+[messages.machine-offline]
+source = "{ $name } (offline)"
+translation = "{ $name } (offline)"
+
+[messages.machine-search-hint]
+source = "Find a machine by name, OS or address"
+translation = "Caută o mașină după nume, sistem sau adresă"
+
+[messages.machines-matching]
+source = "Machines · { $shown } of { $total } match"
+translation = "Mașini · { $shown } din { $total } corespund"
+
+[messages.machines-online]
+source = "Machines · { $online } of { $total } online"
+translation = "Mașini · { $online } din { $total } online"
+
+[messages.more-actions]
+source = "More actions"
+translation = "Mai multe acțiuni"
+
+[messages.new-tailnet]
+source = "New tailnet"
+translation = "Tailnet nou"
+
+[messages.no-free-port]
+source = "Couldn't find a free local port."
+translation = "Nu s-a găsit niciun port local liber."
+
+[messages.no-machine-matches]
+source = "No machine matches your search."
+translation = "Nicio mașină nu corespunde căutării."
+
+[messages.no-machines]
+source = "No other machines are visible in this tailnet."
+translation = "Nu se vede nicio altă mașină în acest tailnet."
+
+[messages.norwegian-bokmal]
+source = "Norwegian Bokmål"
+translation = "Norvegiană bokmål"
+
+[messages.not-a-port]
+source = "“{ $value }” isn't a port number (1-65535)."
+translation = "„{ $value }” nu este un număr de port (1-65535)."
+
+[messages.not-routing-tooltip]
+source = "This tailnet isn't routing right now. Is it paused?"
+translation = "Acest tailnet nu rutează acum. Este întrerupt?"
+
+[messages.ok]
+source = "OK"
+translation = "OK"
+
+[messages.open-in-browser]
+source = "Open { $url } in your browser"
+translation = "Deschide { $url } în browser"
+
+[messages.open-log]
+source = "Open log"
+translation = "Deschide jurnalul"
+
+[messages.open-remote-desktop]
+source = "Open Remote Desktop"
+translation = "Deschide Desktop la distanță"
+
+[messages.open-remote-desktop-to]
+source = "Open Remote Desktop to { $address }"
+translation = "Deschide Desktop la distanță către { $address }"
+
+[messages.open-settings-folder]
+source = "Open settings folder"
+translation = "Deschide dosarul de setări"
+
+[messages.pause-all]
+source = "Pause all"
+translation = "Întrerupe tot"
+
+[messages.pause-all-tooltip]
+source = "Stop routing through other tailnets for now"
+translation = "Oprește deocamdată rutarea prin alte tailneturi"
+
+[messages.pause-tailnet]
+source = "Pause this tailnet"
+translation = "Întrerupe acest tailnet"
+
+[messages.polish]
+source = "Polish"
+translation = "Poloneză"
+
+[messages.port]
+source = "Port"
+translation = "Port"
+
+[messages.port-hint]
+source = "e.g. 8080"
+translation = "de ex. 8080"
+
+[messages.port-preset-remote-desktop]
+source = "Remote Desktop"
+translation = "Desktop la distanță"
+
+[messages.port-tooltip]
+source = "Port { $port }"
+translation = "Portul { $port }"
+
+[messages.portuguese-brazil]
+source = "Brazilian Portuguese"
+translation = "Portugheză braziliană"
+
+[messages.portuguese-portugal]
+source = "European Portuguese"
+translation = "Portugheză europeană"
+
+[messages.proxy-force]
+source = "On, and replace a proxy script set by your company while running"
+translation = "Activat și înlocuiește scriptul proxy setat de compania ta cât timp rulează"
+
+[messages.proxy-heading]
+source = "System proxy setting"
+translation = "Setarea proxy a sistemului"
+
+[messages.proxy-help-linux]
+source = '"On" sets the GNOME or KDE proxy setting while the app is running and routing, and puts it back afterwards. In Firefox, turn on Settings > Network Settings > "Use system proxy settings".'
+translation = "„Activat” modifică setarea proxy din GNOME sau KDE cât timp aplicația rulează și rutează, apoi o restabilește. În Firefox, activează Setări > Setări de rețea > „Folosește setările proxy ale sistemului”."
+
+[messages.proxy-help-macos]
+source = """"On" sets the proxy for your network services while the app is running and puts it back afterwards. If your Mac needs an admin password for that, you'll be asked when routing starts and when you quit."""
+translation = "„Activat” setează proxyul pentru serviciile de rețea cât timp aplicația rulează și îl restabilește după aceea. Dacă Mac-ul cere o parolă de administrator pentru asta, ți se va cere când pornește rutarea și când închizi aplicația."
+
+[messages.proxy-help-windows]
+source = """"On" points Windows at this app's rules only while it's running and routing, and puts things back when it stops, pauses, disconnects or crashes."""
+translation = "„Activat” îndreaptă Windows spre regulile acestei aplicații doar cât timp rulează și rutează, apoi restabilește totul când se oprește, este întreruptă, se deconectează sau se blochează."
+
+[messages.proxy-off]
+source = "Off: I'll set up my apps myself"
+translation = "Dezactivat: îmi configurez singur aplicațiile"
+
+[messages.proxy-on]
+source = "On (recommended)"
+translation = "Activat (recomandat)"
+
+[messages.remote-desktop-failed]
+source = "Couldn't start Remote Desktop: { $error }"
+translation = "Nu s-a putut porni Desktop la distanță: { $error }"
+
+[messages.remote-desktop-windows-only]
+source = "Remote Desktop is only built in on Windows."
+translation = "Desktop la distanță este integrat doar în Windows."
+
+[messages.remove]
+source = "Remove"
+translation = "Elimină"
+
+[messages.remove-menu]
+source = "Remove…"
+translation = "Elimină…"
+
+[messages.remove-text]
+source = """
+{ -app-name } logs out of { $tailnet } and forgets it on this computer. You can add it again later.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } se deconectează de la { $tailnet } și îl uită pe acest computer. Îl poți adăuga din nou mai târziu.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.remove-title]
+source = "Remove this tailnet?"
+translation = "Elimini acest tailnet?"
+
+[messages.resume]
+source = "Resume"
+translation = "Reia"
+
+[messages.resume-tailnet]
+source = "Resume this tailnet"
+translation = "Reia acest tailnet"
+
+[messages.resume-tooltip]
+source = "Start routing through other tailnets again"
+translation = "Pornește din nou rutarea prin alte tailneturi"
+
+[messages.revert]
+source = "Revert"
+translation = "Renunță"
+
+[messages.revert-tooltip]
+source = "Undo the changes"
+translation = "Anulează modificările"
+
+[messages.romanian]
+source = "Romanian"
+translation = "Română"
+
+[messages.routes-after-sign-in]
+source = "Found after you sign in"
+translation = "Detectate după autentificare"
+
+[messages.russian]
+source = "Russian"
+translation = "Rusă"
+
+[messages.save]
+source = "Save"
+translation = "Salvează"
+
+[messages.serbian-cyrillic]
+source = "Serbian (Cyrillic)"
+translation = "Sârbă, chirilică"
+
+[messages.settings-location]
+source = "Settings in { $path }"
+translation = "Setări în { $path }"
+
+[messages.settings-saved]
+source = "Settings saved"
+translation = "Setările au fost salvate"
+
+[messages.sign-in]
+source = "Sign in"
+translation = "Autentifică-te"
+
+[messages.sign-in-copy-link]
+source = "Copy the link"
+translation = "Copiază linkul"
+
+[messages.sign-in-copy-link-tooltip]
+source = "Paste it into the browser, or browser profile, you use for this tailnet"
+translation = "Lipește-l în browserul sau profilul de browser pe care îl folosești pentru acest tailnet"
+
+[messages.sign-in-dialog-text]
+source = """
+Your browser is opening Tailscale's sign-in page. It may open behind this window.
+    
+    Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically."""
+translation = """
+Browserul deschide pagina de autentificare Tailscale. Se poate deschide în spatele acestei ferestre.
+    
+    Autentifică-te cu contul pentru acel tailnet, apoi revino aici. Domeniul lui este detectat automat."""
+
+[messages.sign-in-dialog-title]
+source = "Sign in to the new tailnet"
+translation = "Autentifică-te în noul tailnet"
+
+[messages.sign-in-help]
+source = "Browser didn't open, or opened the wrong profile?"
+translation = "Browserul nu s-a deschis sau s-a deschis în profilul greșit?"
+
+[messages.sign-in-open-again]
+source = "Open the sign-in page again"
+translation = "Deschide din nou pagina de autentificare"
+
+[messages.spanish-latin-america]
+source = "Latin American Spanish"
+translation = "Spaniolă latino-americană"
+
+[messages.spanish-spain]
+source = "Spanish (Spain)"
+translation = "Spaniolă din Spania"
+
+[messages.start-at-login]
+source = """
+Start { -app-name } when I log in
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Pornește { -app-name } când mă conectez
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.start-failed]
+source = """
+{ -app-name } can't start:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } nu poate porni:
+    { $error }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.state-connecting]
+source = "Connecting"
+translation = "Se conectează"
+
+[messages.state-no-domain]
+source = "No domain yet"
+translation = "Încă fără domeniu"
+
+[messages.state-not-routing]
+source = "Not routing"
+translation = "Fără rutare"
+
+[messages.state-paused]
+source = "Paused"
+translation = "Întrerupt"
+
+[messages.state-problem]
+source = "Problem"
+translation = "Problemă"
+
+[messages.state-routing]
+source = "Routing"
+translation = "Rutare activă"
+
+[messages.state-signed-out]
+source = "Signed out"
+translation = "Deconectat"
+
+[messages.state-waiting-sign-in]
+source = "Waiting for sign-in"
+translation = "Așteaptă autentificarea"
+
+[messages.still-running-linux]
+source = "It keeps routing in the background. Find it in the system tray."
+translation = "Continuă să ruteze în fundal. Îl găsești în zona de notificare."
+
+[messages.still-running-macos]
+source = "It keeps routing in the background. Find it in the menu bar."
+translation = "Continuă să ruteze în fundal. Îl găsești în bara de meniu."
+
+[messages.still-running-title]
+source = """
+{ -app-name } is still running
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } rulează în continuare
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.still-running-windows]
+source = "It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock."
+translation = "Continuă să ruteze în fundal. Îl găsești în zona de notificare; Windows îl poate ascunde sub săgeata ^ de lângă ceas."
+
+[messages.summary-connecting]
+source = "Connecting…"
+translation = "Se conectează…"
+
+[messages.summary-no-tailnets]
+source = "No tailnets yet"
+translation = "Încă nu există tailneturi"
+
+[messages.summary-paused]
+source = "Paused"
+translation = "Întrerupt"
+
+[messages.summary-problem]
+source = "Problem: { $problem }"
+translation = "Problemă: { $problem }"
+
+[messages.summary-routing-all]
+source = """
+{ $count ->
+        [one] Routing via { $count } tailnet
+       *[other] Routing via { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Rutare prin { $count } tailnet
+        [few] Rutare prin { $count } tailneturi
+       *[other] Rutare prin { $count } de tailneturi
+    }"""
+
+[messages.summary-routing-one]
+source = "Routing via { $tailnet }"
+translation = "Rutare prin { $tailnet }"
+
+[messages.summary-routing-some]
+source = """
+{ $count ->
+        [one] Routing via { $routing } of { $count } tailnet
+       *[other] Routing via { $routing } of { $count } tailnets
+    }"""
+translation = """
+{ $count ->
+        [one] Rutare prin { $routing } din { $count } tailnet
+        [few] Rutare prin { $routing } din { $count } tailneturi
+       *[other] Rutare prin { $routing } din { $count } de tailneturi
+    }"""
+
+[messages.summary-signed-out]
+source = "Not logged in"
+translation = "Neautentificat"
+
+[messages.swedish]
+source = "Swedish"
+translation = "Suedeză"
+
+[messages.system-default]
+source = "System default"
+translation = "Implicită a sistemului"
+
+[messages.tab-settings]
+source = "Settings"
+translation = "Setări"
+
+[messages.tab-tailnets]
+source = "Tailnets"
+translation = "Tailneturi"
+
+[messages.tailnet-name]
+source = "Name"
+translation = "Nume"
+
+[messages.tailnet-name-hint]
+source = "Shown in this app and the tray menu"
+translation = "Afișat în această aplicație și în meniul din zona de notificare"
+
+[messages.test]
+source = "Test"
+translation = "Testează"
+
+[messages.testing]
+source = "Testing…"
+translation = "Se testează…"
+
+[messages.thai]
+source = "Thai"
+translation = "Thailandeză"
+
+[messages.tray-add-tailnet]
+source = "Add a tailnet…"
+translation = "Adaugă un tailnet…"
+
+[messages.tray-open]
+source = """
+Open { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Deschide { -app-name }…
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.tray-quit]
+source = "Quit"
+translation = "Ieșire"
+
+[messages.tray-route]
+source = "Route through other tailnets"
+translation = "Rutează prin alte tailneturi"
+
+[messages.tray-sign-in]
+source = "{ $tailnet }: sign in…"
+translation = "{ $tailnet }: autentifică-te…"
+
+[messages.tray-tailnet]
+source = "{ $tailnet }: { $state }"
+translation = "{ $tailnet }: { $state }"
+
+[messages.tray-tooltip]
+source = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }: { $summary }
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.troubleshooting-heading]
+source = "Troubleshooting"
+translation = "Depanare"
+
+[messages.troubleshooting-help]
+source = "Test a web address or name:port to see which tailnet carries it and whether it connects."
+translation = "Testează o adresă web sau nume:port ca să vezi ce tailnet o transportă și dacă se conectează."
+
+[messages.turkish]
+source = "Turkish"
+translation = "Turcă"
+
+[messages.ukrainian]
+source = "Ukrainian"
+translation = "Ucraineană"
+
+[messages.unsaved-changes]
+source = "You have unsaved changes."
+translation = "Ai modificări nesalvate."
+
+[messages.vietnamese]
+source = "Vietnamese"
+translation = "Vietnameză"
+
+[messages.welcome-forward]
+source = "Forward a port when an app needs one"
+translation = "Redirecționează un port când o aplicație are nevoie"
+
+[messages.welcome-forward-detail]
+source = "Remote Desktop, SSH and database apps get a local port that leads to a machine."
+translation = "Desktop la distanță, SSH și aplicațiile de baze de date primesc un port local care duce la o mașină."
+
+[messages.welcome-open]
+source = "Open its machines by name"
+translation = "Deschide-i mașinile după nume"
+
+[messages.welcome-open-detail]
+source = "Addresses like { $example } work in your browser."
+translation = "Adrese ca { $example } funcționează în browser."
+
+[messages.welcome-sign-in]
+source = "Sign in to another tailnet"
+translation = "Autentifică-te în alt tailnet"
+
+[messages.welcome-sign-in-detail]
+source = "Tailscale's sign-in page opens in your browser."
+translation = "Pagina de autentificare Tailscale se deschide în browser."
+
+[messages.welcome-text]
+source = "Stay on your own tailnet and open machines in others at the same time. Your Tailscale app keeps working as usual."
+translation = "Rămâi în propriul tailnet și deschide în același timp mașini din altele. Aplicația Tailscale funcționează în continuare ca de obicei."
+
+[messages.welcome-title]
+source = "Reach machines on other tailnets"
+translation = "Accesează mașini din alte tailneturi"

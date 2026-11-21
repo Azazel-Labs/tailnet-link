@@ -10,6 +10,7 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use crate::config::{self, Config, Forward, TailnetConfig};
+use crate::i18n::tr;
 use crate::proxy::{self, PacState, Router};
 use crate::sync::lock;
 use crate::sysproxy::SystemProxy;
@@ -101,7 +102,7 @@ impl TailnetStatus {
         } else if !self.tailnet.is_empty() {
             self.tailnet.clone()
         } else {
-            "New tailnet".into()
+            tr!("new-tailnet")
         }
     }
 }
@@ -123,23 +124,23 @@ impl Status {
         let login = self.tailnets.iter().filter(|t| t.needs_login()).count();
         let n = self.tailnets.len();
         if n == 0 {
-            "No tailnets yet".into()
+            tr!("summary-no-tailnets")
         } else if !self.enabled {
-            "Paused".into()
+            tr!("summary-paused")
         } else if routing == n {
             if n == 1 {
-                format!("Routing via {}", self.tailnets[0].label())
+                tr!("summary-routing-one", tailnet = self.tailnets[0].label())
             } else {
-                format!("Routing via {n} tailnets")
+                tr!("summary-routing-all", count = n)
             }
         } else if routing > 0 {
-            format!("Routing via {routing} of {n} tailnets")
+            tr!("summary-routing-some", routing = routing, count = n)
         } else if login > 0 {
-            "Not logged in".into()
+            tr!("summary-signed-out")
         } else if !self.problem.is_empty() {
-            format!("Problem: {}", self.problem)
+            tr!("summary-problem", problem = self.problem.as_str())
         } else {
-            "Connecting…".into()
+            tr!("summary-connecting")
         }
     }
 
@@ -428,7 +429,7 @@ impl Core {
             if want {
                 for d in &e.st.domains {
                     if let Some(other) = claimed.get(d) {
-                        e.st.problem = format!("{d} is also routed by {other}; that one wins");
+                        e.st.problem = tr!("domain-conflict", domain = d.as_str(), tailnet = other.as_str());
                     } else {
                         claimed.insert(d.clone(), e.st.label());
                     }
@@ -691,6 +692,21 @@ impl Core {
         }
     }
 
+    /// Saves the UI language (already loaded with `i18n::set_language`) and
+    /// redraws everything that shows text, including the tray menu.
+    pub fn set_language(&self, code: &str) -> Result<(), String> {
+        let res = {
+            let mut g = lock(&self.inner);
+            code.clone_into(&mut g.cfg.language);
+            let r = g.cfg.save();
+            // Rebuilds stored messages, such as a domain conflict, in the new language.
+            self.update_routing(&mut g);
+            r
+        };
+        self.changed();
+        res
+    }
+
     pub fn update_tailnet(&self, id: &str, name: &str, enabled: bool, extra: Vec<String>) -> Result<(), String> {
         let res = {
             let mut g = lock(&self.inner);
@@ -754,7 +770,7 @@ impl Core {
             .find(|f| f.target == target)
             .map(|f| f.local_port)
             .filter(|p| *p != 0)
-            .ok_or_else(|| "couldn't find a free local port".to_owned())
+            .ok_or_else(|| tr!("no-free-port"))
     }
 
     /// Checks a name or address: which tailnet routes it, and whether a
@@ -762,33 +778,29 @@ impl Core {
     pub fn check(&self, input: &str) -> Result<String, String> {
         let (host, port) = parse_check_target(input)?;
         let Some(id) = self.node_for(&host) else {
-            return Err(format!(
-                "{host} isn't routed by Tailnet Link: it doesn't end in the domain of any \
-                 tailnet that's routing right now, so it goes direct (through your normal \
-                 network and your own Tailscale)."
-            ));
+            return Err(tr!("check-not-routed", host = host.as_str()));
         };
         let (label, target) = {
             let g = lock(&self.inner);
-            let e = g.entries.get(&id).ok_or("that tailnet just went away")?;
+            let e = g.entries.get(&id).ok_or_else(|| tr!("check-gone"))?;
             (e.st.label(), e.node.as_ref().map(|n| n.socks()))
         };
-        let target = target.ok_or_else(|| format!("{label} isn't running"))?;
+        let target = target.ok_or_else(|| tr!("check-not-running", tailnet = label.as_str()))?;
         let started = std::time::Instant::now();
         let res = self.rt.block_on(async {
             tokio::time::timeout(Duration::from_secs(10), crate::socks::connect(&target, &host, port)).await
         });
         match res {
-            Ok(Ok(_)) => {
-                Ok(format!("{host}:{port} works: connected through {label} in {} ms.", started.elapsed().as_millis()))
-            }
-            Ok(Err(e)) => Err(format!(
-                "{host} is routed through {label}, but connecting to port {port} failed: {e}\n\
-                 Check the machine is online and something is listening on that port."
+            Ok(Ok(_)) => Ok(tr!(
+                "check-ok",
+                address = format!("{host}:{port}"),
+                tailnet = label,
+                ms = u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX)
             )),
-            Err(_) => {
-                Err(format!("{host} is routed through {label}, but port {port} didn't answer within 10 seconds."))
+            Ok(Err(e)) => {
+                Err(tr!("check-failed", host = host, tailnet = label, port = port.to_string(), error = e.to_string()))
             }
+            Err(_) => Err(tr!("check-timeout", host = host, tailnet = label, port = port.to_string())),
         }
     }
 
@@ -883,10 +895,10 @@ pub fn parse_check_target(input: &str) -> Result<(String, u16), String> {
     let (host, port) = proxy::split_host_port(hostport, default_port);
     let host = host.trim_end_matches('.').to_lowercase();
     if host.is_empty() {
-        return Err("Type a machine name or a web address.".into());
+        return Err(tr!("check-empty"));
     }
     if port == 0 {
-        return Err(format!("{hostport}: that's not a valid port"));
+        return Err(tr!("check-bad-port", input = hostport));
     }
     Ok((host, port))
 }
