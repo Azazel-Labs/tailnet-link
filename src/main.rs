@@ -132,6 +132,7 @@ fn window(core: &Arc<core::Core>, start_hidden: bool) {
             .with_inner_size([720.0, 760.0])
             .with_min_inner_size([520.0, 480.0])
             .with_icon(Arc::new(icon)),
+        wgpu_options: wgpu_options(),
         ..Default::default()
     };
     let core2 = core.clone();
@@ -142,6 +143,40 @@ fn window(core: &Arc<core::Core>, start_hidden: bool) {
     ) {
         log::error!("UI failed: {e}");
     }
+}
+
+/// GPU setup for the window. On Windows wgpu would otherwise pick Vulkan when the
+/// driver offers it, and some drivers' Vulkan swapchains flash the whole window
+/// on redraw (seen on hover); DX12 is the well-trodden path there. A tray app
+/// needs no discrete GPU either. Setting `WGPU_BACKEND` or `WGPU_POWER_PREF`
+/// restores wgpu's own choice.
+fn wgpu_options() -> eframe::WgpuConfiguration {
+    use eframe::egui_wgpu::{WgpuSetup, wgpu};
+    let mut options = eframe::WgpuConfiguration::default();
+    let overridden = wgpu::Backends::from_env().is_some() || wgpu::PowerPreference::from_env().is_some();
+    if let WgpuSetup::CreateNew(setup) = &mut options.wgpu_setup
+        && !overridden
+    {
+        setup.native_adapter_selector = Some(Arc::new(|adapters, surface| {
+            let rank = |a: &wgpu::Adapter| {
+                let info = a.get_info();
+                let device = match info.device_type {
+                    wgpu::DeviceType::IntegratedGpu => 0,
+                    wgpu::DeviceType::DiscreteGpu => 1,
+                    wgpu::DeviceType::VirtualGpu | wgpu::DeviceType::Other => 2,
+                    wgpu::DeviceType::Cpu => 3,
+                };
+                (cfg!(windows) && info.backend != wgpu::Backend::Dx12, device)
+            };
+            adapters
+                .iter()
+                .filter(|a| surface.is_none_or(|s| a.is_surface_supported(s)))
+                .min_by_key(|a| rank(a))
+                .cloned()
+                .ok_or_else(|| "no graphics adapter can draw to the window".to_owned())
+        }));
+    }
+    options
 }
 
 /// True if another copy is running (it's asked to show its window).

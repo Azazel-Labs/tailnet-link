@@ -130,6 +130,10 @@ impl Gui {
     /// `start_hidden`: launched at login (--background): stay in the tray.
     pub fn new(cc: &eframe::CreationContext<'_>, core: Arc<Core>, start_hidden: bool) -> Gui {
         let ctx = cc.egui_ctx.clone();
+        if let Some(rs) = &cc.wgpu_render_state {
+            let info = rs.adapter.get_info();
+            log::info!("Rendering with {} ({:?}, driver {})", info.name, info.backend, info.driver_info);
+        }
         let cfg = core.config();
         theme::apply(&ctx, i18n::set_language(&cfg.language));
 
