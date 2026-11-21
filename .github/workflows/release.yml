@@ -2,24 +2,30 @@ name: Release
 
 # A version tag (v1.2.3, or v1.2.3-rc.1 for a prerelease) runs CI, builds the
 # installers for every platform and publishes a GitHub Release with them.
-# Tags come from `cargo xtask release publish` or the Auto release workflow,
-# which dispatches this workflow on the tag.
+# Tags come from `cargo xtask release publish`, which starts this, or the Auto
+# release workflow, which calls it with the tag it made.
 on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      tag:
+        description: "Version tag to release (Auto release passes the one it made)"
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-${{ inputs.tag || github.ref }}
   cancel-in-progress: false
 
 env:
   CARGO_TERM_COLOR: always
   CARGO_INCREMENTAL: 0
-  VERSION: ${{ github.ref_name }}
+  VERSION: ${{ inputs.tag || github.ref_name }}
   # Build dependencies on Linux: GTK + AppIndicator (tray), xdo, xkbcommon, Wayland.
   LINUX_DEPS: build-essential libgtk-3-dev libxdo-dev libayatana-appindicator3-dev libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev
 
@@ -30,13 +36,15 @@ jobs:
     outputs:
       prerelease: ${{ steps.decide.outputs.prerelease }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Check this is a version tag
         run: |
-          if [[ "$GITHUB_REF" != refs/tags/v* ]]; then
+          if [[ "$VERSION" != v* ]]; then
             echo "::error::Run releases from a version tag (v1.2.3)."
             exit 1
           fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ env.VERSION }}
       - name: Install toolchain (from rust-toolchain.toml)
         run: rustup toolchain install
       - name: Validate version tag
@@ -56,6 +64,8 @@ jobs:
     runs-on: ubuntu-latest # cross-compiles with MinGW; NSIS builds the installer
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ env.VERSION }}
       - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
         with:
           go-version-file: tsbridge/go.mod
@@ -85,6 +95,8 @@ jobs:
     runs-on: ubuntu-24.04 # fixed glibc baseline for the download
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ env.VERSION }}
       - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
         with:
           go-version-file: tsbridge/go.mod
@@ -110,6 +122,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ env.VERSION }}
       - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
         with:
           go-version-file: tsbridge/go.mod
@@ -132,7 +146,7 @@ jobs:
           if-no-files-found: error
 
   publish:
-    name: Publish ${{ github.ref_name }}
+    name: Publish ${{ inputs.tag || github.ref_name }}
     needs: [plan, windows, linux, macos]
     runs-on: ubuntu-latest
     permissions:
@@ -146,8 +160,8 @@ jobs:
         run: cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
       - uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Tailnet Link ${{ github.ref_name }}
+          tag_name: ${{ env.VERSION }}
+          name: Tailnet Link ${{ env.VERSION }}
           prerelease: ${{ needs.plan.outputs.prerelease == 'true' }}
           make_latest: ${{ needs.plan.outputs.prerelease != 'true' }}
           generate_release_notes: true
