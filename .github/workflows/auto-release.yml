@@ -7,10 +7,10 @@ name: Auto release
 # A tag counts only on a line by itself or with other tags (e.g. "#minor #release");
 # tags mentioned mid-sentence are ignored.
 #
-# Nothing is committed to main. The version is set in a commit of its own that only the version tag
-# points to, so builds from the tag see it in Cargo.toml, there's never a bot commit to pull first, and
-# the bot isn't counted among the repository's contributors. main's Cargo.toml keeps whatever version
-# it was last given by hand; the version tags are what count.
+# Nothing is committed anywhere. The tag goes on main's commit and the release builds write the
+# tag's version into Cargo.toml before building, so there's never a bot commit to pull first, no
+# branch of the bot's off main, and the bot isn't counted among the repository's contributors.
+# main's Cargo.toml keeps whatever version it was last given by hand; the version tags are what count.
 #
 # Pushes made with GITHUB_TOKEN don't start workflows, so release.yml is called from here
 # rather than started by the tag.
@@ -86,21 +86,15 @@ jobs:
           echo "Releasing ${last:-nothing yet} -> v$version"
           echo "release=true" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
-      - name: Install toolchain (from rust-toolchain.toml)
-        if: steps.plan.outputs.release == 'true'
-        run: rustup toolchain install
       - name: Tag
         if: steps.plan.outputs.release == 'true'
         env:
           VERSION: ${{ steps.plan.outputs.version }}
         run: |
-          # Setting the version updates the lockfile offline, so download what it resolves against first.
-          cargo fetch --locked
-          cargo xtask release prepare "$VERSION"
+          # The tag goes on main's own commit. The release builds write the version into Cargo.toml
+          # themselves, so there's no commit of the bot's: nothing off main, and no bot contributor.
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # On a commit only the tag points to; main already having the version needs none.
-          git diff --quiet || git commit -qam "Release $VERSION"
           git tag -a "v$VERSION" -m "Tailnet Link $VERSION"
           # Only the tag is pushed. It fails rather than replaces a version tag that's already there.
           git push origin "refs/tags/v$VERSION"

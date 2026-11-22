@@ -106,8 +106,8 @@ fn validate(root: &Path, version: &str) -> Result<()> {
     Ok(())
 }
 
+/// The tag can go on any commit of main: the release builds write its version into Cargo.toml.
 fn publish(root: &Path, version: &str) -> Result<()> {
-    validate(root, version)?;
     if !git(root, &["status", "--porcelain"])?.is_empty() {
         return Err("Commit your changes before publishing".into());
     }

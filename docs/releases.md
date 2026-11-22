@@ -22,36 +22,31 @@ message is safe.
 A `#minor #release` line releases 1.0.0 to 1.1.0. Leave out `#release` to let changes
 collect; the bump lines count once a later push releases.
 
-Nothing is committed to `main`, so there's never a bot commit to pull. The version
-is set in Cargo.toml and Cargo.lock in a commit of its own that only the version
-tag points to, which is what the release builds from. `main`'s Cargo.toml keeps
-the version it was last given by hand; the version tags are what count. If CI
-fails, nothing happens; the tags still count once a later push passes CI.
+Nothing is committed anywhere: the tag goes on your commit on `main`, and each
+release build writes the tag's version into Cargo.toml and Cargo.lock before it
+builds. So there's never a bot commit to pull, no bot branch off `main`, and the
+bot isn't listed as a contributor. `main`'s Cargo.toml keeps the version it was
+last given by hand; the version tags are what count. If CI fails, nothing happens;
+the tags still count once a later push passes CI.
 
 ## Publish a version manually
 
-Start on `main`. For example, to release `0.4.0`:
+Start on `main`, with everything you intend to release committed and pushed. For
+example, to release `0.4.0`:
 
 ```sh
-cargo xtask release prepare 0.4.0
-git diff -- Cargo.toml Cargo.lock
-git add Cargo.toml Cargo.lock
-git commit -m "Release 0.4.0"
-git push origin main
 cargo xtask release publish 0.4.0
 ```
 
-If the version already matches, Prepare has nothing to change, so skip the empty
-commit. Commit and push any other changes you intend to release before Publish.
-
-Prepare updates the workspace version and the lockfile without upgrading
-third-party dependencies. Publish requires a clean `main` at the same commit as
-`origin/main`, creates an annotated `v0.4.0` tag, and pushes that tag. It never
-force-pushes or replaces a version tag.
+Publish requires a clean `main` at the same commit as `origin/main`, creates an
+annotated `v0.4.0` tag, and pushes that tag. It never force-pushes or replaces a
+version tag. You don't need to set the version in Cargo.toml first; the builds do.
+If you want `main` to show it too, `cargo xtask release prepare 0.4.0` updates the
+workspace version and the lockfile without upgrading third-party dependencies.
 
 Follow the [Release workflow](https://github.com/Azazel-Labs/tailnet-link/actions/workflows/release.yml).
-It checks the tag against Cargo.toml, runs the full CI (formatting, strict Clippy,
-tests and the Windows smoke test), then builds:
+It writes the tag's version into Cargo.toml, runs the full CI (formatting, strict
+Clippy, tests and the Windows smoke test), then builds:
 
 | Job | Output |
 | --- | --- |
@@ -69,8 +64,8 @@ automatically generated release notes.
 | `0.4.0` → `v0.4.0` | Stable release | Promoted to Latest |
 | `0.5.0-alpha.1`, `0.5.0-beta.1`, `0.5.0-rc.1` | Prerelease | Unchanged |
 
-A preview's version must match its tag, including the suffix. Promoting a preview
-to stable is a new version: prepare and publish `0.5.0` after testing `0.5.0-rc.1`.
+Promoting a preview to stable is a new version: publish `0.5.0` after testing
+`0.5.0-rc.1`.
 
 ## Failed releases
 
