@@ -82,6 +82,7 @@ impl SystemProxy {
     }
 
     /// The setting as it is now ("" when there's none).
+    #[expect(clippy::unused_self, reason = "same signature as on macOS and Linux, where it reads the backend")]
     pub fn current(&self) -> String {
         read_auto_config_url()
     }
@@ -278,6 +279,13 @@ mod tests {
         s
     }
 
+    /// As with "Replace it" chosen in Settings.
+    fn forced(url: &str) -> SystemProxy {
+        let s = sp(url);
+        s.set_force(true);
+        s
+    }
+
     #[test]
     fn takes_over_an_earlier_copys_address_and_puts_it_back() {
         let _g = lock(&crate::TEST_LOCK);
@@ -307,7 +315,7 @@ mod tests {
         let _g = lock(&crate::TEST_LOCK);
         let _p = Preserve(read_auto_config_url());
         set_auto_config_url(Some(CORP)).unwrap();
-        let s = sp(V1);
+        let s = forced(V1);
         s.enable().unwrap();
         assert_eq!(read_auto_config_url(), V1);
         s.update(V2).unwrap();
@@ -317,7 +325,7 @@ mod tests {
         assert!(hkcu().open_subkey(STATE_KEY).is_err(), "state removed");
 
         // Crash: owner alive -> untouched; owner dead -> restored.
-        let s = sp(V1);
+        let s = forced(V1);
         s.enable().unwrap();
         cleanup_stale();
         assert_eq!(read_auto_config_url(), V1);
@@ -330,7 +338,7 @@ mod tests {
         assert_eq!(read_auto_config_url(), CORP);
 
         // A foreign watchdog leaves it alone.
-        let s = sp(V1);
+        let s = forced(V1);
         s.enable().unwrap();
         restore_proxy_state(std::process::id() + 1);
         assert_eq!(read_auto_config_url(), V1);

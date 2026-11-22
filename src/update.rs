@@ -8,7 +8,7 @@ use crate::core::Update;
 const LATEST: &str = "https://api.github.com/repos/Azazel-Labs/tailnet-link/releases/latest";
 
 /// How often to ask, and how long to wait after starting before the first time.
-pub const EVERY: Duration = Duration::from_secs(12 * 60 * 60);
+pub const EVERY: Duration = Duration::from_hours(12);
 pub const FIRST_AFTER: Duration = Duration::from_secs(20);
 
 /// The latest release, if it's newer than this build.

@@ -935,7 +935,7 @@ impl Core {
             (e.st.label(), e.node.as_ref().map(|n| n.socks()))
         };
         let target = target.ok_or_else(|| tr!("check-not-running", tailnet = label.as_str()))?;
-        let started = std::time::Instant::now();
+        let started = Instant::now();
         let res = self.rt.block_on(async {
             tokio::time::timeout(Duration::from_secs(10), crate::socks::connect(&target, &host, port)).await
         });
@@ -1239,7 +1239,8 @@ pub(crate) mod tests {
     #[test]
     fn routing_by_name() {
         let (_g, _d) = test_dir();
-        let core = Core::new(Config::default());
+        // No system proxy here; "off" keeps that out of the summary.
+        let core = Core::new(Config { system_proxy: "off".into(), ..Config::default() });
         fake(&core, "a", "example.ts.net", true);
         fake(&core, "b", "other-net.ts.net", true);
         fake(&core, "c", "offline.ts.net", false);

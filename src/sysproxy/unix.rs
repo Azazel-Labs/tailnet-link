@@ -332,6 +332,7 @@ mod tests {
     fn enable_update_disable() {
         let (_g, m, _d) = setup(CORP, false);
         let s = SystemProxy::with_backend(m.clone(), V1);
+        s.set_force(true); // "Replace it", so the company script is set aside and restored
         s.enable().unwrap();
         assert_eq!(*lock(&m.url), V1);
         assert!(*lock(&m.cleanup));
