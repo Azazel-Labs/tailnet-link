@@ -70,8 +70,19 @@ mkdir -p "$STAGE"
 cp -R "$APP" "$STAGE/"
 ln -s /Applications "$STAGE/Applications"
 cp LICENSE "$STAGE/LICENSE.txt"
-hdiutil create -volname "Tailnet Link" -srcfolder "$STAGE" -ov -format UDZO \
-  "$OUT/tailnet-link-macos-universal.dmg" >/dev/null
+# hdiutil's own guess at the image size from -srcfolder is sometimes too small on CI runners ("No space left on
+# device"), so give it one: the staged size plus room for the file system. It also fails now and then with
+# "Resource busy", so try a few times.
+mb=$(( $(du -sm "$STAGE" | cut -f1) * 5 / 4 + 16 ))
+for try in 1 2 3; do
+  if hdiutil create -volname "Tailnet Link" -srcfolder "$STAGE" -fs HFS+ -size "${mb}m" -ov -format UDZO \
+    "$OUT/tailnet-link-macos-universal.dmg" >/dev/null; then
+    break
+  fi
+  [ "$try" = 3 ] && exit 1
+  echo "hdiutil failed, trying again" >&2
+  sleep 5
+done
 
 rm -rf "$OUT/build" "$APP"
 echo "Built $OUT/tailnet-link-macos-universal.dmg and .zip"
