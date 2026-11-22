@@ -24,6 +24,7 @@ mod sysproxy;
 mod theme;
 mod tsnet;
 mod ui;
+mod update;
 
 use std::sync::Arc;
 use std::time::Duration;
@@ -34,17 +35,19 @@ pub static TEST_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
 struct Args {
     cleanup: bool,
+    logout_all: bool,
     watchdog_pid: Option<u32>,
     export_icon: Option<String>,
     background: bool,
 }
 
 fn parse_args() -> Args {
-    let mut a = Args { cleanup: false, watchdog_pid: None, export_icon: None, background: false };
+    let mut a = Args { cleanup: false, logout_all: false, watchdog_pid: None, export_icon: None, background: false };
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.trim_start_matches('-') {
             "cleanup" => a.cleanup = true,
+            "logout-all" => a.logout_all = true,
             "background" => a.background = true,
             "watchdog-pid" => a.watchdog_pid = it.next().and_then(|v| v.parse().ok()),
             "export-icon" => a.export_icon = it.next(),
@@ -78,10 +81,14 @@ fn main() {
     // Before logging starts, since the log lives in the config folder.
     let migrated = config::migrate_legacy_dir();
     logging::init();
+    let mut startup_error = None;
     match migrated {
         Ok(Some(old)) => log::info!("Moved settings from {} to {}", old.display(), config::config_dir().display()),
         Ok(None) => {}
-        Err(e) => log::warn!("Couldn't move settings from the old tailnet-proxy folder: {e}"),
+        Err(e) => {
+            log::warn!("Couldn't move settings from the old tailnet-proxy folder: {e}");
+            startup_error = Some(i18n::tr!("migrate-failed", error = e.to_string()));
+        }
     }
 
     // Hidden modes the app launches itself with (see sysproxy).
@@ -91,6 +98,11 @@ fn main() {
     }
     if let Some(pid) = args.watchdog_pid {
         sysproxy::run_watchdog(pid);
+        return;
+    }
+    // The uninstaller, before deleting logins: sign out so no machine is left behind.
+    if args.logout_all {
+        core::logout_all();
         return;
     }
 
@@ -105,7 +117,8 @@ fn main() {
             config::Config::default()
         }
     };
-    if first_run {
+    // Not while the old folder couldn't be moved: it can still move on the next start.
+    if first_run && startup_error.is_none() {
         let _ = cfg.save();
     }
 
@@ -118,12 +131,14 @@ fn main() {
     log::info!("Tailnet Link {} starting (settings: {})", env!("CARGO_PKG_VERSION"), config::config_path().display());
     let core = core::Core::new(cfg);
 
-    window(&core, args.background && !first_run);
+    let start_hidden = args.background && !first_run && startup_error.is_none();
+    window(&core, start_hidden, startup_error);
     core.shutdown();
 }
 
 /// Runs the window until it closes. `start_hidden`: stay in the tray.
-fn window(core: &Arc<core::Core>, start_hidden: bool) {
+/// `startup_error`: shown in a dialog once the window is up.
+fn window(core: &Arc<core::Core>, start_hidden: bool, startup_error: Option<String>) {
     let icon = egui::IconData { rgba: icon::app(256), width: 256, height: 256 };
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
@@ -139,7 +154,7 @@ fn window(core: &Arc<core::Core>, start_hidden: bool) {
     if let Err(e) = eframe::run_native(
         "Tailnet Link",
         options,
-        Box::new(move |cc| Ok(Box::new(ui::Gui::new(cc, core2, start_hidden)))),
+        Box::new(move |cc| Ok(Box::new(ui::Gui::new(cc, core2, start_hidden, startup_error)))),
     ) {
         log::error!("UI failed: {e}");
     }

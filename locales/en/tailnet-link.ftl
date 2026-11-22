@@ -78,6 +78,8 @@ summary-routing-some =
 summary-signed-out = Not logged in
 summary-problem = Problem: { $problem }
 summary-connecting = Connecting…
+# Signed in and routing, but the system proxy setting doesn't send anything to the app.
+summary-proxy-problem = Connected, but your apps aren't using it
 # A tailnet before its first sign-in, when it has no name yet.
 new-tailnet = New tailnet
 
@@ -91,6 +93,18 @@ hero-sign-in = Sign in to { $tailnet } to reach its machines.
 # $address is a machine's name, such as build-pc.example.ts.net.
 hero-routing-example = Open { $address } or any other address in these tailnets. Everything else goes direct.
 hero-routing = Addresses in these tailnets open in your browser. Everything else goes direct.
+# Why browsers don't use the app although it's connected. $script is another program's proxy setup script address.
+hero-proxy-taken = Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script }).
+hero-proxy-other-copy = Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+hero-proxy-changed = Your browser won't open these tailnets' addresses: something else changed the system proxy setting.
+# $error is a system error message.
+hero-proxy-failed = Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error }).
+# The user turned the system proxy setting off in Settings. $pac is a web address.
+hero-proxy-manual = The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }
+proxy-replace = Replace it
+proxy-replace-tooltip = Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+proxy-retry = Try again
+proxy-retry-tooltip = Point the system proxy setting at { -app-name } again
 add-tailnet = Add a tailnet
 pause-all = Pause all
 pause-all-tooltip = Stop routing through other tailnets for now
@@ -186,6 +200,10 @@ open-log = Open log
 open-settings-folder = Open settings folder
 about-line = { -app-name } { $version } · local proxy { $proxy } · PAC { $pac }
 settings-location = Settings in { $path }
+# $value is the setup script address the system uses now, or system-setting-none.
+system-setting = System proxy setting now: { $value }
+system-setting-none = none
+check-updates = Check for new versions
 
 ## Results of "Test" in Troubleshooting
 
@@ -255,6 +273,8 @@ tray-route = Route through other tailnets
 tray-open = Open { -app-name }…
 tray-quit = Quit
 tray-tooltip = { -app-name }: { $summary }
+# $version is a version number such as 0.5.0. Opens the download page.
+tray-update = Download { -app-name } { $version }…
 
 ## Notification the first time the window is closed
 
@@ -262,6 +282,18 @@ still-running-title = { -app-name } is still running
 still-running-windows = It keeps routing in the background. Find it in the system tray; Windows may tuck it under the ^ arrow by the clock.
 still-running-macos = It keeps routing in the background. Find it in the menu bar.
 still-running-linux = It keeps routing in the background. Find it in the system tray.
+
+## A newer version ($version, such as 0.5.0; $current is the one running)
+
+update-available = Version { $version } is out
+update-available-tooltip = You have { $current }. Opens the download page.
+update-notify-title = { -app-name } { $version } is available
+update-notify-text = Open { -app-name } to download it.
+
+## Starting up
+
+# tailnet-proxy is this app's earlier name; keep it as it is. $error is a system error message.
+migrate-failed = Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
 
 ## Language names in Settings, after each language's own name
 

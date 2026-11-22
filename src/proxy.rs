@@ -71,6 +71,16 @@ pub fn is_our_pac(a: &str, b: &str) -> bool {
     !a.is_empty() && base(a) == base(b)
 }
 
+/// A PAC address in the form this app (and its earlier versions) uses, on any
+/// port: `http://127.0.0.1:PORT/proxy.pac`, with or without `?v=`. Left behind
+/// by an earlier copy that ran on another port, it's safe to take over.
+pub fn is_tailnet_link_pac(url: &str) -> bool {
+    let Some(rest) = url.strip_prefix("http://127.0.0.1:") else { return false };
+    let Some((port, path)) = rest.split_once('/') else { return false };
+    let path = path.split('?').next().unwrap_or("");
+    !port.is_empty() && port.len() <= 5 && port.bytes().all(|b| b.is_ascii_digit()) && path == "proxy.pac"
+}
+
 pub async fn serve(listener: TcpListener, router: Arc<dyn Router>, pac: Arc<PacState>) {
     loop {
         let Ok((conn, _)) = listener.accept().await else {
@@ -254,6 +264,17 @@ pub async fn serve_forward(listener: TcpListener, target: String, router: Arc<dy
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn recognises_our_pac_on_any_port() {
+        assert!(is_tailnet_link_pac("http://127.0.0.1:1055/proxy.pac?v=1795182691"));
+        assert!(is_tailnet_link_pac("http://127.0.0.1:49768/proxy.pac"));
+        assert!(!is_tailnet_link_pac("http://127.0.0.1:1055/other.pac"));
+        assert!(!is_tailnet_link_pac("http://127.0.0.1:/proxy.pac"));
+        assert!(!is_tailnet_link_pac("http://corp.example/proxy.pac"));
+        assert!(!is_tailnet_link_pac("http://127.0.0.1:1055/proxy.pac.evil/x"));
+        assert!(!is_tailnet_link_pac(""));
+    }
 
     #[test]
     fn pac_rules() {

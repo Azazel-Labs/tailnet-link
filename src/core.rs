@@ -7,13 +7,13 @@ use std::fmt::Write as _;
 use std::net::TcpListener as StdListener;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 use crate::config::{self, Config, Forward, TailnetConfig};
 use crate::i18n::tr;
 use crate::proxy::{self, PacState, Router};
 use crate::sync::lock;
-use crate::sysproxy::SystemProxy;
+use crate::sysproxy::{ProxyError, SystemProxy};
 use crate::tsnet::{Node, SocksTarget};
 
 /// A machine in one of the tailnets.
@@ -107,6 +107,52 @@ impl TailnetStatus {
     }
 }
 
+/// Whether the system proxy setting sends these tailnets' names to the app,
+/// as checked against the setting itself (not just what we last wrote).
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub enum SystemProxyState {
+    /// Nothing routes, so the setting isn't needed.
+    #[default]
+    Idle,
+    /// The setting points at this app.
+    Active,
+    /// The user chose "Off": only apps they set up themselves use the app.
+    Manual,
+    /// Another program's setup script is in place (its address).
+    Taken(String),
+    /// Another running copy of Tailnet Link has the setting.
+    OtherCopy,
+    /// Something else changed the setting after we set it.
+    Changed,
+    /// Changing the setting failed.
+    Failed(String),
+}
+
+impl SystemProxyState {
+    /// Routing is on, but browsers won't use it.
+    pub fn is_problem(&self) -> bool {
+        matches!(self, Self::Taken(_) | Self::OtherCopy | Self::Changed | Self::Failed(_))
+    }
+}
+
+impl From<ProxyError> for SystemProxyState {
+    fn from(e: ProxyError) -> Self {
+        match e {
+            ProxyError::Taken(s) => Self::Taken(s),
+            ProxyError::OtherCopy => Self::OtherCopy,
+            ProxyError::Changed => Self::Changed,
+            ProxyError::Failed(s) => Self::Failed(s),
+        }
+    }
+}
+
+/// A newer release than this one.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Update {
+    pub version: String,
+    pub url: String,
+}
+
 /// The whole app as the UI shows it.
 #[derive(Clone, Debug, Default)]
 pub struct Status {
@@ -116,6 +162,12 @@ pub struct Status {
     pub problem: String,
     pub listen: String,
     pub forwards: Vec<ForwardStatus>,
+    /// The address of our setup script, for apps set up by hand.
+    pub pac_url: String,
+    pub system: SystemProxyState,
+    /// The system proxy setting as last read ("" for none).
+    pub system_setting: String,
+    pub update: Option<Update>,
 }
 
 impl Status {
@@ -127,6 +179,8 @@ impl Status {
             tr!("summary-no-tailnets")
         } else if !self.enabled {
             tr!("summary-paused")
+        } else if routing > 0 && self.system.is_problem() {
+            tr!("summary-proxy-problem")
         } else if routing == n {
             if n == 1 {
                 tr!("summary-routing-one", tailnet = self.tailnets[0].label())
@@ -167,7 +221,17 @@ struct Inner {
     forwards: HashMap<String, tokio::task::AbortHandle>,
     /// Port forwards that couldn't listen, by local port.
     forward_errors: HashMap<u16, String>,
+    system: SystemProxyState,
+    system_setting: String,
+    /// When the system proxy setting is next read back (None: on the next poll).
+    system_check_at: Option<Instant>,
+    /// Why the system proxy setting can't be managed at all here.
+    system_unavailable: String,
+    update: Option<Update>,
 }
+
+/// How often the system proxy setting is read back while routing.
+const SYSTEM_CHECK_EVERY: Duration = Duration::from_secs(5);
 
 type Callback = Box<dyn Fn() + Send + Sync>;
 
@@ -208,6 +272,11 @@ impl Core {
                 problem: String::new(),
                 forwards: HashMap::new(),
                 forward_errors: HashMap::new(),
+                system: SystemProxyState::Idle,
+                system_setting: String::new(),
+                system_check_at: None,
+                system_unavailable: String::new(),
+                update: None,
             }),
             pac_state: Arc::new(PacState::new()),
             rt: tokio::runtime::Builder::new_multi_thread()
@@ -278,12 +347,11 @@ impl Core {
                     }
                 })
                 .collect(),
+            pac_url: pac_url_of(&g),
+            system: g.system.clone(),
+            system_setting: g.system_setting.clone(),
+            update: g.update.clone(),
         }
-    }
-
-    pub fn pac_url(&self) -> String {
-        let g = lock(&self.inner);
-        pac_url_of(&g)
     }
 
     fn set_problem(&self, msg: String) {
@@ -331,7 +399,65 @@ impl Core {
                 }
             })
             .map_err(|e| e.to_string())?;
+
+        let me = Arc::downgrade(self);
+        std::thread::Builder::new()
+            .name("updates".into())
+            .spawn(move || {
+                std::thread::sleep(crate::update::FIRST_AFTER);
+                let mut next = Instant::now();
+                loop {
+                    let Some(core) = me.upgrade() else { return };
+                    if core.config().check_updates && Instant::now() >= next {
+                        next = Instant::now() + crate::update::EVERY;
+                        match crate::update::check() {
+                            Ok(u) => core.set_update(u),
+                            Err(e) => log::info!("Couldn't check for updates: {e}"),
+                        }
+                    }
+                    drop(core);
+                    std::thread::sleep(Duration::from_secs(60));
+                }
+            })
+            .map_err(|e| e.to_string())?;
         Ok(())
+    }
+
+    fn set_update(&self, u: Option<Update>) {
+        {
+            let mut g = lock(&self.inner);
+            if g.update == u {
+                return;
+            }
+            if let Some(u) = &u {
+                log::info!("Tailnet Link {} is available: {}", u.version, u.url);
+            }
+            g.update = u;
+        }
+        self.changed();
+    }
+
+    /// Turns the update check on or off.
+    pub fn set_check_updates(&self, on: bool) -> Result<(), String> {
+        let res = {
+            let mut g = lock(&self.inner);
+            g.cfg.check_updates = on;
+            if !on {
+                g.update = None;
+            }
+            g.cfg.save()
+        };
+        self.changed();
+        res
+    }
+
+    /// Remembers that a notification has been shown for this version.
+    pub fn mark_update_notified(&self, version: &str) {
+        let mut g = lock(&self.inner);
+        if g.cfg.update_notified != version {
+            version.clone_into(&mut g.cfg.update_notified);
+            let _ = g.cfg.save();
+        }
     }
 
     /// Opens the proxy port. If another program has it, uses a free port instead (and saves it).
@@ -445,18 +571,14 @@ impl Core {
             e.st.routing = want;
             any |= want;
         }
+        let flipped = any != g.routing;
         g.routing = any;
         self.rebuild_pac(g);
         self.pac_state.set_active(any);
-        if let Some(s) = g.sys.as_ref() {
-            if any {
-                if let Err(e) = s.enable() {
-                    g.problem = format!("system proxy setting: {e}");
-                }
-            } else {
-                s.pause();
-            }
+        if flipped {
+            g.system_check_at = None;
         }
+        sync_system_proxy(g);
     }
 
     fn rebuild_pac(&self, g: &mut Inner) {
@@ -499,9 +621,9 @@ impl Core {
         }
         {
             let mut g = lock(&self.inner);
-            let before = g.routing;
+            let before = (g.routing, g.system.clone(), g.system_setting.clone());
             self.update_routing(&mut g);
-            changed |= before != g.routing;
+            changed |= before != (g.routing, g.system.clone(), g.system_setting.clone());
         }
         for u in to_open {
             log::info!("Opening the sign-in page: {u}");
@@ -729,6 +851,32 @@ impl Core {
         self.update_tailnet(id, &tc.name, on, tc.extra_domains)
     }
 
+    /// Tries the system proxy setting again (after something else changed it).
+    pub fn retry_system_proxy(&self) {
+        {
+            let mut g = lock(&self.inner);
+            g.system = SystemProxyState::Idle;
+            g.system_check_at = None;
+            self.update_routing(&mut g);
+        }
+        self.changed();
+    }
+
+    /// Switches the system proxy mode ("on", "force", "off") and saves it.
+    pub fn set_system_proxy_mode(&self, mode: &str) -> Result<(), String> {
+        let res = {
+            let mut g = lock(&self.inner);
+            mode.clone_into(&mut g.cfg.system_proxy);
+            let r = g.cfg.save();
+            g.system = SystemProxyState::Idle;
+            apply_system_proxy_mode(&mut g);
+            self.update_routing(&mut g);
+            r
+        };
+        self.changed();
+        res
+    }
+
     /// Saves port forwards and the system-proxy mode and applies them live.
     pub fn apply_global(self: &Arc<Self>, forwards: Vec<Forward>, sys_mode: &str) -> Result<(), String> {
         {
@@ -738,6 +886,7 @@ impl Core {
             g.cfg.validate()?;
             g.cfg.save()?;
             g.problem.clear();
+            g.system = SystemProxyState::Idle;
             apply_system_proxy_mode(&mut g);
             self.update_routing(&mut g);
         }
@@ -861,6 +1010,32 @@ impl Core {
     }
 }
 
+/// Signs every saved tailnet out, for the uninstaller before it deletes the
+/// logins: otherwise each tailnet keeps an abandoned machine with this
+/// computer's name, and a later install's machine gets "-1" added to its name.
+/// Each tailnet gets up to 30 seconds altogether.
+pub fn logout_all() {
+    let cfg = Config::load().unwrap_or_default();
+    let jobs: Vec<_> = cfg
+        .tailnets
+        .iter()
+        .filter(|tc| config::node_dir(&tc.id).is_dir())
+        .map(|tc| {
+            let (id, hostname) = (tc.id.clone(), cfg.hostname.clone());
+            std::thread::spawn(move || match Node::start(&config::node_dir(&id), &hostname).and_then(|n| n.logout()) {
+                Ok(()) => log::info!("[{id}] logged out"),
+                Err(e) => log::warn!("[{id}] couldn't log out: {e}"),
+            })
+        })
+        .collect();
+    let deadline = Instant::now() + Duration::from_secs(30);
+    for job in jobs {
+        while !job.is_finished() && Instant::now() < deadline {
+            std::thread::sleep(Duration::from_millis(200));
+        }
+    }
+}
+
 /// The routing tailnet whose domain matches host (longest match wins).
 fn node_for_in(g: &Inner, host: &str) -> Option<String> {
     let host = host.trim_end_matches('.').to_lowercase();
@@ -908,20 +1083,71 @@ fn pac_url_of(g: &Inner) -> String {
 }
 
 fn apply_system_proxy_mode(g: &mut Inner) {
+    g.system_check_at = None;
     if g.cfg.system_proxy == "off" {
         if let Some(s) = g.sys.take() {
             s.disable();
         }
         return;
     }
-    if g.sys.is_none() {
-        match SystemProxy::new(&pac_url_of(g), g.cfg.system_proxy == "force") {
-            Ok(s) => g.sys = Some(s),
-            Err(e) => {
-                log::info!("System proxy not managed: {e}");
-                g.problem = e;
-            }
+    let force = g.cfg.system_proxy == "force";
+    if let Some(s) = g.sys.as_ref() {
+        s.set_force(force);
+        return;
+    }
+    match SystemProxy::new(&pac_url_of(g), force) {
+        Ok(s) => {
+            g.sys = Some(s);
+            g.system_unavailable.clear();
         }
+        Err(e) => {
+            log::warn!("System proxy setting can't be managed here: {e}");
+            g.system_unavailable = e;
+        }
+    }
+}
+
+/// Keeps the system proxy setting on exactly while something routes, and reads
+/// it back every few seconds, so the status says whether browsers really use
+/// the app rather than what we last wrote.
+fn sync_system_proxy(g: &mut Inner) {
+    let any = g.routing;
+    let state = if g.cfg.system_proxy == "off" {
+        if any { SystemProxyState::Manual } else { SystemProxyState::Idle }
+    } else if let Some(s) = g.sys.as_ref() {
+        if any {
+            if g.system_check_at.is_some_and(|t| Instant::now() < t) {
+                return; // not due yet; keep the last answer
+            }
+            g.system_check_at = Some(Instant::now() + SYSTEM_CHECK_EVERY);
+            let res = if s.is_on() {
+                s.verify()
+            } else if g.system == SystemProxyState::Changed {
+                // Something else changed it: wait for "Try again" rather than fight it.
+                Err(ProxyError::Changed)
+            } else {
+                s.enable()
+            };
+            g.system_setting = s.current();
+            match res {
+                Ok(()) => SystemProxyState::Active,
+                Err(e) => e.into(),
+            }
+        } else {
+            s.pause();
+            if g.system != SystemProxyState::Idle {
+                g.system_setting = s.current();
+            }
+            SystemProxyState::Idle
+        }
+    } else if any {
+        SystemProxyState::Failed(g.system_unavailable.clone())
+    } else {
+        SystemProxyState::Idle
+    };
+    if state != g.system {
+        log::info!("System proxy setting: {state:?} (currently {:?})", g.system_setting);
+        g.system = state;
     }
 }
 

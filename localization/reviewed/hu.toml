@@ -100,6 +100,10 @@ translation = "{ $address } működik: kapcsolódva a(z) { $tailnet } tailneten 
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } a(z) { $tailnet } tailneten át van irányítva, de a(z) { $port } port 10 másodpercen belül nem válaszolt."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "Új verziók keresése"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "Egyszerűsített kínai"
@@ -304,6 +308,34 @@ translation = "Fejezze be a böngészőben a bejelentkezést a(z) { $tailnet } t
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "Most semmi sem halad át más tailneteken. A saját hálózata és tailnetje a szokásos módon működik."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "A böngészője nem nyitja meg ezeknek a tailneteknek a címeit: valami más módosította a rendszer proxybeállítását."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "A böngészője nem nyitja meg ezeknek a tailneteknek a címeit: a rendszer proxybeállítását nem sikerült módosítani ({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "A rendszer proxybeállítása ki van kapcsolva, így csak a saját maga által beállított alkalmazások érik el ezeket a tailneteket. Irányítsa őket erre a címre: { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A böngészője nem nyitja meg ezeknek a tailneteknek a címeit: a rendszer proxybeállítását a { -app-name } egy másik példánya kezeli. Lépjen ki abból a példányból, és ez veszi át a helyét.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "A böngészője nem nyitja meg ezeknek a tailneteknek a címeit: a rendszer proxybeállítása egy másik telepítési szkriptet használ ({ $script })."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "Ezeknek a tailneteknek a címei megnyílnak a böngészőben. Minden más forgalom közvetlenül halad."
@@ -379,6 +411,18 @@ translation = "Gépek · { $shown } találat, összesen { $total }"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "Gépek · { $online } online, összesen { $total }"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A tailnet-proxy programból, az alkalmazás korábbi verziójából nem sikerült átvinni a bejelentkezéseit ({ $error }). Valószínűleg még fut. Lépjen ki a tailnet-proxy programból, majd indítsa újra a { -app-name } alkalmazást, mielőtt itt bejelentkezik: az újbóli bejelentkezés minden tailnethez másodszor is hozzáadná ezt a számítógépet.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "Ki: az alkalmazásaimat magam állítom be"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "Be (ajánlott)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "Csere"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } telepítési szkriptjének használata, amíg fut, majd a másik visszaállítása
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "Újrapróbálás"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A rendszer proxybeállításának újbóli ráirányítása a { -app-name } alkalmazásra
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "Szüneteltetve"
 source = "Problem: { $problem }"
 translation = "Hiba: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "Csatlakozva, de az alkalmazásai nem használják"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -763,6 +843,14 @@ translation = "Svéd"
 [messages.system-default]
 source = "System default"
 translation = "Rendszer alapértelmezése"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "A rendszer jelenlegi proxybeállítása: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "nincs"
 
 [messages.tab-settings]
 source = "Settings"
@@ -836,6 +924,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } { $version } letöltése…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "Hibaelhárítás"
@@ -855,6 +955,38 @@ translation = "Ukrán"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "Nem mentett módosításai vannak."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "Új verzió: { $version }"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "Az Ön verziója: { $current }. Megnyitja a letöltési oldalt."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A letöltéshez nyissa meg a { -app-name } alkalmazást.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Elérhető a { -app-name } { $version }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

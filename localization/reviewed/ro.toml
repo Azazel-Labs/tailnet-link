@@ -100,6 +100,10 @@ translation = "{ $address } funcționează: conectat prin { $tailnet } în { $ms
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } este rutat prin { $tailnet }, dar portul { $port } nu a răspuns în 10 secunde."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "Caută versiuni noi"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "Chineză simplificată"
@@ -304,6 +308,34 @@ translation = "Finalizează autentificarea în { $tailnet } din browser."
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "Acum nu trece nimic prin alte tailneturi. Rețeaua și tailnetul tău funcționează ca de obicei."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "Browserul nu va deschide adresele din aceste tailneturi: altceva a modificat setarea proxy a sistemului."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "Browserul nu va deschide adresele din aceste tailneturi: setarea proxy a sistemului nu a putut fi modificată ({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "Setarea proxy a sistemului este dezactivată, așa că doar aplicațiile pe care le configurezi singur ajung la aceste tailneturi. Îndreaptă-le spre { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Browserul nu va deschide adresele din aceste tailneturi: altă copie de { -app-name } deține setarea proxy a sistemului. Închide copia aceea și aceasta va prelua controlul.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "Browserul nu va deschide adresele din aceste tailneturi: setarea proxy a sistemului folosește alt script de configurare ({ $script })."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "Adresele din aceste tailneturi se deschid în browser. Restul traficului merge direct."
@@ -379,6 +411,18 @@ translation = "Mașini · { $shown } din { $total } corespund"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "Mașini · { $online } din { $total } online"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Autentificările tale din tailnet-proxy, versiunea anterioară a acestei aplicații, nu au putut fi mutate ({ $error }). Probabil încă rulează. Închide tailnet-proxy, apoi pornește din nou { -app-name } înainte să te autentifici aici: o nouă autentificare ar adăuga acest computer a doua oară în fiecare tailnet.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "Dezactivat: îmi configurez singur aplicațiile"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "Activat (recomandat)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "Înlocuiește-l"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Folosește scriptul de configurare din { -app-name } cât timp rulează și pune-l înapoi pe celălalt după aceea
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "Încearcă din nou"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Îndreaptă din nou setarea proxy a sistemului spre { -app-name }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "Întrerupt"
 source = "Problem: { $problem }"
 translation = "Problemă: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "Conectat, dar aplicațiile tale nu îl folosesc"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -765,6 +845,14 @@ translation = "Suedeză"
 [messages.system-default]
 source = "System default"
 translation = "Implicită a sistemului"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "Setarea proxy actuală a sistemului: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "niciunul"
 
 [messages.tab-settings]
 source = "Settings"
@@ -838,6 +926,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Descarcă { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "Depanare"
@@ -857,6 +957,38 @@ translation = "Ucraineană"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "Ai modificări nesalvate."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "A apărut versiunea { $version }"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "Ai versiunea { $current }. Deschide pagina de descărcare."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Deschide { -app-name } ca să îl descarci.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } este disponibil
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

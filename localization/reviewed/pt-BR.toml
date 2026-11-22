@@ -100,6 +100,10 @@ translation = "{ $address } funciona: conectado via { $tailnet } em { $ms } ms."
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } é roteado via { $tailnet }, mas a porta { $port } não respondeu em 10 segundos."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "Verificar novas versões"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "Chinês simplificado"
@@ -304,6 +308,34 @@ translation = "Conclua o login em { $tailnet } no seu navegador."
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "Nada passa pelas outras tailnets agora. Sua rede e a sua tailnet funcionam normalmente."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "Seu navegador não vai abrir os endereços dessas tailnets: outra coisa alterou a configuração de proxy do sistema."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "Seu navegador não vai abrir os endereços dessas tailnets: não foi possível alterar a configuração de proxy do sistema ({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "A configuração de proxy do sistema está desativada, então só os aplicativos que você mesmo configurar chegam a essas tailnets. Aponte-os para { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Seu navegador não vai abrir os endereços dessas tailnets: outra cópia do { -app-name } está com a configuração de proxy do sistema. Feche essa cópia e esta assume.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "Seu navegador não vai abrir os endereços dessas tailnets: a configuração de proxy do sistema usa outro script de configuração ({ $script })."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "Os endereços dessas tailnets abrem no seu navegador. Todo o resto vai direto."
@@ -379,6 +411,18 @@ translation = "Máquinas · { $shown } de { $total } correspondem"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "Máquinas · { $online } de { $total } online"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Não foi possível transferir seus logins do tailnet-proxy, a versão anterior deste aplicativo ({ $error }). Ele provavelmente ainda está em execução. Feche o tailnet-proxy e inicie o { -app-name } novamente antes de fazer login aqui: fazer login de novo adicionaria este computador a cada tailnet uma segunda vez.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "Desativado: eu mesmo configuro meus aplicativos"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "Ativado (recomendado)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "Substituir"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Usar o script de configuração do { -app-name } enquanto ele estiver em execução e restaurar o outro depois
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "Tentar novamente"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Apontar a configuração de proxy do sistema para o { -app-name } novamente
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "Em pausa"
 source = "Problem: { $problem }"
 translation = "Problema: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "Conectado, mas seus aplicativos não estão usando a conexão"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -763,6 +843,14 @@ translation = "Sueco"
 [messages.system-default]
 source = "System default"
 translation = "Padrão do sistema"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "Configuração de proxy do sistema atual: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "nenhum"
 
 [messages.tab-settings]
 source = "Settings"
@@ -836,6 +924,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Baixar o { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "Solução de problemas"
@@ -855,6 +955,38 @@ translation = "Ucraniano"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "Você tem alterações não salvas."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "Versão { $version } disponível"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "Você está com a versão { $current }. Abre a página de download."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Abra o { -app-name } para baixá-lo.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+O { -app-name } { $version } está disponível
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

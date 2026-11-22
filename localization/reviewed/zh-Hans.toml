@@ -100,6 +100,10 @@ translation = "{ $address } 可用：已经由 { $tailnet } 连接，用时 { $m
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } 经由 { $tailnet } 路由，但端口 { $port } 在 10 秒内没有响应。"
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "检查新版本"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "简体中文"
@@ -304,6 +308,34 @@ translation = "请在浏览器中完成 { $tailnet } 的登录。"
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "目前没有流量经过其他 tailnet。你自己的网络和 tailnet 照常工作。"
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "浏览器无法打开这些 tailnet 的地址：其他程序更改了系统代理设置。"
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "浏览器无法打开这些 tailnet 的地址：无法更改系统代理设置（{ $error }）。"
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "系统代理设置已关闭，因此只有你自己配置的应用才能访问这些 tailnet。请将它们指向 { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+浏览器无法打开这些 tailnet 的地址：另一个 { -app-name } 副本占用了系统代理设置。退出那个副本后，这个副本会接管。
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "浏览器无法打开这些 tailnet 的地址：系统代理设置正在使用另一个配置脚本（{ $script }）。"
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "这些 tailnet 中的地址可直接在浏览器中打开。其他流量一律直连。"
@@ -379,6 +411,18 @@ translation = "设备 · { $total } 台中 { $shown } 台匹配"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "设备 · { $total } 台中 { $online } 台在线"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+无法迁移你在 tailnet-proxy（本应用的旧版本）中的登录信息（{ $error }）。它可能仍在运行。请退出 tailnet-proxy，然后在此处登录之前重新启动 { -app-name }：再次登录会把这台电脑第二次添加到每个 tailnet。
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "关闭：我自己配置应用"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "开启（推荐）"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "替换"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+运行期间使用 { -app-name } 的配置脚本，之后再恢复原来的脚本
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "重试"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+让系统代理设置重新指向 { -app-name }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "已暂停"
 source = "Problem: { $problem }"
 translation = "问题：{ $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "已连接，但你的应用没有使用它"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -755,6 +835,14 @@ translation = "瑞典语"
 [messages.system-default]
 source = "System default"
 translation = "跟随系统"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "当前系统代理设置：{ $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "无"
 
 [messages.tab-settings]
 source = "Settings"
@@ -828,6 +916,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+下载 { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "故障排除"
@@ -847,6 +947,38 @@ translation = "乌克兰语"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "有未保存的更改。"
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "{ $version } 版已发布"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "你当前的版本是 { $current }。打开下载页面。"
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+打开 { -app-name } 即可下载。
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } 已发布
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

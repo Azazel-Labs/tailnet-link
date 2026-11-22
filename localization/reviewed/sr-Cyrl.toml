@@ -100,6 +100,10 @@ translation = "{ $address } ради: повезано преко { $tailnet } �
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } се рутира преко { $tailnet }, али порт { $port } није одговорио у року од 10 секунди."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "Потражи нове верзије"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "Поједностављени кинески"
@@ -304,6 +308,34 @@ translation = "Довршите пријаву на { $tailnet } у прегле
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "Тренутно ништа не иде кроз друге мреже tailnet. Ваша локална мрежа и ваша мрежа tailnet раде као и обично."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "Прегледач неће отварати адресе ових мрежа tailnet: нешто друго је променило системско подешавање проксија."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "Прегледач неће отварати адресе ових мрежа tailnet: системско подешавање проксија није могло да се промени ({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "Системско подешавање проксија је искључено, па до ових мрежа tailnet стижу само апликације које сами подесите. Усмерите их на { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Прегледач неће отварати адресе ових мрежа tailnet: системско подешавање проксија држи друга копија апликације { -app-name }. Изађите из те копије и ова ће преузети.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "Прегледач неће отварати адресе ових мрежа tailnet: системско подешавање проксија користи другу скрипту за подешавање ({ $script })."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "Адресе у овим мрежама tailnet отварају се у прегледачу. Све остало иде директно."
@@ -379,6 +411,18 @@ translation = "Уређаји · пронађено { $shown } од { $total }"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "Уређаји · на мрежи { $online } од { $total }"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Ваше пријаве из tailnet-proxy, претходне верзије ове апликације, нису могле да се пренесу ({ $error }). Вероватно још увек ради. Изађите из tailnet-proxy, па поново покрените { -app-name } пре него што се пријавите овде: поновна пријава би додала овај рачунар у сваку мрежу tailnet други пут.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "Искључено: подесићу апликације руч�
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "Укључено (препоручено)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "Замени је"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Користи скрипту за подешавање апликације { -app-name } док ради, а после врати ону другу
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "Покушај поново"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Поново усмери системско подешавање проксија на { -app-name }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "Паузирано"
 source = "Problem: { $problem }"
 translation = "Проблем: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "Повезано, али апликације не користе везу"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -765,6 +845,14 @@ translation = "Шведски"
 [messages.system-default]
 source = "System default"
 translation = "Подразумевано у систему"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "Тренутно системско подешавање проксија: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "нема"
 
 [messages.tab-settings]
 source = "Settings"
@@ -838,6 +926,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Преузми { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "Решавање проблема"
@@ -857,6 +957,38 @@ translation = "Украјински"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "Имате несачуване измене."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "Изашла је верзија { $version }"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "Имате верзију { $current }. Отвара страницу за преузимање."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Отворите { -app-name } да бисте је преузели.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Доступна је верзија { -app-name } { $version }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

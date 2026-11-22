@@ -31,6 +31,7 @@ SetCompressor /SOLID lzma
 
 !define APP        "Tailnet Link"
 !define EXE        "tailnet-link.exe"
+!define LEGACY_EXE "tailnet-proxy.exe"
 !define ICO        "tailnet-link.ico"
 !define PUBLISHER  "Azazel Labs LLC"
 !define URL        "https://github.com/Azazel-Labs/tailnet-link"
@@ -94,8 +95,12 @@ FunctionEnd
 
 ; Stop every running copy (the app and its hidden watchdog), then put the
 ; proxy setting back if they had it on. Used before upgrading and uninstalling.
+; Also stops the app under its earlier name: while tailnet-proxy runs, its
+; settings and logins can't be moved, and its proxy setting stays in the way.
 !macro StopApp
   nsExec::Exec 'taskkill /F /T /IM "${EXE}"'
+  Pop $0
+  nsExec::Exec 'taskkill /F /T /IM "${LEGACY_EXE}"'
   Pop $0
   Sleep 800
   ${If} ${FileExists} "$INSTDIR\${EXE}"
@@ -181,6 +186,20 @@ SectionEnd
 Section "Uninstall"
   !insertmacro StopApp
 
+  ; Logins and settings belong to the user; ask before deleting (keep them on silent uninstall).
+  ; Asked first, while the app is still here to sign each tailnet out: deleting a
+  ; login without that leaves an abandoned machine in the tailnet, and the next
+  ; install's machine gets "-1" added to its name.
+  StrCpy $1 "keep"
+  ${IfNot} ${Silent}
+    MessageBox MB_YESNO|MB_ICONQUESTION "Also sign out of your tailnets and delete your ${APP} settings?$\r$\n$\r$\nThis computer is removed from each tailnet you added. Choose No to keep them for a later reinstall." IDNO keep_logins
+      StrCpy $1 "delete"
+      DetailPrint "Signing out of your tailnets..."
+      nsExec::Exec '"$INSTDIR\${EXE}" --logout-all'
+      Pop $0
+    keep_logins:
+  ${EndIf}
+
   nsExec::Exec 'netsh advfirewall firewall delete rule name="${FW_RULE}"'
   Pop $0
 
@@ -201,10 +220,7 @@ Section "Uninstall"
 
   DeleteRegKey HKLM "${UNINST_KEY}"
 
-  ; Logins and settings belong to the user; ask before deleting (keep them on silent uninstall).
-  ${IfNot} ${Silent}
-    MessageBox MB_YESNO|MB_ICONQUESTION "Also delete your ${APP} settings and tailnet logins?$\r$\n$\r$\n(Choose No to keep them for a later reinstall.)" IDNO keep
-      RMDir /r "$APPDATA\${APP}"
-    keep:
+  ${If} $1 == "delete"
+    RMDir /r "$APPDATA\${APP}"
   ${EndIf}
 SectionEnd

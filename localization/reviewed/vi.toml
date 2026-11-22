@@ -100,6 +100,10 @@ translation = "{ $address } hoạt động: đã kết nối qua { $tailnet } tr
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } được định tuyến qua { $tailnet }, nhưng cổng { $port } không phản hồi trong vòng 10 giây."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "Kiểm tra phiên bản mới"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "Tiếng Trung giản thể"
@@ -304,6 +308,34 @@ translation = "Hãy hoàn tất việc đăng nhập vào { $tailnet } trong tr�
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "Hiện không có gì đi qua các tailnet khác. Mạng và tailnet của riêng bạn vẫn hoạt động như bình thường."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "Trình duyệt sẽ không mở được địa chỉ của các tailnet này: một thứ khác đã thay đổi cài đặt proxy hệ thống."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "Trình duyệt sẽ không mở được địa chỉ của các tailnet này: không thể thay đổi cài đặt proxy hệ thống ({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "Cài đặt proxy hệ thống đang tắt, nên chỉ những ứng dụng bạn tự thiết lập mới truy cập được các tailnet này. Hãy trỏ chúng tới { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Trình duyệt sẽ không mở được địa chỉ của các tailnet này: một bản { -app-name } khác đang giữ cài đặt proxy hệ thống. Hãy thoát bản đó, bản này sẽ tiếp quản.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "Trình duyệt sẽ không mở được địa chỉ của các tailnet này: cài đặt proxy hệ thống đang dùng một tập lệnh thiết lập khác ({ $script })."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "Các địa chỉ trong những tailnet này mở được ngay trong trình duyệt. Mọi thứ khác vẫn đi trực tiếp."
@@ -379,6 +411,18 @@ translation = "Máy · { $shown }/{ $total } khớp"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "Máy · { $online }/{ $total } trực tuyến"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Không thể chuyển các phiên đăng nhập của bạn từ tailnet-proxy, phiên bản trước của ứng dụng này ({ $error }). Có lẽ nó vẫn đang chạy. Hãy thoát tailnet-proxy, rồi khởi động lại { -app-name } trước khi đăng nhập ở đây: đăng nhập lại sẽ thêm máy tính này vào mỗi tailnet lần thứ hai.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "Tắt: tôi sẽ tự thiết lập ứng dụng"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "Bật (khuyên dùng)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "Thay thế"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Dùng tập lệnh thiết lập của { -app-name } trong khi ứng dụng chạy, rồi khôi phục tập lệnh kia sau đó
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "Thử lại"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Trỏ lại cài đặt proxy hệ thống tới { -app-name }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "Đã tạm dừng"
 source = "Problem: { $problem }"
 translation = "Sự cố: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "Đã kết nối, nhưng các ứng dụng của bạn không dùng kết nối này"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -755,6 +835,14 @@ translation = "Tiếng Thụy Điển"
 [messages.system-default]
 source = "System default"
 translation = "Mặc định hệ thống"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "Cài đặt proxy hệ thống hiện tại: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "không có"
 
 [messages.tab-settings]
 source = "Settings"
@@ -828,6 +916,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Tải xuống { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "Khắc phục sự cố"
@@ -847,6 +947,38 @@ translation = "Tiếng Ukraina"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "Bạn có thay đổi chưa lưu."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "Đã có phiên bản { $version }"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "Bạn đang dùng { $current }. Mở trang tải xuống."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Mở { -app-name } để tải xuống.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Đã có { -app-name } { $version }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

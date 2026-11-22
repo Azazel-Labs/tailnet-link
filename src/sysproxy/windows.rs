@@ -1,9 +1,12 @@
 //! Windows: HKCU\...\Internet Settings\AutoConfigURL ("Use setup script").
 //! What to restore and which process owns it live in HKCU\Software\Tailnet Link.
 
-use crate::proxy::is_our_pac;
+use super::ProxyError;
+use crate::proxy::{is_our_pac, is_tailnet_link_pac};
 use crate::sync::lock;
-use std::sync::Mutex;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Mutex, Once};
+use std::time::Instant;
 use winreg::RegKey;
 use winreg::enums::{HKEY_CURRENT_USER, KEY_SET_VALUE};
 
@@ -45,34 +48,65 @@ fn set_auto_config_url(v: Option<&str>) -> std::io::Result<()> {
 pub struct SystemProxy {
     pac_url: Mutex<String>,
     on: Mutex<bool>,
+    force: AtomicBool,
+    watchdog: Once,
+    /// When the setting was last put back after something else changed it.
+    reapplied: Mutex<Option<Instant>>,
+}
+
+/// The copy of the app recorded as owning the setting, if it's another one that's still running.
+fn other_copy_running() -> bool {
+    let recorded: u32 = hkcu().open_subkey(STATE_KEY).and_then(|k| k.get_value("OwnerPID")).unwrap_or(0);
+    recorded != 0 && recorded != std::process::id() && process_alive(recorded)
 }
 
 impl SystemProxy {
-    /// Checks we may take over the setting, and starts the crash watchdog.
+    /// `force`: replace another program's setup script while running.
+    #[expect(clippy::unnecessary_wraps, reason = "same signature as on macOS and Linux, where it can fail")]
     pub fn new(pac_url: &str, force: bool) -> Result<SystemProxy, String> {
-        let cur = read_auto_config_url();
-        if !cur.is_empty() && !is_our_pac(&cur, pac_url) && !force {
-            return Err(format!(
-                "Windows already uses a proxy setup script ({cur}); not replacing it. \
-                 Choose \"replace\" in Settings to replace it while running"
-            ));
-        }
-        if let Err(e) = super::start_watchdog() {
-            log::warn!("crash watchdog not started ({e}); a crash would leave the proxy setting on until next login");
-        }
-        Ok(SystemProxy { pac_url: Mutex::new(pac_url.into()), on: Mutex::new(false) })
+        Ok(SystemProxy {
+            pac_url: Mutex::new(pac_url.into()),
+            on: Mutex::new(false),
+            force: AtomicBool::new(force),
+            watchdog: Once::new(),
+            reapplied: Mutex::new(None),
+        })
     }
 
-    pub fn enable(&self) -> Result<(), String> {
+    pub fn set_force(&self, force: bool) {
+        self.force.store(force, Ordering::SeqCst);
+    }
+
+    pub fn is_on(&self) -> bool {
+        *lock(&self.on)
+    }
+
+    /// The setting as it is now ("" when there's none).
+    pub fn current(&self) -> String {
+        read_auto_config_url()
+    }
+
+    /// Points the setting at us, unless another program's script is there.
+    pub fn enable(&self) -> Result<(), ProxyError> {
         let mut on = lock(&self.on);
         if *on {
             return Ok(());
         }
         let url = lock(&self.pac_url).clone();
-        // 1. Record how to undo it (and who owns it) before changing anything.
-        let (st, _) = hkcu().create_subkey(STATE_KEY).map_err(|e| format!("saving proxy state: {e}"))?;
         let cur = read_auto_config_url();
-        if !is_our_pac(&cur, &url) {
+        super::may_take(&cur, &url, self.force.load(Ordering::SeqCst), other_copy_running)?;
+        self.watchdog.call_once(|| {
+            if let Err(e) = super::start_watchdog() {
+                log::warn!(
+                    "crash watchdog not started ({e}); a crash would leave the proxy setting on until next login"
+                );
+            }
+        });
+        // 1. Record how to undo it (and who owns it) before changing anything.
+        let (st, _) =
+            hkcu().create_subkey(STATE_KEY).map_err(|e| ProxyError::Failed(format!("saving proxy state: {e}")))?;
+        // An earlier copy's address is never what to put back; keep what that copy recorded.
+        if !is_our_pac(&cur, &url) && !is_tailnet_link_pac(&cur) {
             if cur.is_empty() {
                 let _ = st.delete_value("Prev");
             } else {
@@ -88,9 +122,41 @@ impl SystemProxy {
             let _ = ro.set_value(RUN_ONCE_NAME, &format!("\"{}\" --cleanup", exe.display()));
         }
         // 3. Turn it on.
-        set_auto_config_url(Some(&url)).map_err(|e| format!("setting the proxy setup script: {e}"))?;
+        set_auto_config_url(Some(&url))
+            .map_err(|e| ProxyError::Failed(format!("setting the proxy setup script: {e}")))?;
         notify_change();
+        if !is_our_pac(&cur, &url) {
+            log::info!("Windows proxy setting now points at {url} (was {cur:?})");
+        }
         *on = true;
+        Ok(())
+    }
+
+    /// Checks that the setting still points at us. If something cleared it (an
+    /// old copy's uninstaller, say), puts it back, but only once a minute, so we
+    /// never fight a policy that keeps resetting it.
+    pub fn verify(&self) -> Result<(), ProxyError> {
+        if !*lock(&self.on) {
+            return Ok(());
+        }
+        let url = lock(&self.pac_url).clone();
+        let cur = read_auto_config_url();
+        if is_our_pac(&cur, &url) {
+            return Ok(());
+        }
+        log::warn!("Windows proxy setting was changed by something else (now {cur:?})");
+        *lock(&self.on) = false;
+        // Forget our record (and the login cleanup) without touching their setting.
+        restore_proxy_state(std::process::id());
+        let mut last = lock(&self.reapplied);
+        if last.is_some_and(|t| t.elapsed() < super::REAPPLY_GAP) {
+            return Err(ProxyError::Changed);
+        }
+        super::may_take(&cur, &url, self.force.load(Ordering::SeqCst), other_copy_running)?;
+        *last = Some(Instant::now());
+        drop(last);
+        self.enable()?;
+        log::info!("Windows proxy setting put back.");
         Ok(())
     }
 
@@ -207,11 +273,38 @@ mod tests {
         }
     }
     fn sp(url: &str) -> SystemProxy {
-        SystemProxy { pac_url: Mutex::new(url.into()), on: Mutex::new(false) }
+        let s = SystemProxy::new(url, false).unwrap();
+        s.watchdog.call_once(|| {}); // no watchdog process from tests
+        s
+    }
+
+    #[test]
+    fn takes_over_an_earlier_copys_address_and_puts_it_back() {
+        let _g = lock(&crate::TEST_LOCK);
+        let _p = Preserve(read_auto_config_url());
+        // An earlier copy on another port left its address behind.
+        set_auto_config_url(Some("http://127.0.0.1:1055/proxy.pac?v=7")).unwrap();
+        let s = sp("http://127.0.0.1:49768/proxy.pac?v=1");
+        s.enable().unwrap();
+        assert_eq!(read_auto_config_url(), "http://127.0.0.1:49768/proxy.pac?v=1");
+        // Something clears it: it's put back once...
+        set_auto_config_url(None).unwrap();
+        s.verify().unwrap();
+        assert_eq!(read_auto_config_url(), "http://127.0.0.1:49768/proxy.pac?v=1");
+        // ...but not again straight away.
+        set_auto_config_url(None).unwrap();
+        assert_eq!(s.verify(), Err(ProxyError::Changed));
+        assert_eq!(read_auto_config_url(), "");
+        // Someone else's script is left alone.
+        set_auto_config_url(Some(CORP)).unwrap();
+        let s = sp(V1);
+        assert_eq!(s.enable(), Err(ProxyError::Taken(CORP.into())));
+        assert_eq!(read_auto_config_url(), CORP);
     }
 
     #[test]
     fn registry_lifecycle() {
+        let _g = lock(&crate::TEST_LOCK);
         let _p = Preserve(read_auto_config_url());
         set_auto_config_url(Some(CORP)).unwrap();
         let s = sp(V1);

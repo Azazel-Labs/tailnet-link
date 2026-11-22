@@ -23,6 +23,39 @@ mod unix;
 #[cfg(unix)]
 pub use self::unix::*;
 
+/// Why the system proxy setting doesn't point at this app.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum ProxyError {
+    /// Another program's setup script is in place (its address), and the
+    /// user hasn't chosen to replace it.
+    Taken(String),
+    /// Another running copy of Tailnet Link has the setting.
+    OtherCopy,
+    /// Something else changed the setting after we set it. Not put back
+    /// automatically, so we don't fight it (or ask for a password over and over).
+    Changed,
+    /// Changing the setting failed.
+    Failed(String),
+}
+
+/// Whether we may point the setting at `ours` while it's `cur`.
+/// `other_copy_running`: the recorded owner is another live copy of this app.
+fn may_take(cur: &str, ours: &str, force: bool, other_copy_running: impl FnOnce() -> bool) -> Result<(), ProxyError> {
+    if cur.is_empty() || crate::proxy::is_our_pac(cur, ours) {
+        Ok(())
+    } else if crate::proxy::is_tailnet_link_pac(cur) {
+        // An earlier copy's address on another port: take it over once that copy is gone.
+        if other_copy_running() { Err(ProxyError::OtherCopy) } else { Ok(()) }
+    } else if force {
+        Ok(())
+    } else {
+        Err(ProxyError::Taken(cur.to_owned()))
+    }
+}
+
+/// How soon after putting the setting back we stop doing it automatically.
+const REAPPLY_GAP: std::time::Duration = std::time::Duration::from_secs(60);
+
 /// Starts a detached copy of this program that outlives us and restores the
 /// proxy setting the moment we exit for any reason.
 pub fn start_watchdog() -> std::io::Result<()> {

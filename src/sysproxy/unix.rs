@@ -1,13 +1,16 @@
 //! macOS / Linux manager. What to restore and which process owns it live in
 //! proxy-state.json in the config folder.
 
+use super::ProxyError;
 use super::backend::{DesktopBackend, MacBackend, PacBackend};
 use crate::config::config_dir;
-use crate::proxy::is_our_pac;
+use crate::proxy::{is_our_pac, is_tailnet_link_pac};
 use crate::sync::lock;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex};
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, Mutex, Once};
+use std::time::Instant;
 
 #[derive(Serialize, Deserialize, Default)]
 struct State {
@@ -47,49 +50,85 @@ pub struct SystemProxy {
     be: Arc<dyn PacBackend>,
     pac_url: Mutex<String>,
     on: Mutex<bool>,
+    force: AtomicBool,
+    watchdog: Once,
+    /// When the setting was last put back after something else changed it.
+    reapplied: Mutex<Option<Instant>>,
+}
+
+/// The copy of the app recorded as owning the setting, if it's another one that's still running.
+fn other_copy_running() -> bool {
+    read_state()
+        .is_some_and(|st| st.owner_pid != 0 && st.owner_pid != std::process::id() && process_alive(st.owner_pid))
 }
 
 impl SystemProxy {
+    /// `force`: replace another program's setup script while running.
     pub fn new(pac_url: &str, force: bool) -> Result<SystemProxy, String> {
-        let be = new_backend()?;
-        if let Ok(cur) = be.current()
-            && !cur.is_empty()
-            && !is_our_pac(&cur, pac_url)
-            && !force
-        {
-            return Err(format!(
-                "your system already uses a proxy setup script ({cur}); not replacing it. \
-                 Choose \"replace\" in Settings to replace it while running"
-            ));
-        }
-        if let Err(e) = super::start_watchdog() {
-            log::warn!("crash watchdog not started ({e}); a crash would leave the proxy setting on until next login");
-        }
-        Ok(Self::with_backend(be, pac_url))
+        let s = Self::with_backend(new_backend()?, pac_url);
+        s.set_force(force);
+        Ok(s)
     }
 
     fn with_backend(be: Arc<dyn PacBackend>, pac_url: &str) -> Self {
-        SystemProxy { be, pac_url: Mutex::new(pac_url.into()), on: Mutex::new(false) }
+        let s = SystemProxy {
+            be,
+            pac_url: Mutex::new(pac_url.into()),
+            on: Mutex::new(false),
+            force: AtomicBool::new(false),
+            watchdog: Once::new(),
+            reapplied: Mutex::new(None),
+        };
+        #[cfg(test)]
+        s.watchdog.call_once(|| {}); // no watchdog process from tests
+        s
     }
 
-    pub fn enable(&self) -> Result<(), String> {
+    pub fn set_force(&self, force: bool) {
+        self.force.store(force, Ordering::SeqCst);
+    }
+
+    pub fn is_on(&self) -> bool {
+        *lock(&self.on)
+    }
+
+    /// The setting as it is now ("" when there's none or it can't be read).
+    pub fn current(&self) -> String {
+        self.be.current().unwrap_or_default()
+    }
+
+    /// Points the setting at us, unless another program's script is there.
+    pub fn enable(&self) -> Result<(), ProxyError> {
         let mut on = lock(&self.on);
         if *on {
             return Ok(());
         }
         let url = lock(&self.pac_url).clone();
+        let cur = self.be.current().map_err(ProxyError::Failed)?;
+        super::may_take(&cur, &url, self.force.load(Ordering::SeqCst), other_copy_running)?;
+        self.watchdog.call_once(|| {
+            if let Err(e) = super::start_watchdog() {
+                log::warn!(
+                    "crash watchdog not started ({e}); a crash would leave the proxy setting on until next login"
+                );
+            }
+        });
         // 1. Record how to undo it (and who owns it) before changing anything.
         let mut st = match read_state() {
             Some(st) => st,
+            None if is_tailnet_link_pac(&cur) => State::default(), // an earlier copy's: never put back
             None => State {
-                prev: self.be.snapshot().map_err(|e| format!("reading current proxy setting: {e}"))?,
+                prev: self
+                    .be
+                    .snapshot()
+                    .map_err(|e| ProxyError::Failed(format!("reading current proxy setting: {e}")))?,
                 ..Default::default()
             },
         };
         st.active.clone_from(&url);
         st.owner_pid = std::process::id();
         st.backend = self.be.name().into();
-        write_state(&st).map_err(|e| format!("saving proxy state: {e}"))?;
+        write_state(&st).map_err(|e| ProxyError::Failed(format!("saving proxy state: {e}")))?;
         // 2. Clean up at next login if everything else fails.
         if let Ok(exe) = std::env::current_exe()
             && let Err(e) = self.be.install_cleanup(&exe.to_string_lossy())
@@ -99,9 +138,40 @@ impl SystemProxy {
         // 3. Turn it on.
         if let Err(e) = self.be.apply(&url) {
             restore_with(&*self.be, std::process::id()); // don't leave it half-applied
-            return Err(e);
+            return Err(ProxyError::Failed(e));
+        }
+        if !is_our_pac(&cur, &url) {
+            log::info!("System proxy setting now points at {url} (was {cur:?})");
         }
         *on = true;
+        Ok(())
+    }
+
+    /// Checks that the setting still points at us. If something cleared it,
+    /// puts it back, but only once a minute, and never where that needs a
+    /// password (it would ask over and over).
+    pub fn verify(&self) -> Result<(), ProxyError> {
+        if !*lock(&self.on) {
+            return Ok(());
+        }
+        let url = lock(&self.pac_url).clone();
+        let Ok(cur) = self.be.current() else { return Ok(()) }; // can't tell; assume fine
+        if is_our_pac(&cur, &url) {
+            return Ok(());
+        }
+        log::warn!("System proxy setting was changed by something else (now {cur:?})");
+        *lock(&self.on) = false;
+        // Forget our record (and the login cleanup) without touching their setting.
+        restore_with(&*self.be, std::process::id());
+        let mut last = lock(&self.reapplied);
+        if self.be.privileged() || last.is_some_and(|t| t.elapsed() < super::REAPPLY_GAP) {
+            return Err(ProxyError::Changed);
+        }
+        super::may_take(&cur, &url, self.force.load(Ordering::SeqCst), other_copy_running)?;
+        *last = Some(Instant::now());
+        drop(last);
+        self.enable()?;
+        log::info!("System proxy setting put back.");
         Ok(())
     }
 
@@ -229,6 +299,7 @@ mod tests {
     const CORP: &str = "http://corp.example/proxy.pac";
     const V1: &str = "http://127.0.0.1:1055/proxy.pac?v=1";
     const V2: &str = "http://127.0.0.1:1055/proxy.pac?v=2";
+    const V2_OTHER_PORT: &str = "http://127.0.0.1:49768/proxy.pac?v=2";
 
     fn setup(start: &str, privileged: bool) -> (std::sync::MutexGuard<'static, ()>, Arc<Mem>, tempdir::Dir) {
         let g = lock(&crate::TEST_LOCK);
@@ -296,6 +367,47 @@ mod tests {
         s.pause();
         assert_eq!(*lock(&m.url), V1);
         s.disable();
+        assert_eq!(*lock(&m.url), "");
+    }
+
+    #[test]
+    fn takes_over_an_earlier_copys_address_and_puts_it_back() {
+        let (_g, m, _d) = setup("http://127.0.0.1:1055/proxy.pac?v=7", false);
+        let s = SystemProxy::with_backend(m.clone(), V2_OTHER_PORT);
+        s.enable().unwrap();
+        assert_eq!(*lock(&m.url), V2_OTHER_PORT);
+        *lock(&m.url) = String::new(); // something clears it
+        s.verify().unwrap();
+        assert_eq!(*lock(&m.url), V2_OTHER_PORT, "put back once");
+        *lock(&m.url) = String::new();
+        assert_eq!(s.verify(), Err(ProxyError::Changed), "not again straight away");
+        assert_eq!(*lock(&m.url), "");
+        // Quitting puts back nothing: the earlier copy's address was never ours to restore.
+        s.enable().unwrap();
+        s.disable();
+        assert_eq!(*lock(&m.url), "");
+    }
+
+    #[test]
+    fn refuses_someone_elses_script_unless_forced() {
+        let (_g, m, _d) = setup(CORP, false);
+        let s = SystemProxy::with_backend(m.clone(), V1);
+        assert_eq!(s.enable(), Err(ProxyError::Taken(CORP.into())));
+        assert_eq!(*lock(&m.url), CORP);
+        s.set_force(true);
+        s.enable().unwrap();
+        assert_eq!(*lock(&m.url), V1);
+        s.disable();
+        assert_eq!(*lock(&m.url), CORP);
+    }
+
+    #[test]
+    fn privileged_change_is_not_put_back() {
+        let (_g, m, _d) = setup("", true);
+        let s = SystemProxy::with_backend(m.clone(), V1);
+        s.enable().unwrap();
+        *lock(&m.url) = String::new();
+        assert_eq!(s.verify(), Err(ProxyError::Changed));
         assert_eq!(*lock(&m.url), "");
     }
 

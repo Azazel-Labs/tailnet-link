@@ -100,6 +100,10 @@ translation = "{ $address } 정상: { $tailnet } 경유로 { $ms }ms 만에 연�
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host }: { $tailnet } 경유로 라우팅되지만 포트 { $port }에서 10초 안에 응답이 없었습니다."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "새 버전 확인"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "중국어 간체"
@@ -304,6 +308,34 @@ translation = "브라우저에서 { $tailnet } 로그인을 완료하세요."
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "지금은 다른 tailnet을 거치는 트래픽이 없습니다. 내 네트워크와 tailnet은 평소처럼 작동합니다."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "브라우저에서 이 tailnet들의 주소를 열 수 없습니다. 다른 프로그램이 시스템 프록시 설정을 변경했습니다."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "브라우저에서 이 tailnet들의 주소를 열 수 없습니다. 시스템 프록시 설정을 변경하지 못했습니다({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "시스템 프록시 설정이 꺼져 있어 직접 설정한 앱만 이 tailnet들에 접속할 수 있습니다. 앱에서 다음 주소를 지정하세요: { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+브라우저에서 이 tailnet들의 주소를 열 수 없습니다. 다른 { -app-name } 인스턴스가 시스템 프록시 설정을 사용하고 있습니다. 그쪽을 종료하면 이쪽이 이어받습니다.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "브라우저에서 이 tailnet들의 주소를 열 수 없습니다. 시스템 프록시 설정이 다른 설정 스크립트({ $script })를 사용하고 있습니다."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "이 tailnet들에 있는 주소가 브라우저에서 열립니다. 나머지는 모두 직접 연결됩니다."
@@ -379,6 +411,18 @@ translation = "머신 · { $total }대 중 { $shown }대 일치"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "머신 · { $total }대 중 { $online }대 온라인"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+이 앱의 이전 버전인 tailnet-proxy에서 로그인 정보를 옮기지 못했습니다({ $error }). 아마 아직 실행 중일 것입니다. tailnet-proxy를 종료한 다음, 여기서 로그인하기 전에 { -app-name }를 다시 시작하세요. 다시 로그인하면 이 컴퓨터가 각 tailnet에 한 번 더 추가됩니다.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "끄기: 앱은 직접 설정하겠습니다"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "켜기(권장)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "대체하기"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+실행 중에는 { -app-name }의 설정 스크립트를 사용하고, 끝나면 원래 스크립트로 되돌립니다
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "다시 시도"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+시스템 프록시 설정이 다시 { -app-name }를 가리키도록 합니다
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "일시 중지됨"
 source = "Problem: { $problem }"
 translation = "문제: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "연결되었지만 앱에서 사용하지 않음"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -755,6 +835,14 @@ translation = "스웨덴어"
 [messages.system-default]
 source = "System default"
 translation = "시스템 기본값"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "현재 시스템 프록시 설정: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "없음"
 
 [messages.tab-settings]
 source = "Settings"
@@ -828,6 +916,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } 다운로드…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "문제 해결"
@@ -847,6 +947,38 @@ translation = "우크라이나어"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "저장하지 않은 변경 사항이 있습니다."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "{ $version } 버전 출시"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "현재 버전은 { $current }입니다. 다운로드 페이지를 엽니다."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name }를 열어 다운로드하세요.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } 사용 가능
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

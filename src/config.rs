@@ -3,7 +3,7 @@
 
 use crate::i18n::tr;
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// A local port sent to a machine in one of the tailnets, for apps that don't
 /// use proxies (Remote Desktop, databases). The target's name picks the tailnet.
@@ -79,6 +79,10 @@ pub struct Config {
     pub background_hint_shown: bool,
     /// UI language: a catalog code like "fr", or "auto" to follow the OS.
     pub language: String,
+    /// Ask GitHub once in a while whether there's a newer release.
+    pub check_updates: bool,
+    /// The newest version a notification has been shown for, so each is announced once.
+    pub update_notified: String,
 }
 
 /// Reads `null` as an empty list. Older versions wrote `null` for empty lists,
@@ -102,6 +106,8 @@ impl Default for Config {
             listen: "127.0.0.1:1055".into(),
             background_hint_shown: false,
             language: "auto".into(),
+            check_updates: true,
+            update_notified: String::new(),
         }
     }
 }
@@ -146,20 +152,53 @@ pub fn config_dir() -> PathBuf {
 }
 
 /// Moves the settings and logins from the folder the app used when it was called
-/// tailnet-proxy, once, if there's nothing in the new place yet. Returns the old
+/// tailnet-proxy, if there are no settings in the new place yet. Returns the old
 /// folder if it was moved.
+///
+/// If tailnet-proxy is still running its files are in use; it retries for a few
+/// seconds (an installer may be stopping it) and then fails, and the caller must
+/// not save new settings: that would make the move impossible, and signing in
+/// again would leave the old login behind as a second machine in each tailnet.
 pub fn migrate_legacy_dir() -> std::io::Result<Option<PathBuf>> {
     if std::env::var_os("TAILNET_LINK_CONFIG_DIR").is_some() {
         return Ok(None);
     }
     let Some(base) = dirs::config_dir() else { return Ok(None) };
-    let old = base.join(LEGACY_DIR_NAME);
-    let new = config_dir();
-    if !old.is_dir() || new.exists() {
+    migrate_dir(&base.join(LEGACY_DIR_NAME), &config_dir())
+}
+
+fn migrate_dir(old: &Path, new: &Path) -> std::io::Result<Option<PathBuf>> {
+    if !old.is_dir() || new.join("config.json").exists() {
         return Ok(None);
     }
-    std::fs::rename(&old, &new)?;
-    Ok(Some(old))
+    let mut tries = 0;
+    loop {
+        match move_dir(old, new) {
+            Ok(()) => return Ok(Some(old.to_owned())),
+            Err(_) if tries < 5 => {
+                tries += 1;
+                std::thread::sleep(std::time::Duration::from_secs(1));
+            }
+            Err(e) => return Err(e),
+        }
+    }
+}
+
+/// Renames `old` to `new`. If `new` exists without settings (an earlier
+/// attempt's log, say), moves what's inside instead, keeping what's there.
+fn move_dir(old: &Path, new: &Path) -> std::io::Result<()> {
+    if !new.exists() {
+        return std::fs::rename(old, new);
+    }
+    for entry in std::fs::read_dir(old)? {
+        let entry = entry?;
+        let to = new.join(entry.file_name());
+        if !to.exists() {
+            std::fs::rename(entry.path(), to)?;
+        }
+    }
+    let _ = std::fs::remove_dir(old); // only if now empty
+    Ok(())
 }
 
 pub fn config_path() -> PathBuf {
@@ -288,6 +327,28 @@ pub fn forwards_text(fs: &[Forward]) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn legacy_folder_moves_even_after_a_failed_attempt_left_a_log() {
+        let root = std::env::temp_dir().join(format!("tl-migrate-{}", rand::random::<u64>()));
+        let (old, new) = (root.join("tailnet-proxy"), root.join("Tailnet Link"));
+        std::fs::create_dir_all(old.join("nodes").join("t1")).unwrap();
+        std::fs::write(old.join("config.json"), "{}").unwrap();
+        std::fs::write(old.join("nodes").join("t1").join("tailscaled.state"), "x").unwrap();
+        // An earlier start couldn't move it, but its log created the new folder.
+        std::fs::create_dir_all(&new).unwrap();
+        std::fs::write(new.join("tailnet-link.log"), "log").unwrap();
+
+        assert_eq!(migrate_dir(&old, &new).unwrap(), Some(old.clone()));
+        assert!(new.join("config.json").exists());
+        assert!(new.join("nodes").join("t1").join("tailscaled.state").exists());
+        assert!(new.join("tailnet-link.log").exists());
+        assert!(!old.exists());
+        // Settings in place: never again.
+        std::fs::create_dir_all(&old).unwrap();
+        assert_eq!(migrate_dir(&old, &new).unwrap(), None);
+        let _ = std::fs::remove_dir_all(&root);
+    }
 
     #[test]
     fn domains_are_cleaned_up() {

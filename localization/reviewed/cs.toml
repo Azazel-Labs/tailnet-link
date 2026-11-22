@@ -100,6 +100,10 @@ translation = "{ $address } funguje: připojeno přes { $tailnet } za { $ms } ms
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } se směruje přes { $tailnet }, ale port { $port } neodpověděl do 10 sekund."
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "Zkontrolovat nové verze"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "Zjednodušená čínština"
@@ -304,6 +308,34 @@ translation = "Dokončete v prohlížeči přihlášení k síti { $tailnet }."
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "Přes ostatní sítě tailnet teď nic neprochází. Vaše vlastní síť i síť tailnet fungují jako obvykle."
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "Prohlížeč neotevře adresy těchto sítí tailnet: systémové nastavení proxy změnilo něco jiného."
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "Prohlížeč neotevře adresy těchto sítí tailnet: systémové nastavení proxy se nepodařilo změnit ({ $error })."
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "Systémové nastavení proxy je vypnuté, takže se k těmto sítím tailnet dostanou jen aplikace, které si nastavíte sami. Nasměrujte je na { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Prohlížeč neotevře adresy těchto sítí tailnet: systémové nastavení proxy drží jiná kopie aplikace { -app-name }. Ukončete tamtu kopii a tato ho převezme.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "Prohlížeč neotevře adresy těchto sítí tailnet: systémové nastavení proxy používá jiný instalační skript ({ $script })."
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "Adresy v těchto sítích tailnet se otevírají v prohlížeči. Vše ostatní jde napřímo."
@@ -379,6 +411,18 @@ translation = "Zařízení · vyhovuje { $shown } z { $total }"
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "Zařízení · online { $online } z { $total }"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Vaše přihlášení z tailnet-proxy, dřívější verze této aplikace, se nepodařilo přenést ({ $error }). Pravděpodobně stále běží. Ukončete tailnet-proxy a pak znovu spusťte { -app-name }, než se tady přihlásíte: nové přihlášení by tento počítač přidalo do každé sítě tailnet podruhé.
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "Vypnuto: aplikace nastavím ručně"
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "Zapnuto (doporučeno)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "Nahradit"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Za běhu používat instalační skript aplikace { -app-name } a potom vrátit ten původní
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "Zkusit znovu"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Znovu nasměrovat systémové nastavení proxy na { -app-name }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "Pozastaveno"
 source = "Problem: { $problem }"
 translation = "Problém: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "Připojeno, ale aplikace připojení nepoužívají"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -767,6 +847,14 @@ translation = "Švédština"
 [messages.system-default]
 source = "System default"
 translation = "Jazyk systému"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "Aktuální systémové nastavení proxy: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "žádné"
 
 [messages.tab-settings]
 source = "Settings"
@@ -840,6 +928,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Stáhnout { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "Řešení potíží"
@@ -859,6 +959,38 @@ translation = "Ukrajinština"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "Máte neuložené změny."
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "Vyšla verze { $version }"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "Máte verzi { $current }. Otevře stránku ke stažení."
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Otevřete { -app-name } a stáhněte si novou verzi.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Je k dispozici { -app-name } { $version }
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

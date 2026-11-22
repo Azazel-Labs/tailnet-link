@@ -100,6 +100,10 @@ translation = "{ $address } ใช้งานได้: เชื่อมต�
 source = "{ $host } is routed through { $tailnet }, but port { $port } didn't answer within 10 seconds."
 translation = "{ $host } ถูกกำหนดเส้นทางผ่าน { $tailnet } แต่พอร์ต { $port } ไม่ตอบสนองภายใน 10 วินาที"
 
+[messages.check-updates]
+source = "Check for new versions"
+translation = "ตรวจหาเวอร์ชันใหม่"
+
 [messages.chinese-simplified]
 source = "Simplified Chinese"
 translation = "จีนตัวย่อ"
@@ -304,6 +308,34 @@ translation = "ลงชื่อเข้าใช้ { $tailnet } ในเบ
 source = "Nothing goes through other tailnets right now. Your own network and tailnet work as usual."
 translation = "ขณะนี้ไม่มีข้อมูลใดผ่าน tailnet อื่น เครือข่ายและ tailnet ของคุณเองยังทำงานตามปกติ"
 
+[messages.hero-proxy-changed]
+source = "Your browser won't open these tailnets' addresses: something else changed the system proxy setting."
+translation = "เบราว์เซอร์จะไม่เปิดที่อยู่ของ tailnet เหล่านี้: มีสิ่งอื่นเปลี่ยนการตั้งค่าพร็อกซีของระบบ"
+
+[messages.hero-proxy-failed]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting couldn't be changed ({ $error })."
+translation = "เบราว์เซอร์จะไม่เปิดที่อยู่ของ tailnet เหล่านี้: เปลี่ยนการตั้งค่าพร็อกซีของระบบไม่ได้ ({ $error })"
+
+[messages.hero-proxy-manual]
+source = "The system proxy setting is off, so only apps you set up yourself reach these tailnets. Point them at { $pac }"
+translation = "การตั้งค่าพร็อกซีของระบบปิดอยู่ จึงมีเพียงแอปที่คุณตั้งค่าเองเท่านั้นที่เข้าถึง tailnet เหล่านี้ได้ ให้ชี้แอปเหล่านั้นไปที่ { $pac }"
+
+[messages.hero-proxy-other-copy]
+source = """
+Your browser won't open these tailnets' addresses: another copy of { -app-name } has the system proxy setting. Quit that copy, and this one takes over.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+เบราว์เซอร์จะไม่เปิดที่อยู่ของ tailnet เหล่านี้: { -app-name } อีกตัวหนึ่งครองการตั้งค่าพร็อกซีของระบบอยู่ ปิดตัวนั้นแล้วตัวนี้จะทำหน้าที่แทน
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.hero-proxy-taken]
+source = "Your browser won't open these tailnets' addresses: the system proxy setting uses another setup script ({ $script })."
+translation = "เบราว์เซอร์จะไม่เปิดที่อยู่ของ tailnet เหล่านี้: การตั้งค่าพร็อกซีของระบบใช้สคริปต์การตั้งค่าอื่นอยู่ ({ $script })"
+
 [messages.hero-routing]
 source = "Addresses in these tailnets open in your browser. Everything else goes direct."
 translation = "ที่อยู่ใน tailnet เหล่านี้เปิดได้ในเบราว์เซอร์ ส่วนการเชื่อมต่ออื่นทั้งหมดจะไปโดยตรง"
@@ -379,6 +411,18 @@ translation = "เครื่อง · ตรงกัน { $shown } จาก 
 [messages.machines-online]
 source = "Machines · { $online } of { $total } online"
 translation = "เครื่อง · ออนไลน์ { $online } จาก { $total }"
+
+[messages.migrate-failed]
+source = """
+Your sign-ins from tailnet-proxy, this app's earlier version, couldn't be moved over ({ $error }). It's probably still running. Quit tailnet-proxy, then start { -app-name } again before you sign in here: signing in again would add this computer to each tailnet a second time.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+ย้ายการลงชื่อเข้าใช้ของคุณจาก tailnet-proxy ซึ่งเป็นแอปนี้เวอร์ชันก่อนหน้าไม่ได้ ({ $error }) อาจเป็นเพราะ tailnet-proxy ยังทำงานอยู่ ให้ออกจาก tailnet-proxy แล้วเริ่ม { -app-name } ใหม่ก่อนลงชื่อเข้าใช้ที่นี่ เพราะการลงชื่อเข้าใช้อีกครั้งจะเพิ่มคอมพิวเตอร์เครื่องนี้ลงในแต่ละ tailnet เป็นครั้งที่สอง
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.more-actions]
 source = "More actions"
@@ -503,6 +547,38 @@ translation = "ปิด: ฉันจะตั้งค่าแอปต่า
 [messages.proxy-on]
 source = "On (recommended)"
 translation = "เปิด (แนะนำ)"
+
+[messages.proxy-replace]
+source = "Replace it"
+translation = "แทนที่"
+
+[messages.proxy-replace-tooltip]
+source = """
+Use { -app-name }'s setup script while it runs, and put the other one back afterwards
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+ใช้สคริปต์การตั้งค่าของ { -app-name } ขณะที่แอปทำงาน และคืนสคริปต์เดิมหลังจากนั้น
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.proxy-retry]
+source = "Try again"
+translation = "ลองอีกครั้ง"
+
+[messages.proxy-retry-tooltip]
+source = """
+Point the system proxy setting at { -app-name } again
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+ชี้การตั้งค่าพร็อกซีของระบบไปที่ { -app-name } อีกครั้ง
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.remote-desktop-failed]
 source = "Couldn't start Remote Desktop: { $error }"
@@ -724,6 +800,10 @@ translation = "หยุดชั่วคราว"
 source = "Problem: { $problem }"
 translation = "ปัญหา: { $problem }"
 
+[messages.summary-proxy-problem]
+source = "Connected, but your apps aren't using it"
+translation = "เชื่อมต่อแล้ว แต่แอปของคุณไม่ได้ใช้การเชื่อมต่อนี้"
+
 [messages.summary-routing-all]
 source = """
 { $count ->
@@ -761,6 +841,14 @@ translation = "สวีเดน"
 [messages.system-default]
 source = "System default"
 translation = "ค่าเริ่มต้นของระบบ"
+
+[messages.system-setting]
+source = "System proxy setting now: { $value }"
+translation = "การตั้งค่าพร็อกซีของระบบตอนนี้: { $value }"
+
+[messages.system-setting-none]
+source = "none"
+translation = "ไม่มี"
 
 [messages.tab-settings]
 source = "Settings"
@@ -834,6 +922,18 @@ translation = """
 # reference -app-name
 Tailnet Link"""
 
+[messages.tray-update]
+source = """
+Download { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+ดาวน์โหลด { -app-name } { $version }…
+
+# reference -app-name
+Tailnet Link"""
+
 [messages.troubleshooting-heading]
 source = "Troubleshooting"
 translation = "การแก้ไขปัญหา"
@@ -853,6 +953,38 @@ translation = "ยูเครน"
 [messages.unsaved-changes]
 source = "You have unsaved changes."
 translation = "คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก"
+
+[messages.update-available]
+source = "Version { $version } is out"
+translation = "เวอร์ชัน { $version } ออกแล้ว"
+
+[messages.update-available-tooltip]
+source = "You have { $current }. Opens the download page."
+translation = "คุณใช้เวอร์ชัน { $current } อยู่ เปิดหน้าดาวน์โหลด"
+
+[messages.update-notify-text]
+source = """
+Open { -app-name } to download it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+เปิด { -app-name } เพื่อดาวน์โหลด
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.update-notify-title]
+source = """
+{ -app-name } { $version } is available
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } { $version } พร้อมให้ใช้งานแล้ว
+
+# reference -app-name
+Tailnet Link"""
 
 [messages.vietnamese]
 source = "Vietnamese"

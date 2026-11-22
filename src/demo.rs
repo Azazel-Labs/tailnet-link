@@ -143,6 +143,10 @@ pub fn status() -> Status {
                 error: String::new(),
             },
         ],
+        pac_url: "http://127.0.0.1:1055/proxy.pac?v=1".into(),
+        system: crate::core::SystemProxyState::Active,
+        system_setting: "http://127.0.0.1:1055/proxy.pac?v=1".into(),
+        update: None,
     }
 }
 

@@ -14,7 +14,7 @@ use tray_icon::menu::{CheckMenuItem, Menu, MenuEvent, MenuId, MenuItem, Predefin
 use tray_icon::{TrayIcon, TrayIconBuilder, TrayIconEvent};
 
 use crate::config::{self, forwards_text, parse_domains, parse_forwards};
-use crate::core::{Core, ForwardStatus, Machine, Status, TailnetStatus};
+use crate::core::{Core, ForwardStatus, Machine, Status, SystemProxyState, TailnetStatus};
 use crate::i18n::{self, tr};
 use crate::icon;
 use crate::sync::lock;
@@ -26,6 +26,8 @@ pub(crate) enum Action {
     Add,
     Login(String),
     ToggleMaster,
+    /// Opens a web page (the new release's download page).
+    OpenUrl(String),
     Quit,
 }
 
@@ -128,7 +130,13 @@ pub struct Gui {
 
 impl Gui {
     /// `start_hidden`: launched at login (--background): stay in the tray.
-    pub fn new(cc: &eframe::CreationContext<'_>, core: Arc<Core>, start_hidden: bool) -> Gui {
+    /// `startup_error`: something to tell the user straight away.
+    pub fn new(
+        cc: &eframe::CreationContext<'_>,
+        core: Arc<Core>,
+        start_hidden: bool,
+        startup_error: Option<String>,
+    ) -> Gui {
         let ctx = cc.egui_ctx.clone();
         if let Some(rs) = &cc.wgpu_render_state {
             let info = rs.adapter.get_info();
@@ -196,7 +204,7 @@ impl Gui {
         let mut gui = Gui {
             core,
             tab: Tab::Tailnets,
-            dialog: Dialog::None,
+            dialog: startup_error.map_or(Dialog::None, Dialog::Error),
             started: false,
             logo,
             forwards: forwards_text(&cfg.forwards),
@@ -277,6 +285,7 @@ impl Gui {
             Action::Add => self.add_tailnet(ctx),
             Action::Login(id) => self.core.login(&id),
             Action::ToggleMaster => self.core.set_enabled(!self.core.config().enabled),
+            Action::OpenUrl(url) => open_url(&url),
             Action::Quit => self.quit(ctx),
         }
     }
@@ -366,8 +375,21 @@ impl eframe::App for Gui {
         let v = self.core.version();
         if v != self.tray_version {
             self.tray_version = v;
+            let status = self.core.status();
             if let Some(t) = self.tray.as_mut() {
-                t.refresh(&self.core.status());
+                t.refresh(&status);
+            }
+            // A new release is announced once, by notification.
+            if let Some(u) = &status.update
+                && self.core.config().update_notified != u.version
+                && !demo()
+            {
+                notify(
+                    self.tray.as_ref(),
+                    &tr!("update-notify-title", version = u.version.as_str()),
+                    &tr!("update-notify-text"),
+                );
+                self.core.mark_update_notified(&u.version);
             }
         }
 
@@ -401,7 +423,14 @@ impl eframe::App for Gui {
             if cfg!(target_os = "linux") || self.tray.is_some() {
                 self.hide_window(ctx);
                 if !self.core.config().background_hint_shown {
-                    notify_still_running(self.tray.as_ref());
+                    let text = if cfg!(windows) {
+                        tr!("still-running-windows")
+                    } else if cfg!(target_os = "macos") {
+                        tr!("still-running-macos")
+                    } else {
+                        tr!("still-running-linux")
+                    };
+                    notify(self.tray.as_ref(), &tr!("still-running-title"), &text);
                     self.core.mark_background_hint_shown();
                 }
             } else {
@@ -440,7 +469,7 @@ impl eframe::App for Gui {
         #[cfg(feature = "screenshots")]
         crate::demo::capture(&ctx);
         let status = self.status();
-        self.header(ui);
+        self.header(ui, &status);
         if self.tab == Tab::Settings && self.settings_dirty() {
             self.save_bar(ui);
         }
@@ -464,7 +493,7 @@ impl eframe::App for Gui {
 // ---- Window chrome ----
 
 impl Gui {
-    fn header(&mut self, ui: &mut egui::Ui) {
+    fn header(&mut self, ui: &mut egui::Ui, s: &Status) {
         let panel = egui::Panel::top("header")
             .frame(egui::Frame::new().fill(theme::SURFACE).inner_margin(Margin::symmetric(16, 10)))
             .show(ui, |ui| {
@@ -494,6 +523,16 @@ impl Gui {
                                 }
                             }
                         });
+                        if let Some(u) = &s.update {
+                            let text = with_icon(
+                                icons::DOWNLOAD_SIMPLE,
+                                &tr!("update-available", version = u.version.as_str()),
+                            );
+                            let tip = tr!("update-available-tooltip", current = env!("CARGO_PKG_VERSION"));
+                            if ui.add(theme::primary_button(text)).on_hover_text(tip).clicked() {
+                                open_url(&u.url);
+                            }
+                        }
                     });
                 });
             });
@@ -616,7 +655,9 @@ fn os_name(os: &str) -> String {
 
 /// The app as a whole, as the tray icon shows it.
 fn status_tone(s: &Status) -> Tone {
-    if s.routing && !s.any_needs_login() {
+    if s.routing && s.system.is_problem() {
+        Tone::Warn
+    } else if s.routing && !s.any_needs_login() {
         Tone::Good
     } else if s.any_needs_login() {
         Tone::Warn
@@ -663,6 +704,21 @@ fn hero_text(s: &Status, started: bool) -> (Tone, String, String) {
             tr!("hero-sign-in", tailnet = t.label())
         };
         return (Tone::Warn, s.summary(), detail);
+    }
+    if s.routing {
+        let why = match &s.system {
+            SystemProxyState::Taken(script) => Some(tr!("hero-proxy-taken", script = script.as_str())),
+            SystemProxyState::OtherCopy => Some(tr!("hero-proxy-other-copy")),
+            SystemProxyState::Changed => Some(tr!("hero-proxy-changed")),
+            SystemProxyState::Failed(e) => Some(tr!("hero-proxy-failed", error = e.as_str())),
+            SystemProxyState::Manual => {
+                return (Tone::Good, s.summary(), tr!("hero-proxy-manual", pac = s.pac_url.as_str()));
+            }
+            SystemProxyState::Idle | SystemProxyState::Active => None,
+        };
+        if let Some(why) = why {
+            return (Tone::Warn, s.summary(), why);
+        }
     }
     let tone = status_tone(s);
     let detail = match tone {
@@ -738,7 +794,33 @@ impl Gui {
                     ui.add(egui::Label::new(muted(detail)).wrap());
                 });
                 let actions = ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if ui.add(theme::primary_button(with_icon(icons::PLUS, &tr!("add-tailnet")))).clicked() {
+                    // When browsers aren't using the app, the way to fix it comes first.
+                    let fix = match &s.system {
+                        _ if !s.routing => None,
+                        SystemProxyState::Taken(_) => Some((tr!("proxy-replace"), tr!("proxy-replace-tooltip"))),
+                        SystemProxyState::Changed | SystemProxyState::Failed(_) => {
+                            Some((tr!("proxy-retry"), tr!("proxy-retry-tooltip")))
+                        }
+                        _ => None,
+                    };
+                    if let Some((label, tip)) = &fix
+                        && ui
+                            .add(theme::primary_button(with_icon(icons::ARROW_CLOCKWISE, label)))
+                            .on_hover_text(tip.as_str())
+                            .clicked()
+                    {
+                        if matches!(s.system, SystemProxyState::Taken(_)) {
+                            if let Err(e) = self.core.set_system_proxy_mode("force") {
+                                self.dialog = Dialog::Error(e);
+                            }
+                            self.sys_mode = SYS_VALUES.iter().position(|v| *v == "force").unwrap_or(0);
+                        } else {
+                            self.core.retry_system_proxy();
+                        }
+                    }
+                    let add = with_icon(icons::PLUS, &tr!("add-tailnet"));
+                    let add = if fix.is_some() { theme::secondary_button(add) } else { theme::primary_button(add) };
+                    if ui.add(add).clicked() {
                         self.add_tailnet(ctx);
                     }
                     let (symbol, label, tip) = if s.enabled {
@@ -1066,6 +1148,17 @@ impl Gui {
                 self.autostart = before;
                 self.dialog = Dialog::Error(e);
             }
+            let check_updates = tr!("check-updates");
+            let mut on = self.core.config().check_updates;
+            ui.horizontal(|ui| {
+                theme::toggle(ui, &mut on, &check_updates);
+                ui.label(&check_updates);
+            });
+            if on != self.core.config().check_updates
+                && let Err(e) = self.core.set_check_updates(on)
+            {
+                self.dialog = Dialog::Error(e);
+            }
             ui.add_space(4.0);
             self.language_picker(ui);
         });
@@ -1147,12 +1240,20 @@ impl Gui {
             ui.add(
                 egui::Label::new(
                     muted(format!(
-                        "{}\n{}",
+                        "{}\n{}\n{}",
                         tr!(
                             "about-line",
                             version = env!("CARGO_PKG_VERSION"),
                             proxy = s.listen.as_str(),
-                            pac = self.core.pac_url()
+                            pac = s.pac_url.as_str()
+                        ),
+                        tr!(
+                            "system-setting",
+                            value = if s.system_setting.is_empty() {
+                                tr!("system-setting-none")
+                            } else {
+                                s.system_setting.clone()
+                            }
                         ),
                         tr!("settings-location", path = settings_dir_text())
                     ))
@@ -1528,6 +1629,11 @@ impl Tray {
         let mut map = HashMap::new();
         let summary = MenuItem::new(s.summary(), false, None);
         let _ = menu.append(&summary);
+        if let Some(u) = &s.update {
+            let item = MenuItem::new(tr!("tray-update", version = u.version.as_str()), true, None);
+            map.insert(item.id().clone(), Action::OpenUrl(u.url.clone()));
+            let _ = menu.append(&item);
+        }
         let _ = menu.append(&PredefinedMenuItem::separator());
         for t in &s.tailnets {
             let label = if t.needs_login() {
@@ -1564,20 +1670,25 @@ impl Tray {
     }
 }
 
-/// Linux: the tray needs its own GTK main loop on its own thread.
-/// Tells the user, once, that closing the window left the app running.
-fn notify_still_running(tray: Option<&Tray>) {
-    let title = tr!("still-running-title");
+/// Opens a web page in the browser.
+fn open_url(url: &str) {
+    if let Err(e) = open::that_detached(url) {
+        log::warn!("couldn't open the browser: {e}");
+    }
+}
+
+/// Shows a system notification (on Windows, from the tray icon).
+fn notify(tray: Option<&Tray>, title: &str, text: &str) {
     #[cfg(windows)]
     {
-        if !tray.is_some_and(|t| t.notify(&title, &tr!("still-running-windows"))) {
-            log::warn!("couldn't show the still-running notification");
+        if !tray.is_some_and(|t| t.notify(title, text)) {
+            log::warn!("couldn't show the notification {title:?}");
         }
     }
     #[cfg(not(windows))]
     {
         let _ = tray;
-        let text = if cfg!(target_os = "macos") { tr!("still-running-macos") } else { tr!("still-running-linux") };
+        let (title, text) = (title.to_owned(), text.to_owned());
         let mut cmd = if cfg!(target_os = "macos") {
             let mut c = std::process::Command::new("osascript");
             c.arg("-e").arg(format!("display notification {text:?} with title {title:?}"));
@@ -1589,7 +1700,7 @@ fn notify_still_running(tray: Option<&Tray>) {
         };
         std::thread::spawn(move || {
             if let Err(e) = cmd.status() {
-                log::warn!("couldn't show the still-running notification: {e}");
+                log::warn!("couldn't show the notification {title:?}: {e}");
             }
         });
     }
