@@ -85,6 +85,9 @@ pub struct Config {
     pub update_notified: String,
     /// Look for websites on the machines in the routing tailnets (each asked at most once a day).
     pub find_sites: bool,
+    /// Tailnets whose machine list is open. A new tailnet's list starts closed.
+    #[serde(deserialize_with = "null_as_empty")]
+    pub machines_open: Vec<String>,
 }
 
 /// Reads `null` as an empty list. Older versions wrote `null` for empty lists,
@@ -111,6 +114,7 @@ impl Default for Config {
             check_updates: true,
             update_notified: String::new(),
             find_sites: true,
+            machines_open: Vec::new(),
         }
     }
 }

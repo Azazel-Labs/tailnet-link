@@ -306,6 +306,12 @@ system-setting = Systemets proxyinställning nu: { $value }
 system-setting-none = ingen
 check-updates = Sök efter nya versioner
 find-websites = Leta efter webbplatser på datorerna i dina tailnet
+# $version is the version that's running, such as 0.6.0.
+version-current = Version { $version }
+update-check-now = Sök nu
+update-checking = Söker…
+update-up-to-date = Du har den senaste versionen
+update-check-failed = Det gick inte att söka efter uppdateringar
 tray-update = Ladda ned { -app-name } { $version }…
 update-available = Version { $version } är ute
 update-available-tooltip = Du har { $current }. Öppnar nedladdningssidan.

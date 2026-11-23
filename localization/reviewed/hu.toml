@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
 translation = "ed6917ff6bf3f9cc731c4aa16a6c8750744bab85c44b83dfced4a938169040e4"
 
 [messages.about-line]
@@ -988,6 +988,18 @@ translation = "Új verzió: { $version }"
 source = "You have { $current }. Opens the download page."
 translation = "Az Ön verziója: { $current }. Megnyitja a letöltési oldalt."
 
+[messages.update-check-failed]
+source = "Couldn't check for updates"
+translation = "Nem sikerült frissítéseket keresni"
+
+[messages.update-check-now]
+source = "Check now"
+translation = "Ellenőrzés most"
+
+[messages.update-checking]
+source = "Checking…"
+translation = "Ellenőrzés…"
+
 [messages.update-notify-text]
 source = """
 Open { -app-name } to download it.
@@ -1011,6 +1023,14 @@ Elérhető a { -app-name } { $version }
 
 # reference -app-name
 Tailnet Link"""
+
+[messages.update-up-to-date]
+source = "You have the latest version"
+translation = "A legújabb verzió van telepítve"
+
+[messages.version-current]
+source = "Version { $version }"
+translation = "Verzió: { $version }"
 
 [messages.vietnamese]
 source = "Vietnamese"

@@ -296,6 +296,12 @@ system-setting = 현재 시스템 프록시 설정: { $value }
 system-setting-none = 없음
 check-updates = 새 버전 확인
 find-websites = tailnet의 머신에서 웹사이트 찾기
+# $version is the version that's running, such as 0.6.0.
+version-current = 버전 { $version }
+update-check-now = 지금 확인
+update-checking = 확인 중…
+update-up-to-date = 최신 버전입니다
+update-check-failed = 업데이트를 확인할 수 없습니다
 tray-update = { -app-name } { $version } 다운로드…
 update-available = { $version } 버전 출시
 update-available-tooltip = 현재 버전은 { $current }입니다. 다운로드 페이지를 엽니다.

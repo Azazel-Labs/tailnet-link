@@ -316,6 +316,12 @@ system-setting = การตั้งค่าพร็อกซีของร
 system-setting-none = ไม่มี
 check-updates = ตรวจหาเวอร์ชันใหม่
 find-websites = ค้นหาเว็บไซต์บนเครื่องใน tailnet ของคุณ
+# $version is the version that's running, such as 0.6.0.
+version-current = เวอร์ชัน { $version }
+update-check-now = ตรวจสอบตอนนี้
+update-checking = กำลังตรวจสอบ…
+update-up-to-date = คุณใช้เวอร์ชันล่าสุดแล้ว
+update-check-failed = ตรวจหาอัปเดตไม่ได้
 tray-update = ดาวน์โหลด { -app-name } { $version }…
 update-available = เวอร์ชัน { $version } ออกแล้ว
 update-available-tooltip = คุณใช้เวอร์ชัน { $current } อยู่ เปิดหน้าดาวน์โหลด

@@ -305,6 +305,12 @@ system-setting = Configuração de proxy do sistema atual: { $value }
 system-setting-none = nenhum
 check-updates = Verificar novas versões
 find-websites = Procurar sites nas máquinas das suas tailnets
+# $version is the version that's running, such as 0.6.0.
+version-current = Versão { $version }
+update-check-now = Verificar agora
+update-checking = Verificando…
+update-up-to-date = Você tem a versão mais recente
+update-check-failed = Não foi possível verificar atualizações
 tray-update = Baixar o { -app-name } { $version }…
 update-available = Versão { $version } disponível
 update-available-tooltip = Você está com a versão { $current }. Abre a página de download.

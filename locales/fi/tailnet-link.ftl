@@ -308,6 +308,12 @@ system-setting = Järjestelmän välityspalvelinasetus nyt: { $value }
 system-setting-none = ei mitään
 check-updates = Tarkista uudet versiot
 find-websites = Etsi verkkosivustoja tailnetiesi koneilta
+# $version is the version that's running, such as 0.6.0.
+version-current = Versio { $version }
+update-check-now = Tarkista nyt
+update-checking = Tarkistetaan…
+update-up-to-date = Sinulla on uusin versio
+update-check-failed = Päivitysten tarkistus epäonnistui
 tray-update = Lataa { -app-name } { $version }…
 update-available = Versio { $version } on julkaistu
 update-available-tooltip = Sinulla on { $current }. Avaa lataussivun.

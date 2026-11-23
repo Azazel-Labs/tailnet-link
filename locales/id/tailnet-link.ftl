@@ -316,6 +316,12 @@ system-setting = Pengaturan proksi sistem saat ini: { $value }
 system-setting-none = tidak ada
 check-updates = Periksa versi baru
 find-websites = Cari situs web di mesin dalam tailnet Anda
+# $version is the version that's running, such as 0.6.0.
+version-current = Versi { $version }
+update-check-now = Periksa sekarang
+update-checking = Memeriksa…
+update-up-to-date = Anda memakai versi terbaru
+update-check-failed = Tidak dapat memeriksa pembaruan
 tray-update = Unduh { -app-name } { $version }…
 update-available = Versi { $version } sudah rilis
 update-available-tooltip = Versi Anda { $current }. Membuka halaman unduhan.

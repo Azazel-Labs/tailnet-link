@@ -319,6 +319,12 @@ system-setting = Τρέχουσα ρύθμιση διακομιστή μεσολ
 system-setting-none = καμία
 check-updates = Έλεγχος για νέες εκδόσεις
 find-websites = Αναζήτηση ιστότοπων στα μηχανήματα των tailnet σας
+# $version is the version that's running, such as 0.6.0.
+version-current = Έκδοση { $version }
+update-check-now = Έλεγχος τώρα
+update-checking = Έλεγχος…
+update-up-to-date = Έχετε την πιο πρόσφατη έκδοση
+update-check-failed = Δεν ήταν δυνατός ο έλεγχος για ενημερώσεις
 tray-update = Λήψη του { -app-name } { $version }…
 update-available = Κυκλοφόρησε η έκδοση { $version }
 update-available-tooltip = Έχετε την έκδοση { $current }. Ανοίγει τη σελίδα λήψης.

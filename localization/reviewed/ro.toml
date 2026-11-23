@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
 translation = "a16cf5c696e4ffc4e20a93e74b95f96b05efd3cf9ff5def7cd750ed595e5daa1"
 
 [messages.about-line]
@@ -990,6 +990,18 @@ translation = "A apărut versiunea { $version }"
 source = "You have { $current }. Opens the download page."
 translation = "Ai versiunea { $current }. Deschide pagina de descărcare."
 
+[messages.update-check-failed]
+source = "Couldn't check for updates"
+translation = "Nu s-au putut căuta actualizări"
+
+[messages.update-check-now]
+source = "Check now"
+translation = "Verifică acum"
+
+[messages.update-checking]
+source = "Checking…"
+translation = "Se verifică…"
+
 [messages.update-notify-text]
 source = """
 Open { -app-name } to download it.
@@ -1013,6 +1025,14 @@ translation = """
 
 # reference -app-name
 Tailnet Link"""
+
+[messages.update-up-to-date]
+source = "You have the latest version"
+translation = "Aveți cea mai nouă versiune"
+
+[messages.version-current]
+source = "Version { $version }"
+translation = "Versiunea { $version }"
 
 [messages.vietnamese]
 source = "Vietnamese"

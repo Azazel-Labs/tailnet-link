@@ -307,6 +307,12 @@ system-setting = Stelsel se instaanbedienerinstelling nou: { $value }
 system-setting-none = geen
 check-updates = Kyk vir nuwe weergawes
 find-websites = Soek na webwerwe op die masjiene in jou tailnets
+# $version is the version that's running, such as 0.6.0.
+version-current = Weergawe { $version }
+update-check-now = Kyk nou
+update-checking = Kyk tans…
+update-up-to-date = Jy het die nuutste weergawe
+update-check-failed = Kon nie vir opdaterings kyk nie
 tray-update = Laai { -app-name } { $version } af…
 update-available = Weergawe { $version } is uit
 update-available-tooltip = Jy het { $current }. Maak die aflaaibladsy oop.

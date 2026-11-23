@@ -214,6 +214,12 @@ system-setting = System proxy setting now: { $value }
 system-setting-none = none
 check-updates = Check for new versions
 find-websites = Look for websites on the machines in your tailnets
+# $version is the version that's running, such as 0.6.0.
+version-current = Version { $version }
+update-check-now = Check now
+update-checking = Checking…
+update-up-to-date = You have the latest version
+update-check-failed = Couldn't check for updates
 
 ## Results of "Test" in Troubleshooting
 

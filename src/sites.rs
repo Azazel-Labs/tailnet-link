@@ -185,7 +185,15 @@ fn decode_png(b64: &str) -> Option<Icon> {
 pub fn probe(proxy: &str, host: &str, reach: impl FnOnce() -> io::Result<()>) -> Outcome {
     match reach() {
         Ok(()) => {}
-        Err(e) if matches!(e.kind(), io::ErrorKind::ConnectionRefused | io::ErrorKind::PermissionDenied) => {
+        // Closed, refused by the tailnet's rules, or dropped by a firewall (the machine
+        // is online, so silence means the port is filtered): no site, for a day.
+        Err(e)
+            if matches!(
+                e.kind(),
+                io::ErrorKind::ConnectionRefused | io::ErrorKind::PermissionDenied | io::ErrorKind::TimedOut
+            ) =>
+        {
+            log::debug!("[sites] {host}: {e}");
             return Outcome::None;
         }
         Err(e) => {
@@ -643,6 +651,8 @@ mod tests {
         assert_eq!(probe("127.0.0.1:1", "a.example.ts.net", refused), Outcome::None);
         let denied = || Err(io::Error::from(io::ErrorKind::PermissionDenied));
         assert_eq!(probe("127.0.0.1:1", "a.example.ts.net", denied), Outcome::None);
+        let dropped = || Err(io::Error::from(io::ErrorKind::TimedOut));
+        assert_eq!(probe("127.0.0.1:1", "a.example.ts.net", dropped), Outcome::None);
         let unreachable = || Err(io::Error::from(io::ErrorKind::HostUnreachable));
         assert_eq!(probe("127.0.0.1:1", "a.example.ts.net", unreachable), Outcome::Unsure);
         // Reachable, but the proxy isn't there: can't tell.

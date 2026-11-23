@@ -296,6 +296,12 @@ system-setting = Cài đặt proxy hệ thống hiện tại: { $value }
 system-setting-none = không có
 check-updates = Kiểm tra phiên bản mới
 find-websites = Tìm trang web trên các máy trong tailnet của bạn
+# $version is the version that's running, such as 0.6.0.
+version-current = Phiên bản { $version }
+update-check-now = Kiểm tra ngay
+update-checking = Đang kiểm tra…
+update-up-to-date = Bạn đang dùng phiên bản mới nhất
+update-check-failed = Không thể kiểm tra bản cập nhật
 tray-update = Tải xuống { -app-name } { $version }…
 update-available = Đã có phiên bản { $version }
 update-available-tooltip = Bạn đang dùng { $current }. Mở trang tải xuống.

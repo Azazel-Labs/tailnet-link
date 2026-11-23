@@ -305,6 +305,12 @@ system-setting = Huidige proxyinstelling van het systeem: { $value }
 system-setting-none = geen
 check-updates = Controleren op nieuwe versies
 find-websites = Zoeken naar websites op de machines in je tailnets
+# $version is the version that's running, such as 0.6.0.
+version-current = Versie { $version }
+update-check-now = Nu controleren
+update-checking = Controleren…
+update-up-to-date = Je hebt de nieuwste versie
+update-check-failed = Kan niet controleren op updates
 tray-update = { -app-name } { $version } downloaden…
 update-available = Versie { $version } is uit
 update-available-tooltip = Je hebt { $current }. Opent de downloadpagina.

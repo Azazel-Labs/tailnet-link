@@ -306,6 +306,12 @@ system-setting = Systemets proxyindstilling lige nu: { $value }
 system-setting-none = ingen
 check-updates = Søg efter nye versioner
 find-websites = Søg efter websites på maskinerne på dine tailnets
+# $version is the version that's running, such as 0.6.0.
+version-current = Version { $version }
+update-check-now = Søg nu
+update-checking = Søger…
+update-up-to-date = Du har den nyeste version
+update-check-failed = Kunne ikke søge efter opdateringer
 tray-update = Hent { -app-name } { $version }…
 update-available = Version { $version } er ude
 update-available-tooltip = Du har { $current }. Åbner downloadsiden.

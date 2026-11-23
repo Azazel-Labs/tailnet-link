@@ -310,6 +310,12 @@ system-setting = Поточне системне налаштування про
 system-setting-none = немає
 check-updates = Перевірити наявність нових версій
 find-websites = Шукати сайти на пристроях у ваших мережах tailnet
+# $version is the version that's running, such as 0.6.0.
+version-current = Версія { $version }
+update-check-now = Перевірити
+update-checking = Перевірка…
+update-up-to-date = У вас найновіша версія
+update-check-failed = Не вдалося перевірити оновлення
 tray-update = Завантажити { -app-name } { $version }…
 update-available = Вийшла версія { $version }
 update-available-tooltip = У вас версія { $current }. Відкриває сторінку завантаження.

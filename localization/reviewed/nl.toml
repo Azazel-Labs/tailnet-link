@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
 translation = "f3a01e178ca0b91e81a6438566250a337bc6caf60591f567754f05692975b290"
 
 [messages.about-line]
@@ -988,6 +988,18 @@ translation = "Versie { $version } is uit"
 source = "You have { $current }. Opens the download page."
 translation = "Je hebt { $current }. Opent de downloadpagina."
 
+[messages.update-check-failed]
+source = "Couldn't check for updates"
+translation = "Kan niet controleren op updates"
+
+[messages.update-check-now]
+source = "Check now"
+translation = "Nu controleren"
+
+[messages.update-checking]
+source = "Checking…"
+translation = "Controleren…"
+
 [messages.update-notify-text]
 source = """
 Open { -app-name } to download it.
@@ -1011,6 +1023,14 @@ translation = """
 
 # reference -app-name
 Tailnet Link"""
+
+[messages.update-up-to-date]
+source = "You have the latest version"
+translation = "Je hebt de nieuwste versie"
+
+[messages.version-current]
+source = "Version { $version }"
+translation = "Versie { $version }"
 
 [messages.vietnamese]
 source = "Vietnamese"

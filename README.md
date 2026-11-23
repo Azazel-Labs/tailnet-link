@@ -90,24 +90,26 @@ You can also edit forwards by hand in Settings, one per line, for example
 - Overall status, **Pause all** and **Add a tailnet**.
 - **Websites** found on the machines, as tiles with each page's title and icon. Click one to open
   it, or right-click to copy its address. A warning sign means the site's certificate isn't trusted
-  (often a self-signed one). Each machine is asked once a day, one at a time; the refresh button asks
-  again now.
+  (often a self-signed one). Each machine is asked once a day, a few at a time; the refresh button
+  asks again now.
 - One card per tailnet, with its status, routed domains and this computer's name there. Sign in or
   log out, pause or resume, rename it, add extra domains, or remove it.
-- Each signed-in tailnet lists its **machines**, online first. Search filters them by name, OS or
-  address. For each machine you can **open** it in your browser, **copy** its name, or **forward a
+- Each signed-in tailnet lists its **machines**, online first. The list starts folded away and
+  remembers whether you opened it. Search filters them by name, OS or address. For each machine you can **open** it in your browser, **copy** its name, or **forward a
   port** to it.
 - If the sign-in page didn't open, or opened in the wrong browser profile, the card offers to open it
   again or copy the link.
 
 **Settings tab**
 
-![The Settings tab: port forwards, the system proxy setting, start at login, update checks, finding websites, language and troubleshooting](docs/images/settings.png)
+![The Settings tab: the version with a Check now button, start at login, update checks, finding websites, language, port forwards, the system proxy setting and troubleshooting](docs/images/settings.png)
 
+- The **version** you're running, with **Check now** to look for a newer one, then **start at
+  login**, **checking for new versions**, **looking for websites** on your machines, and the
+  interface **language**.
 - **Port forwards**, each with its local address, a copy button, and which tailnet carries it (or
   why it can't).
-- The **system proxy setting**, **start at login**, **checking for new versions**, **looking for
-  websites** on your machines, and the interface **language**.
+- The **system proxy setting**.
 - **Test a name or address** shows which tailnet routes it and tries to connect through it. It's the
   quickest way to find out why a page won't load.
 - Unsaved changes are flagged, with **Revert**. Ctrl+S saves, and Esc closes dialogs.

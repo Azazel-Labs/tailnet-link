@@ -310,6 +310,12 @@ system-setting = Текущая системная настройка прокс
 system-setting-none = нет
 check-updates = Проверить наличие новых версий
 find-websites = Искать сайты на устройствах в ваших сетях tailnet
+# $version is the version that's running, such as 0.6.0.
+version-current = Версия { $version }
+update-check-now = Проверить
+update-checking = Проверка…
+update-up-to-date = У вас последняя версия
+update-check-failed = Не удалось проверить обновления
 tray-update = Скачать { -app-name } { $version }…
 update-available = Вышла версия { $version }
 update-available-tooltip = У вас версия { $current }. Открывает страницу загрузки.

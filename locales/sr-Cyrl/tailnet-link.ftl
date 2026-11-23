@@ -308,6 +308,12 @@ system-setting = Тренутно системско подешавање про
 system-setting-none = нема
 check-updates = Потражи нове верзије
 find-websites = Тражи веб-сајтове на уређајима у вашим мрежама tailnet
+# $version is the version that's running, such as 0.6.0.
+version-current = Верзија { $version }
+update-check-now = Провери сада
+update-checking = Провера…
+update-up-to-date = Имате најновију верзију
+update-check-failed = Провера ажурирања није успела
 tray-update = Преузми { -app-name } { $version }…
 update-available = Изашла је верзија { $version }
 update-available-tooltip = Имате верзију { $current }. Отвара страницу за преузимање.

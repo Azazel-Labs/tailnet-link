@@ -296,6 +296,12 @@ system-setting = 当前系统代理设置：{ $value }
 system-setting-none = 无
 check-updates = 检查新版本
 find-websites = 在你的 tailnet 设备上查找网站
+# $version is the version that's running, such as 0.6.0.
+version-current = 版本 { $version }
+update-check-now = 立即检查
+update-checking = 正在检查…
+update-up-to-date = 已是最新版本
+update-check-failed = 无法检查更新
 tray-update = 下载 { -app-name } { $version }…
 update-available = { $version } 版已发布
 update-available-tooltip = 你当前的版本是 { $current }。打开下载页面。

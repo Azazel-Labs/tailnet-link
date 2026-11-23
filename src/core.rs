@@ -5,7 +5,7 @@
 use std::collections::HashMap;
 use std::fmt::Write as _;
 use std::net::TcpListener as StdListener;
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::{AtomicU64, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
@@ -147,6 +147,18 @@ impl From<ProxyError> for SystemProxyState {
     }
 }
 
+/// How the last update check went, for Settings.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub enum UpdateCheck {
+    /// Not asked yet since starting.
+    #[default]
+    NotYet,
+    Checking,
+    /// Asked; `Status::update` holds the answer.
+    Done,
+    Failed(String),
+}
+
 /// A newer release than this one.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Update {
@@ -169,6 +181,7 @@ pub struct Status {
     /// The system proxy setting as last read ("" for none).
     pub system_setting: String,
     pub update: Option<Update>,
+    pub update_check: UpdateCheck,
     /// Websites on the online machines, in tailnet then machine order.
     pub sites: Vec<SiteStatus>,
     /// While machines are being asked for websites: (this one, of how many).
@@ -269,6 +282,7 @@ struct Inner {
     /// Why the system proxy setting can't be managed at all here.
     system_unavailable: String,
     update: Option<Update>,
+    update_check: UpdateCheck,
 }
 
 /// The websites found so far, and how far the current round has got.
@@ -279,11 +293,17 @@ struct SiteState {
 }
 
 /// How long after starting the first machines are asked for websites.
-const SITES_FIRST_AFTER: Duration = Duration::from_secs(20);
+const SITES_FIRST_AFTER: Duration = Duration::from_secs(10);
 /// How often to look for machines that are due (new, or asked over a day ago).
 const SITES_EVERY: Duration = Duration::from_secs(60);
-/// How long to wait for a machine to accept a connection on port 443.
-const SITES_CONNECT_TIMEOUT: Duration = Duration::from_secs(8);
+/// How long to wait for a machine to accept a connection on port 443. A firewall
+/// that drops the connection (Windows does by default) never answers, so this is
+/// how long such a machine takes to rule out.
+const SITES_CONNECT_TIMEOUT: Duration = Duration::from_secs(5);
+/// How many machines are asked at the same time.
+const SITES_AT_ONCE: usize = 6;
+/// A machine that takes longer than this is named in the log.
+const SITES_SLOW: Duration = Duration::from_secs(30);
 
 /// How often the system proxy setting is read back while routing.
 const SYSTEM_CHECK_EVERY: Duration = Duration::from_secs(5);
@@ -336,6 +356,7 @@ impl Core {
                 system_check_at: None,
                 system_unavailable: String::new(),
                 update: None,
+                update_check: UpdateCheck::NotYet,
             }),
             pac_state: Arc::new(PacState::new()),
             rt: tokio::runtime::Builder::new_multi_thread()
@@ -413,6 +434,7 @@ impl Core {
             system: g.system.clone(),
             system_setting: g.system_setting.clone(),
             update: g.update.clone(),
+            update_check: g.update_check.clone(),
             sites: if g.cfg.find_sites { sites_of(&g, &state.cache) } else { Vec::new() },
             sites_checking: state.progress,
         }
@@ -474,10 +496,7 @@ impl Core {
                     let Some(core) = me.upgrade() else { return };
                     if core.config().check_updates && Instant::now() >= next {
                         next = Instant::now() + crate::update::EVERY;
-                        match crate::update::check() {
-                            Ok(u) => core.set_update(u),
-                            Err(e) => log::info!("Couldn't check for updates: {e}"),
-                        }
+                        core.check_for_update();
                     }
                     drop(core);
                     std::thread::sleep(Duration::from_secs(60));
@@ -507,7 +526,7 @@ impl Core {
 
     // ---- Websites ----
 
-    /// Asks each online machine that's due whether it serves a website, one at a time.
+    /// Asks each online machine that's due whether it serves a website.
     fn find_sites(&self) {
         let (proxy, due) = {
             let g = lock(&self.inner);
@@ -528,35 +547,68 @@ impl Core {
             (g.cfg.listen.clone(), due)
         };
         let total = due.len();
-        for (i, (id, host)) in due.into_iter().enumerate() {
-            let cfg = self.config();
-            if !cfg.find_sites || !cfg.enabled {
-                break;
+        let began = Instant::now();
+        let found = AtomicUsize::new(0);
+        // A few different machines at once, so ones that never answer don't hold up
+        // the rest. Each machine still gets just one look.
+        let queue = Mutex::new(due.into_iter());
+        let started = AtomicUsize::new(0);
+        std::thread::scope(|scope| {
+            for _ in 0..SITES_AT_ONCE.min(total) {
+                scope.spawn(|| {
+                    loop {
+                        let Some((id, host)) = lock(&queue).next() else { return };
+                        let cfg = self.config();
+                        if !cfg.find_sites || !cfg.enabled {
+                            return;
+                        }
+                        // Its tailnet may have stopped routing since the list was made.
+                        if self.node_for(&host).as_deref() != Some(id.as_str()) {
+                            continue;
+                        }
+                        let n = started.fetch_add(1, Ordering::Relaxed) + 1;
+                        lock(&self.sites).progress = Some((n, total));
+                        self.changed();
+                        // A bug in reading one odd page mustn't stop the rest, or leave the
+                        // progress showing forever.
+                        let asked = Instant::now();
+                        match std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| self.find_site(&proxy, &host))) {
+                            Ok(true) => _ = found.fetch_add(1, Ordering::Relaxed),
+                            Ok(false) => {}
+                            Err(_) => log::error!("[sites] {host}: the check crashed"),
+                        }
+                        if asked.elapsed() > SITES_SLOW {
+                            log::warn!("[sites] {host} took {}s to check", asked.elapsed().as_secs());
+                        }
+                    }
+                });
             }
-            // Its tailnet may have stopped routing since the list was made.
-            if self.node_for(&host).as_deref() != Some(id.as_str()) {
-                continue;
-            }
-            lock(&self.sites).progress = Some((i + 1, total));
-            self.changed();
-            let reach = || {
-                let target =
-                    self.socks_for(&host).ok_or_else(|| std::io::Error::from(std::io::ErrorKind::NotConnected))?;
-                self.rt
-                    .block_on(tokio::time::timeout(SITES_CONNECT_TIMEOUT, crate::socks::connect(&target, &host, 443)))
-                    .map_err(|_| std::io::Error::from(std::io::ErrorKind::TimedOut))?
-                    .map(drop)
-            };
-            let outcome = sites::probe(&proxy, &host, reach);
-            log::debug!("[sites] {host}: {outcome:?}");
-            let mut state = lock(&self.sites);
-            state.cache.record(&host, outcome, sites::now());
-            state.cache.save();
+        });
+        if total > 0 {
+            let found = found.into_inner();
+            log::info!("[sites] checked {total} machines in {}s, {found} with a website", began.elapsed().as_secs());
         }
         let was_checking = lock(&self.sites).progress.take().is_some();
         if was_checking {
             self.changed();
         }
+    }
+
+    /// Asks one machine whether it serves a website, and remembers the answer.
+    /// Returns whether it has one.
+    fn find_site(&self, proxy: &str, host: &str) -> bool {
+        let reach = || {
+            let target = self.socks_for(host).ok_or_else(|| std::io::Error::from(std::io::ErrorKind::NotConnected))?;
+            // Plain sockets with their own deadline, so a busy runtime can't stall it.
+            crate::socks::connect_blocking(&target, host, 443, SITES_CONNECT_TIMEOUT).map(drop)
+        };
+        let outcome = sites::probe(proxy, host, reach);
+        log::debug!("[sites] {host}: {outcome:?}");
+        let found = matches!(outcome, sites::Outcome::Site(_));
+        let mut state = lock(&self.sites);
+        state.cache.record(host, outcome, sites::now());
+        state.cache.save();
+        found
     }
 
     /// Asks every machine again now, instead of when its day is up.
@@ -585,18 +637,45 @@ impl Core {
         res
     }
 
-    fn set_update(&self, u: Option<Update>) {
+    /// Asks GitHub for the latest release now, and waits for the answer.
+    fn check_for_update(&self) {
         {
             let mut g = lock(&self.inner);
-            if g.update == u {
+            if g.update_check == UpdateCheck::Checking {
                 return;
             }
-            if let Some(u) = &u {
-                log::info!("Tailnet Link {} is available: {}", u.version, u.url);
-            }
-            g.update = u;
+            g.update_check = UpdateCheck::Checking;
         }
         self.changed();
+        let result = crate::update::check();
+        {
+            let mut g = lock(&self.inner);
+            match result {
+                Ok(u) => {
+                    if let Some(u) = &u
+                        && g.update.as_ref() != Some(u)
+                    {
+                        log::info!("Tailnet Link {} is available: {}", u.version, u.url);
+                    }
+                    g.update = u;
+                    g.update_check = UpdateCheck::Done;
+                }
+                Err(e) => {
+                    log::info!("Couldn't check for updates: {e}");
+                    g.update_check = UpdateCheck::Failed(e);
+                }
+            }
+        }
+        self.changed();
+    }
+
+    /// The "Check now" button: asks in the background, whether or not automatic checks are on.
+    pub fn check_for_update_now(self: &Arc<Self>) {
+        let me = Arc::clone(self);
+        let spawned = std::thread::Builder::new().name("update-check".into()).spawn(move || me.check_for_update());
+        if let Err(e) = spawned {
+            log::warn!("Couldn't check for updates: {e}");
+        }
     }
 
     /// Turns the update check on or off.
@@ -611,6 +690,23 @@ impl Core {
         };
         self.changed();
         res
+    }
+
+    /// Remembers whether a tailnet's machine list is open.
+    pub fn set_machines_open(&self, id: &str, open: bool) {
+        let mut g = lock(&self.inner);
+        let list = &mut g.cfg.machines_open;
+        if open == list.iter().any(|t| t == id) {
+            return;
+        }
+        if open {
+            list.push(id.to_owned());
+        } else {
+            list.retain(|t| t != id);
+        }
+        if let Err(e) = g.cfg.save() {
+            log::warn!("Couldn't save settings: {e}");
+        }
     }
 
     /// Remembers that a notification has been shown for this version.
@@ -912,6 +1008,7 @@ impl Core {
             let mut g = lock(&self.inner);
             g.entries.remove(id);
             g.cfg.tailnets.retain(|t| t.id != id);
+            g.cfg.machines_open.retain(|t| t != id);
             let r = g.cfg.save();
             self.update_routing(&mut g);
             r

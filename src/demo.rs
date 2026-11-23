@@ -52,6 +52,7 @@ pub fn config() -> Config {
     Config {
         forwards: parse_forwards(FORWARDS).unwrap_or_default(),
         hostname: "ana-laptop".into(),
+        machines_open: vec!["home".into(), "studio".into()],
         // English unless asked, so screenshots don't follow this computer's language.
         language: std::env::var("TAILNET_LINK_DEMO_LANGUAGE").unwrap_or_else(|_| "en".into()),
         ..Config::default()
@@ -147,6 +148,7 @@ pub fn status() -> Status {
         system: crate::core::SystemProxyState::Active,
         system_setting: "http://127.0.0.1:1055/proxy.pac?v=1".into(),
         update: None,
+        update_check: crate::core::UpdateCheck::Done,
         // The sign-in picture is about the new tailnet's card; tiles would push it out of frame.
         sites: if matches!(view(), View::Welcome | View::SignIn) { Vec::new() } else { sites() },
         sites_checking: None,

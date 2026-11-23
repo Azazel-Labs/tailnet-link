@@ -14,7 +14,7 @@ use tray_icon::menu::{CheckMenuItem, Menu, MenuEvent, MenuId, MenuItem, Predefin
 use tray_icon::{TrayIcon, TrayIconBuilder, TrayIconEvent};
 
 use crate::config::{self, forwards_text, parse_domains, parse_forwards};
-use crate::core::{Core, ForwardStatus, Machine, SiteStatus, Status, SystemProxyState, TailnetStatus};
+use crate::core::{Core, ForwardStatus, Machine, SiteStatus, Status, SystemProxyState, TailnetStatus, UpdateCheck};
 use crate::i18n::{self, tr};
 use crate::icon;
 use crate::sync::lock;
@@ -1014,10 +1014,13 @@ impl Gui {
         } else {
             tr!("machines-online", online = online, total = t.machines.len())
         };
-        egui::CollapsingHeader::new(RichText::new(title).strong().color(theme::MUTED))
+        // Closed until opened, and remembered. A search opens the lists with matches
+        // without changing what's remembered.
+        let saved = self.core.config().machines_open.contains(&t.id);
+        let open = if searching { !shown.is_empty() } else { saved };
+        let header = egui::CollapsingHeader::new(RichText::new(title).strong().color(theme::MUTED))
             .id_salt(("machines", &t.id))
-            .default_open(true)
-            .open(searching.then_some(!shown.is_empty()))
+            .open(Some(open))
             .show(ui, |ui| {
                 if t.machines.is_empty() {
                     ui.label(muted(tr!("no-machines")));
@@ -1038,6 +1041,9 @@ impl Gui {
                         }
                     });
             });
+        if !searching && header.header_response.clicked() {
+            self.core.set_machines_open(&t.id, !saved);
+        }
     }
 
     fn machine_row(&mut self, ui: &mut egui::Ui, t: &TailnetStatus, m: &Machine) {
@@ -1287,11 +1293,11 @@ impl Gui {
     fn settings_tab(&mut self, ui: &mut egui::Ui, s: &Status) {
         egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
             ui.spacing_mut().item_spacing.y = 8.0;
+            self.general_section(ui, s);
+            ui.add_space(4.0);
             self.forwards_section(ui, s);
             ui.add_space(4.0);
             self.proxy_section(ui);
-            ui.add_space(4.0);
-            self.general_section(ui);
             ui.add_space(4.0);
             self.troubleshooting_section(ui, s);
             ui.add_space(16.0);
@@ -1334,10 +1340,11 @@ impl Gui {
         });
     }
 
-    fn general_section(&mut self, ui: &mut egui::Ui) {
+    fn general_section(&mut self, ui: &mut egui::Ui, s: &Status) {
         theme::card().show(ui, |ui| {
             ui.set_width(ui.available_width());
             theme::section_heading(ui, icons::GEAR_SIX, &tr!("general-heading"), None);
+            self.version_row(ui, s);
             let before = self.autostart;
             let start_at_login = tr!("start-at-login");
             ui.horizontal(|ui| {
@@ -1376,6 +1383,41 @@ impl Gui {
             }
             ui.add_space(4.0);
             self.language_picker(ui);
+        });
+    }
+
+    /// This version, a button to check for a newer one now, and what the last check found.
+    fn version_row(&mut self, ui: &mut egui::Ui, s: &Status) {
+        ui.horizontal(|ui| {
+            ui.label(tr!("version-current", version = env!("CARGO_PKG_VERSION")));
+            ui.add_space(4.0);
+            if s.update_check == UpdateCheck::Checking {
+                ui.add(egui::Spinner::new().size(14.0).color(theme::MUTED));
+                ui.label(muted(tr!("update-checking")));
+                return;
+            }
+            if ui.button(with_icon(icons::ARROW_CLOCKWISE, &tr!("update-check-now"))).clicked() {
+                self.core.check_for_update_now();
+            }
+            match (&s.update, &s.update_check) {
+                (Some(u), _) => {
+                    let text =
+                        with_icon(icons::DOWNLOAD_SIMPLE, &tr!("update-available", version = u.version.as_str()));
+                    let tip = tr!("update-available-tooltip", current = env!("CARGO_PKG_VERSION"));
+                    if ui.link(text).on_hover_text(tip).clicked() {
+                        open_url(&u.url);
+                    }
+                }
+                (None, UpdateCheck::Done) => {
+                    let text = with_icon(icons::CHECK_CIRCLE, &tr!("update-up-to-date"));
+                    ui.label(RichText::new(text).color(Tone::Good.color()));
+                }
+                (None, UpdateCheck::Failed(e)) => {
+                    let text = with_icon(icons::WARNING_CIRCLE, &tr!("update-check-failed"));
+                    ui.label(RichText::new(text).color(Tone::Bad.color())).on_hover_text(e.as_str());
+                }
+                (None, UpdateCheck::NotYet | UpdateCheck::Checking) => {}
+            }
         });
     }
 

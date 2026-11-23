@@ -310,6 +310,12 @@ system-setting = Aktuální systémové nastavení proxy: { $value }
 system-setting-none = žádné
 check-updates = Zkontrolovat nové verze
 find-websites = Hledat weby na zařízeních ve vašich sítích tailnet
+# $version is the version that's running, such as 0.6.0.
+version-current = Verze { $version }
+update-check-now = Zkontrolovat
+update-checking = Kontroluje se…
+update-up-to-date = Máte nejnovější verzi
+update-check-failed = Aktualizace se nepodařilo zkontrolovat
 tray-update = Stáhnout { -app-name } { $version }…
 update-available = Vyšla verze { $version }
 update-available-tooltip = Máte verzi { $current }. Otevře stránku ke stažení.

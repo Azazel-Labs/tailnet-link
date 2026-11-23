@@ -307,6 +307,12 @@ system-setting = Setarea proxy actuală a sistemului: { $value }
 system-setting-none = niciunul
 check-updates = Caută versiuni noi
 find-websites = Caută site-uri pe mașinile din tailnet-urile tale
+# $version is the version that's running, such as 0.6.0.
+version-current = Versiunea { $version }
+update-check-now = Verifică acum
+update-checking = Se verifică…
+update-up-to-date = Aveți cea mai nouă versiune
+update-check-failed = Nu s-au putut căuta actualizări
 tray-update = Descarcă { -app-name } { $version }…
 update-available = A apărut versiunea { $version }
 update-available-tooltip = Ai versiunea { $current }. Deschide pagina de descărcare.

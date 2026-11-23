@@ -13,7 +13,7 @@ const VIEWS: [(&str, &str, &str); 5] = [
     ("tailnets", "tailnets", "760x1203"),
     ("welcome", "welcome", "760x560"),
     ("sign-in", "signin", "760x775"),
-    ("settings", "settings", "760x1072"),
+    ("settings", "settings", "760x1100"),
     ("forward", "forward", "760x860"),
 ];
 

@@ -319,6 +319,12 @@ system-setting = Şu anki sistem proxy ayarı: { $value }
 system-setting-none = yok
 check-updates = Yeni sürümleri denetle
 find-websites = Tailnet'lerinizdeki makinelerde web sitesi ara
+# $version is the version that's running, such as 0.6.0.
+version-current = Sürüm { $version }
+update-check-now = Şimdi denetle
+update-checking = Denetleniyor…
+update-up-to-date = En yeni sürümü kullanıyorsunuz
+update-check-failed = Güncellemeler denetlenemedi
 tray-update = { -app-name } { $version } sürümünü indir…
 update-available = { $version } sürümü çıktı
 update-available-tooltip = Sizdeki sürüm: { $current }. İndirme sayfasını açar.

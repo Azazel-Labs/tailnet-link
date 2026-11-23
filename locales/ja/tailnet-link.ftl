@@ -296,6 +296,12 @@ system-setting = 現在のシステムのプロキシ設定: { $value }
 system-setting-none = なし
 check-updates = 新しいバージョンを確認
 find-websites = tailnet 内のマシンで Web サイトを探す
+# $version is the version that's running, such as 0.6.0.
+version-current = バージョン { $version }
+update-check-now = 今すぐ確認
+update-checking = 確認中…
+update-up-to-date = 最新バージョンです
+update-check-failed = 更新を確認できませんでした
 tray-update = { -app-name } { $version } をダウンロード…
 update-available = バージョン { $version } 公開
 update-available-tooltip = 現在のバージョンは { $current } です。ダウンロード ページを開きます。

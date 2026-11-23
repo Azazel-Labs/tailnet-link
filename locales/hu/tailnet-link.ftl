@@ -319,6 +319,12 @@ system-setting = A rendszer jelenlegi proxybeállítása: { $value }
 system-setting-none = nincs
 check-updates = Új verziók keresése
 find-websites = Webhelyek keresése a tailnetjeiben lévő gépeken
+# $version is the version that's running, such as 0.6.0.
+version-current = Verzió: { $version }
+update-check-now = Ellenőrzés most
+update-checking = Ellenőrzés…
+update-up-to-date = A legújabb verzió van telepítve
+update-check-failed = Nem sikerült frissítéseket keresni
 tray-update = A { -app-name } { $version } letöltése…
 update-available = Új verzió: { $version }
 update-available-tooltip = Az Ön verziója: { $current }. Megnyitja a letöltési oldalt.
