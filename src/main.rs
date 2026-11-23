@@ -33,19 +33,22 @@ use std::time::Duration;
 #[cfg(test)]
 pub static TEST_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
+#[derive(Default)]
 struct Args {
     cleanup: bool,
     logout_all: bool,
     watchdog_pid: Option<u32>,
     export_icon: Option<String>,
     background: bool,
+    version: bool,
 }
 
 fn parse_args() -> Args {
-    let mut a = Args { cleanup: false, logout_all: false, watchdog_pid: None, export_icon: None, background: false };
+    let mut a = Args::default();
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.trim_start_matches('-') {
+            "version" | "V" => a.version = true,
             "cleanup" => a.cleanup = true,
             "logout-all" => a.logout_all = true,
             "background" => a.background = true,
@@ -57,8 +60,32 @@ fn parse_args() -> Args {
     a
 }
 
+/// Prints a line where whoever started the app can see it. On Windows the app is a GUI program,
+/// which gets no console, so unless its output is piped somewhere it joins the terminal it was
+/// started from first.
+fn print_line(text: &str) {
+    #[cfg(windows)]
+    {
+        use windows_sys::Win32::System::Console::{
+            ATTACH_PARENT_PROCESS, AttachConsole, GetStdHandle, STD_OUTPUT_HANDLE,
+        };
+        // SAFETY: takes no pointers; a null handle just means no stdout.
+        if unsafe { GetStdHandle(STD_OUTPUT_HANDLE) }.is_null() {
+            // SAFETY: takes no pointers; failing (no parent console) leaves nothing to print to.
+            unsafe { AttachConsole(ATTACH_PARENT_PROCESS) };
+        }
+    }
+    println!("{text}");
+}
+
 fn main() {
     let args = parse_args();
+
+    // Before anything touches settings, the log or the system proxy.
+    if args.version {
+        print_line(&format!("Tailnet Link {}", env!("CARGO_PKG_VERSION")));
+        return;
+    }
 
     // Build tool: write the app icon, then exit.
     if let Some(path) = args.export_icon {
