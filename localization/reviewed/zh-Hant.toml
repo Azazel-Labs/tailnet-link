@@ -520,6 +520,26 @@ translation = "開啟到 { $address } 的遠端桌面"
 source = "Open settings folder"
 translation = "開啟設定資料夾"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "無法開啟終端機：{ $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } 在應用程式旁邊找不到它的終端機輔助程式 tl。請重新安裝 { -app-name } 以取得它。
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "開啟可使用你的 tailnet 中名稱的終端機，適用於 curl、git、ssh、ping 等。也可以在任何終端機中，於任何命令前加上 tl。"
+
 [messages.pause-all]
 source = "Pause all"
 translation = "全部暫停"
@@ -531,6 +551,10 @@ translation = "暫時停止透過其他 tailnet 路由"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "暫停這個 tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } 經由 { $tailnet }，但它不是該 tailnet 中的裝置，因此 Tailscale 沒有可以 ping 的對象。"
 
 [messages.polish]
 source = "Polish"

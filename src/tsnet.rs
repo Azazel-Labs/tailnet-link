@@ -73,6 +73,47 @@ pub struct TailnetInfo {
     pub magic_dns_suffix: String,
 }
 
+/// One answer to Tailscale's ping (ipnstate.PingResult).
+#[derive(Debug, Default, Clone, Deserialize)]
+pub struct PingResult {
+    /// The machine that answered: for an address behind a subnet router, the router.
+    #[serde(rename = "NodeName", default)]
+    pub node_name: String,
+    #[serde(rename = "NodeIP", default)]
+    pub node_ip: String,
+    #[serde(rename = "Err", default)]
+    pub err: String,
+    #[serde(rename = "LatencySeconds", default)]
+    pub latency_seconds: f64,
+    /// Set when the answer came over a direct connection, e.g. 203.0.113.4:41641.
+    #[serde(rename = "Endpoint", default)]
+    pub endpoint: String,
+    /// Set when it came through a peer relay.
+    #[serde(rename = "PeerRelay", default)]
+    pub peer_relay: String,
+    /// Set when it came through one of Tailscale's DERP relays, e.g. sea.
+    #[serde(rename = "DERPRegionCode", default)]
+    pub derp_region_code: String,
+}
+
+impl PingResult {
+    /// How the answer came, in `tailscale ping`'s words.
+    pub fn via(&self) -> String {
+        if !self.endpoint.is_empty() {
+            self.endpoint.clone()
+        } else if !self.peer_relay.is_empty() {
+            format!("peer-relay({})", self.peer_relay)
+        } else if !self.derp_region_code.is_empty() {
+            format!("DERP({})", self.derp_region_code)
+        } else {
+            String::new()
+        }
+    }
+}
+
+/// How long one ping waits for its answer.
+pub const PING_TIMEOUT: Duration = Duration::from_secs(5);
+
 /// Where and how to reach a node's SOCKS5 proxy.
 #[derive(Clone, Debug)]
 pub struct SocksTarget {
@@ -87,6 +128,8 @@ pub struct Node {
     proxy_cred: String,
     api_cred: String,
     http: ureq::Agent,
+    /// The same, giving up after [`PING_TIMEOUT`] (the LocalAPI waits for a pong forever).
+    ping_http: ureq::Agent,
 }
 
 fn cstring(s: &str) -> Result<CString, String> {
@@ -158,14 +201,22 @@ impl Node {
         }
 
         // Talk to our own 127.0.0.1 LocalAPI directly: never through a system/corporate proxy.
-        let http: ureq::Agent = ureq::Agent::config_builder()
-            .proxy(None)
-            .timeout_global(Some(Duration::from_secs(15)))
-            .http_status_as_error(false)
-            .build()
-            .into();
-
-        Ok(Node { sd, loopback: read_buf(&addr), proxy_cred: read_buf(&proxy), api_cred: read_buf(&local), http })
+        let agent = |timeout| -> ureq::Agent {
+            ureq::Agent::config_builder()
+                .proxy(None)
+                .timeout_global(Some(timeout))
+                .http_status_as_error(false)
+                .build()
+                .into()
+        };
+        Ok(Node {
+            sd,
+            loopback: read_buf(&addr),
+            proxy_cred: read_buf(&proxy),
+            api_cred: read_buf(&local),
+            http: agent(Duration::from_secs(15)),
+            ping_http: agent(PING_TIMEOUT),
+        })
     }
 
     fn errmsg(sd: c_int) -> String {
@@ -194,25 +245,34 @@ impl Node {
     }
 
     fn local_api(&self, method: &str, path: &str, body: Option<&str>) -> Result<String, String> {
+        self.local_api_with(&self.http, method, path, body)
+    }
+
+    fn local_api_with(
+        &self,
+        http: &ureq::Agent,
+        method: &str,
+        path: &str,
+        body: Option<&str>,
+    ) -> Result<String, String> {
         let url = format!("http://{}/localapi/v0/{}", self.loopback, path);
         let auth =
             format!("Basic {}", base64::engine::general_purpose::STANDARD.encode(format!("tsnet:{}", self.api_cred)));
         let result = match method {
             "POST" => {
-                let req = self.http.post(&url).header("Sec-Tailscale", "localapi").header("Authorization", &auth);
+                let req = http.post(&url).header("Sec-Tailscale", "localapi").header("Authorization", &auth);
                 match body {
                     Some(b) => req.header("Content-Type", "application/json").send(b),
                     None => req.send_empty(),
                 }
             }
-            "PATCH" => self
-                .http
+            "PATCH" => http
                 .patch(&url)
                 .header("Sec-Tailscale", "localapi")
                 .header("Authorization", &auth)
                 .header("Content-Type", "application/json")
                 .send(body.unwrap_or("{}")),
-            _ => self.http.get(&url).header("Sec-Tailscale", "localapi").header("Authorization", &auth).call(),
+            _ => http.get(&url).header("Sec-Tailscale", "localapi").header("Authorization", &auth).call(),
         };
         let mut resp = result.map_err(|e| format!("LocalAPI {path}: {e}"))?;
         let status = resp.status();
@@ -226,6 +286,13 @@ impl Node {
     /// Starts Tailscale's interactive login; the sign-in URL then appears in `status().auth_url`.
     pub fn login_interactive(&self) -> Result<(), String> {
         self.local_api("POST", "login-interactive", None).map(|_| ())
+    }
+
+    /// Pings a machine (or an address behind a subnet router) once, the way
+    /// `tailscale ping` does. Errors on no answer within [`PING_TIMEOUT`].
+    pub fn ping(&self, ip: &str) -> Result<PingResult, String> {
+        let text = self.local_api_with(&self.ping_http, "POST", &format!("ping?ip={ip}&type=disco"), None)?;
+        serde_json::from_str(&text).map_err(|e| format!("reading the ping's answer: {e}"))
     }
 
     pub fn logout(&self) -> Result<(), String> {
@@ -282,6 +349,7 @@ mod tests {
             proxy_cred: String::new(),
             api_cred: "wrong".into(),
             http: node.http.clone(),
+            ping_http: node.ping_http.clone(),
         };
         assert!(bad.local_api("GET", "status", None).is_err(), "wrong LocalAPI credential must be refused");
         std::mem::forget(bad); // sd -1: nothing to close

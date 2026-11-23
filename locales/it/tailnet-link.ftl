@@ -111,6 +111,9 @@ welcome-forward-detail = Desktop remoto, SSH e le app per database ricevono una 
 
 machine-search-hint = Cerca un dispositivo per nome, sistema operativo o indirizzo
 clear-search = Cancella la ricerca
+open-terminal-tooltip = Apri un terminale in cui funzionano i nomi dei tuoi tailnet, per curl, git, ssh, ping e altro. Oppure metti tl davanti a qualsiasi comando in qualsiasi terminale.
+open-terminal-missing = { -app-name } non trova tl, il suo programma di supporto per il terminale, accanto all'app. Reinstalla { -app-name } per ottenerlo.
+open-terminal-failed = Impossibile aprire un terminale: { $error }
 more-actions = Altre azioni
 edit-tailnet-menu = Rinomina o aggiungi domini…
 log-out-menu = Esci dall'account…
@@ -214,6 +217,7 @@ check-not-routed = { $host } non viene instradato da { -app-name }: non è un no
 check-ambiguous = { $host } si trova in più di un tailnet ({ $tailnets }), quindi non viene instradato. Usa invece il nome del dispositivo, oppure disattiva le subnet per uno di quei tailnet.
 check-gone = Quel tailnet è appena scomparso.
 check-not-running = { $tailnet } non è in esecuzione.
+ping-no-machine = { $host } passa per { $tailnet }, ma non è uno dei suoi dispositivi, quindi Tailscale non ha niente da pingare.
 check-ok = { $address } funziona: connesso tramite { $tailnet } in { $ms } ms.
 check-failed =
     { $host } è instradato tramite { $tailnet }, ma la connessione alla porta { $port } non è riuscita: { $error }

@@ -105,6 +105,9 @@ welcome-forward-detail = L’Escriptori remot, SSH i les aplicacions de bases de
 
 machine-search-hint = Cerca una màquina per nom, sistema o adreça
 clear-search = Esborra la cerca
+open-terminal-tooltip = Obre un terminal on funcionen els noms de les teves tailnets, per a curl, git, ssh, ping i més. O posa tl davant de qualsevol ordre en qualsevol terminal.
+open-terminal-missing = { -app-name } no troba tl, el seu ajudant de terminal, al costat de l’aplicació. Reinstal·la { -app-name } per obtenir-lo.
+open-terminal-failed = No s’ha pogut obrir un terminal: { $error }
 more-actions = Més accions
 edit-tailnet-menu = Canvia el nom o afegeix dominis…
 log-out-menu = Tanca la sessió…
@@ -206,6 +209,7 @@ check-not-routed = { -app-name } no encamina { $host }: no és un nom, una adre�
 check-ambiguous = { $host } és a més d’una tailnet ({ $tailnets }), de manera que no s’encamina. Fes servir el nom de la màquina, o desactiva les subxarxes d’una d’aquestes tailnets.
 check-gone = Aquesta tailnet acaba de desaparèixer.
 check-not-running = { $tailnet } no s’està executant.
+ping-no-machine = { $host } passa per { $tailnet }, però no és cap de les seves màquines, de manera que Tailscale no té res a què fer ping.
 check-ok = { $address } funciona: connectat per { $tailnet } en { $ms } ms.
 check-failed =
     { $host } s’encamina per { $tailnet }, però la connexió al port { $port } ha fallat: { $error }

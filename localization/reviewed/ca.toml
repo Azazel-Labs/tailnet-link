@@ -520,6 +520,26 @@ translation = "Obre l’Escriptori remot a { $address }"
 source = "Open settings folder"
 translation = "Obre la carpeta de configuració"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "No s’ha pogut obrir un terminal: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } no troba tl, el seu ajudant de terminal, al costat de l’aplicació. Reinstal·la { -app-name } per obtenir-lo.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Obre un terminal on funcionen els noms de les teves tailnets, per a curl, git, ssh, ping i més. O posa tl davant de qualsevol ordre en qualsevol terminal."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Posa-ho tot en pausa"
@@ -531,6 +551,10 @@ translation = "Deixa d’encaminar per les altres tailnets de moment"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Posa en pausa aquesta tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } passa per { $tailnet }, però no és cap de les seves màquines, de manera que Tailscale no té res a què fer ping."
 
 [messages.polish]
 source = "Polish"

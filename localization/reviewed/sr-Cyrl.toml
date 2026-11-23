@@ -520,6 +520,26 @@ translation = "Повежи се са { $address } преко удаљене р�
 source = "Open settings folder"
 translation = "Отвори фасциклу подешавања"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Отварање терминала није успело: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } не може да пронађе tl, свој помоћни програм за терминал, поред апликације. Поново инсталирајте { -app-name } да бисте га добили.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Отворите терминал у ком раде имена из ваших мрежа tailnet, за curl, git, ssh, ping и још много тога. Или ставите tl испред било које команде у било ком терминалу."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Паузирај све"
@@ -531,6 +551,10 @@ translation = "Привремено заустави рутирање кроз �
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Паузирај ову мрежу tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } иде кроз мрежу { $tailnet }, али није ниједан од њених уређаја, па Tailscale нема шта да пингује."
 
 [messages.polish]
 source = "Polish"

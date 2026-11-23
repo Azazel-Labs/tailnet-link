@@ -113,6 +113,9 @@ welcome-forward-detail = Uzak Masaüstü, SSH ve veritabanı uygulamaları bir m
 
 machine-search-hint = Ada, işletim sistemine veya adrese göre makine bulun
 clear-search = Aramayı temizle
+open-terminal-tooltip = curl, git, ssh, ping ve daha fazlası için tailnet'lerinizdeki adların çalıştığı bir terminal açın. Ya da herhangi bir terminalde herhangi bir komutun başına tl ekleyin.
+open-terminal-missing = { -app-name }, terminal yardımcısı olan tl'yi uygulamanın yanında bulamıyor. Almak için { -app-name } uygulamasını yeniden yükleyin.
+open-terminal-failed = Terminal açılamadı: { $error }
 more-actions = Diğer işlemler
 edit-tailnet-menu = Yeniden adlandır veya alan adı ekle…
 log-out-menu = Oturumu kapat…
@@ -217,6 +220,7 @@ check-not-routed = { $host }, { -app-name } tarafından yönlendirilmiyor: şu a
 check-ambiguous = { $host } birden fazla tailnet'te bulunuyor ({ $tailnets }), bu yüzden yönlendirilmiyor. Bunun yerine makinenin adını kullanın veya bu tailnet'lerden biri için alt ağları kapatın.
 check-gone = Bu tailnet az önce kayboldu.
 check-not-running = { $tailnet } adlı tailnet çalışmıyor.
+ping-no-machine = { $host }, { $tailnet } üzerinden gidiyor ama onun makinelerinden biri değil, bu yüzden Tailscale'in ping atacağı bir şey yok.
 check-ok = { $address } çalışıyor: { $tailnet } üzerinden { $ms } ms içinde bağlandı.
 check-failed =
     { $host }, { $tailnet } üzerinden yönlendiriliyor ancak { $port } numaralı porta bağlanılamadı: { $error }

@@ -107,6 +107,9 @@ welcome-forward-detail = Desktop la distanță, SSH și aplicațiile de baze de 
 
 machine-search-hint = Caută o mașină după nume, sistem sau adresă
 clear-search = Șterge căutarea
+open-terminal-tooltip = Deschide un terminal în care funcționează numele din tailnet-urile tale, pentru curl, git, ssh, ping și altele. Sau pune tl în fața oricărei comenzi, în orice terminal.
+open-terminal-missing = { -app-name } nu găsește tl, utilitarul său pentru terminal, lângă aplicație. Reinstalează { -app-name } ca să îl obții.
+open-terminal-failed = Nu s-a putut deschide un terminal: { $error }
 more-actions = Mai multe acțiuni
 edit-tailnet-menu = Redenumește sau adaugă domenii…
 log-out-menu = Deconectează-te…
@@ -208,6 +211,7 @@ check-not-routed = { $host } nu este rutat de { -app-name }: nu este un nume, o 
 check-ambiguous = { $host } se află în mai multe tailnet-uri ({ $tailnets }), așa că nu este rutat. Folosește în schimb numele mașinii sau dezactivează subrețelele pentru unul dintre aceste tailnet-uri.
 check-gone = Acel tailnet tocmai a dispărut.
 check-not-running = { $tailnet } nu rulează.
+ping-no-machine = { $host } trece prin { $tailnet }, dar nu este una dintre mașinile sale, așa că nu există nimic căruia Tailscale să îi dea ping.
 check-ok = { $address } funcționează: conectat prin { $tailnet } în { $ms } ms.
 check-failed =
     { $host } este rutat prin { $tailnet }, dar conectarea la portul { $port } a eșuat: { $error }

@@ -520,6 +520,26 @@ translation = "Buka Desktop Jarak Jauh ke { $address }"
 source = "Open settings folder"
 translation = "Buka folder pengaturan"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Tidak dapat membuka terminal: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } tidak dapat menemukan tl, alat bantu terminalnya, di samping aplikasi. Instal ulang { -app-name } untuk mendapatkannya.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Buka terminal tempat nama-nama di tailnet Anda berfungsi, untuk curl, git, ssh, ping, dan lainnya. Atau tambahkan tl di depan perintah apa pun di terminal mana pun."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Jeda semua"
@@ -531,6 +551,10 @@ translation = "Hentikan perutean melalui tailnet lain untuk sementara"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Jeda tailnet ini"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } melewati { $tailnet }, tetapi bukan salah satu mesinnya, jadi tidak ada yang bisa di-ping oleh Tailscale."
 
 [messages.polish]
 source = "Polish"

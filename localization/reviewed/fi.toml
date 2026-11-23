@@ -520,6 +520,26 @@ translation = "Avaa Etätyöpöytä-yhteys kohteeseen { $address }"
 source = "Open settings folder"
 translation = "Avaa asetuskansio"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Päätteen avaaminen epäonnistui: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ei löydä sovelluksen vierestä tl:ää, päätteen apuohjelmaansa. Asenna { -app-name } uudelleen saadaksesi sen.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Avaa pääte, jossa tailnetiesi nimet toimivat: curl, git, ssh, ping ja muut. Tai lisää tl minkä tahansa komennon eteen missä tahansa päätteessä."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Keskeytä kaikki"
@@ -531,6 +551,10 @@ translation = "Lopeta reititys muiden tailnetien kautta toistaiseksi"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Keskeytä tämä tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } kulkee tailnetin { $tailnet } kautta, mutta se ei ole mikään sen koneista, joten Tailscalella ei ole mitään pingattavaa."
 
 [messages.polish]
 source = "Polish"

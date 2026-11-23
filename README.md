@@ -75,8 +75,8 @@ Under the hood:
   ambiguous, so it isn't routed. **Test a name or address** says so. Turning off one tailnet's
   subnets settles it.
 - HTTPS works end to end with the real certificates. The proxy never sees inside it.
-- `ping` and other tools that look names up themselves don't go through a proxy, so they can't reach
-  these tailnets. Test a machine in **Settings → Test a name or address** instead.
+- Terminal tools don't read the system proxy setting. Put [`tl`](#in-a-terminal-tl) in front of
+  them, or test a machine in **Settings → Test a name or address**.
 
 ### Names of your own
 
@@ -96,11 +96,59 @@ their own **Open Remote Desktop** button.
 You can also edit forwards by hand in Settings, one per line, for example
 `auto = build-pc.capybara-iguana.ts.net:3389`.
 
+### In a terminal: `tl`
+
+Command-line tools don't read the system proxy setting. `tl`, installed with the app, sets things up
+for one command:
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl git clone https://git.capybara-iguana.ts.net/team/app.git
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+Run `tl` on its own for a shell where every command works that way. Its prompt starts with `(tl)`,
+and `exit` leaves it. The **terminal button** on the Tailnets tab opens a new terminal window with that shell.
+
+- **Most tools** follow the standard proxy variables that `tl` sets (`HTTPS_PROXY` and the rest):
+  curl, wget, git, npm, pip, cargo, Go, Python and Node.js. Your tailnets' names go through them, and
+  everything else goes directly, as it would without `tl`.
+- **`ssh`, `scp` and `sftp`** connect through `tl` (an SSH `ProxyCommand`), and so does git over SSH.
+  A `ProxyJump` or `ProxyCommand` you set up yourself is kept.
+- **`tl ping`** uses Tailscale's own ping and shows whether the connection is direct or relayed.
+  `-c 10` sends 10 pings and `-t` keeps going. An address behind a subnet router is answered by the
+  router. A name outside your tailnets gets the normal `ping`.
+- When you `ssh` somewhere from a `tl` shell, the remote shell is a normal shell: nothing is passed
+  along.
+- Tools that use neither the variables nor SSH still can't reach these tailnets. Forward a port to
+  them instead (see above).
+
+To have this in every terminal, add a line to your shell's profile. It does nothing while Tailnet Link
+isn't running:
+
+| Shell | Profile line |
+|---|---|
+| bash (`~/.bashrc`) | `eval "$(tl --env bash 2>/dev/null)"` |
+| zsh (`~/.zshrc`) | `eval "$(tl --env zsh 2>/dev/null)"` |
+| fish (`~/.config/fish/config.fish`) | `tl --env fish 2>/dev/null \| source` |
+| PowerShell (`$PROFILE`) | `tl --env powershell 2>$null \| Out-String \| Invoke-Expression` |
+
+The proxy variables point at Tailnet Link, so a terminal set up that way can't reach the internet
+after you quit Tailnet Link. Open a new terminal then. A `tl` shell has the same limit, but `exit` ends
+it.
+
+The Windows installer puts `tl` on the `PATH`. The Linux package installs it as `/usr/bin/tl`. On a
+Mac, link it from the app: `sudo ln -s "/Applications/Tailnet Link.app/Contents/MacOS/tl"
+/usr/local/bin/tl`.
+
 ## Everything at a glance
 
 **Tailnets tab**
 
 - Overall status, **Pause all** and **Add a tailnet**.
+- A **terminal** button, next to the machine search, that opens a terminal where your tailnets' names
+  work (see [`tl`](#in-a-terminal-tl)).
 - **Websites** found on the machines, as tiles with each page's title and icon. Click one to open
   it, or right-click to copy its address. Click the star on a tile to make it a favorite: favorites
   come first, as large tiles with a picture of the page. The picture is taken once a day by Edge,
@@ -187,9 +235,10 @@ macOS, right-click the app and choose **Open** the first time.
   instead of through Tailscale's relays, without an "allow access" pop-up.
 - Adds a Start menu shortcut, an optional desktop shortcut, and **Start at login** (on by default;
   starts quietly in the tray).
+- Puts `tl` on the `PATH` (on by default), so it works in every new terminal.
 - Upgrades in place and keeps logins and settings.
-- Uninstalling closes the app, restores the proxy setting, removes the firewall rule and login item,
-  and asks before deleting logins.
+- Uninstalling closes the app, restores the proxy setting, removes the firewall rule, login item and
+  `PATH` entry, and asks before deleting logins.
 - Silent install: `tailnet-link-windows-setup.exe /S`. Silent uninstall:
   `"C:\Program Files\Tailnet Link\uninstall.exe" /S`.
 

@@ -108,6 +108,9 @@ welcome-forward-detail = Etätyöpöytä, SSH ja tietokantasovellukset saavat pa
 
 machine-search-hint = Etsi konetta nimen, käyttöjärjestelmän tai osoitteen perusteella
 clear-search = Tyhjennä haku
+open-terminal-tooltip = Avaa pääte, jossa tailnetiesi nimet toimivat: curl, git, ssh, ping ja muut. Tai lisää tl minkä tahansa komennon eteen missä tahansa päätteessä.
+open-terminal-missing = { -app-name } ei löydä sovelluksen vierestä tl:ää, päätteen apuohjelmaansa. Asenna { -app-name } uudelleen saadaksesi sen.
+open-terminal-failed = Päätteen avaaminen epäonnistui: { $error }
 more-actions = Lisää toimintoja
 edit-tailnet-menu = Nimeä uudelleen tai lisää verkkotunnuksia…
 log-out-menu = Kirjaudu ulos…
@@ -209,6 +212,7 @@ check-not-routed = { -app-name } ei reititä kohdetta { $host }: se ei ole mink�
 check-ambiguous = { $host } on useammassa kuin yhdessä tailnetissä ({ $tailnets }), joten sitä ei reititetä. Käytä mieluummin koneen nimeä tai poista aliverkot käytöstä yhdestä näistä tailneteista.
 check-gone = Tuo tailnet katosi juuri.
 check-not-running = Tailnet { $tailnet } ei ole käynnissä.
+ping-no-machine = { $host } kulkee tailnetin { $tailnet } kautta, mutta se ei ole mikään sen koneista, joten Tailscalella ei ole mitään pingattavaa.
 check-ok = { $address } toimii: yhteys tailnetin { $tailnet } kautta, { $ms } ms.
 check-failed =
     Kohde { $host } reititetään tailnetin { $tailnet } kautta, mutta yhteys porttiin { $port } epäonnistui: { $error }

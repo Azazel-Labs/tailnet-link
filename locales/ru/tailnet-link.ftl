@@ -110,6 +110,9 @@ welcome-forward-detail = Удалённый рабочий стол, SSH и кл
 
 machine-search-hint = Поиск устройства по имени, ОС или адресу
 clear-search = Очистить поиск
+open-terminal-tooltip = Открыть терминал, в котором работают имена из ваших сетей tailnet, — для curl, git, ssh, ping и других программ. Или добавьте tl перед любой командой в любом терминале.
+open-terminal-missing = { -app-name } не может найти рядом с приложением tl — свою вспомогательную программу для терминала. Переустановите { -app-name }, чтобы получить её.
+open-terminal-failed = Не удалось открыть терминал: { $error }
 more-actions = Другие действия
 edit-tailnet-menu = Переименовать или добавить домены…
 log-out-menu = Выйти…
@@ -211,6 +214,7 @@ check-not-routed = { -app-name } не маршрутизирует { $host }: э
 check-ambiguous = { $host } входит в несколько сетей tailnet ({ $tailnets }), поэтому не маршрутизируется. Используйте вместо этого имя устройства или отключите подсети в одной из этих сетей.
 check-gone = Эта сеть tailnet только что исчезла.
 check-not-running = Сеть { $tailnet } не запущена.
+ping-no-machine = { $host } идёт через сеть { $tailnet }, но не является ни одним из её устройств, поэтому Tailscale нечего пинговать.
 check-ok = { $address } работает: подключение через { $tailnet } за { $ms } мс.
 check-failed =
     { $host } маршрутизируется через { $tailnet }, но подключиться к порту { $port } не удалось: { $error }

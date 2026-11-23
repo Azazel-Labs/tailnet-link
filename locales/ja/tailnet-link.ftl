@@ -97,6 +97,9 @@ welcome-forward-detail = リモート デスクトップ、SSH、データベー
 
 machine-search-hint = 名前、OS、アドレスでマシンを検索
 clear-search = 検索をクリア
+open-terminal-tooltip = tailnet の名前が使えるターミナルを開きます (curl、git、ssh、ping など)。どのターミナルでも、コマンドの前に tl を付けて実行することもできます。
+open-terminal-missing = { -app-name } のターミナル ヘルパーである tl がアプリと同じ場所に見つかりません。{ -app-name } を再インストールして入手してください。
+open-terminal-failed = ターミナルを開けませんでした: { $error }
 more-actions = その他の操作
 edit-tailnet-menu = 名前の変更・ドメインの追加…
 log-out-menu = ログアウト…
@@ -197,6 +200,7 @@ check-not-routed = { $host } は { -app-name } でルーティングされませ
 check-ambiguous = { $host } は複数の tailnet ({ $tailnets }) に含まれるため、ルーティングされません。代わりにマシン名を使うか、いずれかの tailnet でサブネットをオフにしてください。
 check-gone = その tailnet はたった今なくなりました。
 check-not-running = { $tailnet } は実行されていません。
+ping-no-machine = { $host } は { $tailnet } を経由しますが、その tailnet のマシンではないため、Tailscale で ping する対象がありません。
 check-ok = { $address } に接続できました: { $tailnet } 経由、{ $ms } ms。
 check-failed =
     { $host } は { $tailnet } 経由でルーティングされますが、ポート { $port } への接続に失敗しました: { $error }

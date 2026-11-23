@@ -20,6 +20,10 @@ rm -rf "$APP" "$OUT/build"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$OUT/build"
 lipo -create -output "$APP/Contents/MacOS/tailnet-link" \
   target/aarch64-apple-darwin/release/tailnet-link target/x86_64-apple-darwin/release/tailnet-link
+# tl, the terminal helper: the app's Open terminal button runs it from here, and
+# the README shows how to link it into /usr/local/bin.
+lipo -create -output "$APP/Contents/MacOS/tl" \
+  target/aarch64-apple-darwin/release/tl target/x86_64-apple-darwin/release/tl
 
 # App icon from assets/icons/tailnet-link.png.
 ICONSET="$OUT/build/tailnet-link.iconset"

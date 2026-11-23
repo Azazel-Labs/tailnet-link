@@ -520,6 +520,26 @@ translation = "Mở Máy tính Từ xa tới { $address }"
 source = "Open settings folder"
 translation = "Mở thư mục cài đặt"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Không thể mở terminal: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } không tìm thấy tl, công cụ hỗ trợ terminal của nó, bên cạnh ứng dụng. Hãy cài đặt lại { -app-name } để có công cụ này.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Mở một terminal dùng được tên trong các tailnet của bạn, cho curl, git, ssh, ping và nhiều lệnh khác. Hoặc thêm tl vào trước bất kỳ lệnh nào trong bất kỳ terminal nào."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Tạm dừng tất cả"
@@ -531,6 +551,10 @@ translation = "Tạm ngừng định tuyến qua các tailnet khác"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Tạm dừng tailnet này"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } đi qua { $tailnet }, nhưng không phải là máy nào trong tailnet đó, nên Tailscale không có gì để ping."
 
 [messages.polish]
 source = "Polish"

@@ -520,6 +520,26 @@ translation = "Připojit se k { $address } přes Vzdálenou plochu"
 source = "Open settings folder"
 translation = "Otevřít složku nastavení"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Terminál se nepodařilo otevřít: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } nemůže vedle aplikace najít tl, svého pomocníka pro terminál. Přeinstalujte { -app-name }, abyste ho získali.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Otevřete terminál, ve kterém fungují názvy z vašich sítí tailnet, pro curl, git, ssh, ping a další. Nebo v libovolném terminálu napište tl před jakýkoli příkaz."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Pozastavit vše"
@@ -531,6 +551,10 @@ translation = "Dočasně zastavit směrování přes ostatní sítě tailnet"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Pozastavit tuto síť tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } vede přes síť { $tailnet }, ale není to žádné z jejích zařízení, takže Tailscale nemá co pingnout."
 
 [messages.polish]
 source = "Polish"

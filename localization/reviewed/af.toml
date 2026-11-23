@@ -520,6 +520,26 @@ translation = "Maak Remote Desktop na { $address } oop"
 source = "Open settings folder"
 translation = "Maak instellingsvouer oop"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Kon nie 'n terminaal oopmaak nie: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } kan nie tl, sy terminaalhulpprogram, langs die app vind nie. Installeer { -app-name } weer om dit te kry.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Maak 'n terminaal oop waar jou tailnets se name werk, vir curl, git, ssh, ping en meer. Of sit tl voor enige opdrag in enige terminaal."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Pouseer alles"
@@ -531,6 +551,10 @@ translation = "Hou voorlopig op om deur ander tailnets te roeteer"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Pouseer hierdie tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } gaan deur { $tailnet }, maar dit is nie een van sy masjiene nie, so daar is niks vir Tailscale om te ping nie."
 
 [messages.polish]
 source = "Polish"

@@ -11,7 +11,7 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 use crate::config::{self, Alias, Config, Forward, TailnetConfig};
 use crate::i18n::tr;
-use crate::proxy::{self, PacRules, PacState, Router};
+use crate::proxy::{self, Fallback, PacRules, PacState, PingAnswer, Router};
 use crate::routes::{Prefix, Reach};
 use crate::sites;
 use crate::sync::lock;
@@ -334,6 +334,8 @@ struct Inner {
     system_unavailable: String,
     update: Option<Update>,
     update_check: UpdateCheck,
+    /// Where the terminal proxy listens (see [`proxy::Fallback::Direct`]), for `tl`.
+    terminal: String,
 }
 
 /// The websites found so far, and how far the current round has got.
@@ -388,6 +390,12 @@ impl Router for CoreRouter {
             c.request_show();
         }
     }
+    fn terminal_proxy(&self) -> String {
+        self.0.upgrade().map(|c| lock(&c.inner).terminal.clone()).unwrap_or_default()
+    }
+    fn ping(&self, host: &str) -> PingAnswer {
+        self.0.upgrade().map(|c| c.ping(host)).unwrap_or_default()
+    }
 }
 
 impl Core {
@@ -410,6 +418,7 @@ impl Core {
                 system_unavailable: String::new(),
                 update: None,
                 update_check: UpdateCheck::NotYet,
+                terminal: String::new(),
             }),
             pac_state: Arc::new(PacState::new()),
             rt: tokio::runtime::Builder::new_multi_thread()
@@ -510,9 +519,25 @@ impl Core {
         {
             let _g = self.rt.enter();
             let ln = tokio::net::TcpListener::from_std(ln).map_err(|e| e.to_string())?;
-            self.rt.spawn(proxy::serve(ln, router, pac));
+            self.rt.spawn(proxy::serve(ln, router.clone(), pac.clone(), Fallback::Refuse));
         }
         log::info!("Local proxy on {}", self.config().listen);
+        // The terminal proxy, for `tl`: on the next port when it's free, so a shell
+        // `tl` started keeps working after the app restarts.
+        match self.listen_terminal() {
+            Ok((ln, addr)) => {
+                let _g = self.rt.enter();
+                match tokio::net::TcpListener::from_std(ln) {
+                    Ok(ln) => {
+                        self.rt.spawn(proxy::serve(ln, router, pac, Fallback::Direct));
+                        log::info!("Terminal proxy on {addr}");
+                        lock(&self.inner).terminal = addr;
+                    }
+                    Err(e) => log::warn!("No terminal proxy: {e}"),
+                }
+            }
+            Err(e) => log::warn!("No terminal proxy: {e}"),
+        }
 
         for tc in self.config().tailnets {
             if let Err(e) = self.start_node(&tc) {
@@ -874,6 +899,20 @@ impl Core {
         }
     }
 
+    /// The terminal proxy's port: the one after the main proxy's, or any free one.
+    fn listen_terminal(&self) -> std::io::Result<(StdListener, String)> {
+        let listen = self.config().listen;
+        let next =
+            listen.rsplit_once(':').and_then(|(h, p)| Some(format!("{h}:{}", p.parse::<u16>().ok()?.checked_add(1)?)));
+        let ln = match next.map(StdListener::bind) {
+            Some(Ok(l)) => l,
+            _ => StdListener::bind("127.0.0.1:0")?,
+        };
+        ln.set_nonblocking(true)?;
+        let addr = ln.local_addr()?.to_string();
+        Ok((ln, addr))
+    }
+
     fn start_node(&self, tc: &TailnetConfig) -> Result<(), String> {
         let hostname = self.config().hostname;
         let mut st = TailnetStatus {
@@ -932,6 +971,61 @@ impl Core {
         let g = lock(&self.inner);
         let Route::To { id, dial } = route_in(&g, host) else { return None };
         g.entries.get(&id)?.node.as_ref().map(|n| (n.socks(), dial))
+    }
+
+    /// Pings `host` once through the tailnet that carries it, with Tailscale's
+    /// own ping (for `tl ping`). A name must be one of the tailnet's machines; an
+    /// address behind a subnet router pings the router.
+    pub fn ping(&self, host: &str) -> PingAnswer {
+        let fail =
+            |tailnet: String, error: String| PingAnswer { routed: true, tailnet, error, ..PingAnswer::default() };
+        let (label, node, ip) = {
+            let g = lock(&self.inner);
+            let host = crate::routes::normalize(host);
+            let (id, dial) = match route_in(&g, &host) {
+                Route::To { id, dial } => (id, dial),
+                Route::Ambiguous(tailnets) => {
+                    let names = tailnets.join(", ");
+                    return fail(names.clone(), tr!("check-ambiguous", host = host.as_str(), tailnets = names));
+                }
+                Route::None => return PingAnswer::default(),
+            };
+            let Some(e) = g.entries.get(&id) else { return fail(String::new(), tr!("check-gone")) };
+            let label = e.st.label();
+            let Some(node) = e.node.clone() else {
+                return fail(label.clone(), tr!("check-not-running", tailnet = label.as_str()));
+            };
+            let ip = if dial.parse::<std::net::IpAddr>().is_ok() {
+                dial
+            } else {
+                match e.st.machines.iter().find(|m| m.dns_name == dial && !m.ip.is_empty()) {
+                    Some(m) => m.ip.clone(),
+                    None => {
+                        return fail(
+                            label.clone(),
+                            tr!("ping-no-machine", host = dial.as_str(), tailnet = label.as_str()),
+                        );
+                    }
+                }
+            };
+            (label, node, ip)
+        };
+        match node.ping(&ip) {
+            Ok(r) if r.err.is_empty() => PingAnswer {
+                routed: true,
+                tailnet: label,
+                via: r.via(),
+                node: r.node_name,
+                node_ip: r.node_ip,
+                ms: r.latency_seconds * 1000.0,
+                ..PingAnswer::default()
+            },
+            Ok(r) => fail(label, r.err),
+            Err(e) if e.to_lowercase().contains("timeout") || e.to_lowercase().contains("timed out") => {
+                PingAnswer { routed: true, tailnet: label, timeout: true, ..PingAnswer::default() }
+            }
+            Err(e) => fail(label, e),
+        }
     }
 
     /// Decides which tailnets route, rebuilds the PAC if the domains changed,

@@ -97,6 +97,9 @@ welcome-forward-detail = 원격 데스크톱, SSH, 데이터베이스 앱에 머
 
 machine-search-hint = 이름, OS 또는 주소로 머신 찾기
 clear-search = 검색 지우기
+open-terminal-tooltip = tailnet 이름을 사용할 수 있는 터미널을 엽니다(curl, git, ssh, ping 등). 또는 어떤 터미널에서든 명령 앞에 tl을 붙이세요.
+open-terminal-missing = 앱 옆에서 { -app-name }의 터미널 도우미인 tl을 찾을 수 없습니다. { -app-name }를 다시 설치하여 받으세요.
+open-terminal-failed = 터미널을 열 수 없습니다: { $error }
 more-actions = 추가 작업
 edit-tailnet-menu = 이름 변경 또는 도메인 추가…
 log-out-menu = 로그아웃…
@@ -197,6 +200,7 @@ check-not-routed = { $host }: { -app-name }에서 라우팅하지 않습니다. 
 check-ambiguous = { $host }은(는) 둘 이상의 tailnet({ $tailnets })에 있으므로 라우팅되지 않습니다. 대신 머신 이름을 사용하거나 해당 tailnet 중 하나에서 서브넷을 끄세요.
 check-gone = 해당 tailnet이 방금 사라졌습니다.
 check-not-running = { $tailnet }: 실행 중이 아닙니다.
+ping-no-machine = { $host }은(는) { $tailnet }을(를) 거치지만 해당 tailnet의 머신이 아니므로 Tailscale이 ping할 대상이 없습니다.
 check-ok = { $address } 정상: { $tailnet } 경유로 { $ms }ms 만에 연결되었습니다.
 check-failed =
     { $host }: { $tailnet } 경유로 라우팅되지만 포트 { $port }에 연결하지 못했습니다: { $error }

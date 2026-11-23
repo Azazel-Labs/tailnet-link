@@ -23,6 +23,7 @@ mod sites;
 mod socks;
 mod sync;
 mod sysproxy;
+mod terminal;
 mod theme;
 mod thumbs;
 mod tsnet;
@@ -44,6 +45,9 @@ struct Args {
     export_icon: Option<String>,
     background: bool,
     version: bool,
+    /// For the installer: put the app's folder (and with it `tl`) on the system Path, or take it off.
+    #[cfg_attr(not(windows), allow(dead_code))]
+    path: Option<bool>,
 }
 
 fn parse_args() -> Args {
@@ -55,6 +59,8 @@ fn parse_args() -> Args {
             "cleanup" => a.cleanup = true,
             "logout-all" => a.logout_all = true,
             "background" => a.background = true,
+            "add-to-path" => a.path = Some(true),
+            "remove-from-path" => a.path = Some(false),
             "watchdog-pid" => a.watchdog_pid = it.next().and_then(|v| v.parse().ok()),
             "export-icon" => a.export_icon = it.next(),
             _ => {}
@@ -87,6 +93,15 @@ fn main() {
     // Before anything touches settings, the log or the system proxy.
     if args.version {
         print_line(&format!("Tailnet Link {}", env!("CARGO_PKG_VERSION")));
+        return;
+    }
+
+    #[cfg(windows)]
+    if let Some(add) = args.path {
+        if let Err(e) = terminal::set_on_path(add) {
+            print_line(&e);
+            std::process::exit(1);
+        }
         return;
     }
 

@@ -111,6 +111,9 @@ welcome-forward-detail = Bureau à distance, SSH et les clients de bases de donn
 
 machine-search-hint = Chercher une machine par nom, OS ou adresse
 clear-search = Effacer la recherche
+open-terminal-tooltip = Ouvrir un terminal où les noms de vos tailnets fonctionnent, pour curl, git, ssh, ping et plus encore. Vous pouvez aussi placer tl devant n’importe quelle commande, dans n’importe quel terminal.
+open-terminal-missing = { -app-name } ne trouve pas tl, son utilitaire pour le terminal, à côté de l’application. Réinstallez { -app-name } pour l’obtenir.
+open-terminal-failed = Impossible d’ouvrir un terminal : { $error }
 more-actions = Plus d’actions
 edit-tailnet-menu = Renommer ou ajouter des domaines…
 log-out-menu = Se déconnecter…
@@ -214,6 +217,7 @@ check-not-routed = { $host } n’est pas routé par { -app-name } : ce n’est 
 check-ambiguous = { $host } se trouve dans plusieurs tailnets ({ $tailnets }), il n’est donc pas routé. Utilisez plutôt le nom de la machine, ou désactivez les sous-réseaux de l’un de ces tailnets.
 check-gone = Ce tailnet vient de disparaître.
 check-not-running = { $tailnet } n’est pas en cours d’exécution.
+ping-no-machine = { $host } passe par { $tailnet }, mais ce n’est pas l’une de ses machines, il n’y a donc rien que Tailscale puisse pinguer.
 check-ok = { $address } fonctionne : connecté via { $tailnet } en { $ms } ms.
 check-failed =
     { $host } est routé via { $tailnet }, mais la connexion au port { $port } a échoué : { $error }

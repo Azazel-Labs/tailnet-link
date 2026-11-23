@@ -520,6 +520,26 @@ translation = "Ouvrir Bureau à distance vers { $address }"
 source = "Open settings folder"
 translation = "Ouvrir le dossier des paramètres"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Impossible d’ouvrir un terminal : { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ne trouve pas tl, son utilitaire pour le terminal, à côté de l’application. Réinstallez { -app-name } pour l’obtenir.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Ouvrir un terminal où les noms de vos tailnets fonctionnent, pour curl, git, ssh, ping et plus encore. Vous pouvez aussi placer tl devant n’importe quelle commande, dans n’importe quel terminal."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Tout mettre en pause"
@@ -531,6 +551,10 @@ translation = "Arrêter pour l’instant le routage via les autres tailnets"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Mettre ce tailnet en pause"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } passe par { $tailnet }, mais ce n’est pas l’une de ses machines, il n’y a donc rien que Tailscale puisse pinguer."
 
 [messages.polish]
 source = "Polish"

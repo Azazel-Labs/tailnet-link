@@ -127,6 +127,9 @@ welcome-forward-detail = Remote Desktop, SSH and database apps get a local port 
 
 machine-search-hint = Find a machine by name, OS or address
 clear-search = Clear the search
+open-terminal-tooltip = Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal.
+open-terminal-missing = { -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+open-terminal-failed = Couldn't open a terminal: { $error }
 more-actions = More actions
 edit-tailnet-menu = Rename or add domains…
 log-out-menu = Log out…
@@ -243,6 +246,7 @@ check-not-routed = { $host } isn't routed by { -app-name }: it isn't a name, add
 check-ambiguous = { $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets.
 check-gone = That tailnet just went away.
 check-not-running = { $tailnet } isn't running.
+ping-no-machine = { $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping.
 check-ok = { $address } works: connected through { $tailnet } in { $ms } ms.
 check-failed =
     { $host } is routed through { $tailnet }, but connecting to port { $port } failed: { $error }

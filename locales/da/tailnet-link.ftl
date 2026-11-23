@@ -106,6 +106,9 @@ welcome-forward-detail = Fjernskrivebord, SSH og databaseapps får en lokal port
 
 machine-search-hint = Find en maskine efter navn, styresystem eller adresse
 clear-search = Ryd søgningen
+open-terminal-tooltip = Åbn en terminal, hvor navnene i dine tailnets virker, til curl, git, ssh, ping og mere. Eller sæt tl foran en hvilken som helst kommando i en hvilken som helst terminal.
+open-terminal-missing = { -app-name } kan ikke finde tl, sit terminalhjælpeprogram, ved siden af appen. Geninstaller { -app-name } for at få det.
+open-terminal-failed = Kunne ikke åbne en terminal: { $error }
 more-actions = Flere handlinger
 edit-tailnet-menu = Omdøb eller tilføj domæner…
 log-out-menu = Log ud…
@@ -207,6 +210,7 @@ check-not-routed = { $host } dirigeres ikke af { -app-name }: den er ikke et nav
 check-ambiguous = { $host } findes på mere end ét tailnet ({ $tailnets }), så den dirigeres ikke. Brug maskinens navn i stedet, eller slå subnets fra for et af de tailnets.
 check-gone = Det tailnet forsvandt lige.
 check-not-running = { $tailnet } kører ikke.
+ping-no-machine = { $host } går gennem { $tailnet }, men er ikke en af dets maskiner, så der er intet for Tailscale at pinge.
 check-ok = { $address } virker: forbundet gennem { $tailnet } på { $ms } ms.
 check-failed =
     { $host } dirigeres gennem { $tailnet }, men forbindelsen til port { $port } mislykkedes: { $error }

@@ -97,6 +97,9 @@ welcome-forward-detail = 遠端桌面、SSH 和資料庫應用程式會取得一
 
 machine-search-hint = 依名稱、作業系統或位址尋找裝置
 clear-search = 清除搜尋
+open-terminal-tooltip = 開啟可使用你的 tailnet 中名稱的終端機，適用於 curl、git、ssh、ping 等。也可以在任何終端機中，於任何命令前加上 tl。
+open-terminal-missing = { -app-name } 在應用程式旁邊找不到它的終端機輔助程式 tl。請重新安裝 { -app-name } 以取得它。
+open-terminal-failed = 無法開啟終端機：{ $error }
 more-actions = 更多動作
 edit-tailnet-menu = 重新命名或新增網域…
 log-out-menu = 登出…
@@ -197,6 +200,7 @@ check-not-routed = { -app-name } 不會路由 { $host }：它不是任何正在�
 check-ambiguous = { $host } 位於多個 tailnet 中（{ $tailnets }），因此不會路由。請改用裝置名稱，或為其中一個 tailnet 關閉子網路。
 check-gone = 該 tailnet 剛剛消失了。
 check-not-running = { $tailnet } 未在執行。
+ping-no-machine = { $host } 經由 { $tailnet }，但它不是該 tailnet 中的裝置，因此 Tailscale 沒有可以 ping 的對象。
 check-ok = { $address } 可正常使用：已經由 { $tailnet } 連線，耗時 { $ms } 毫秒。
 check-failed =
     { $host } 經由 { $tailnet } 路由，但連線到連接埠 { $port } 失敗：{ $error }

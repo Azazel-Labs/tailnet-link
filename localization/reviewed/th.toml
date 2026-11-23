@@ -520,6 +520,26 @@ translation = "เปิดเดสก์ท็อประยะไกลไ�
 source = "Open settings folder"
 translation = "เปิดโฟลเดอร์การตั้งค่า"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "เปิดเทอร์มินัลไม่ได้: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } ไม่พบ tl ซึ่งเป็นตัวช่วยสำหรับเทอร์มินัล ในตำแหน่งเดียวกับแอป ติดตั้ง { -app-name } ใหม่เพื่อให้ได้ tl มา
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "เปิดเทอร์มินัลที่ใช้ชื่อใน tailnet ของคุณได้ สำหรับ curl, git, ssh, ping และอื่นๆ หรือใส่ tl ไว้หน้าคำสั่งใดก็ได้ในเทอร์มินัลใดก็ได้"
+
 [messages.pause-all]
 source = "Pause all"
 translation = "หยุดทั้งหมดชั่วคราว"
@@ -531,6 +551,10 @@ translation = "หยุดกำหนดเส้นทางผ่าน tail
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "หยุด tailnet นี้ชั่วคราว"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } ผ่าน { $tailnet } แต่ไม่ใช่เครื่องใดใน tailnet นั้น จึงไม่มีอะไรให้ Tailscale ping"
 
 [messages.polish]
 source = "Polish"

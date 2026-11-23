@@ -520,6 +520,26 @@ translation = "{ $address } へのリモート デスクトップを開く"
 source = "Open settings folder"
 translation = "設定フォルダーを開く"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "ターミナルを開けませんでした: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } のターミナル ヘルパーである tl がアプリと同じ場所に見つかりません。{ -app-name } を再インストールして入手してください。
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "tailnet の名前が使えるターミナルを開きます (curl、git、ssh、ping など)。どのターミナルでも、コマンドの前に tl を付けて実行することもできます。"
+
 [messages.pause-all]
 source = "Pause all"
 translation = "すべて一時停止"
@@ -531,6 +551,10 @@ translation = "他の tailnet 経由のルーティングを一時的に停止�
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "この tailnet を一時停止"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } は { $tailnet } を経由しますが、その tailnet のマシンではないため、Tailscale で ping する対象がありません。"
 
 [messages.polish]
 source = "Polish"

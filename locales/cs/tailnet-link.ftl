@@ -110,6 +110,9 @@ welcome-forward-detail = Vzdálená plocha, SSH a databázoví klienti dostanou 
 
 machine-search-hint = Najít zařízení podle názvu, OS nebo adresy
 clear-search = Vymazat hledání
+open-terminal-tooltip = Otevřete terminál, ve kterém fungují názvy z vašich sítí tailnet, pro curl, git, ssh, ping a další. Nebo v libovolném terminálu napište tl před jakýkoli příkaz.
+open-terminal-missing = { -app-name } nemůže vedle aplikace najít tl, svého pomocníka pro terminál. Přeinstalujte { -app-name }, abyste ho získali.
+open-terminal-failed = Terminál se nepodařilo otevřít: { $error }
 more-actions = Další akce
 edit-tailnet-menu = Přejmenovat nebo přidat domény…
 log-out-menu = Odhlásit…
@@ -211,6 +214,7 @@ check-not-routed = { -app-name } nesměruje { $host }: není to název, adresa a
 check-ambiguous = { $host } je ve více sítích tailnet ({ $tailnets }), proto se nesměruje. Použijte raději název zařízení, nebo u jedné z těchto sítí vypněte podsítě.
 check-gone = Tato síť tailnet právě zmizela.
 check-not-running = Síť { $tailnet } neběží.
+ping-no-machine = { $host } vede přes síť { $tailnet }, ale není to žádné z jejích zařízení, takže Tailscale nemá co pingnout.
 check-ok = { $address } funguje: připojeno přes { $tailnet } za { $ms } ms.
 check-failed =
     { $host } se směruje přes { $tailnet }, ale připojení k portu { $port } selhalo: { $error }

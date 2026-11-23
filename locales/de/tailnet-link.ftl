@@ -111,6 +111,9 @@ welcome-forward-detail = Remotedesktop, SSH und Datenbank-Apps erhalten einen lo
 
 machine-search-hint = Gerät nach Name, Betriebssystem oder Adresse suchen
 clear-search = Suche löschen
+open-terminal-tooltip = Ein Terminal öffnen, in dem die Namen Ihrer Tailnets funktionieren, für curl, git, ssh, ping und mehr. Oder setzen Sie in einem beliebigen Terminal tl vor einen beliebigen Befehl.
+open-terminal-missing = { -app-name } findet tl, sein Terminal-Hilfsprogramm, nicht neben der App. Installieren Sie { -app-name } neu, um es zu erhalten.
+open-terminal-failed = Terminal konnte nicht geöffnet werden: { $error }
 more-actions = Weitere Aktionen
 edit-tailnet-menu = Umbenennen oder Domains hinzufügen…
 log-out-menu = Abmelden…
@@ -214,6 +217,7 @@ check-not-routed = { $host } wird nicht von { -app-name } weitergeleitet: Es ist
 check-ambiguous = { $host } liegt in mehr als einem Tailnet ({ $tailnets }) und wird daher nicht weitergeleitet. Verwenden Sie stattdessen den Namen des Geräts, oder schalten Sie die Subnetze für eines dieser Tailnets aus.
 check-gone = Dieses Tailnet ist gerade verschwunden.
 check-not-running = { $tailnet } läuft nicht.
+ping-no-machine = { $host } läuft über { $tailnet }, ist aber keines seiner Geräte, daher gibt es für Tailscale nichts anzupingen.
 check-ok = { $address } funktioniert: verbunden über { $tailnet } in { $ms } ms.
 check-failed =
     { $host } wird über { $tailnet } geleitet, aber die Verbindung zu Port { $port } ist fehlgeschlagen: { $error }

@@ -97,6 +97,9 @@ welcome-forward-detail = 远程桌面、SSH 和数据库应用会获得一个通
 
 machine-search-hint = 按名称、操作系统或地址查找设备
 clear-search = 清除搜索
+open-terminal-tooltip = 打开一个可以使用你的 tailnet 中名称的终端，适用于 curl、git、ssh、ping 等。也可以在任意终端中，在任意命令前加上 tl。
+open-terminal-missing = { -app-name } 在应用旁边找不到它的终端辅助程序 tl。请重新安装 { -app-name } 以获取它。
+open-terminal-failed = 无法打开终端：{ $error }
 more-actions = 更多操作
 edit-tailnet-menu = 重命名或添加域名…
 log-out-menu = 退出登录…
@@ -197,6 +200,7 @@ check-not-routed = { -app-name } 不会路由 { $host }：它不是任何正在�
 check-ambiguous = { $host } 位于多个 tailnet 中（{ $tailnets }），因此不会被路由。请改用设备名称，或为其中一个 tailnet 关闭子网。
 check-gone = 该 tailnet 刚刚消失了。
 check-not-running = { $tailnet } 未在运行。
+ping-no-machine = { $host } 经由 { $tailnet }，但它不是该 tailnet 中的设备，因此 Tailscale 没有可以 ping 的对象。
 check-ok = { $address } 可用：已经由 { $tailnet } 连接，用时 { $ms } 毫秒。
 check-failed =
     { $host } 经由 { $tailnet } 路由，但连接端口 { $port } 失败：{ $error }

@@ -24,10 +24,12 @@ fi
 
 cargo build --release --locked --target x86_64-pc-windows-gnu
 cp target/x86_64-pc-windows-gnu/release/tailnet-link.exe "$OUT/tailnet-link.exe"
+cp target/x86_64-pc-windows-gnu/release/tl.exe "$OUT/tl.exe"
 cp assets/icons/tailnet-link.ico "$OUT/tailnet-link.ico"
 cp LICENSE "$OUT/LICENSE.txt"
 
-makensis -V2 \
+# The script is UTF-8 without a BOM; makensis on Windows would read it as ANSI.
+makensis -INPUTCHARSET UTF8 -V2 \
   -DVERSION="$VERSION" \
   -DVERSION_NUM="$VERSION_NUM" \
   -DDIST="$OUT" \
@@ -35,5 +37,5 @@ makensis -V2 \
   packaging/windows/tailnet-link.nsi
 
 mv "$OUT/tailnet-link.exe" "$OUT/tailnet-link-windows-amd64.exe"
-rm -f "$OUT/tailnet-link.ico" "$OUT/LICENSE.txt"
+rm -f "$OUT/tl.exe" "$OUT/tailnet-link.ico" "$OUT/LICENSE.txt"
 echo "Built $OUT/tailnet-link-windows-setup.exe ($VERSION)"

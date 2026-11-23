@@ -97,6 +97,9 @@ welcome-forward-detail = Máy tính Từ xa, SSH và ứng dụng cơ sở dữ 
 
 machine-search-hint = Tìm máy theo tên, hệ điều hành hoặc địa chỉ
 clear-search = Xóa tìm kiếm
+open-terminal-tooltip = Mở một terminal dùng được tên trong các tailnet của bạn, cho curl, git, ssh, ping và nhiều lệnh khác. Hoặc thêm tl vào trước bất kỳ lệnh nào trong bất kỳ terminal nào.
+open-terminal-missing = { -app-name } không tìm thấy tl, công cụ hỗ trợ terminal của nó, bên cạnh ứng dụng. Hãy cài đặt lại { -app-name } để có công cụ này.
+open-terminal-failed = Không thể mở terminal: { $error }
 more-actions = Thao tác khác
 edit-tailnet-menu = Đổi tên hoặc thêm tên miền…
 log-out-menu = Đăng xuất…
@@ -197,6 +200,7 @@ check-not-routed = { $host } không được { -app-name } định tuyến: nó 
 check-ambiguous = { $host } nằm trong nhiều hơn một tailnet ({ $tailnets }), nên không được định tuyến. Hãy dùng tên máy thay thế, hoặc tắt mạng con cho một trong các tailnet đó.
 check-gone = Tailnet đó vừa biến mất.
 check-not-running = { $tailnet } không chạy.
+ping-no-machine = { $host } đi qua { $tailnet }, nhưng không phải là máy nào trong tailnet đó, nên Tailscale không có gì để ping.
 check-ok = { $address } hoạt động: đã kết nối qua { $tailnet } trong { $ms } ms.
 check-failed =
     { $host } được định tuyến qua { $tailnet }, nhưng không thể kết nối tới cổng { $port }: { $error }

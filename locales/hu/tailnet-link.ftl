@@ -113,6 +113,9 @@ welcome-forward-detail = A Távoli asztal, az SSH és az adatbázis-alkalmazáso
 
 machine-search-hint = Gép keresése név, operációs rendszer vagy cím szerint
 clear-search = Keresés törlése
+open-terminal-tooltip = Terminál megnyitása, amelyben a tailnetjei nevei működnek: curl, git, ssh, ping és még sok más. Vagy írja be a tl-t bármely parancs elé, bármelyik terminálban.
+open-terminal-missing = A { -app-name } nem találja az alkalmazás mellett a tl-t, a terminálos segédprogramját. Telepítse újra a { -app-name } alkalmazást, hogy megkapja.
+open-terminal-failed = Nem sikerült megnyitni a terminált: { $error }
 more-actions = További műveletek
 edit-tailnet-menu = Átnevezés vagy tartományok hozzáadása…
 log-out-menu = Kijelentkezés…
@@ -217,6 +220,7 @@ check-not-routed = { $host }: a { -app-name } nem irányítja át, mert nem neve
 check-ambiguous = { $host } több tailnetben is szerepel ({ $tailnets }), ezért nincs átirányítva. Használja inkább a gép nevét, vagy kapcsolja ki az alhálózatokat az egyik ilyen tailnetben.
 check-gone = Ez a tailnet épp eltűnt.
 check-not-running = A(z) { $tailnet } tailnet nem fut.
+ping-no-machine = { $host } a(z) { $tailnet } tailneten keresztül megy, de nem tartozik annak gépei közé, így a Tailscale-nek nincs mit pingelnie.
 check-ok = { $address } működik: kapcsolódva a(z) { $tailnet } tailneten át, { $ms } ms alatt.
 check-failed =
     { $host } a(z) { $tailnet } tailneten át van irányítva, de a(z) { $port } portra nem sikerült csatlakozni: { $error }

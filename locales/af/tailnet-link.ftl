@@ -107,6 +107,9 @@ welcome-forward-detail = Remote Desktop, SSH en databasis-apps kry 'n plaaslike 
 
 machine-search-hint = Soek 'n masjien volgens naam, bedryfstelsel of adres
 clear-search = Maak die soektog skoon
+open-terminal-tooltip = Maak 'n terminaal oop waar jou tailnets se name werk, vir curl, git, ssh, ping en meer. Of sit tl voor enige opdrag in enige terminaal.
+open-terminal-missing = { -app-name } kan nie tl, sy terminaalhulpprogram, langs die app vind nie. Installeer { -app-name } weer om dit te kry.
+open-terminal-failed = Kon nie 'n terminaal oopmaak nie: { $error }
 more-actions = Meer aksies
 edit-tailnet-menu = Hernoem of voeg domeine by…
 log-out-menu = Meld af…
@@ -208,6 +211,7 @@ check-not-routed = { $host } word nie deur { -app-name } geroeteer nie: dit is n
 check-ambiguous = { $host } is in meer as een tailnet ({ $tailnets }), so dit word nie geroeteer nie. Gebruik eerder die masjien se naam, of skakel subnette af vir een van daardie tailnets.
 check-gone = Daardie tailnet het pas verdwyn.
 check-not-running = { $tailnet } loop nie.
+ping-no-machine = { $host } gaan deur { $tailnet }, maar dit is nie een van sy masjiene nie, so daar is niks vir Tailscale om te ping nie.
 check-ok = { $address } werk: gekoppel deur { $tailnet } in { $ms } ms.
 check-failed =
     { $host } word deur { $tailnet } geroeteer, maar koppeling aan poort { $port } het misluk: { $error }

@@ -1,10 +1,17 @@
 //! The local proxy on 127.0.0.1: sends each request to the tailnet that owns
 //! its name. Also serves the PAC file (the rules the system proxy setting
-//! points at), and lets a second copy of the app ask this one to show itself.
+//! points at), lets a second copy of the app ask this one to show itself, and
+//! answers `tl` (see src/bin/tl.rs).
+//!
+//! It runs twice. The system proxy setting's copy refuses names no tailnet
+//! carries. The terminal copy, which `tl` points proxy-aware tools at,
+//! connects to those directly instead, so `tl npm install` still reaches the
+//! internet.
 
 use std::fmt::Write as _;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, PoisonError, RwLock};
+use std::time::Duration;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener, TcpStream};
 
@@ -19,6 +26,46 @@ pub trait Router: Send + Sync + 'static {
     fn route(&self, host: &str) -> Option<(SocksTarget, String)>;
     /// A second copy of the app asked us to show our window.
     fn show(&self);
+    /// The terminal proxy's address, for `tl`.
+    fn terminal_proxy(&self) -> String {
+        String::new()
+    }
+    /// Pings `host` once with Tailscale's own ping, for `tl ping`. Blocks.
+    fn ping(&self, _host: &str) -> PingAnswer {
+        PingAnswer::default()
+    }
+}
+
+/// What a proxy does with a name no tailnet carries.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Fallback {
+    /// Refuses it. The system proxy setting only sends tailnet names here, and
+    /// the website pictures must not reach anything else.
+    Refuse,
+    /// Connects to it directly: the terminal proxy.
+    Direct,
+}
+
+/// How long a direct connection may take to open.
+const DIRECT_TIMEOUT: Duration = Duration::from_secs(20);
+
+/// One answer to `tl ping`, sent as JSON.
+#[derive(Clone, Debug, Default, PartialEq, serde::Serialize)]
+pub struct PingAnswer {
+    /// False: no tailnet carries the host, so `tl` runs the normal ping.
+    pub routed: bool,
+    /// The tailnet that carries it.
+    pub tailnet: String,
+    /// The machine that answered (a subnet router, for an address behind one).
+    pub node: String,
+    pub node_ip: String,
+    /// How: an address and port when direct, "DERP(code)" through a relay.
+    pub via: String,
+    pub ms: f64,
+    /// No answer in time.
+    pub timeout: bool,
+    /// Why it couldn't ping (translated).
+    pub error: String,
 }
 
 /// The PAC rules and whether routing is on (off = PAC says "everything direct").
@@ -127,23 +174,47 @@ pub fn is_tailnet_link_pac(url: &str) -> bool {
     !port.is_empty() && port.len() <= 5 && port.bytes().all(|b| b.is_ascii_digit()) && path == "proxy.pac"
 }
 
-pub async fn serve(listener: TcpListener, router: Arc<dyn Router>, pac: Arc<PacState>) {
+pub async fn serve(listener: TcpListener, router: Arc<dyn Router>, pac: Arc<PacState>, fallback: Fallback) {
     loop {
         let Ok((conn, _)) = listener.accept().await else {
             continue;
         };
         let (router, pac) = (router.clone(), pac.clone());
         tokio::spawn(async move {
-            if let Err(e) = handle(conn, router, pac).await {
+            if let Err(e) = handle(conn, router, pac, fallback).await {
                 log::debug!("proxy connection: {e}");
             }
         });
     }
 }
 
+/// Opens a connection to host:port through the tailnet that carries it, or
+/// directly when none does and `fallback` allows it.
+async fn open(router: &dyn Router, host: &str, port: u16, fallback: Fallback) -> Result<TcpStream, String> {
+    if let Some((target, dial)) = router.route(host) {
+        return socks::connect(&target, &dial, port).await.map_err(|e| {
+            log::info!("connect {host}:{port}: {e}");
+            format!("Tailnet Link: {e}")
+        });
+    }
+    match fallback {
+        Fallback::Refuse => Err(format!("no connected tailnet handles {host}")),
+        Fallback::Direct => match tokio::time::timeout(DIRECT_TIMEOUT, TcpStream::connect((host, port))).await {
+            Ok(Ok(s)) => Ok(s),
+            Ok(Err(e)) => Err(format!("{host}:{port}: {e}")),
+            Err(_) => Err(format!("{host}:{port} didn't answer within {}s", DIRECT_TIMEOUT.as_secs())),
+        },
+    }
+}
+
 const MAX_HEAD: usize = 64 * 1024;
 
-async fn handle(mut client: TcpStream, router: Arc<dyn Router>, pac: Arc<PacState>) -> std::io::Result<()> {
+async fn handle(
+    mut client: TcpStream,
+    router: Arc<dyn Router>,
+    pac: Arc<PacState>,
+    fallback: Fallback,
+) -> std::io::Result<()> {
     // Read the request head.
     let mut buf = Vec::with_capacity(4096);
     let head_len = loop {
@@ -172,16 +243,9 @@ async fn handle(mut client: TcpStream, router: Arc<dyn Router>, pac: Arc<PacStat
 
     if method.eq_ignore_ascii_case("CONNECT") {
         let (host, port) = split_host_port(&path, 443);
-        let Some((target, dial)) = router.route(&host) else {
-            return respond(&mut client, 502, "text/plain", format!("no connected tailnet handles {host}").as_bytes())
-                .await;
-        };
-        let mut up = match socks::connect(&target, &dial, port).await {
+        let mut up = match open(&*router, &host, port, fallback).await {
             Ok(s) => s,
-            Err(e) => {
-                log::info!("connect {host}:{port}: {e}");
-                return respond(&mut client, 502, "text/plain", format!("Tailnet Link: {e}").as_bytes()).await;
-            }
+            Err(e) => return respond(&mut client, 502, "text/plain", e.as_bytes()).await,
         };
         client.write_all(b"HTTP/1.1 200 Connection Established\r\n\r\n").await?;
         if !rest.is_empty() {
@@ -198,13 +262,9 @@ async fn handle(mut client: TcpStream, router: Arc<dyn Router>, pac: Arc<PacStat
             None => (after, "/"),
         };
         let (host, port) = split_host_port(authority, 80);
-        let Some((target, dial)) = router.route(&host) else {
-            return respond(&mut client, 502, "text/plain", format!("no connected tailnet handles {host}").as_bytes())
-                .await;
-        };
-        let mut up = match socks::connect(&target, &dial, port).await {
+        let mut up = match open(&*router, &host, port, fallback).await {
             Ok(s) => s,
-            Err(e) => return respond(&mut client, 502, "text/plain", format!("Tailnet Link: {e}").as_bytes()).await,
+            Err(e) => return respond(&mut client, 502, "text/plain", e.as_bytes()).await,
         };
         // Rewrite to an origin-form request; one request per connection.
         let mut out = format!("{method} {origin} HTTP/1.1\r\n");
@@ -229,7 +289,25 @@ async fn handle(mut client: TcpStream, router: Arc<dyn Router>, pac: Arc<PacStat
 
     // Requests addressed to the proxy itself.
     let local_path = path.split('?').next().unwrap_or("");
+    // `tl` asks with its own header, and by this computer's address: a web page
+    // can't send the header to another site, nor (pointing a name of its own
+    // at 127.0.0.1) the Host.
+    let from_tl = req.headers.iter().any(|h| h.name.eq_ignore_ascii_case("x-tailnet-link") && h.value == b"tl")
+        && req.headers.iter().any(|h| h.name.eq_ignore_ascii_case("host") && is_loopback_host(h.value));
     match (method.as_str(), local_path) {
+        ("GET", "/tl/info") if from_tl => {
+            let info = serde_json::json!({
+                "version": env!("CARGO_PKG_VERSION"),
+                "terminal_proxy": router.terminal_proxy(),
+            });
+            respond(&mut client, 200, "application/json", info.to_string().as_bytes()).await
+        }
+        ("GET", "/tl/ping") if from_tl => {
+            let host = query_param(&path, "host").unwrap_or_default();
+            let answer = tokio::task::spawn_blocking(move || router.ping(&host)).await.unwrap_or_default();
+            let body = serde_json::to_vec(&answer).unwrap_or_default();
+            respond(&mut client, 200, "application/json", &body).await
+        }
         ("GET", "/proxy.pac" | "/wpad.dat") => {
             respond(&mut client, 200, "application/x-ns-proxy-autoconfig", &pac.current()).await
         }
@@ -264,6 +342,36 @@ async fn respond(c: &mut TcpStream, code: u16, ctype: &str, body: &[u8]) -> std:
     c.write_all(head.as_bytes()).await?;
     c.write_all(body).await?;
     c.shutdown().await
+}
+
+/// A Host header naming this computer: 127.0.0.1, localhost or `[::1]`, with any port.
+fn is_loopback_host(value: &[u8]) -> bool {
+    let v = String::from_utf8_lossy(value).to_ascii_lowercase();
+    let (host, _) = split_host_port(v.trim(), 0);
+    matches!(host.as_str(), "127.0.0.1" | "localhost" | "::1")
+}
+
+/// A query parameter, %-decoded (`+` is a space).
+fn query_param(path: &str, name: &str) -> Option<String> {
+    let query = path.split_once('?')?.1;
+    let value = query.split('&').find_map(|kv| kv.strip_prefix(name)?.strip_prefix('='))?;
+    let bytes = value.as_bytes();
+    let mut out = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        let hex = bytes.get(i + 1..i + 3).and_then(|h| u8::from_str_radix(std::str::from_utf8(h).ok()?, 16).ok());
+        match (bytes[i], hex) {
+            (b'%', Some(b)) => {
+                out.push(b);
+                i += 3;
+                continue;
+            }
+            (b'+', _) => out.push(b' '),
+            (b, _) => out.push(b),
+        }
+        i += 1;
+    }
+    String::from_utf8(out).ok()
 }
 
 fn find(h: &[u8], needle: &[u8]) -> Option<usize> {
@@ -371,6 +479,17 @@ mod tests {
     }
 
     #[test]
+    fn query_params_and_loopback_hosts() {
+        assert_eq!(query_param("/tl/ping?host=a.ts.net", "host").as_deref(), Some("a.ts.net"));
+        assert_eq!(query_param("/tl/ping?x=1&host=fd7a%3A%3A1", "host").as_deref(), Some("fd7a::1"));
+        assert_eq!(query_param("/tl/ping?hostname=x", "host"), None);
+        assert_eq!(query_param("/tl/ping", "host"), None);
+        assert_eq!(query_param("/tl/ping?host=50%", "host").as_deref(), Some("50%"));
+        assert!(is_loopback_host(b"127.0.0.1:1055") && is_loopback_host(b"localhost") && is_loopback_host(b"[::1]:1"));
+        assert!(!is_loopback_host(b"evil.example:1055") && !is_loopback_host(b""));
+    }
+
+    #[test]
     fn host_ports() {
         assert_eq!(split_host_port("a.ts.net:443", 80), ("a.ts.net".into(), 443));
         assert_eq!(split_host_port("a.ts.net", 80), ("a.ts.net".into(), 80));
@@ -425,7 +544,7 @@ mod tests {
         let socks_addr = fake_socks_echo().await;
         let ln = TcpListener::bind("127.0.0.1:0").await.unwrap();
         let paddr = ln.local_addr().unwrap();
-        tokio::spawn(serve(ln, Arc::new(FakeRouter(socks_addr)), Arc::new(PacState::new())));
+        tokio::spawn(serve(ln, Arc::new(FakeRouter(socks_addr)), Arc::new(PacState::new()), Fallback::Refuse));
 
         let mut c = TcpStream::connect(paddr).await.unwrap();
         c.write_all(b"CONNECT wiki.example.ts.net:443 HTTP/1.1\r\nHost: x\r\n\r\nping").await.unwrap();
@@ -456,5 +575,57 @@ mod tests {
         let mut resp = String::new();
         c.read_to_string(&mut resp).await.unwrap();
         assert!(resp.starts_with("HTTP/1.1 403"));
+    }
+
+    async fn get(addr: std::net::SocketAddr, head: &str) -> String {
+        let mut c = TcpStream::connect(addr).await.unwrap();
+        c.write_all(head.as_bytes()).await.unwrap();
+        let mut resp = String::new();
+        c.read_to_string(&mut resp).await.unwrap();
+        resp
+    }
+
+    /// The terminal proxy: tailnet names through the tailnet, anything else
+    /// direct, and `tl`'s questions answered only when they come from `tl`.
+    #[tokio::test]
+    async fn terminal_proxy_falls_back_to_direct() {
+        // A plain echo server standing in for a site on the internet.
+        let direct = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let direct_port = direct.local_addr().unwrap().port();
+        tokio::spawn(async move {
+            let (mut conn, _) = direct.accept().await.unwrap();
+            let (mut r, mut w) = conn.split();
+            let _ = tokio::io::copy(&mut r, &mut w).await;
+        });
+        let socks_addr = fake_socks_echo().await;
+        let ln = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let paddr = ln.local_addr().unwrap();
+        tokio::spawn(serve(ln, Arc::new(FakeRouter(socks_addr)), Arc::new(PacState::new()), Fallback::Direct));
+
+        let mut c = TcpStream::connect(paddr).await.unwrap();
+        c.write_all(format!("CONNECT 127.0.0.1:{direct_port} HTTP/1.1\r\n\r\nhello").as_bytes()).await.unwrap();
+        let mut resp = vec![0u8; 39];
+        c.read_exact(&mut resp).await.unwrap();
+        assert!(resp.starts_with(b"HTTP/1.1 200"), "{}", String::from_utf8_lossy(&resp));
+        let mut echo = [0u8; 5];
+        c.read_exact(&mut echo).await.unwrap();
+        assert_eq!(&echo, b"hello");
+
+        // Nothing listening: a 502 that says so.
+        let closed = TcpListener::bind("127.0.0.1:0").await.unwrap().local_addr().unwrap().port();
+        let resp = get(paddr, &format!("CONNECT 127.0.0.1:{closed} HTTP/1.1\r\n\r\n")).await;
+        assert!(resp.starts_with("HTTP/1.1 502") && resp.contains(&format!("127.0.0.1:{closed}")), "{resp}");
+
+        // tl's questions need its header and a local Host.
+        let info = "GET /tl/info HTTP/1.1\r\nHost: 127.0.0.1\r\nX-Tailnet-Link: tl\r\n\r\n";
+        let resp = get(paddr, info).await;
+        assert!(resp.contains("application/json") && resp.contains("\"terminal_proxy\""), "{resp}");
+        let resp = get(paddr, "GET /tl/info HTTP/1.1\r\nHost: 127.0.0.1\r\n\r\n").await;
+        assert!(!resp.contains("terminal_proxy"), "{resp}");
+        let resp = get(paddr, "GET /tl/info HTTP/1.1\r\nHost: rebound.example\r\nX-Tailnet-Link: tl\r\n\r\n").await;
+        assert!(!resp.contains("terminal_proxy"), "{resp}");
+        let ping = "GET /tl/ping?host=x.ts.net HTTP/1.1\r\nHost: localhost:1\r\nX-Tailnet-Link: tl\r\n\r\n";
+        let resp = get(paddr, ping).await;
+        assert!(resp.contains("\"routed\":false"), "{resp}");
     }
 }

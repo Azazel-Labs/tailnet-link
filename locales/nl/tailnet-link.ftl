@@ -105,6 +105,9 @@ welcome-forward-detail = Extern bureaublad, SSH en database-apps krijgen een lok
 
 machine-search-hint = Zoek een machine op naam, besturingssysteem of adres
 clear-search = Zoekopdracht wissen
+open-terminal-tooltip = Open een terminal waarin de namen uit je tailnets werken, voor curl, git, ssh, ping en meer. Of zet tl voor elke opdracht in elke terminal.
+open-terminal-missing = { -app-name } kan tl, het bijbehorende terminalhulpprogramma, niet naast de app vinden. Installeer { -app-name } opnieuw om het te krijgen.
+open-terminal-failed = Kan geen terminal openen: { $error }
 more-actions = Meer acties
 edit-tailnet-menu = Naam wijzigen of domeinen toevoegen…
 log-out-menu = Uitloggen…
@@ -206,6 +209,7 @@ check-not-routed = { $host } wordt niet gerouteerd door { -app-name }: het is ge
 check-ambiguous = { $host } zit in meer dan één tailnet ({ $tailnets }), dus het wordt niet gerouteerd. Gebruik in plaats daarvan de naam van de machine, of zet subnetten uit voor een van die tailnets.
 check-gone = Dat tailnet is net verdwenen.
 check-not-running = { $tailnet } draait niet.
+ping-no-machine = { $host } gaat via { $tailnet }, maar is geen van de machines daarin, dus er is niets voor Tailscale om te pingen.
 check-ok = { $address } werkt: verbonden via { $tailnet } in { $ms } ms.
 check-failed =
     { $host } wordt gerouteerd via { $tailnet }, maar verbinden met poort { $port } is mislukt: { $error }

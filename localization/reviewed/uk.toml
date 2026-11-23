@@ -520,6 +520,26 @@ translation = "Підключитися до { $address } через відда�
 source = "Open settings folder"
 translation = "Відкрити теку налаштувань"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Не вдалося відкрити термінал: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } не може знайти поруч із застосунком tl — свою допоміжну програму для термінала. Перевстановіть { -app-name }, щоб отримати її.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Відкрити термінал, у якому працюють імена з ваших мереж tailnet, — для curl, git, ssh, ping та інших програм. Або додайте tl перед будь-якою командою в будь-якому терміналі."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Призупинити все"
@@ -531,6 +551,10 @@ translation = "Тимчасово зупинити маршрутизацію ч
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Призупинити цю мережу tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } іде через мережу { $tailnet }, але не є жодним з її пристроїв, тому Tailscale нема чого пінгувати."
 
 [messages.polish]
 source = "Polish"

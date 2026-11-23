@@ -108,6 +108,9 @@ welcome-forward-detail = Удаљена радна површина, SSH и кл
 
 machine-search-hint = Пронађите уређај по имену, ОС-у или адреси
 clear-search = Обриши претрагу
+open-terminal-tooltip = Отворите терминал у ком раде имена из ваших мрежа tailnet, за curl, git, ssh, ping и још много тога. Или ставите tl испред било које команде у било ком терминалу.
+open-terminal-missing = { -app-name } не може да пронађе tl, свој помоћни програм за терминал, поред апликације. Поново инсталирајте { -app-name } да бисте га добили.
+open-terminal-failed = Отварање терминала није успело: { $error }
 more-actions = Још радњи
 edit-tailnet-menu = Преименуј или додај домене…
 log-out-menu = Одјави се…
@@ -209,6 +212,7 @@ check-not-routed = { -app-name } не рутира { $host }: то није им
 check-ambiguous = { $host } се налази у више мрежа tailnet ({ $tailnets }), па се не рутира. Уместо тога користите име уређаја или искључите подмреже за једну од тих мрежа.
 check-gone = Та мрежа tailnet је управо нестала.
 check-not-running = Мрежа { $tailnet } није покренута.
+ping-no-machine = { $host } иде кроз мрежу { $tailnet }, али није ниједан од њених уређаја, па Tailscale нема шта да пингује.
 check-ok = { $address } ради: повезано преко { $tailnet } за { $ms } мс.
 check-failed =
     { $host } се рутира преко { $tailnet }, али повезивање на порт { $port } није успело: { $error }

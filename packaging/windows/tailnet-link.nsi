@@ -1,12 +1,14 @@
 ; Windows installer for Tailnet Link (NSIS 3).
 ; Built by packaging/windows/build-installer.sh, which passes:
-;   /DVERSION=v1.2.3   /DVERSION_NUM=1.2.3.0   /DDIST=<folder with tailnet-link.exe, tailnet-link.ico, LICENSE.txt>   /DOUTFILE=<setup.exe>
+;   /DVERSION=v1.2.3   /DVERSION_NUM=1.2.3.0   /DDIST=<folder with tailnet-link.exe, tl.exe, tailnet-link.ico, LICENSE.txt>   /DOUTFILE=<setup.exe>
 ;
 ; - Installs for all users in Program Files (needs admin once).
 ;   Runs on x64 and ARM64 Windows (ARM64 runs the x64 build via emulation).
 ; - Adds a Windows Firewall rule for the app only (direct peer-to-peer
 ;   connections, no "allow access" pop-up).
 ; - Start-menu shortcut, optional desktop shortcut, optional start at login.
+; - tl.exe (run commands where the tailnets' names work), optionally on the
+;   system PATH so it works in every terminal.
 ; - Upgrades in place: stops the running copy, keeps logins and settings.
 ; - Uninstall: stops the app, puts the proxy setting back, removes the
 ;   firewall rule, login item and shortcuts; asks before deleting logins.
@@ -31,6 +33,7 @@ SetCompressor /SOLID lzma
 
 !define APP        "Tailnet Link"
 !define EXE        "tailnet-link.exe"
+!define TL         "tl.exe"
 !define LEGACY_EXE "tailnet-proxy.exe"
 !define ICO        "tailnet-link.ico"
 !define PUBLISHER  "Azazel Labs LLC"
@@ -123,6 +126,12 @@ Section "${APP} (required)" SecApp
   !insertmacro StopApp
 
   File "${DIST}\${EXE}"
+  ; tl.exe may be running (a shell started with tl waits in it). A running
+  ; program can't be replaced, but it can be renamed out of the way.
+  Delete "$INSTDIR\tl.old"
+  Rename "$INSTDIR\${TL}" "$INSTDIR\tl.old"
+  Delete /REBOOTOK "$INSTDIR\tl.old"
+  File "${DIST}\${TL}"
   File "${DIST}\${ICO}"
   File "${DIST}\LICENSE.txt"
   WriteUninstaller "$INSTDIR\uninstall.exe"
@@ -155,6 +164,12 @@ Section "Windows Firewall rule (recommended)" SecFirewall
   Pop $0
 SectionEnd
 
+Section "Add tl to the PATH (recommended)" SecPath
+  ; Done by the app, which edits PATH without the installer's length limit.
+  nsExec::Exec '"$INSTDIR\${EXE}" --add-to-path'
+  Pop $0
+SectionEnd
+
 Section "Start at login" SecAutostart
   ; Same entry the app's "Start at login" setting uses (starts quietly in the tray).
   WriteRegStr HKCU "${RUN_KEY}" "${APP}" '"$INSTDIR\${EXE}" --background'
@@ -177,6 +192,7 @@ SectionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecApp}       "The app itself."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecFirewall}  "Allow direct connections from your other tailnets (this program only), so traffic doesn't have to go through Tailscale's relays."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecPath}      "Lets you type tl in any terminal: tl curl, tl ssh, tl ping, or tl on its own for a shell where your tailnets' names work."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecAutostart} "Start ${APP} in the tray when you log in to Windows. You can change this later in its Settings."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop}   "Put a ${APP} shortcut on your desktop."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
@@ -203,6 +219,11 @@ Section "Uninstall"
   nsExec::Exec 'netsh advfirewall firewall delete rule name="${FW_RULE}"'
   Pop $0
 
+  ${If} ${FileExists} "$INSTDIR\${EXE}"
+    nsExec::Exec '"$INSTDIR\${EXE}" --remove-from-path'
+    Pop $0
+  ${EndIf}
+
   DeleteRegValue HKCU "${RUN_KEY}" "${APP}"
   DeleteRegValue HKCU "${RUNONCE_KEY}" "${APP} cleanup"
   DeleteRegKey   HKCU "Software\${APP}"
@@ -213,6 +234,8 @@ Section "Uninstall"
   Delete "$DESKTOP\${APP}.lnk"
 
   Delete "$INSTDIR\${EXE}"
+  Delete /REBOOTOK "$INSTDIR\${TL}"
+  Delete /REBOOTOK "$INSTDIR\tl.old"
   Delete "$INSTDIR\${ICO}"
   Delete "$INSTDIR\LICENSE.txt"
   Delete "$INSTDIR\uninstall.exe"

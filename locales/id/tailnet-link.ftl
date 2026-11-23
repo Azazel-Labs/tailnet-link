@@ -110,6 +110,9 @@ welcome-forward-detail = Desktop Jarak Jauh, SSH, dan aplikasi basis data mendap
 
 machine-search-hint = Cari mesin berdasarkan nama, OS, atau alamat
 clear-search = Hapus pencarian
+open-terminal-tooltip = Buka terminal tempat nama-nama di tailnet Anda berfungsi, untuk curl, git, ssh, ping, dan lainnya. Atau tambahkan tl di depan perintah apa pun di terminal mana pun.
+open-terminal-missing = { -app-name } tidak dapat menemukan tl, alat bantu terminalnya, di samping aplikasi. Instal ulang { -app-name } untuk mendapatkannya.
+open-terminal-failed = Tidak dapat membuka terminal: { $error }
 more-actions = Tindakan lainnya
 edit-tailnet-menu = Ganti nama atau tambahkan domain…
 log-out-menu = Keluar…
@@ -214,6 +217,7 @@ check-not-routed = { $host } tidak dirutekan oleh { -app-name }: ini bukan nama,
 check-ambiguous = { $host } ada di lebih dari satu tailnet ({ $tailnets }), jadi tidak dirutekan. Gunakan nama mesinnya, atau matikan subnet untuk salah satu tailnet tersebut.
 check-gone = Tailnet itu baru saja hilang.
 check-not-running = { $tailnet } tidak berjalan.
+ping-no-machine = { $host } melewati { $tailnet }, tetapi bukan salah satu mesinnya, jadi tidak ada yang bisa di-ping oleh Tailscale.
 check-ok = { $address } berfungsi: terhubung melalui { $tailnet } dalam { $ms } ms.
 check-failed =
     { $host } dirutekan melalui { $tailnet }, tetapi koneksi ke port { $port } gagal: { $error }

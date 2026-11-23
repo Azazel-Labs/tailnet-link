@@ -520,6 +520,26 @@ translation = "Åbn Fjernskrivebord til { $address }"
 source = "Open settings folder"
 translation = "Åbn mappen med indstillinger"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Kunne ikke åbne en terminal: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } kan ikke finde tl, sit terminalhjælpeprogram, ved siden af appen. Geninstaller { -app-name } for at få det.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Åbn en terminal, hvor navnene i dine tailnets virker, til curl, git, ssh, ping og mere. Eller sæt tl foran en hvilken som helst kommando i en hvilken som helst terminal."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Sæt alle på pause"
@@ -531,6 +551,10 @@ translation = "Stop dirigering gennem andre tailnets indtil videre"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Sæt dette tailnet på pause"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } går gennem { $tailnet }, men er ikke en af dets maskiner, så der er intet for Tailscale at pinge."
 
 [messages.polish]
 source = "Polish"

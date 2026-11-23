@@ -769,7 +769,7 @@ impl Gui {
         if s.tailnets.iter().any(|t| !t.machines.is_empty()) {
             ui.horizontal(|ui| {
                 let clear = !self.machine_query.is_empty();
-                let w = ui.available_width() - if clear { 38.0 } else { 0.0 };
+                let w = ui.available_width() - if clear { 76.0 } else { 38.0 };
                 ui.add(
                     egui::TextEdit::singleline(&mut self.machine_query)
                         .hint_text(with_icon(icons::MAGNIFYING_GLASS, &tr!("machine-search-hint")))
@@ -778,6 +778,14 @@ impl Gui {
                 );
                 if clear && ui.add(theme::icon_button(icons::X)).on_hover_text(tr!("clear-search")).clicked() {
                     self.machine_query.clear();
+                }
+                if ui
+                    .add(theme::icon_button(icons::TERMINAL_WINDOW))
+                    .on_hover_text(tr!("open-terminal-tooltip"))
+                    .clicked()
+                    && let Err(e) = crate::terminal::open()
+                {
+                    self.dialog = Dialog::Error(e);
                 }
             });
             ui.add_space(4.0);

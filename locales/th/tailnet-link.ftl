@@ -110,6 +110,9 @@ welcome-forward-detail = เดสก์ท็อประยะไกล SSH �
 
 machine-search-hint = ค้นหาเครื่องตามชื่อ ระบบปฏิบัติการ หรือที่อยู่
 clear-search = ล้างการค้นหา
+open-terminal-tooltip = เปิดเทอร์มินัลที่ใช้ชื่อใน tailnet ของคุณได้ สำหรับ curl, git, ssh, ping และอื่นๆ หรือใส่ tl ไว้หน้าคำสั่งใดก็ได้ในเทอร์มินัลใดก็ได้
+open-terminal-missing = { -app-name } ไม่พบ tl ซึ่งเป็นตัวช่วยสำหรับเทอร์มินัล ในตำแหน่งเดียวกับแอป ติดตั้ง { -app-name } ใหม่เพื่อให้ได้ tl มา
+open-terminal-failed = เปิดเทอร์มินัลไม่ได้: { $error }
 more-actions = การดำเนินการเพิ่มเติม
 edit-tailnet-menu = เปลี่ยนชื่อหรือเพิ่มโดเมน…
 log-out-menu = ออกจากระบบ…
@@ -214,6 +217,7 @@ check-not-routed = { -app-name } ไม่ได้กำหนดเส้น�
 check-ambiguous = { $host } อยู่ใน tailnet มากกว่าหนึ่งรายการ ({ $tailnets }) จึงไม่ได้กำหนดเส้นทาง ให้ใช้ชื่อเครื่องแทน หรือปิดซับเน็ตของ tailnet รายการใดรายการหนึ่งในนั้น
 check-gone = tailnet นั้นเพิ่งหายไป
 check-not-running = { $tailnet } ไม่ได้ทำงานอยู่
+ping-no-machine = { $host } ผ่าน { $tailnet } แต่ไม่ใช่เครื่องใดใน tailnet นั้น จึงไม่มีอะไรให้ Tailscale ping
 check-ok = { $address } ใช้งานได้: เชื่อมต่อผ่าน { $tailnet } ใน { $ms } ms
 check-failed =
     { $host } ถูกกำหนดเส้นทางผ่าน { $tailnet } แต่เชื่อมต่อกับพอร์ต { $port } ไม่สำเร็จ: { $error }

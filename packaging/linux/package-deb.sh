@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds a .deb for this machine's architecture: the binary, a menu entry and an icon.
+# Builds a .deb for this machine's architecture: the app, tl, a menu entry and an icon.
 # Needs Rust, Go and:
 #   sudo apt install build-essential libgtk-3-dev libxdo-dev libayatana-appindicator3-dev \
 #     libxkbcommon-dev libwayland-dev
@@ -23,6 +23,7 @@ ROOT="$OUT/build-deb-$ARCH"
 rm -rf "$ROOT"
 mkdir -p "$ROOT/DEBIAN" "$ROOT/usr/share/doc/tailnet-link" "$ROOT/usr/bin" "$ROOT/usr/share/applications" "$ROOT/usr/share/icons/hicolor/512x512/apps"
 install -m 0755 target/release/tailnet-link "$ROOT/usr/bin/tailnet-link"
+install -m 0755 target/release/tl "$ROOT/usr/bin/tl"
 install -m 0644 LICENSE "$ROOT/usr/share/doc/tailnet-link/copyright"
 install -m 0644 assets/icons/tailnet-link.png "$ROOT/usr/share/icons/hicolor/512x512/apps/tailnet-link.png"
 

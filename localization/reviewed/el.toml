@@ -520,6 +520,26 @@ translation = "Άνοιγμα Απομακρυσμένης επιφάνειας 
 source = "Open settings folder"
 translation = "Άνοιγμα φακέλου ρυθμίσεων"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Δεν ήταν δυνατό το άνοιγμα τερματικού: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+Το { -app-name } δεν βρίσκει το tl, το βοηθητικό του πρόγραμμα για το τερματικό, δίπλα στην εφαρμογή. Εγκαταστήστε ξανά το { -app-name } για να το αποκτήσετε.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Ανοίξτε ένα τερματικό όπου λειτουργούν τα ονόματα των tailnet σας, για curl, git, ssh, ping και άλλα. Ή βάλτε το tl μπροστά από οποιαδήποτε εντολή σε οποιοδήποτε τερματικό."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Παύση όλων"
@@ -531,6 +551,10 @@ translation = "Προσωρινή διακοπή της δρομολόγησης
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Παύση αυτού του tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "Το { $host } περνά μέσω του { $tailnet }, αλλά δεν είναι ένα από τα μηχανήματά του, οπότε δεν υπάρχει τίποτα στο οποίο να κάνει ping το Tailscale."
 
 [messages.polish]
 source = "Polish"

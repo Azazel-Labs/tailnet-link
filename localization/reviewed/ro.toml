@@ -520,6 +520,26 @@ translation = "Deschide Desktop la distanță către { $address }"
 source = "Open settings folder"
 translation = "Deschide dosarul de setări"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Nu s-a putut deschide un terminal: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+{ -app-name } nu găsește tl, utilitarul său pentru terminal, lângă aplicație. Reinstalează { -app-name } ca să îl obții.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Deschide un terminal în care funcționează numele din tailnet-urile tale, pentru curl, git, ssh, ping și altele. Sau pune tl în fața oricărei comenzi, în orice terminal."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Întrerupe tot"
@@ -531,6 +551,10 @@ translation = "Oprește deocamdată rutarea prin alte tailneturi"
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "Întrerupe acest tailnet"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } trece prin { $tailnet }, dar nu este una dintre mașinile sale, așa că nu există nimic căruia Tailscale să îi dea ping."
 
 [messages.polish]
 source = "Polish"

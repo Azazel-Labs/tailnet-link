@@ -520,6 +520,26 @@ translation = "Távoli asztal megnyitása: { $address }"
 source = "Open settings folder"
 translation = "Beállításmappa megnyitása"
 
+[messages.open-terminal-failed]
+source = "Couldn't open a terminal: { $error }"
+translation = "Nem sikerült megnyitni a terminált: { $error }"
+
+[messages.open-terminal-missing]
+source = """
+{ -app-name } can't find tl, its terminal helper, next to the app. Reinstall { -app-name } to get it.
+
+# reference -app-name
+Tailnet Link"""
+translation = """
+A { -app-name } nem találja az alkalmazás mellett a tl-t, a terminálos segédprogramját. Telepítse újra a { -app-name } alkalmazást, hogy megkapja.
+
+# reference -app-name
+Tailnet Link"""
+
+[messages.open-terminal-tooltip]
+source = "Open a terminal where your tailnets' names work, for curl, git, ssh, ping and more. Or put tl in front of any command in any terminal."
+translation = "Terminál megnyitása, amelyben a tailnetjei nevei működnek: curl, git, ssh, ping és még sok más. Vagy írja be a tl-t bármely parancs elé, bármelyik terminálban."
+
 [messages.pause-all]
 source = "Pause all"
 translation = "Összes szüneteltetése"
@@ -531,6 +551,10 @@ translation = "Az útválasztás ideiglenes leállítása a többi tailneten át
 [messages.pause-tailnet]
 source = "Pause this tailnet"
 translation = "A tailnet szüneteltetése"
+
+[messages.ping-no-machine]
+source = "{ $host } goes through { $tailnet }, but it isn't one of its machines, so there's nothing for Tailscale to ping."
+translation = "{ $host } a(z) { $tailnet } tailneten keresztül megy, de nem tartozik annak gépei közé, így a Tailscale-nek nincs mit pingelnie."
 
 [messages.polish]
 source = "Polish"
