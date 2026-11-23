@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "1f3158c8b38ee49c12fe4fff25028755b2081a1e18ab02c749c7fa2ae8bec060"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "a16cf5c696e4ffc4e20a93e74b95f96b05efd3cf9ff5def7cd750ed595e5daa1"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Domenii suplimentare (opțional)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Domeniul propriu al tailnetului este rutat automat. Adaugă câte unul pe linie."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Caută site-uri pe mașinile din tailnet-urile tale"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Browserul nu s-a deschis sau s-a deschis în profilul greșit?"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Deschide din nou pagina de autentificare"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Certificatul său nu este de încredere, așa că browserul va afișa un avertisment."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Se verifică { $done } din { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Site-uri"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Mașinile din tailnet-urile tale care servesc un site prin HTTPS. Fiecare mașină este verificată cel mult o dată pe zi."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Verifică acum din nou toate mașinile"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

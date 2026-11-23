@@ -66,13 +66,15 @@ pub async fn connect(proxy: &SocksTarget, host: &str, port: u16) -> io::Result<T
     let mut head = [0u8; 4];
     s.read_exact(&mut head).await?;
     if head[1] != 0 {
-        return Err(err(match head[1] {
-            2 => "connection not allowed by that tailnet's access rules".to_owned(),
-            3 => "network unreachable".into(),
-            4 => format!("{host} is unreachable (is it online in that tailnet?)"),
-            5 => format!("{host} refused the connection on port {port}"),
-            n => format!("SOCKS5 error {n}"),
-        }));
+        use io::ErrorKind as K;
+        let (kind, msg) = match head[1] {
+            2 => (K::PermissionDenied, "connection not allowed by that tailnet's access rules".to_owned()),
+            3 => (K::NetworkUnreachable, "network unreachable".into()),
+            4 => (K::HostUnreachable, format!("{host} is unreachable (is it online in that tailnet?)")),
+            5 => (K::ConnectionRefused, format!("{host} refused the connection on port {port}")),
+            n => (K::Other, format!("SOCKS5 error {n}")),
+        };
+        return Err(io::Error::new(kind, msg));
     }
     // Skip the bound address.
     let skip = match head[3] {

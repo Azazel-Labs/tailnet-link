@@ -24,7 +24,7 @@ just open.
 **[Download the latest release](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** for
 Windows, macOS or Linux. It's free and open source.
 
-![The Tailnets tab with two tailnets routing and their machines listed](docs/images/tailnets.png)
+![The Tailnets tab with two tailnets routing, tiles for the websites found on their machines, and the machines listed](docs/images/tailnets.png)
 
 *Screenshots use made-up tailnets; every name and address in them is invented.*
 
@@ -34,6 +34,8 @@ Windows, macOS or Linux. It's free and open source.
   own tailnet never disconnects.
 - **Nothing to configure.** Sign in, and the tailnet's domain is found for you. Open its machines by
   name in any browser.
+- **Finds the websites on your machines.** Machines that serve an HTTPS page show up as tiles with
+  the page's name and icon, one click away. Each machine is checked at most once a day.
 - **Doesn't fight Tailscale.** No VPN adapter, no routes, no DNS changes. Each extra tailnet runs as
   a separate node inside the app, so nothing clashes with the Tailscale app or with each other.
 - **Locked down by default.** Every extra node joins with shields up: you can reach those tailnets,
@@ -86,6 +88,10 @@ You can also edit forwards by hand in Settings, one per line, for example
 **Tailnets tab**
 
 - Overall status, **Pause all** and **Add a tailnet**.
+- **Websites** found on the machines, as tiles with each page's title and icon. Click one to open
+  it, or right-click to copy its address. A warning sign means the site's certificate isn't trusted
+  (often a self-signed one). Each machine is asked once a day, one at a time; the refresh button asks
+  again now.
 - One card per tailnet, with its status, routed domains and this computer's name there. Sign in or
   log out, pause or resume, rename it, add extra domains, or remove it.
 - Each signed-in tailnet lists its **machines**, online first. Search filters them by name, OS or
@@ -96,11 +102,12 @@ You can also edit forwards by hand in Settings, one per line, for example
 
 **Settings tab**
 
-![The Settings tab: port forwards, the system proxy setting, start at login, language and troubleshooting](docs/images/settings.png)
+![The Settings tab: port forwards, the system proxy setting, start at login, update checks, finding websites, language and troubleshooting](docs/images/settings.png)
 
 - **Port forwards**, each with its local address, a copy button, and which tailnet carries it (or
   why it can't).
-- The **system proxy setting**, **start at login** and the interface **language**.
+- The **system proxy setting**, **start at login**, **checking for new versions**, **looking for
+  websites** on your machines, and the interface **language**.
 - **Test a name or address** shows which tailnet routes it and tries to connect through it. It's the
   quickest way to find out why a page won't load.
 - Unsaved changes are flagged, with **Revert**. Ctrl+S saves, and Esc closes dialogs.
@@ -175,6 +182,7 @@ Everything lives in the app's config folder:
 
 - `config.json`: your tailnets, port forwards and settings
 - `nodes/<id>/`: each tailnet's login (Remove deletes it)
+- `sites.json`: which machines have a website, so each is only asked again after a day
 - `tailnet-link.log`: the log, including the details of any crash
 - `proxy-state.json` (macOS/Linux, only while the proxy setting is on): what to restore
 

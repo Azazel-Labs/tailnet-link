@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "a44abd828c0696c733b6349db96f4644e9b8ed5b8559bcb8eb1d97c38ebc1924"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "f3a01e178ca0b91e81a6438566250a337bc6caf60591f567754f05692975b290"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Extra domeinen (optioneel)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Het eigen domein van het tailnet wordt automatisch gerouteerd. Voeg er één per regel toe."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Zoeken naar websites op de machines in je tailnets"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Opende de browser niet, of in het verkeerde profiel?"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Inlogpagina opnieuw openen"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Het certificaat wordt niet vertrouwd, dus je browser geeft een waarschuwing."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "{ $done } van { $total } controleren…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Websites"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Machines in je tailnets die een website via HTTPS aanbieden. Elke machine wordt hooguit één keer per dag gecontroleerd."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Alle machines nu opnieuw controleren"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

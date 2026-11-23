@@ -142,6 +142,15 @@ copy-address = { $address } kopieren
 open-in-browser = { $url } im Browser öffnen
 not-routing-tooltip = Dieses Tailnet leitet gerade nicht weiter. Ist es pausiert?
 
+## Websites auf den Geräten
+
+sites-heading = Websites
+sites-help = Geräte in Ihren Tailnets, die eine Website über HTTPS bereitstellen. Jedes Gerät wird höchstens einmal am Tag geprüft.
+# $done und $total zählen Geräte.
+sites-checking = Gerät { $done } von { $total } wird geprüft…
+sites-recheck-tooltip = Alle Geräte jetzt erneut prüfen
+site-untrusted = Das Zertifikat ist nicht vertrauenswürdig, daher zeigt Ihr Browser eine Warnung an.
+
 ## Einstellungen: Portweiterleitungen
 
 forwards-heading = Portweiterleitungen
@@ -306,6 +315,7 @@ proxy-retry-tooltip = Die System-Proxy-Einstellung wieder auf { -app-name } rich
 system-setting = Aktuelle System-Proxy-Einstellung: { $value }
 system-setting-none = keine
 check-updates = Nach neuen Versionen suchen
+find-websites = Auf den Geräten in Ihren Tailnets nach Websites suchen
 tray-update = { -app-name } { $version } herunterladen…
 update-available = Version { $version } ist da
 update-available-tooltip = Sie haben { $current }. Öffnet die Downloadseite.

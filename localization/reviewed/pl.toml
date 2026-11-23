@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "db949ebee043d74dd7adfb9a8574d6c56cc8a68c130d3c4b17c25abf257fc500"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "7ad0b2004d533146bc50b879fae1cd18f1d1e9f6aaee63ea9803ea0fff2f5bd0"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Dodatkowe domeny (opcjonalnie)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Własna domena sieci tailnet jest obsługiwana automatycznie. Dodaj po jednej w wierszu."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Szukaj witryn na urządzeniach w twoich sieciach tailnet"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Przeglądarka się nie otworzyła lub otworzyła zły profil?"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Otwórz ponownie stronę logowania"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Jej certyfikat nie jest zaufany, więc przeglądarka wyświetli ostrzeżenie."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Sprawdzanie { $done } z { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Witryny"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Urządzenia w twoich sieciach tailnet, które udostępniają witrynę przez HTTPS. Każde urządzenie jest sprawdzane najwyżej raz dziennie."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Sprawdź teraz ponownie wszystkie urządzenia"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

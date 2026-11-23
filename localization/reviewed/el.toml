@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "7e72ec65729984cccc49c91786b12bda1d9b8c573bd887a9b984ef52dab2f64d"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "c7b75662ed0e0334ebcec63bc05220dbb3dc877b461b1258f66245531e084ce3"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Επιπλέον τομείς (προαιρετικά)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Ο τομέας του ίδιου του tailnet δρομολογείται αυτόματα. Προσθέστε έναν ανά γραμμή."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Αναζήτηση ιστότοπων στα μηχανήματα των tailnet σας"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Δεν άνοιξε το πρόγραμμα περιήγησης 
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Ξανά άνοιγμα της σελίδας σύνδεσης"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Το πιστοποιητικό του δεν είναι αξιόπιστο, οπότε το πρόγραμμα περιήγησης θα σας προειδοποιήσει."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Έλεγχος { $done } από { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Ιστότοποι"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Μηχανήματα στα tailnet σας που εξυπηρετούν έναν ιστότοπο μέσω HTTPS. Κάθε μηχάνημα ελέγχεται το πολύ μία φορά την ημέρα."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Επανέλεγχος όλων των μηχανημάτων τώρα"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

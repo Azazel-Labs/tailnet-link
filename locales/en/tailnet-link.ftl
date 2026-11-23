@@ -158,6 +158,15 @@ copy-address = Copy { $address }
 open-in-browser = Open { $url } in your browser
 not-routing-tooltip = This tailnet isn't routing right now. Is it paused?
 
+## Websites found on the machines
+
+sites-heading = Websites
+sites-help = Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day.
+# $done and $total count machines.
+sites-checking = Checking { $done } of { $total }…
+sites-recheck-tooltip = Check every machine again now
+site-untrusted = Its certificate isn't trusted, so your browser will warn you.
+
 ## Settings: port forwards
 
 forwards-heading = Port forwards
@@ -204,6 +213,7 @@ settings-location = Settings in { $path }
 system-setting = System proxy setting now: { $value }
 system-setting-none = none
 check-updates = Check for new versions
+find-websites = Look for websites on the machines in your tailnets
 
 ## Results of "Test" in Troubleshooting
 

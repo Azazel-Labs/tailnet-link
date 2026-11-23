@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "f87d1b0d9f6068ee6d073ac86c798452cbbb82cc95e21b0c7426e0b729259db9"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "ed6917ff6bf3f9cc731c4aa16a6c8750744bab85c44b83dfced4a938169040e4"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "További tartományok (nem kötelező)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "A tailnet saját tartománya automatikusan át van irányítva. Soronként egyet adjon meg."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Webhelyek keresése a tailnetjeiben lévő gépeken"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Nem nyílt meg a böngésző, vagy rossz profilban nyílt meg?"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "A bejelentkezési oldal újbóli megnyitása"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "A tanúsítványa nem megbízható, ezért a böngésző figyelmeztetni fogja."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Ellenőrzés: { $done } / { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Webhelyek"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "A tailnetjeiben lévő gépek, amelyek HTTPS-en keresztül webhelyet szolgálnak ki. Minden gépet legfeljebb naponta egyszer ellenőriz az alkalmazás."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Minden gép újraellenőrzése most"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

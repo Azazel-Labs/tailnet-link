@@ -144,6 +144,15 @@ copy-address = Αντιγραφή { $address }
 open-in-browser = Άνοιγμα του { $url } στο πρόγραμμα περιήγησης
 not-routing-tooltip = Αυτό το tailnet δεν δρομολογεί αυτή τη στιγμή. Μήπως είναι σε παύση;
 
+## Ιστότοποι στα μηχανήματα
+
+sites-heading = Ιστότοποι
+sites-help = Μηχανήματα στα tailnet σας που εξυπηρετούν έναν ιστότοπο μέσω HTTPS. Κάθε μηχάνημα ελέγχεται το πολύ μία φορά την ημέρα.
+# Τα $done και $total μετρούν μηχανήματα.
+sites-checking = Έλεγχος { $done } από { $total }…
+sites-recheck-tooltip = Επανέλεγχος όλων των μηχανημάτων τώρα
+site-untrusted = Το πιστοποιητικό του δεν είναι αξιόπιστο, οπότε το πρόγραμμα περιήγησης θα σας προειδοποιήσει.
+
 ## Ρυθμίσεις: προωθήσεις θυρών
 
 forwards-heading = Προωθήσεις θυρών
@@ -309,6 +318,7 @@ proxy-retry-tooltip = Νέα κατεύθυνση της ρύθμισης δια
 system-setting = Τρέχουσα ρύθμιση διακομιστή μεσολάβησης συστήματος: { $value }
 system-setting-none = καμία
 check-updates = Έλεγχος για νέες εκδόσεις
+find-websites = Αναζήτηση ιστότοπων στα μηχανήματα των tailnet σας
 tray-update = Λήψη του { -app-name } { $version }…
 update-available = Κυκλοφόρησε η έκδοση { $version }
 update-available-tooltip = Έχετε την έκδοση { $current }. Ανοίγει τη σελίδα λήψης.

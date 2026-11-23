@@ -25,6 +25,7 @@ A Tailscale-lel egyszerre csak egy tailnetbe lehet bejelentkezni. Ha az otthoni 
 
 - **Nincs több fiókváltás.** Adjon hozzá annyi tailnetet, amennyire szüksége van, és használja mindet egyszerre. A saját tailnetje soha nem bontja a kapcsolatot.
 - **Nincs mit beállítani.** Jelentkezzen be, és a program magától megtalálja a tailnet tartományát. A gépeket név szerint nyithatja meg bármely böngészőben.
+- **Megtalálja a gépein futó webhelyeket.** A HTTPS-oldalt kiszolgáló gépek csempékként jelennek meg az oldal nevével és ikonjával, egy kattintásnyira. A program minden gépet legfeljebb naponta egyszer ellenőriz.
 - **Nem akad össze a Tailscale-lel.** Nincs VPN-adapter, nincsenek útvonalak, nincs DNS-módosítás. Minden további tailnet külön csomópontként fut az alkalmazáson belül, így semmi sem ütközik sem a Tailscale alkalmazással, sem egymással.
 - **Alapból zárt.** Minden további csomópont „shields up” módban csatlakozik: Ön eléri azokat a tailneteket, de onnan semmi sem érheti el az Ön számítógépét.
 - **Csak az ő forgalmuk megy rajta át.** A többi tailnet címei a Tailnet Linken keresztül mennek, minden más közvetlenül, pontosan úgy, mint eddig.

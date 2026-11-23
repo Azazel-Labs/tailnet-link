@@ -127,6 +127,15 @@ copy-address = { $address } 복사
 open-in-browser = 브라우저에서 { $url } 열기
 not-routing-tooltip = 이 tailnet은 지금 라우팅하고 있지 않습니다. 일시 중지되었나요?
 
+## Websites found on the machines
+
+sites-heading = 웹사이트
+sites-help = tailnet에서 HTTPS로 웹사이트를 제공하는 머신입니다. 각 머신은 하루에 한 번까지만 확인합니다.
+# $done and $total count machines.
+sites-checking = { $total }대 중 { $done }번째 확인 중…
+sites-recheck-tooltip = 지금 모든 머신 다시 확인
+site-untrusted = 인증서를 신뢰할 수 없으므로 브라우저에 경고가 표시됩니다.
+
 ## Settings: port forwards
 
 forwards-heading = 포트 포워딩
@@ -286,6 +295,7 @@ proxy-retry-tooltip = 시스템 프록시 설정이 다시 { -app-name }를 가�
 system-setting = 현재 시스템 프록시 설정: { $value }
 system-setting-none = 없음
 check-updates = 새 버전 확인
+find-websites = tailnet의 머신에서 웹사이트 찾기
 tray-update = { -app-name } { $version } 다운로드…
 update-available = { $version } 버전 출시
 update-available-tooltip = 현재 버전은 { $current }입니다. 다운로드 페이지를 엽니다.

@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "fb1e1b7ff47171bc4951facc666daa0c1c63a8713e294d667ed880c79923442d"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "bbcc380d61d7455c4a1d8f126d3b2e042a24a26f2b0330bf4165b809ac042a02"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Додаткові домени (необов’язково)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Власний домен мережі tailnet маршрутизується автоматично. Додавайте по одному на рядок."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Шукати сайти на пристроях у ваших мережах tailnet"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Браузер не відкрився або відкрився 
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Знову відкрити сторінку входу"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Його сертифікат не є довіреним, тому браузер покаже попередження."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Перевірка: { $done } з { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Сайти"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Пристрої у ваших мережах tailnet, на яких працює сайт через HTTPS. Кожен пристрій перевіряється не частіше ніж раз на день."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Перевірити всі пристрої знову"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

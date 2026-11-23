@@ -25,6 +25,7 @@ Tailscale només et deixa tenir la sessió iniciada en una tailnet cada vegada. 
 
 - **S’ha acabat canviar de compte.** Afegeix totes les tailnets que necessitis i fes-les servir alhora. La teva tailnet no es desconnecta mai.
 - **No cal configurar res.** Inicia la sessió i el domini de la tailnet es troba sol. Obre’n les màquines pel nom des de qualsevol navegador.
+- **Troba els llocs web de les teves màquines.** Les màquines que serveixen una pàgina HTTPS apareixen com a mosaics amb el nom i la icona de la pàgina, a un clic. Cada màquina es comprova com a màxim un cop al dia.
 - **No es baralla amb Tailscale.** Sense adaptador VPN, sense rutes, sense canvis de DNS. Cada tailnet addicional funciona com un node independent dins de l’aplicació, sense xocar amb l’aplicació de Tailscale ni entre elles.
 - **Protegit per defecte.** Cada node addicional s’hi uneix amb els escuts alçats: tu pots accedir a aquelles tailnets, però res d’elles no pot arribar al teu ordinador.
 - **Només hi passa el seu trànsit.** Les adreces de les altres tailnets passen per Tailnet Link. Tota la resta va directa, igual que abans.

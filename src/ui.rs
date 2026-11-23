@@ -14,7 +14,7 @@ use tray_icon::menu::{CheckMenuItem, Menu, MenuEvent, MenuId, MenuItem, Predefin
 use tray_icon::{TrayIcon, TrayIconBuilder, TrayIconEvent};
 
 use crate::config::{self, forwards_text, parse_domains, parse_forwards};
-use crate::core::{Core, ForwardStatus, Machine, Status, SystemProxyState, TailnetStatus};
+use crate::core::{Core, ForwardStatus, Machine, SiteStatus, Status, SystemProxyState, TailnetStatus};
 use crate::i18n::{self, tr};
 use crate::icon;
 use crate::sync::lock;
@@ -112,6 +112,8 @@ pub struct Gui {
     checking: bool,
     // Machine search (Tailnets tab)
     machine_query: String,
+    /// Site icons as textures, by host, with the icon each was made from.
+    site_icons: HashMap<String, (Arc<crate::sites::Icon>, egui::TextureHandle)>,
     /// A short note at the bottom of the window ("Copied …").
     toast: Option<(String, std::time::Instant)>,
     // Tray
@@ -215,6 +217,7 @@ impl Gui {
             check_result: None,
             checking: false,
             machine_query: String::new(),
+            site_icons: HashMap::new(),
             toast: None,
             tray: None,
             tray_version: u64::MAX,
@@ -769,6 +772,7 @@ impl Gui {
             ui.add_space(4.0);
         }
         egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
+            self.sites_card(ui, s);
             for t in &s.tailnets {
                 self.tailnet_card(ui, t);
                 ui.add_space(4.0);
@@ -1075,6 +1079,206 @@ impl Gui {
             });
         });
     }
+
+    /// The websites the machines serve, as tiles. Hidden until there's one to show.
+    fn sites_card(&mut self, ui: &mut egui::Ui, s: &Status) {
+        let shown: Vec<&SiteStatus> = s.sites.iter().filter(|x| x.matches(&self.machine_query)).collect();
+        if shown.is_empty() && s.sites_checking.is_none() {
+            return;
+        }
+        theme::card().show(ui, |ui| {
+            ui.set_width(ui.available_width());
+            ui.horizontal(|ui| {
+                ui.label(
+                    RichText::new(with_icon(icons::GLOBE, &tr!("sites-heading")))
+                        .size(16.0)
+                        .strong()
+                        .color(theme::STRONG),
+                )
+                .on_hover_text(tr!("sites-help"));
+                if let Some((done, total)) = s.sites_checking {
+                    ui.add(egui::Spinner::new().size(14.0).color(theme::MUTED));
+                    ui.label(muted(tr!("sites-checking", done = done, total = total)).size(12.0));
+                }
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    if ui
+                        .add_enabled(s.sites_checking.is_none(), theme::icon_button(icons::ARROW_CLOCKWISE))
+                        .on_hover_text(tr!("sites-recheck-tooltip"))
+                        .clicked()
+                    {
+                        self.core.recheck_sites();
+                    }
+                });
+            });
+            if shown.is_empty() {
+                return;
+            }
+            ui.add_space(4.0);
+            egui::ScrollArea::vertical()
+                .id_salt("site-scroll")
+                .max_height(SITES_MAX_HEIGHT)
+                .auto_shrink([false, true])
+                .show(ui, |ui| {
+                    ui.spacing_mut().item_spacing = vec2(TILE_GAP, TILE_GAP);
+                    let width = ui.available_width();
+                    let columns = (((width + TILE_GAP) / (TILE_MIN_WIDTH + TILE_GAP)).floor() as usize).max(1);
+                    let tile_width = (width - TILE_GAP * (columns - 1) as f32) / columns as f32;
+                    for row in shown.chunks(columns) {
+                        ui.horizontal(|ui| {
+                            for site in row {
+                                self.site_tile(ui, site, tile_width);
+                            }
+                        });
+                    }
+                });
+        });
+        ui.add_space(4.0);
+    }
+
+    /// One site: its icon (or first letter), its name, and where it is.
+    fn site_tile(&mut self, ui: &mut egui::Ui, site: &SiteStatus, width: f32) {
+        let sense = if site.routing { egui::Sense::click() } else { egui::Sense::hover() };
+        let (rect, response) = ui.allocate_exact_size(vec2(width, TILE_HEIGHT), sense);
+        let url = site.url();
+        response.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Link, site.routing, site.label()));
+        let texture = self.site_texture(ui.ctx(), site);
+        if ui.is_rect_visible(rect) {
+            let hovered = site.routing && response.hovered();
+            let mut painter = ui.painter_at(rect);
+            if !site.routing {
+                painter.set_opacity(0.45);
+            }
+            painter.rect(
+                rect,
+                10,
+                if hovered { theme::ROW_HOVER } else { theme::RAISED },
+                Stroke::new(1.0, if hovered { theme::PANEL_EDGE } else { theme::BORDER }),
+                egui::StrokeKind::Inside,
+            );
+            let plate = egui::Rect::from_center_size(
+                egui::pos2(rect.left() + 10.0 + PLATE_SIZE / 2.0, rect.center().y),
+                vec2(PLATE_SIZE, PLATE_SIZE),
+            );
+            let tint =
+                site.color.map_or_else(|| avatar_color(&site.host), |[r, g, b]| egui::Color32::from_rgb(r, g, b));
+            if let Some(texture) = texture {
+                painter.rect_filled(plate, 8, site.color.map_or(PLATE_PLAIN, |_| tint));
+                let image = egui::Rect::from_center_size(plate.center(), vec2(ICON_DRAW_SIZE, ICON_DRAW_SIZE));
+                let uv = egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0));
+                painter.image(texture, image, uv, egui::Color32::WHITE);
+            } else {
+                painter.rect_filled(plate, 8, tint);
+                let letter: String = site
+                    .label()
+                    .chars()
+                    .find(|c| c.is_alphanumeric())
+                    .map(|c| c.to_uppercase().collect())
+                    .unwrap_or_default();
+                painter.text(
+                    plate.center(),
+                    egui::Align2::CENTER_CENTER,
+                    letter,
+                    egui::FontId::proportional(20.0),
+                    readable_on(tint),
+                );
+            }
+            let left = plate.right() + 10.0;
+            let warn = if site.trusted { 0.0 } else { 20.0 };
+            let text_width = (rect.right() - 10.0 - warn - left).max(10.0);
+            let line = |text: RichText| {
+                egui::WidgetText::from(text).into_galley(
+                    ui,
+                    Some(egui::TextWrapMode::Truncate),
+                    text_width,
+                    egui::TextStyle::Body,
+                )
+            };
+            let title = line(RichText::new(site.label()).strong().color(theme::STRONG));
+            let place = if site.title.is_empty() {
+                site.tailnet.clone()
+            } else {
+                format!("{} · {}", site.machine, site.tailnet)
+            };
+            let detail = line(RichText::new(place).size(12.0).color(theme::MUTED));
+            let top = rect.center().y - (title.size().y + detail.size().y + 2.0) / 2.0;
+            painter.galley(egui::pos2(left, top), title.clone(), theme::STRONG);
+            painter.galley(egui::pos2(left, top + title.size().y + 2.0), detail, theme::MUTED);
+            if !site.trusted {
+                painter.text(
+                    egui::pos2(rect.right() - 10.0, rect.top() + 8.0),
+                    egui::Align2::RIGHT_TOP,
+                    icons::WARNING,
+                    egui::FontId::proportional(14.0),
+                    Tone::Warn.color(),
+                );
+            }
+        }
+        let response = if site.routing {
+            let mut tip = tr!("open-in-browser", url = url.as_str());
+            if !site.trusted {
+                tip = format!("{tip}\n{}", tr!("site-untrusted"));
+            }
+            response.on_hover_cursor(egui::CursorIcon::PointingHand).on_hover_text(tip)
+        } else {
+            response.on_hover_text(tr!("not-routing-tooltip"))
+        };
+        if response.clicked() {
+            let _ = open::that_detached(&url);
+        }
+        response.context_menu(|ui| {
+            if site.routing
+                && ui.button(with_icon(icons::ARROW_SQUARE_OUT, &tr!("open-in-browser", url = url.as_str()))).clicked()
+            {
+                let _ = open::that_detached(&url);
+            }
+            if ui.button(with_icon(icons::COPY, &tr!("copy-address", address = url.as_str()))).clicked() {
+                self.copy(ui.ctx(), &url);
+            }
+        });
+    }
+
+    /// The site's icon as a texture, made once per icon.
+    fn site_texture(&mut self, ctx: &egui::Context, site: &SiteStatus) -> Option<egui::TextureId> {
+        let icon = site.icon.as_ref()?;
+        if let Some((made_from, texture)) = self.site_icons.get(&site.host)
+            && Arc::ptr_eq(made_from, icon)
+        {
+            return Some(texture.id());
+        }
+        // Small icons are pixel art: scale them up crisply.
+        let filter = if icon.size[0].max(icon.size[1]) < 32 {
+            egui::TextureOptions::NEAREST
+        } else {
+            egui::TextureOptions::LINEAR
+        };
+        let image = egui::ColorImage::from_rgba_unmultiplied(icon.size, &icon.rgba);
+        let texture = ctx.load_texture(format!("site-icon-{}", site.host), image, filter);
+        let id = texture.id();
+        self.site_icons.insert(site.host.clone(), (Arc::clone(icon), texture));
+        Some(id)
+    }
+}
+
+const TILE_MIN_WIDTH: f32 = 200.0;
+const TILE_HEIGHT: f32 = 60.0;
+const TILE_GAP: f32 = 8.0;
+/// About three rows of tiles before the list scrolls.
+const SITES_MAX_HEIGHT: f32 = 3.0 * TILE_HEIGHT + 2.0 * TILE_GAP + 4.0;
+const PLATE_SIZE: f32 = 40.0;
+const ICON_DRAW_SIZE: f32 = 32.0;
+/// Behind an icon when the site has no theme colour.
+const PLATE_PLAIN: egui::Color32 = egui::Color32::from_rgb(58, 62, 66);
+
+/// A steady colour for a site's letter, picked from its name.
+fn avatar_color(host: &str) -> egui::Color32 {
+    let hash = host.bytes().fold(0x811c_9dc5_u32, |h, b| (h ^ u32::from(b)).wrapping_mul(0x0100_0193));
+    egui::ecolor::Hsva::new((hash % 360) as f32 / 360.0, 0.45, 0.55, 1.0).into()
+}
+
+/// Black or white, whichever reads better on `bg`.
+fn readable_on(bg: egui::Color32) -> egui::Color32 {
+    let luma = 0.299 * f32::from(bg.r()) + 0.587 * f32::from(bg.g()) + 0.114 * f32::from(bg.b());
+    if luma > 160.0 { egui::Color32::from_rgb(20, 20, 20) } else { egui::Color32::WHITE }
 }
 
 // ---- Settings tab ----
@@ -1156,6 +1360,17 @@ impl Gui {
             });
             if on != self.core.config().check_updates
                 && let Err(e) = self.core.set_check_updates(on)
+            {
+                self.dialog = Dialog::Error(e);
+            }
+            let find_websites = tr!("find-websites");
+            let mut on = self.core.config().find_sites;
+            ui.horizontal(|ui| {
+                theme::toggle(ui, &mut on, &find_websites);
+                ui.label(&find_websites);
+            });
+            if on != self.core.config().find_sites
+                && let Err(e) = self.core.set_find_sites(on)
             {
                 self.dialog = Dialog::Error(e);
             }

@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "7de30fe250055c007e3f829bb0889725af7f48d8b008d00aff8fc3a522928d1c"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "0ad96d30e7ac6e1063074a2cea54c7257044225900e49688e72b867f7000eb59"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Domain tambahan (opsional)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Domain milik tailnet itu sendiri dirutekan secara otomatis. Tambahkan satu per baris."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Cari situs web di mesin dalam tailnet Anda"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Browser tidak terbuka, atau terbuka di profil yang salah?"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Buka lagi halaman masuk"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Sertifikatnya tidak tepercaya, jadi browser Anda akan menampilkan peringatan."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Memeriksa { $done } dari { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Situs web"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Mesin di tailnet Anda yang menyajikan situs web melalui HTTPS. Setiap mesin diperiksa paling banyak sekali sehari."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Periksa ulang semua mesin sekarang"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

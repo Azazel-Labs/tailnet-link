@@ -19,6 +19,8 @@ pub const ACCENT: Color32 = Color32::from_rgb(117, 169, 214);
 pub const DANGER: Color32 = Color32::from_rgb(226, 104, 92);
 /// Background of an informational note or the unsaved-changes bar.
 pub const NOTE_BG: Color32 = Color32::from_rgb(29, 38, 46);
+/// A row or tile under the pointer.
+pub const ROW_HOVER: Color32 = Color32::from_rgb(36, 39, 42);
 /// A switched-off toggle's track.
 pub const TOGGLE_OFF: Color32 = Color32::from_rgb(57, 62, 68);
 /// Dims the window behind a modal dialog.
@@ -238,7 +240,7 @@ pub fn card() -> egui::Frame {
 /// A row inside a card (a machine, a port forward).
 pub fn row_frame(hovered: bool) -> egui::Frame {
     egui::Frame::new()
-        .fill(if hovered { Color32::from_rgb(36, 39, 42) } else { RAISED })
+        .fill(if hovered { ROW_HOVER } else { RAISED })
         .corner_radius(8)
         .inner_margin(Margin::symmetric(10, 6))
 }

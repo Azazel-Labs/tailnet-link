@@ -138,6 +138,15 @@ copy-address = Kopioi { $address }
 open-in-browser = Avaa { $url } selaimessa
 not-routing-tooltip = Tämä tailnet ei reititä juuri nyt. Onko se keskeytetty?
 
+## Websites found on the machines
+
+sites-heading = Verkkosivustot
+sites-help = Tailnetiesi koneet, jotka tarjoavat verkkosivuston HTTPS:n kautta. Jokainen kone tarkistetaan enintään kerran päivässä.
+# $done and $total count machines.
+sites-checking = Tarkistetaan { $done }/{ $total }…
+sites-recheck-tooltip = Tarkista kaikki koneet uudelleen nyt
+site-untrusted = Sen varmenteeseen ei luoteta, joten selain varoittaa sinua.
+
 ## Settings: port forwards
 
 forwards-heading = Portin edelleenohjaukset
@@ -298,6 +307,7 @@ proxy-retry-tooltip = Ohjaa järjestelmän välityspalvelinasetus taas sovelluks
 system-setting = Järjestelmän välityspalvelinasetus nyt: { $value }
 system-setting-none = ei mitään
 check-updates = Tarkista uudet versiot
+find-websites = Etsi verkkosivustoja tailnetiesi koneilta
 tray-update = Lataa { -app-name } { $version }…
 update-available = Versio { $version } on julkaistu
 update-available-tooltip = Sinulla on { $current }. Avaa lataussivun.

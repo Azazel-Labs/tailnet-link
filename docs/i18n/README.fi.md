@@ -25,6 +25,7 @@ Tailscalessa voit olla kirjautuneena vain yhteen tailnetiin kerrallaan. Jos koti
 
 - **Ei enää tilinvaihtoa.** Lisää niin monta tailnetiä kuin tarvitset ja käytä niitä kaikkia yhtä aikaa. Oman tailnetisi yhteys ei katkea koskaan.
 - **Ei mitään määritettävää.** Kirjaudu sisään, niin tailnetin verkkotunnus löytyy puolestasi. Avaa sen koneet nimellä missä tahansa selaimessa.
+- **Löytää koneidesi verkkosivustot.** Koneet, jotka tarjoavat HTTPS-sivun, näkyvät ruutuina sivun nimellä ja kuvakkeella, yhden napsautuksen päässä. Jokainen kone tarkistetaan enintään kerran päivässä.
 - **Ei riitele Tailscalen kanssa.** Ei VPN-sovitinta, ei reittejä, ei DNS-muutoksia. Jokainen lisätailnet toimii sovelluksen sisällä omana solmunaan.
 - **Lukittu oletuksena.** Jokainen lisäsolmu liittyy kilvet ylhäällä: sinä pääset noihin tailneteihin, mutta mikään niissä ei pääse tietokoneellesi.
 - **Vain niiden liikenne kulkee sen kautta.** Muiden tailnetiesi osoitteet kulkevat Tailnet Linkin kautta. Kaikki muu kulkee suoraan, aivan kuten ennenkin.

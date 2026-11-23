@@ -25,6 +25,7 @@ Tailscale hanya mengizinkan Anda masuk ke satu tailnet dalam satu waktu. Jika la
 
 - **Tak perlu lagi berganti akun.** Tambahkan tailnet sebanyak yang Anda perlukan dan gunakan semuanya sekaligus. Tailnet Anda sendiri tidak pernah terputus.
 - **Tanpa konfigurasi.** Cukup masuk, dan domain tailnet ditemukan untuk Anda. Buka mesin-mesinnya berdasarkan nama di browser apa pun.
+- **Menemukan situs web di mesin Anda.** Mesin yang menyajikan halaman HTTPS muncul sebagai ubin dengan nama dan ikon halamannya, tinggal satu klik. Setiap mesin diperiksa paling banyak sekali sehari.
 - **Tidak bentrok dengan Tailscale.** Tanpa adaptor VPN, tanpa rute, tanpa perubahan DNS. Setiap tailnet tambahan berjalan sebagai node terpisah di dalam aplikasi, sehingga tidak ada yang bertabrakan dengan aplikasi Tailscale maupun satu sama lain.
 - **Terkunci secara bawaan.** Setiap node tambahan bergabung dengan shields up: Anda dapat menjangkau tailnet tersebut, tetapi tidak ada apa pun di sana yang dapat menjangkau komputer Anda.
 - **Hanya lalu lintas mereka yang lewat.** Alamat di tailnet Anda yang lain melewati Tailnet Link. Selebihnya berjalan langsung, persis seperti sebelumnya.

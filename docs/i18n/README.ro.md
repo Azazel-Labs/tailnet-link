@@ -25,6 +25,7 @@ Tailscale te lasă să fii autentificat într-un singur tailnet odată. Dacă la
 
 - **Gata cu schimbatul conturilor.** Adaugă câte tailneturi ai nevoie și folosește-le pe toate deodată. Propriul tailnet nu se deconectează niciodată.
 - **Nimic de configurat.** Autentifică-te, iar domeniul tailnetului este găsit pentru tine. Deschide-i mașinile după nume în orice browser.
+- **Găsește site-urile de pe mașinile tale.** Mașinile care servesc o pagină HTTPS apar ca plăci cu numele și pictograma paginii, la un clic distanță. Fiecare mașină este verificată cel mult o dată pe zi.
 - **Nu se bate cap în cap cu Tailscale.** Fără adaptor VPN, fără rute, fără modificări DNS. Fiecare tailnet suplimentar rulează ca nod separat în aplicație, așa că nimic nu intră în conflict cu aplicația Tailscale sau între ele.
 - **Blocat implicit.** Fiecare nod suplimentar intră cu scuturile ridicate: tu ajungi la acele tailneturi, dar nimic din ele nu poate ajunge la computerul tău.
 - **Doar traficul lor trece prin el.** Adresele din celelalte tailneturi trec prin Tailnet Link. Restul merge direct, exact ca înainte.

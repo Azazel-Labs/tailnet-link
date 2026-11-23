@@ -142,6 +142,15 @@ copy-address = Copiar { $address }
 open-in-browser = Abrir { $url } en tu navegador
 not-routing-tooltip = Este tailnet no está enrutando ahora mismo. ¿Está en pausa?
 
+## Sitios web encontrados en los equipos
+
+sites-heading = Sitios web
+sites-help = Equipos de tus tailnets que sirven un sitio web por HTTPS. Cada equipo se comprueba como máximo una vez al día.
+# $done y $total cuentan equipos.
+sites-checking = Comprobando { $done } de { $total }…
+sites-recheck-tooltip = Volver a comprobar todos los equipos ahora
+site-untrusted = Su certificado no es de confianza, así que tu navegador te mostrará una advertencia.
+
 ## Ajustes: redirecciones de puertos
 
 forwards-heading = Redirecciones de puertos
@@ -306,6 +315,7 @@ proxy-retry-tooltip = Volver a dirigir el ajuste de proxy del sistema a { -app-n
 system-setting = Ajuste de proxy del sistema actual: { $value }
 system-setting-none = ninguno
 check-updates = Buscar nuevas versiones
+find-websites = Buscar sitios web en los equipos de tus tailnets
 tray-update = Descargar { -app-name } { $version }…
 update-available = Versión { $version } disponible
 update-available-tooltip = Tienes la versión { $current }. Abre la página de descarga.

@@ -25,6 +25,7 @@ Con Tailscale puoi essere connesso a un solo tailnet alla volta. Se il tuo home 
 
 - **Basta cambiare account.** Aggiungi tutti i tailnet che ti servono e usali tutti insieme. Il tuo tailnet non si disconnette mai.
 - **Niente da configurare.** Accedi e il dominio del tailnet viene trovato per te. Apri i suoi dispositivi per nome in qualsiasi browser.
+- **Trova i siti web sui tuoi dispositivi.** I dispositivi che servono una pagina HTTPS compaiono come riquadri con il nome e l'icona della pagina, a portata di clic. Ogni dispositivo viene controllato al massimo una volta al giorno.
 - **Non entra in conflitto con Tailscale.** Nessun adattatore VPN, nessuna route, nessuna modifica al DNS. Ogni tailnet aggiuntivo gira come nodo separato all'interno dell'app, senza conflitti con l'app Tailscale né tra loro.
 - **Protetto per impostazione predefinita.** Ogni nodo aggiuntivo entra con gli scudi alzati: tu raggiungi quei tailnet, ma nulla al loro interno può raggiungere il tuo computer.
 - **Ci passa solo il loro traffico.** Gli indirizzi degli altri tailnet passano da Tailnet Link; tutto il resto va diretto, esattamente come prima.

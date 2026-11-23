@@ -25,6 +25,7 @@ Mit Tailscale sind Sie immer nur bei einem Tailnet angemeldet. Haben Ihr Homelab
 
 - **Kein Kontowechsel mehr.** Fügen Sie so viele Tailnets hinzu, wie Sie brauchen, und nutzen Sie alle gleichzeitig. Ihr eigenes Tailnet wird nie getrennt.
 - **Nichts einzurichten.** Anmelden genügt, die Domain des Tailnets wird automatisch gefunden. Öffnen Sie seine Geräte per Name in jedem Browser.
+- **Findet die Websites auf Ihren Geräten.** Geräte, die eine HTTPS-Seite ausliefern, erscheinen als Kacheln mit Name und Symbol der Seite, nur einen Klick entfernt. Jedes Gerät wird höchstens einmal am Tag geprüft.
 - **Verträgt sich mit Tailscale.** Kein VPN-Adapter, keine Routen, keine DNS-Änderungen. Jedes zusätzliche Tailnet läuft als eigener Knoten in der App, ohne Konflikte mit der Tailscale-App oder untereinander.
 - **Standardmäßig abgeschottet.** Jeder zusätzliche Knoten tritt mit „Shields up“ bei: Sie erreichen diese Tailnets, aber nichts darin erreicht Ihren Computer.
 - **Nur deren Verkehr läuft darüber.** Adressen in Ihren anderen Tailnets gehen über Tailnet Link, alles andere direkt, genau wie vorher.

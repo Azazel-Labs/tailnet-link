@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "e0ea7f664daeb98627ed499ec2447d35e56623f3286f343beb9260efb536e1b2"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "ecae9672cebdd8282f5c08c1d2c708b87e834312412533b0c6defb7ff81874e4"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Додатни домени (опционо)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Сопствени домен мреже tailnet рутира се аутоматски. Додајте по један у сваки ред."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Тражи веб-сајтове на уређајима у вашим мрежама tailnet"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Прегледач се није отворио или је от�
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Поново отвори страницу за пријаву"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Његов сертификат није поуздан, па ће вас прегледач упозорити."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Провера: { $done } од { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Веб-сајтови"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Уређаји у вашим мрежама tailnet који пружају веб-сајт преко HTTPS-а. Сваки уређај се проверава највише једном дневно."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Поново провери све уређаје сада"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

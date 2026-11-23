@@ -138,6 +138,15 @@ copy-address = Копирај { $address }
 open-in-browser = Отвори { $url } у прегледачу
 not-routing-tooltip = Ова мрежа tailnet тренутно не рутира саобраћај. Да ли је паузирана?
 
+## Websites found on the machines
+
+sites-heading = Веб-сајтови
+sites-help = Уређаји у вашим мрежама tailnet који пружају веб-сајт преко HTTPS-а. Сваки уређај се проверава највише једном дневно.
+# $done and $total count machines.
+sites-checking = Провера: { $done } од { $total }…
+sites-recheck-tooltip = Поново провери све уређаје сада
+site-untrusted = Његов сертификат није поуздан, па ће вас прегледач упозорити.
+
 ## Settings: port forwards
 
 forwards-heading = Прослеђивање портова
@@ -298,6 +307,7 @@ proxy-retry-tooltip = Поново усмери системско подеша�
 system-setting = Тренутно системско подешавање проксија: { $value }
 system-setting-none = нема
 check-updates = Потражи нове верзије
+find-websites = Тражи веб-сајтове на уређајима у вашим мрежама tailnet
 tray-update = Преузми { -app-name } { $version }…
 update-available = Изашла је верзија { $version }
 update-available-tooltip = Имате верзију { $current }. Отвара страницу за преузимање.

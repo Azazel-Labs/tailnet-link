@@ -137,6 +137,15 @@ copy-address = Copiază { $address }
 open-in-browser = Deschide { $url } în browser
 not-routing-tooltip = Acest tailnet nu rutează acum. Este întrerupt?
 
+## Site-uri găsite pe mașini
+
+sites-heading = Site-uri
+sites-help = Mașinile din tailnet-urile tale care servesc un site prin HTTPS. Fiecare mașină este verificată cel mult o dată pe zi.
+# $done și $total numără mașini.
+sites-checking = Se verifică { $done } din { $total }…
+sites-recheck-tooltip = Verifică acum din nou toate mașinile
+site-untrusted = Certificatul său nu este de încredere, așa că browserul va afișa un avertisment.
+
 ## Setări: redirecționări de porturi
 
 forwards-heading = Redirecționări de porturi
@@ -297,6 +306,7 @@ proxy-retry-tooltip = Îndreaptă din nou setarea proxy a sistemului spre { -app
 system-setting = Setarea proxy actuală a sistemului: { $value }
 system-setting-none = niciunul
 check-updates = Caută versiuni noi
+find-websites = Caută site-uri pe mașinile din tailnet-urile tale
 tray-update = Descarcă { -app-name } { $version }…
 update-available = A apărut versiunea { $version }
 update-available-tooltip = Ai versiunea { $current }. Deschide pagina de descărcare.

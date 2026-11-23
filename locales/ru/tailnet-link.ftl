@@ -140,6 +140,15 @@ copy-address = Скопировать { $address }
 open-in-browser = Открыть { $url } в браузере
 not-routing-tooltip = Эта сеть tailnet сейчас не маршрутизирует трафик. Может быть, она приостановлена?
 
+## Websites found on the machines
+
+sites-heading = Сайты
+sites-help = Устройства в ваших сетях tailnet, на которых работает сайт по HTTPS. Каждое устройство проверяется не чаще раза в день.
+# $done and $total count machines.
+sites-checking = Проверка: { $done } из { $total }…
+sites-recheck-tooltip = Проверить все устройства заново
+site-untrusted = Его сертификат не считается доверенным, поэтому браузер покажет предупреждение.
+
 ## Settings: port forwards
 
 forwards-heading = Переадресация портов
@@ -300,6 +309,7 @@ proxy-retry-tooltip = Снова направить системную наст�
 system-setting = Текущая системная настройка прокси: { $value }
 system-setting-none = нет
 check-updates = Проверить наличие новых версий
+find-websites = Искать сайты на устройствах в ваших сетях tailnet
 tray-update = Скачать { -app-name } { $version }…
 update-available = Вышла версия { $version }
 update-available-tooltip = У вас версия { $current }. Открывает страницу загрузки.

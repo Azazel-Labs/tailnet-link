@@ -140,6 +140,15 @@ copy-address = Kopírovat { $address }
 open-in-browser = Otevřít { $url } v prohlížeči
 not-routing-tooltip = Tato síť tailnet právě nesměruje provoz. Není pozastavená?
 
+## Websites found on the machines
+
+sites-heading = Weby
+sites-help = Zařízení ve vašich sítích tailnet, která poskytují web přes HTTPS. Každé zařízení se kontroluje nejvýše jednou denně.
+# $done and $total count machines.
+sites-checking = Kontroluje se { $done } z { $total }…
+sites-recheck-tooltip = Znovu zkontrolovat všechna zařízení
+site-untrusted = Jeho certifikát není důvěryhodný, takže vás prohlížeč upozorní.
+
 ## Settings: port forwards
 
 forwards-heading = Přesměrování portů
@@ -300,6 +309,7 @@ proxy-retry-tooltip = Znovu nasměrovat systémové nastavení proxy na { -app-n
 system-setting = Aktuální systémové nastavení proxy: { $value }
 system-setting-none = žádné
 check-updates = Zkontrolovat nové verze
+find-websites = Hledat weby na zařízeních ve vašich sítích tailnet
 tray-update = Stáhnout { -app-name } { $version }…
 update-available = Vyšla verze { $version }
 update-available-tooltip = Máte verzi { $current }. Otevře stránku ke stažení.

@@ -83,6 +83,8 @@ pub struct Config {
     pub check_updates: bool,
     /// The newest version a notification has been shown for, so each is announced once.
     pub update_notified: String,
+    /// Look for websites on the machines in the routing tailnets (each asked at most once a day).
+    pub find_sites: bool,
 }
 
 /// Reads `null` as an empty list. Older versions wrote `null` for empty lists,
@@ -108,6 +110,7 @@ impl Default for Config {
             language: "auto".into(),
             check_updates: true,
             update_notified: String::new(),
+            find_sites: true,
         }
     }
 }

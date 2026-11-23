@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "c9487da8438481a4af3a48d0daa6296d8c45dff3e9a220f0441146c3f565505b"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "88d34fda4685e47e6261108493b75589687c31a7d01f49c0c31536dea5aef685"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Domaines supplémentaires (facultatif)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Le domaine propre du tailnet est routé automatiquement. Ajoutez-en un par ligne."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Rechercher des sites web sur les machines de vos tailnets"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Le navigateur ne s’est pas ouvert, ou avec le mauvais profil ?
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Rouvrir la page de connexion"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Son certificat n’est pas reconnu, votre navigateur affichera donc un avertissement."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Vérification de { $done } sur { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Sites web"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Les machines de vos tailnets qui servent un site web en HTTPS. Chaque machine est vérifiée au plus une fois par jour."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Revérifier toutes les machines maintenant"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

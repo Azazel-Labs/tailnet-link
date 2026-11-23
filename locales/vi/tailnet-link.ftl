@@ -127,6 +127,15 @@ copy-address = Sao chép { $address }
 open-in-browser = Mở { $url } trong trình duyệt
 not-routing-tooltip = Tailnet này hiện không định tuyến. Có phải nó đang tạm dừng?
 
+## Websites found on the machines
+
+sites-heading = Trang web
+sites-help = Các máy trong tailnet của bạn có phục vụ trang web qua HTTPS. Mỗi máy được kiểm tra tối đa một lần mỗi ngày.
+# $done and $total count machines.
+sites-checking = Đang kiểm tra { $done }/{ $total }…
+sites-recheck-tooltip = Kiểm tra lại tất cả các máy ngay
+site-untrusted = Chứng chỉ của trang này không được tin cậy, vì vậy trình duyệt sẽ cảnh báo bạn.
+
 ## Settings: port forwards
 
 forwards-heading = Chuyển tiếp cổng
@@ -286,6 +295,7 @@ proxy-retry-tooltip = Trỏ lại cài đặt proxy hệ thống tới { -app-na
 system-setting = Cài đặt proxy hệ thống hiện tại: { $value }
 system-setting-none = không có
 check-updates = Kiểm tra phiên bản mới
+find-websites = Tìm trang web trên các máy trong tailnet của bạn
 tray-update = Tải xuống { -app-name } { $version }…
 update-available = Đã có phiên bản { $version }
 update-available-tooltip = Bạn đang dùng { $current }. Mở trang tải xuống.

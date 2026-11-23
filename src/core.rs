@@ -12,6 +12,7 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 use crate::config::{self, Config, Forward, TailnetConfig};
 use crate::i18n::tr;
 use crate::proxy::{self, PacState, Router};
+use crate::sites;
 use crate::sync::lock;
 use crate::sysproxy::{ProxyError, SystemProxy};
 use crate::tsnet::{Node, SocksTarget};
@@ -168,6 +169,46 @@ pub struct Status {
     /// The system proxy setting as last read ("" for none).
     pub system_setting: String,
     pub update: Option<Update>,
+    /// Websites on the online machines, in tailnet then machine order.
+    pub sites: Vec<SiteStatus>,
+    /// While machines are being asked for websites: (this one, of how many).
+    pub sites_checking: Option<(usize, usize)>,
+}
+
+/// A website one of the machines serves, for its tile.
+#[derive(Clone, Debug)]
+pub struct SiteStatus {
+    /// Full MagicDNS name.
+    pub host: String,
+    /// Short machine name.
+    pub machine: String,
+    /// The site's own name ("" if it gives none).
+    pub title: String,
+    /// Its certificate checked out.
+    pub trusted: bool,
+    pub color: Option<[u8; 3]>,
+    pub icon: Option<Arc<sites::Icon>>,
+    /// The tailnet's label.
+    pub tailnet: String,
+    /// That tailnet routes right now, so the link works.
+    pub routing: bool,
+}
+
+impl SiteStatus {
+    /// The site's name, or the machine's when it has none.
+    pub fn label(&self) -> &str {
+        if self.title.is_empty() { &self.machine } else { &self.title }
+    }
+
+    pub fn url(&self) -> String {
+        format!("https://{}/", self.host)
+    }
+
+    /// Case-insensitive match on its name, machine, or tailnet.
+    pub fn matches(&self, query: &str) -> bool {
+        let q = query.trim().to_lowercase();
+        q.is_empty() || [&self.title, &self.host, &self.tailnet].iter().any(|f| f.to_lowercase().contains(&q))
+    }
 }
 
 impl Status {
@@ -230,6 +271,20 @@ struct Inner {
     update: Option<Update>,
 }
 
+/// The websites found so far, and how far the current round has got.
+#[derive(Default)]
+struct SiteState {
+    cache: sites::Cache,
+    progress: Option<(usize, usize)>,
+}
+
+/// How long after starting the first machines are asked for websites.
+const SITES_FIRST_AFTER: Duration = Duration::from_secs(20);
+/// How often to look for machines that are due (new, or asked over a day ago).
+const SITES_EVERY: Duration = Duration::from_secs(60);
+/// How long to wait for a machine to accept a connection on port 443.
+const SITES_CONNECT_TIMEOUT: Duration = Duration::from_secs(8);
+
 /// How often the system proxy setting is read back while routing.
 const SYSTEM_CHECK_EVERY: Duration = Duration::from_secs(5);
 
@@ -242,6 +297,10 @@ pub struct Core {
     on_change: Mutex<Option<Callback>>,
     on_show: Mutex<Option<Callback>>,
     version: AtomicU64,
+    /// Locked after `inner` when both are needed, never before.
+    sites: Mutex<SiteState>,
+    /// Wakes the "sites" thread early (Check again, or the setting turned on).
+    sites_wake: Mutex<Option<std::sync::mpsc::Sender<()>>>,
 }
 
 /// Lets the proxy ask the core which tailnet handles a name.
@@ -288,6 +347,8 @@ impl Core {
             on_change: Mutex::new(None),
             on_show: Mutex::new(None),
             version: AtomicU64::new(0),
+            sites: Mutex::new(SiteState::default()),
+            sites_wake: Mutex::new(None),
         })
     }
 
@@ -324,6 +385,7 @@ impl Core {
 
     pub fn status(&self) -> Status {
         let g = lock(&self.inner);
+        let state = lock(&self.sites);
         Status {
             tailnets: g.cfg.tailnets.iter().filter_map(|t| g.entries.get(&t.id).map(|e| e.st.clone())).collect(),
             enabled: g.cfg.enabled,
@@ -351,6 +413,8 @@ impl Core {
             system: g.system.clone(),
             system_setting: g.system_setting.clone(),
             update: g.update.clone(),
+            sites: if g.cfg.find_sites { sites_of(&g, &state.cache) } else { Vec::new() },
+            sites_checking: state.progress,
         }
     }
 
@@ -420,7 +484,105 @@ impl Core {
                 }
             })
             .map_err(|e| e.to_string())?;
+
+        lock(&self.sites).cache = sites::Cache::load();
+        let (wake, woken) = std::sync::mpsc::channel();
+        *lock(&self.sites_wake) = Some(wake);
+        let me = Arc::downgrade(self);
+        std::thread::Builder::new()
+            .name("sites".into())
+            .spawn(move || {
+                let mut wait = SITES_FIRST_AFTER;
+                // Ends when the core (which holds the sender) is gone.
+                while !matches!(woken.recv_timeout(wait), Err(std::sync::mpsc::RecvTimeoutError::Disconnected)) {
+                    let Some(core) = me.upgrade() else { return };
+                    core.find_sites();
+                    drop(core);
+                    wait = SITES_EVERY;
+                }
+            })
+            .map_err(|e| e.to_string())?;
         Ok(())
+    }
+
+    // ---- Websites ----
+
+    /// Asks each online machine that's due whether it serves a website, one at a time.
+    fn find_sites(&self) {
+        let (proxy, due) = {
+            let g = lock(&self.inner);
+            if !g.cfg.find_sites || !g.cfg.enabled {
+                return;
+            }
+            let state = lock(&self.sites);
+            let now = sites::now();
+            let due: Vec<(String, String)> = g
+                .cfg
+                .tailnets
+                .iter()
+                .filter_map(|t| g.entries.get(&t.id).filter(|e| e.st.routing).map(|e| (&t.id, e)))
+                .flat_map(|(id, e)| e.st.machines.iter().filter(|m| m.online).map(move |m| (id, m)))
+                .filter(|(_, m)| state.cache.is_due(&m.dns_name, now))
+                .map(|(id, m)| (id.clone(), m.dns_name.clone()))
+                .collect();
+            (g.cfg.listen.clone(), due)
+        };
+        let total = due.len();
+        for (i, (id, host)) in due.into_iter().enumerate() {
+            let cfg = self.config();
+            if !cfg.find_sites || !cfg.enabled {
+                break;
+            }
+            // Its tailnet may have stopped routing since the list was made.
+            if self.node_for(&host).as_deref() != Some(id.as_str()) {
+                continue;
+            }
+            lock(&self.sites).progress = Some((i + 1, total));
+            self.changed();
+            let reach = || {
+                let target =
+                    self.socks_for(&host).ok_or_else(|| std::io::Error::from(std::io::ErrorKind::NotConnected))?;
+                self.rt
+                    .block_on(tokio::time::timeout(SITES_CONNECT_TIMEOUT, crate::socks::connect(&target, &host, 443)))
+                    .map_err(|_| std::io::Error::from(std::io::ErrorKind::TimedOut))?
+                    .map(drop)
+            };
+            let outcome = sites::probe(&proxy, &host, reach);
+            log::debug!("[sites] {host}: {outcome:?}");
+            let mut state = lock(&self.sites);
+            state.cache.record(&host, outcome, sites::now());
+            state.cache.save();
+        }
+        let was_checking = lock(&self.sites).progress.take().is_some();
+        if was_checking {
+            self.changed();
+        }
+    }
+
+    /// Asks every machine again now, instead of when its day is up.
+    pub fn recheck_sites(&self) {
+        lock(&self.sites).cache.recheck_all();
+        self.wake_sites();
+    }
+
+    fn wake_sites(&self) {
+        if let Some(wake) = lock(&self.sites_wake).as_ref() {
+            let _ = wake.send(());
+        }
+    }
+
+    /// Turns looking for websites on or off.
+    pub fn set_find_sites(&self, on: bool) -> Result<(), String> {
+        let res = {
+            let mut g = lock(&self.inner);
+            g.cfg.find_sites = on;
+            g.cfg.save()
+        };
+        if on {
+            self.wake_sites();
+        }
+        self.changed();
+        res
     }
 
     fn set_update(&self, u: Option<Update>) {
@@ -1076,6 +1238,27 @@ pub fn parse_check_target(input: &str) -> Result<(String, u16), String> {
         return Err(tr!("check-bad-port", input = hostport));
     }
     Ok((host, port))
+}
+
+/// The websites on the online machines, for `Status`.
+fn sites_of(g: &Inner, cache: &sites::Cache) -> Vec<SiteStatus> {
+    let mut out = Vec::new();
+    for e in g.cfg.tailnets.iter().filter_map(|t| g.entries.get(&t.id)) {
+        for m in e.st.machines.iter().filter(|m| m.online) {
+            let Some(site) = cache.site(&m.dns_name) else { continue };
+            out.push(SiteStatus {
+                host: m.dns_name.clone(),
+                machine: m.name.clone(),
+                title: site.title.clone(),
+                trusted: site.trusted,
+                color: site.color,
+                icon: cache.icon(&m.dns_name),
+                tailnet: e.st.label(),
+                routing: e.st.routing,
+            });
+        }
+    }
+    out
 }
 
 fn pac_url_of(g: &Inner) -> String {

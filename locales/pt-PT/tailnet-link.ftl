@@ -135,6 +135,15 @@ copy-address = Copiar { $address }
 open-in-browser = Abrir { $url } no browser
 not-routing-tooltip = Esta tailnet não está a encaminhar neste momento. Estará suspensa?
 
+## Sites encontrados nas máquinas
+
+sites-heading = Sites
+sites-help = Máquinas das suas tailnets que disponibilizam um site por HTTPS. Cada máquina é verificada no máximo uma vez por dia.
+# $done e $total contam máquinas.
+sites-checking = A verificar { $done } de { $total }…
+sites-recheck-tooltip = Verificar novamente todas as máquinas agora
+site-untrusted = O certificado não é fidedigno, por isso o browser vai mostrar um aviso.
+
 ## Definições: reencaminhamentos de portas
 
 forwards-heading = Reencaminhamentos de portas
@@ -295,6 +304,7 @@ proxy-retry-tooltip = Apontar novamente a definição de proxy do sistema para o
 system-setting = Definição de proxy do sistema atual: { $value }
 system-setting-none = nenhum
 check-updates = Procurar novas versões
+find-websites = Procurar sites nas máquinas das suas tailnets
 tray-update = Transferir o { -app-name } { $version }…
 update-available = Versão { $version } disponível
 update-available-tooltip = Tem a versão { $current }. Abre a página de transferência.

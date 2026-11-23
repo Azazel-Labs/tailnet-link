@@ -144,6 +144,15 @@ copy-address = Másolás: { $address }
 open-in-browser = Megnyitás a böngészőben: { $url }
 not-routing-tooltip = Ez a tailnet most nem végez útválasztást. Talán szüneteltetve van?
 
+## A gépeken talált webhelyek
+
+sites-heading = Webhelyek
+sites-help = A tailnetjeiben lévő gépek, amelyek HTTPS-en keresztül webhelyet szolgálnak ki. Minden gépet legfeljebb naponta egyszer ellenőriz az alkalmazás.
+# A $done és a $total gépeket számol.
+sites-checking = Ellenőrzés: { $done } / { $total }…
+sites-recheck-tooltip = Minden gép újraellenőrzése most
+site-untrusted = A tanúsítványa nem megbízható, ezért a böngésző figyelmeztetni fogja.
+
 ## Beállítások: porttovábbítások
 
 forwards-heading = Porttovábbítások
@@ -309,6 +318,7 @@ proxy-retry-tooltip = A rendszer proxybeállításának újbóli ráirányítás
 system-setting = A rendszer jelenlegi proxybeállítása: { $value }
 system-setting-none = nincs
 check-updates = Új verziók keresése
+find-websites = Webhelyek keresése a tailnetjeiben lévő gépeken
 tray-update = A { -app-name } { $version } letöltése…
 update-available = Új verzió: { $version }
 update-available-tooltip = Az Ön verziója: { $current }. Megnyitja a letöltési oldalt.

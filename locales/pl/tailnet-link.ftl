@@ -140,6 +140,15 @@ copy-address = Skopiuj { $address }
 open-in-browser = Otwórz { $url } w przeglądarce
 not-routing-tooltip = Ta sieć tailnet nie przekazuje teraz ruchu. Czy jest wstrzymana?
 
+## Websites found on the machines
+
+sites-heading = Witryny
+sites-help = Urządzenia w twoich sieciach tailnet, które udostępniają witrynę przez HTTPS. Każde urządzenie jest sprawdzane najwyżej raz dziennie.
+# $done and $total count machines.
+sites-checking = Sprawdzanie { $done } z { $total }…
+sites-recheck-tooltip = Sprawdź teraz ponownie wszystkie urządzenia
+site-untrusted = Jej certyfikat nie jest zaufany, więc przeglądarka wyświetli ostrzeżenie.
+
 ## Settings: port forwards
 
 forwards-heading = Przekierowania portów
@@ -300,6 +309,7 @@ proxy-retry-tooltip = Ponownie skieruj systemowe ustawienie proxy na { -app-name
 system-setting = Obecne systemowe ustawienie proxy: { $value }
 system-setting-none = brak
 check-updates = Sprawdź dostępność nowych wersji
+find-websites = Szukaj witryn na urządzeniach w twoich sieciach tailnet
 tray-update = Pobierz { -app-name } { $version }…
 update-available = Dostępna wersja { $version }
 update-available-tooltip = Masz wersję { $current }. Otwiera stronę pobierania.

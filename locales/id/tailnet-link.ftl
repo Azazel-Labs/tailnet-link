@@ -141,6 +141,15 @@ copy-address = Salin { $address }
 open-in-browser = Buka { $url } di browser Anda
 not-routing-tooltip = Tailnet ini sedang tidak merutekan. Apakah sedang dijeda?
 
+## Situs web yang ditemukan di mesin
+
+sites-heading = Situs web
+sites-help = Mesin di tailnet Anda yang menyajikan situs web melalui HTTPS. Setiap mesin diperiksa paling banyak sekali sehari.
+# $done dan $total menghitung mesin.
+sites-checking = Memeriksa { $done } dari { $total }…
+sites-recheck-tooltip = Periksa ulang semua mesin sekarang
+site-untrusted = Sertifikatnya tidak tepercaya, jadi browser Anda akan menampilkan peringatan.
+
 ## Pengaturan: penerusan port
 
 forwards-heading = Penerusan port
@@ -306,6 +315,7 @@ proxy-retry-tooltip = Arahkan lagi pengaturan proksi sistem ke { -app-name }
 system-setting = Pengaturan proksi sistem saat ini: { $value }
 system-setting-none = tidak ada
 check-updates = Periksa versi baru
+find-websites = Cari situs web di mesin dalam tailnet Anda
 tray-update = Unduh { -app-name } { $version }…
 update-available = Versi { $version } sudah rilis
 update-available-tooltip = Versi Anda { $current }. Membuka halaman unduhan.

@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "5e995b8a7b56c8165a835790f9baea0a192b98eace9f58c59f8bee3cf05c721c"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "2adb7a11f2fab43d2976f04fab903d6124d077f6a8c62eed866356ad5cf5e239"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Ekstra domener (valgfritt)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Tailnettets eget domene rutes automatisk. Legg til ett per linje."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Se etter nettsteder på maskinene i tailnettene dine"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Åpnet ikke nettleseren seg, eller åpnet den feil profil?"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Åpne påloggingssiden igjen"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Sertifikatet er ikke klarert, så nettleseren vil advare deg."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Sjekker { $done } av { $total }…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Nettsteder"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Maskiner i tailnettene dine som har et nettsted over HTTPS. Hver maskin sjekkes høyst én gang om dagen."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Sjekk alle maskinene på nytt nå"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

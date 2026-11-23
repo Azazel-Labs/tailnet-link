@@ -127,6 +127,15 @@ copy-address = 复制 { $address }
 open-in-browser = 在浏览器中打开 { $url }
 not-routing-tooltip = 此 tailnet 目前未在路由。是否已暂停？
 
+## Websites found on the machines
+
+sites-heading = 网站
+sites-help = 你的 tailnet 中通过 HTTPS 提供网站的设备。每台设备每天最多检查一次。
+# $done and $total count machines.
+sites-checking = 正在检查第 { $done } 台，共 { $total } 台…
+sites-recheck-tooltip = 立即重新检查所有设备
+site-untrusted = 它的证书不受信任，因此浏览器会显示警告。
+
 ## Settings: port forwards
 
 forwards-heading = 端口转发
@@ -286,6 +295,7 @@ proxy-retry-tooltip = 让系统代理设置重新指向 { -app-name }
 system-setting = 当前系统代理设置：{ $value }
 system-setting-none = 无
 check-updates = 检查新版本
+find-websites = 在你的 tailnet 设备上查找网站
 tray-update = 下载 { -app-name } { $version }…
 update-available = { $version } 版已发布
 update-available-tooltip = 你当前的版本是 { $current }。打开下载页面。

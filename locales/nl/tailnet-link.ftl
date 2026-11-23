@@ -135,6 +135,15 @@ copy-address = { $address } kopiëren
 open-in-browser = { $url } openen in je browser
 not-routing-tooltip = Dit tailnet routeert nu niet. Is het gepauzeerd?
 
+## Websites op de machines
+
+sites-heading = Websites
+sites-help = Machines in je tailnets die een website via HTTPS aanbieden. Elke machine wordt hooguit één keer per dag gecontroleerd.
+# $done en $total tellen machines.
+sites-checking = { $done } van { $total } controleren…
+sites-recheck-tooltip = Alle machines nu opnieuw controleren
+site-untrusted = Het certificaat wordt niet vertrouwd, dus je browser geeft een waarschuwing.
+
 ## Instellingen: doorgestuurde poorten
 
 forwards-heading = Doorgestuurde poorten
@@ -295,6 +304,7 @@ proxy-retry-tooltip = De proxyinstelling van het systeem weer naar { -app-name }
 system-setting = Huidige proxyinstelling van het systeem: { $value }
 system-setting-none = geen
 check-updates = Controleren op nieuwe versies
+find-websites = Zoeken naar websites op de machines in je tailnets
 tray-update = { -app-name } { $version } downloaden…
 update-available = Versie { $version } is uit
 update-available-tooltip = Je hebt { $current }. Opent de downloadpagina.

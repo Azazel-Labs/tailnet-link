@@ -25,6 +25,7 @@ O Tailscale só permite ter sessão iniciada numa tailnet de cada vez. Se o seu 
 
 - **Acabou a troca de contas.** Adicione as tailnets de que precisar e use-as todas ao mesmo tempo. A sua própria tailnet nunca perde a ligação.
 - **Nada para configurar.** Inicie sessão e o domínio da tailnet é encontrado por si. Abra as respetivas máquinas pelo nome em qualquer browser.
+- **Encontra os sites nas suas máquinas.** As máquinas que servem uma página HTTPS aparecem como mosaicos com o nome e o ícone da página, à distância de um clique. Cada máquina é verificada, no máximo, uma vez por dia.
 - **Não entra em conflito com o Tailscale.** Sem adaptador VPN, sem rotas, sem alterações de DNS. Cada tailnet adicional funciona como um nó separado dentro da aplicação, sem colidir com a aplicação Tailscale nem entre si.
 - **Protegido por predefinição.** Cada nó adicional entra com os escudos levantados: pode aceder a essas tailnets, mas nada nelas consegue chegar ao seu computador.
 - **Só o tráfego delas passa por ele.** Os endereços das suas outras tailnets passam pelo Tailnet Link. Tudo o resto segue diretamente, como antes.

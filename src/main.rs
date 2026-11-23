@@ -18,6 +18,7 @@ mod i18n;
 mod icon;
 mod logging;
 mod proxy;
+mod sites;
 mod socks;
 mod sync;
 mod sysproxy;
@@ -101,7 +102,7 @@ fn main() {
     if demo::active() {
         logging::init();
         let core = core::Core::new(demo::config());
-        window(&core, false);
+        window(&core, false, None);
         return;
     }
 

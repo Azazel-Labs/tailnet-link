@@ -10,7 +10,7 @@ use std::io::Write as _;
 use eframe::egui::{self, vec2};
 
 use crate::config::{Config, parse_forwards};
-use crate::core::{ForwardStatus, Machine, Status, TailnetStatus};
+use crate::core::{ForwardStatus, Machine, SiteStatus, Status, TailnetStatus};
 
 /// What a capture shows.
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -147,7 +147,32 @@ pub fn status() -> Status {
         system: crate::core::SystemProxyState::Active,
         system_setting: "http://127.0.0.1:1055/proxy.pac?v=1".into(),
         update: None,
+        // The sign-in picture is about the new tailnet's card; tiles would push it out of frame.
+        sites: if matches!(view(), View::Welcome | View::SignIn) { Vec::new() } else { sites() },
+        sites_checking: None,
     }
+}
+
+fn site(machine: &str, domain: &str, tailnet: &str, title: &str, color: Option<[u8; 3]>, trusted: bool) -> SiteStatus {
+    SiteStatus {
+        host: format!("{machine}.{domain}"),
+        machine: machine.into(),
+        title: title.into(),
+        trusted,
+        color,
+        icon: None,
+        tailnet: tailnet.into(),
+        routing: true,
+    }
+}
+
+fn sites() -> Vec<SiteStatus> {
+    vec![
+        site("nas", HOME, "Home lab", "Storage Manager", Some([38, 99, 235]), true),
+        site("pi-hole", HOME, "Home lab", "Pi-hole Admin", Some([150, 18, 30]), false),
+        site("wiki", STUDIO, "Lantern Studio", "Lantern Wiki", Some([22, 128, 92]), true),
+        site("render-01", STUDIO, "Lantern Studio", "", None, true),
+    ]
 }
 
 /// Keeps the real mouse and keyboard out of the capture.

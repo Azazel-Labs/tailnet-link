@@ -137,6 +137,15 @@ copy-address = Kopieer { $address }
 open-in-browser = Maak { $url } in jou blaaier oop
 not-routing-tooltip = Hierdie tailnet roeteer nie op die oomblik nie. Is dit gepouseer?
 
+## Websites found on the machines
+
+sites-heading = Webwerwe
+sites-help = Masjiene in jou tailnets wat 'n webwerf oor HTTPS bedien. Elke masjien word hoogstens een keer per dag nagegaan.
+# $done and $total count machines.
+sites-checking = Gaan { $done } van { $total } na…
+sites-recheck-tooltip = Gaan nou weer elke masjien na
+site-untrusted = Sy sertifikaat word nie vertrou nie, dus sal jou blaaier jou waarsku.
+
 ## Settings: port forwards
 
 forwards-heading = Poortaanstuurings
@@ -297,6 +306,7 @@ proxy-retry-tooltip = Wys die stelsel se instaanbedienerinstelling weer na { -ap
 system-setting = Stelsel se instaanbedienerinstelling nou: { $value }
 system-setting-none = geen
 check-updates = Kyk vir nuwe weergawes
+find-websites = Soek na webwerwe op die masjiene in jou tailnets
 tray-update = Laai { -app-name } { $version } af…
 update-available = Weergawe { $version } is uit
 update-available-tooltip = Jy het { $current }. Maak die aflaaibladsy oop.

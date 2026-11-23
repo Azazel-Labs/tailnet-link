@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "e585476a54837a2be52dd1ae47cf91255e26d623f9a3debda68deb9a0d5d14fa"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "375839d52a5f92fe3dc652a92031ad86b99fbc83111bc8a6420363e7589ec9b2"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "추가 도메인(선택 사항)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "tailnet 자체 도메인은 자동으로 라우팅됩니다. 한 줄에 하나씩 추가하세요."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "tailnet의 머신에서 웹사이트 찾기"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "브라우저가 열리지 않았거나 다른 프로필로 열렸
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "로그인 페이지 다시 열기"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "인증서를 신뢰할 수 없으므로 브라우저에 경고가 표시됩니다."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "{ $total }대 중 { $done }번째 확인 중…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "웹사이트"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "tailnet에서 HTTPS로 웹사이트를 제공하는 머신입니다. 각 머신은 하루에 한 번까지만 확인합니다."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "지금 모든 머신 다시 확인"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

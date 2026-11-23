@@ -84,6 +84,7 @@ code panics with "incoherent Windows version" when a node starts.
 | `src/ui.rs` | The egui window and the tray menu |
 | `src/core.rs` | Tailnet nodes, routing state and port forwards |
 | `src/proxy.rs`, `src/socks.rs` | The local HTTP proxy, PAC file and SOCKS5 client |
+| `src/sites.rs` | Finding websites on the machines, and the once-a-day cache of the answers |
 | `src/sysproxy/` | Setting and restoring the system proxy on each platform |
 | `src/tsnet.rs` | Safe wrapper over libtailscale's C API |
 | `src/config.rs` | Settings, the config folder and migration from the old name |

@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "90e75093ba20d1ae9314d401b7b95ec0d63ec86564c6d422e6a3343107d10632"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "9183ed6448a2c8aec88cb8528f349605f27c1eb13b41e3ae8545f25232b98c51"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "额外域名（可选）"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "tailnet 自身的域名会自动路由。每行添加一个。"
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "在你的 tailnet 设备上查找网站"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "浏览器没有打开，或打开了错误的配置文件？"
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "重新打开登录页面"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "它的证书不受信任，因此浏览器会显示警告。"
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "正在检查第 { $done } 台，共 { $total } 台…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "网站"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "你的 tailnet 中通过 HTTPS 提供网站的设备。每台设备每天最多检查一次。"
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "立即重新检查所有设备"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

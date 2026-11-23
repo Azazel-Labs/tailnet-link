@@ -127,6 +127,15 @@ copy-address = { $address } をコピー
 open-in-browser = { $url } をブラウザーで開く
 not-routing-tooltip = この tailnet は現在ルーティングしていません。一時停止していませんか?
 
+## Websites found on the machines
+
+sites-heading = Web サイト
+sites-help = tailnet 内で HTTPS の Web サイトを提供しているマシンです。各マシンの確認は 1 日 1 回までです。
+# $done and $total count machines.
+sites-checking = 確認中 ({ $total } 台中 { $done } 台目)…
+sites-recheck-tooltip = すべてのマシンを今すぐ再確認
+site-untrusted = 証明書が信頼されていないため、ブラウザーに警告が表示されます。
+
 ## Settings: port forwards
 
 forwards-heading = ポート転送
@@ -286,6 +295,7 @@ proxy-retry-tooltip = システムのプロキシ設定をもう一度 { -app-na
 system-setting = 現在のシステムのプロキシ設定: { $value }
 system-setting-none = なし
 check-updates = 新しいバージョンを確認
+find-websites = tailnet 内のマシンで Web サイトを探す
 tray-update = { -app-name } { $version } をダウンロード…
 update-available = バージョン { $version } 公開
 update-available-tooltip = 現在のバージョンは { $current } です。ダウンロード ページを開きます。

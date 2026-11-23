@@ -136,6 +136,15 @@ copy-address = Kopiera { $address }
 open-in-browser = Öppna { $url } i webbläsaren
 not-routing-tooltip = Det här tailnetet dirigerar inte just nu. Är det pausat?
 
+## Websites found on the machines
+
+sites-heading = Webbplatser
+sites-help = Datorer i dina tailnet som har en webbplats över HTTPS. Varje dator kontrolleras högst en gång om dagen.
+# $done and $total count machines.
+sites-checking = Kontrollerar { $done } av { $total }…
+sites-recheck-tooltip = Kontrollera alla datorer igen nu
+site-untrusted = Certifikatet är inte betrott, så webbläsaren kommer att varna dig.
+
 ## Settings: port forwards
 
 forwards-heading = Portvidarebefordringar
@@ -296,6 +305,7 @@ proxy-retry-tooltip = Peka systemets proxyinställning mot { -app-name } igen
 system-setting = Systemets proxyinställning nu: { $value }
 system-setting-none = ingen
 check-updates = Sök efter nya versioner
+find-websites = Leta efter webbplatser på datorerna i dina tailnet
 tray-update = Ladda ned { -app-name } { $version }…
 update-available = Version { $version } är ute
 update-available-tooltip = Du har { $current }. Öppnar nedladdningssidan.

@@ -144,6 +144,15 @@ copy-address = { $address } adresini kopyala
 open-in-browser = { $url } adresini tarayıcınızda açın
 not-routing-tooltip = Bu tailnet şu anda yönlendirme yapmıyor. Duraklatılmış olabilir mi?
 
+## Makinelerde bulunan web siteleri
+
+sites-heading = Web siteleri
+sites-help = Tailnet'lerinizde HTTPS üzerinden web sitesi sunan makineler. Her makine günde en fazla bir kez denetlenir.
+# $done ve $total makineleri sayar.
+sites-checking = { $done }/{ $total } denetleniyor…
+sites-recheck-tooltip = Tüm makineleri şimdi yeniden denetle
+site-untrusted = Sertifikasına güvenilmiyor, bu yüzden tarayıcınız sizi uyaracak.
+
 ## Ayarlar: port yönlendirmeleri
 
 forwards-heading = Port yönlendirmeleri
@@ -309,6 +318,7 @@ proxy-retry-tooltip = Sistem proxy ayarını yeniden { -app-name } uygulamasına
 system-setting = Şu anki sistem proxy ayarı: { $value }
 system-setting-none = yok
 check-updates = Yeni sürümleri denetle
+find-websites = Tailnet'lerinizdeki makinelerde web sitesi ara
 tray-update = { -app-name } { $version } sürümünü indir…
 update-available = { $version } sürümü çıktı
 update-available-tooltip = Sizdeki sürüm: { $current }. İndirme sayfasını açar.

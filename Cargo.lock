@@ -4284,6 +4284,7 @@ dependencies = [
  "httparse",
  "i18n-embed",
  "i18n-embed-fl",
+ "image",
  "libc",
  "log",
  "num-format",

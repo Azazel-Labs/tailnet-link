@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "aacf5b6523852e7a58b9b402118cf74c161694b2a9709d909b1d31125679853a"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "2b1850953507a80aa821ff3fd351121f97ae9e349f5747c9078fb3afc228e3a6"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Ekstra domeine (opsioneel)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Die tailnet se eie domein word outomaties geroeteer. Voeg een per reël by."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Soek na webwerwe op die masjiene in jou tailnets"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Het die blaaier nie oopgemaak nie, of die verkeerde profiel oopge
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Maak die aanmeldbladsy weer oop"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Sy sertifikaat word nie vertrou nie, dus sal jou blaaier jou waarsku."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "Gaan { $done } van { $total } na…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Webwerwe"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Masjiene in jou tailnets wat 'n webwerf oor HTTPS bedien. Elke masjien word hoogstens een keer per dag nagegaan."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Gaan nou weer elke masjien na"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

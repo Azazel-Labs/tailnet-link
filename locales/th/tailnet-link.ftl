@@ -141,6 +141,15 @@ copy-address = คัดลอก { $address }
 open-in-browser = เปิด { $url } ในเบราว์เซอร์
 not-routing-tooltip = tailnet นี้ไม่ได้กำหนดเส้นทางอยู่ในขณะนี้ หยุดชั่วคราวอยู่หรือเปล่า
 
+## เว็บไซต์ที่พบบนเครื่อง
+
+sites-heading = เว็บไซต์
+sites-help = เครื่องใน tailnet ของคุณที่ให้บริการเว็บไซต์ผ่าน HTTPS แต่ละเครื่องจะได้รับการตรวจสอบไม่เกินวันละครั้ง
+# $done และ $total นับจำนวนเครื่อง
+sites-checking = กำลังตรวจสอบ { $done } จาก { $total }…
+sites-recheck-tooltip = ตรวจสอบทุกเครื่องอีกครั้งตอนนี้
+site-untrusted = ใบรับรองของเว็บไซต์นี้ไม่น่าเชื่อถือ เบราว์เซอร์จึงจะแสดงคำเตือน
+
 ## การตั้งค่า: การส่งต่อพอร์ต
 
 forwards-heading = การส่งต่อพอร์ต
@@ -306,6 +315,7 @@ proxy-retry-tooltip = ชี้การตั้งค่าพร็อกซ�
 system-setting = การตั้งค่าพร็อกซีของระบบตอนนี้: { $value }
 system-setting-none = ไม่มี
 check-updates = ตรวจหาเวอร์ชันใหม่
+find-websites = ค้นหาเว็บไซต์บนเครื่องใน tailnet ของคุณ
 tray-update = ดาวน์โหลด { -app-name } { $version }…
 update-available = เวอร์ชัน { $version } ออกแล้ว
 update-available-tooltip = คุณใช้เวอร์ชัน { $current } อยู่ เปิดหน้าดาวน์โหลด

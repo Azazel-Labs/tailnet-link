@@ -142,6 +142,15 @@ copy-address = Copia { $address }
 open-in-browser = Apri { $url } nel browser
 not-routing-tooltip = Questo tailnet non sta instradando al momento. È in pausa?
 
+## Siti web trovati sui dispositivi
+
+sites-heading = Siti web
+sites-help = Dispositivi dei tuoi tailnet che offrono un sito web via HTTPS. Ogni dispositivo viene controllato al massimo una volta al giorno.
+# $done e $total contano dispositivi.
+sites-checking = Controllo { $done } di { $total }…
+sites-recheck-tooltip = Ricontrolla ora tutti i dispositivi
+site-untrusted = Il suo certificato non è attendibile, quindi il browser mostrerà un avviso.
+
 ## Impostazioni: port forwarding
 
 forwards-heading = Port forwarding
@@ -306,6 +315,7 @@ proxy-retry-tooltip = Indirizza di nuovo l'impostazione del proxy di sistema a {
 system-setting = Impostazione del proxy di sistema attuale: { $value }
 system-setting-none = nessuno
 check-updates = Cerca nuove versioni
+find-websites = Cerca siti web sui dispositivi dei tuoi tailnet
 tray-update = Scarica { -app-name } { $version }…
 update-available = Versione { $version } disponibile
 update-available-tooltip = Hai la versione { $current }. Apre la pagina di download.

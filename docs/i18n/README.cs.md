@@ -25,6 +25,7 @@ Tailscale vám dovolí být přihlášeni jen k jedné síti tailnet najednou. P
 
 - **Žádné přepínání účtů.** Přidejte tolik sítí tailnet, kolik potřebujete, a používejte je všechny najednou. Vaše vlastní síť tailnet se nikdy neodpojí.
 - **Nic se nenastavuje.** Přihlaste se a doména sítě tailnet se najde sama. Její zařízení otevírejte podle názvu v libovolném prohlížeči.
+- **Najde weby na vašich zařízeních.** Zařízení, která poskytují stránku přes HTTPS, se zobrazí jako dlaždice s názvem a ikonou stránky, na jedno kliknutí. Každé zařízení se kontroluje nejvýše jednou denně.
 - **Nepřekáží aplikaci Tailscale.** Žádný VPN adaptér, žádné trasy ani změny DNS. Každá další síť tailnet běží jako samostatný uzel uvnitř aplikace, takže nic nekoliduje s aplikací Tailscale ani navzájem.
 - **Ve výchozím stavu uzamčeno.** Každý další uzel se připojuje se zapnutou volbou Shields Up: vy se k těmto sítím tailnet dostanete, ale nic z nich se nedostane k vašemu počítači.
 - **Prochází jím jen jejich provoz.** Adresy v ostatních sítích tailnet jdou přes Tailnet Link. Vše ostatní jde napřímo, přesně jako dřív.

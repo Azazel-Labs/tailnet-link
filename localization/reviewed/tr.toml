@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "af8b6ab10fa15d9b002c12b45f80db57df899b14e06093556d1e7c60adbccc16"
-translation = "879140c65dc9f0342d3f1b45afc3adefe9085d32b84f4fdcfaeb1b847a10de1b"
+source = "6c65cff343cc9747f31de7f97a670dd22dbdd18022fd2d0bbec4db342ea1c432"
+translation = "65a4c156d65355c3345df68dd5e3f5750de1e9d4af2dbecd9575398eda38028b"
 
 [messages.about-line]
 source = """
@@ -207,6 +207,10 @@ translation = "Ek alan adları (isteğe bağlı)"
 [messages.extra-domains-help]
 source = "The tailnet's own domain is routed automatically. Add one per line."
 translation = "Tailnet'in kendi alan adı otomatik olarak yönlendirilir. Her satıra bir tane ekleyin."
+
+[messages.find-websites]
+source = "Look for websites on the machines in your tailnets"
+translation = "Tailnet'lerinizdeki makinelerde web sitesi ara"
 
 [messages.finnish]
 source = "Finnish"
@@ -693,6 +697,26 @@ translation = "Tarayıcı açılmadı mı, yoksa yanlış profilde mi açıldı?
 [messages.sign-in-open-again]
 source = "Open the sign-in page again"
 translation = "Oturum açma sayfasını yeniden aç"
+
+[messages.site-untrusted]
+source = "Its certificate isn't trusted, so your browser will warn you."
+translation = "Sertifikasına güvenilmiyor, bu yüzden tarayıcınız sizi uyaracak."
+
+[messages.sites-checking]
+source = "Checking { $done } of { $total }…"
+translation = "{ $done }/{ $total } denetleniyor…"
+
+[messages.sites-heading]
+source = "Websites"
+translation = "Web siteleri"
+
+[messages.sites-help]
+source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
+translation = "Tailnet'lerinizde HTTPS üzerinden web sitesi sunan makineler. Her makine günde en fazla bir kez denetlenir."
+
+[messages.sites-recheck-tooltip]
+source = "Check every machine again now"
+translation = "Tüm makineleri şimdi yeniden denetle"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

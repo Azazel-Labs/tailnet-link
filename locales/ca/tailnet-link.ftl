@@ -135,6 +135,15 @@ copy-address = Copia { $address }
 open-in-browser = Obre { $url } al navegador
 not-routing-tooltip = Aquesta tailnet no està encaminant ara mateix. Potser està en pausa?
 
+## Llocs web trobats a les màquines
+
+sites-heading = Llocs web
+sites-help = Màquines de les teves tailnets que serveixen un lloc web per HTTPS. Cada màquina es comprova com a màxim un cop al dia.
+# $done i $total compten màquines.
+sites-checking = S’està comprovant { $done } de { $total }…
+sites-recheck-tooltip = Torna a comprovar totes les màquines ara
+site-untrusted = El seu certificat no és de confiança, així que el navegador t’avisarà.
+
 ## Configuració: redireccions de ports
 
 forwards-heading = Redireccions de ports
@@ -295,6 +304,7 @@ proxy-retry-tooltip = Torna a fer que la configuració del proxy del sistema apu
 system-setting = Configuració actual del proxy del sistema: { $value }
 system-setting-none = cap
 check-updates = Cerca versions noves
+find-websites = Cerca llocs web a les màquines de les teves tailnets
 tray-update = Baixa { -app-name } { $version }…
 update-available = Versió { $version } disponible
 update-available-tooltip = Tens la versió { $current }. Obre la pàgina de baixada.
