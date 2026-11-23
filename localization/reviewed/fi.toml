@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "6cdaa31f041fa3ceeb3841ba12855299aee8583680c361c091c65c5a542c6440"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Eikö selain avautunut, tai avautuiko väärä profiili?"
 source = "Open the sign-in page again"
 translation = "Avaa kirjautumissivu uudelleen"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Lisää suosikkeihin"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Poista suosikeista"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Sen varmenteeseen ei luoteta, joten selain varoittaa sinua."
@@ -717,6 +725,14 @@ translation = "Tailnetiesi koneet, jotka tarjoavat verkkosivuston HTTPS:n kautta
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Tarkista kaikki koneet uudelleen nyt"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Näytä kaikki verkkosivustot ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Näytä vähemmän"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

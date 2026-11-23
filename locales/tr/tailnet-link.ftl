@@ -152,6 +152,10 @@ sites-help = Tailnet'lerinizde HTTPS üzerinden web sitesi sunan makineler. Her 
 sites-checking = { $done }/{ $total } denetleniyor…
 sites-recheck-tooltip = Tüm makineleri şimdi yeniden denetle
 site-untrusted = Sertifikasına güvenilmiyor, bu yüzden tarayıcınız sizi uyaracak.
+site-favorite-add = Sık kullanılanlara ekle
+site-favorite-remove = Sık kullanılanlardan kaldır
+sites-show-all = Tüm web sitelerini göster ({ $count })
+sites-show-fewer = Daha az göster
 
 ## Ayarlar: port yönlendirmeleri
 

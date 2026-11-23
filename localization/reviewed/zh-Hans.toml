@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "9183ed6448a2c8aec88cb8528f349605f27c1eb13b41e3ae8545f25232b98c51"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "浏览器没有打开，或打开了错误的配置文件？"
 source = "Open the sign-in page again"
 translation = "重新打开登录页面"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "添加到收藏"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "从收藏中移除"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "它的证书不受信任，因此浏览器会显示警告。"
@@ -717,6 +725,14 @@ translation = "你的 tailnet 中通过 HTTPS 提供网站的设备。每台设�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "立即重新检查所有设备"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "显示所有网站（{ $count }）"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "收起"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

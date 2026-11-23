@@ -149,6 +149,10 @@ sites-help = เครื่องใน tailnet ของคุณที่ใ�
 sites-checking = กำลังตรวจสอบ { $done } จาก { $total }…
 sites-recheck-tooltip = ตรวจสอบทุกเครื่องอีกครั้งตอนนี้
 site-untrusted = ใบรับรองของเว็บไซต์นี้ไม่น่าเชื่อถือ เบราว์เซอร์จึงจะแสดงคำเตือน
+site-favorite-add = เพิ่มในรายการโปรด
+site-favorite-remove = นำออกจากรายการโปรด
+sites-show-all = แสดงเว็บไซต์ทั้งหมด ({ $count })
+sites-show-fewer = แสดงน้อยลง
 
 ## การตั้งค่า: การส่งต่อพอร์ต
 

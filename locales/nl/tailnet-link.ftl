@@ -143,6 +143,10 @@ sites-help = Machines in je tailnets die een website via HTTPS aanbieden. Elke m
 sites-checking = { $done } van { $total } controleren…
 sites-recheck-tooltip = Alle machines nu opnieuw controleren
 site-untrusted = Het certificaat wordt niet vertrouwd, dus je browser geeft een waarschuwing.
+site-favorite-add = Toevoegen aan favorieten
+site-favorite-remove = Verwijderen uit favorieten
+sites-show-all = Alle websites tonen ({ $count })
+sites-show-fewer = Minder tonen
 
 ## Instellingen: doorgestuurde poorten
 

@@ -47,7 +47,7 @@ sign-in-dialog-text =
     
     Sign in with your account for that tailnet, then come back here. Its domain is picked up automatically.
 
-## One tailnet's state, shown as a coloured label beside its name
+## One tailnet's state, shown as a colored label beside its name
 
 state-waiting-sign-in = Waiting for sign-in
 state-signed-out = Signed out
@@ -166,6 +166,11 @@ sites-help = Machines in your tailnets that serve a website over HTTPS. Each mac
 sites-checking = Checking { $done } of { $total }…
 sites-recheck-tooltip = Check every machine again now
 site-untrusted = Its certificate isn't trusted, so your browser will warn you.
+site-favorite-add = Add to favorites
+site-favorite-remove = Remove from favorites
+# $count is how many websites there are.
+sites-show-all = Show all websites ({ $count })
+sites-show-fewer = Show fewer
 
 ## Settings: port forwards
 

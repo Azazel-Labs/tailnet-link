@@ -135,6 +135,10 @@ sites-help = tailnet 内で HTTPS の Web サイトを提供しているマシ�
 sites-checking = 確認中 ({ $total } 台中 { $done } 台目)…
 sites-recheck-tooltip = すべてのマシンを今すぐ再確認
 site-untrusted = 証明書が信頼されていないため、ブラウザーに警告が表示されます。
+site-favorite-add = お気に入りに追加
+site-favorite-remove = お気に入りから削除
+sites-show-all = すべてのウェブサイトを表示（{ $count }）
+sites-show-fewer = 表示を減らす
 
 ## Settings: port forwards
 

@@ -152,6 +152,10 @@ sites-help = A tailnetjeiben lévő gépek, amelyek HTTPS-en keresztül webhelye
 sites-checking = Ellenőrzés: { $done } / { $total }…
 sites-recheck-tooltip = Minden gép újraellenőrzése most
 site-untrusted = A tanúsítványa nem megbízható, ezért a böngésző figyelmeztetni fogja.
+site-favorite-add = Hozzáadás a kedvencekhez
+site-favorite-remove = Eltávolítás a kedvencek közül
+sites-show-all = Az összes webhely megjelenítése ({ $count })
+sites-show-fewer = Kevesebb megjelenítése
 
 ## Beállítások: porttovábbítások
 

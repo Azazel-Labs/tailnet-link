@@ -143,6 +143,10 @@ sites-help = Màquines de les teves tailnets que serveixen un lloc web per HTTPS
 sites-checking = S’està comprovant { $done } de { $total }…
 sites-recheck-tooltip = Torna a comprovar totes les màquines ara
 site-untrusted = El seu certificat no és de confiança, així que el navegador t’avisarà.
+site-favorite-add = Afegeix als preferits
+site-favorite-remove = Treu dels preferits
+sites-show-all = Mostra tots els llocs web ({ $count })
+sites-show-fewer = Mostra’n menys
 
 ## Configuració: redireccions de ports
 

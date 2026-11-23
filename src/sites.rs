@@ -435,7 +435,7 @@ impl Page {
                 _ => {}
             }
         }
-        // The window is dark, so a dark-mode colour suits it better.
+        // The window is dark, so a dark-mode color suits it better.
         page.color = dark_color.or(page.color);
         icons.sort_by_key(|(_, size)| std::cmp::Reverse(*size));
         page.icons = icons.into_iter().map(|(h, _)| h).collect();
@@ -581,7 +581,7 @@ mod tests {
         assert_eq!(page.title, "Sign in & more · Grafana");
         assert_eq!(page.app_name, "Grafana");
         assert_eq!(page.name(), "Grafana");
-        assert_eq!(page.color, Some([10, 11, 12]), "dark-mode colour preferred");
+        assert_eq!(page.color, Some([10, 11, 12]), "dark-mode color preferred");
         assert_eq!(page.icons, ["touch.png", "/favicon-32.png", "/fav16.png"], "largest first; no SVG, no body");
     }
 

@@ -148,6 +148,10 @@ sites-help = Urządzenia w twoich sieciach tailnet, które udostępniają witryn
 sites-checking = Sprawdzanie { $done } z { $total }…
 sites-recheck-tooltip = Sprawdź teraz ponownie wszystkie urządzenia
 site-untrusted = Jej certyfikat nie jest zaufany, więc przeglądarka wyświetli ostrzeżenie.
+site-favorite-add = Dodaj do ulubionych
+site-favorite-remove = Usuń z ulubionych
+sites-show-all = Pokaż wszystkie witryny ({ $count })
+sites-show-fewer = Pokaż mniej
 
 ## Settings: port forwards
 

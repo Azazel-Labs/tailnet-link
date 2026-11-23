@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "ebf82b60693ab403190823ee025f0a9a83cf4b6bec1021e85466f3e0ecf8ba83"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "El navegador no s’ha obert, o s’ha obert amb el perfil equivo
 source = "Open the sign-in page again"
 translation = "Torna a obrir la pàgina d’inici de sessió"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Afegeix als preferits"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Treu dels preferits"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "El seu certificat no és de confiança, així que el navegador t’avisarà."
@@ -717,6 +725,14 @@ translation = "Màquines de les teves tailnets que serveixen un lloc web per HTT
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Torna a comprovar totes les màquines ara"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Mostra tots els llocs web ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Mostra’n menys"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

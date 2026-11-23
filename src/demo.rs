@@ -165,14 +165,16 @@ fn site(machine: &str, domain: &str, tailnet: &str, title: &str, color: Option<[
         icon: None,
         tailnet: tailnet.into(),
         routing: true,
+        favorite: false,
     }
 }
 
 fn sites() -> Vec<SiteStatus> {
+    let wiki = site("wiki", STUDIO, "Lantern Studio", "Lantern Wiki", Some([22, 128, 92]), true);
     vec![
+        SiteStatus { favorite: true, ..wiki },
         site("nas", HOME, "Home lab", "Storage Manager", Some([38, 99, 235]), true),
         site("pi-hole", HOME, "Home lab", "Pi-hole Admin", Some([150, 18, 30]), false),
-        site("wiki", STUDIO, "Lantern Studio", "Lantern Wiki", Some([22, 128, 92]), true),
         site("render-01", STUDIO, "Lantern Studio", "", None, true),
     ]
 }

@@ -150,6 +150,10 @@ sites-help = Les machines de vos tailnets qui servent un site web en HTTPS. Chaq
 sites-checking = Vérification de { $done } sur { $total }…
 sites-recheck-tooltip = Revérifier toutes les machines maintenant
 site-untrusted = Son certificat n’est pas reconnu, votre navigateur affichera donc un avertissement.
+site-favorite-add = Ajouter aux favoris
+site-favorite-remove = Retirer des favoris
+sites-show-all = Afficher tous les sites web ({ $count })
+sites-show-fewer = Afficher moins
 
 ## Paramètres : redirections de port
 

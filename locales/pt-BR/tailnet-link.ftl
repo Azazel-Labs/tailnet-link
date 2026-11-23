@@ -143,6 +143,10 @@ sites-help = Máquinas das suas tailnets que servem um site por HTTPS. Cada máq
 sites-checking = Verificando { $done } de { $total }…
 sites-recheck-tooltip = Verificar todas as máquinas de novo agora
 site-untrusted = O certificado dele não é confiável, então o navegador vai mostrar um aviso.
+site-favorite-add = Adicionar aos favoritos
+site-favorite-remove = Remover dos favoritos
+sites-show-all = Mostrar todos os sites ({ $count })
+sites-show-fewer = Mostrar menos
 
 ## Configurações: encaminhamentos de porta
 

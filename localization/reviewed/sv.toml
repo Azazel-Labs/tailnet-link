@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "ca10476e25bc394a6d0c15c0244aa92a835b062e93a1d62cfa392c13a5a2a783"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Öppnades inte webbläsaren, eller öppnades fel profil?"
 source = "Open the sign-in page again"
 translation = "Öppna inloggningssidan igen"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Lägg till i favoriter"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Ta bort från favoriter"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Certifikatet är inte betrott, så webbläsaren kommer att varna dig."
@@ -717,6 +725,14 @@ translation = "Datorer i dina tailnet som har en webbplats över HTTPS. Varje da
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Kontrollera alla datorer igen nu"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Visa alla webbplatser ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Visa färre"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

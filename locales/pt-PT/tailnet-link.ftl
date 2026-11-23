@@ -143,6 +143,10 @@ sites-help = Máquinas das suas tailnets que disponibilizam um site por HTTPS. C
 sites-checking = A verificar { $done } de { $total }…
 sites-recheck-tooltip = Verificar novamente todas as máquinas agora
 site-untrusted = O certificado não é fidedigno, por isso o browser vai mostrar um aviso.
+site-favorite-add = Adicionar aos favoritos
+site-favorite-remove = Remover dos favoritos
+sites-show-all = Mostrar todos os sites ({ $count })
+sites-show-fewer = Mostrar menos
 
 ## Definições: reencaminhamentos de portas
 

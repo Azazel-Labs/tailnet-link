@@ -64,7 +64,7 @@ impl Tone {
         }
     }
 
-    /// An icon that says the same thing as the colour.
+    /// An icon that says the same thing as the color.
     pub const fn symbol(self) -> &'static str {
         match self {
             Tone::Good => icons::CHECK_CIRCLE,
@@ -116,7 +116,7 @@ fn vertical_metrics(bytes: &[u8], index: u32) -> Option<(f32, f32, f32)> {
     Some((f32::from(face.ascender()) / em, f32::from(face.descender()) / em, f32::from(face.line_gap()) / em))
 }
 
-/// egui centres a fallback face's line box in the main font's, so a face with
+/// egui centers a fallback face's line box in the main font's, so a face with
 /// other proportions lands above or below the Latin baseline. Yu Gothic, with
 /// its half-em line gap, sits visibly high. Returns the downward shift, as a
 /// fraction of the font size, that puts `fallback` back on `main`'s baseline.
@@ -294,7 +294,7 @@ pub fn with_icon(symbol: &str, text: &str) -> String {
     format!("{symbol}  {text}")
 }
 
-/// A small coloured status label.
+/// A small colored status label.
 pub fn pill(ui: &mut egui::Ui, tone: Tone, text: &str) {
     egui::Frame::new()
         .fill(tone.color().gamma_multiply(0.16))
@@ -305,7 +305,7 @@ pub fn pill(ui: &mut egui::Ui, tone: Tone, text: &str) {
         });
 }
 
-/// A small coloured dot.
+/// A small colored dot.
 pub fn dot(ui: &mut egui::Ui, tone: Tone) {
     let (rect, _) = ui.allocate_exact_size(vec2(10.0, 10.0), egui::Sense::hover());
     ui.painter().circle_filled(rect.center(), 4.0, tone.color());
@@ -357,7 +357,7 @@ mod tests {
         let main = &fonts.font_data[&fonts.families[&egui::FontFamily::Proportional][0]];
         let main = (*main.font).as_ref();
         assert!(baseline_shift(main, main, 0).abs() < 1e-6, "the main font needs no shift");
-        // Noto Sans Thai's deeper descent puts its box 0.05 em high when centred.
+        // Noto Sans Thai's deeper descent puts its box 0.05 em high when centered.
         let thai = on_baseline(&fonts, egui::FontData::from_static(THAI)).tweak.y_offset_factor;
         assert!((thai - 0.052).abs() < 0.005, "{thai}");
         assert!(baseline_shift(main, b"not a font", 0).abs() < f32::EPSILON);

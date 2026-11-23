@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "27d60856cb1c02f532f56a8323abf4bd906916794a0801bbc810a20d1538c5e1"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "瀏覽器沒有開啟，或開啟了錯誤的設定檔？"
 source = "Open the sign-in page again"
 translation = "再次開啟登入頁面"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "加入我的最愛"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "從我的最愛中移除"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "它的憑證不受信任，因此瀏覽器會顯示警告。"
@@ -717,6 +725,14 @@ translation = "你的 tailnet 中透過 HTTPS 提供網站的裝置。每台裝�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "立即重新檢查所有裝置"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "顯示所有網站（{ $count }）"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "收合"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

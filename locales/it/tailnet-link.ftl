@@ -150,6 +150,10 @@ sites-help = Dispositivi dei tuoi tailnet che offrono un sito web via HTTPS. Ogn
 sites-checking = Controllo { $done } di { $total }…
 sites-recheck-tooltip = Ricontrolla ora tutti i dispositivi
 site-untrusted = Il suo certificato non è attendibile, quindi il browser mostrerà un avviso.
+site-favorite-add = Aggiungi ai preferiti
+site-favorite-remove = Rimuovi dai preferiti
+sites-show-all = Mostra tutti i siti web ({ $count })
+sites-show-fewer = Mostra meno
 
 ## Impostazioni: port forwarding
 

@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "1c1b40a2f9b752a5436afa31d9c63ddc5b3c29c92d6fa2a79e8f0225718daf10"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Åbnede browseren ikke, eller åbnede den den forkerte profil?"
 source = "Open the sign-in page again"
 translation = "Åbn login-siden igen"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Føj til favoritter"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Fjern fra favoritter"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Certifikatet er ikke godkendt som pålideligt, så din browser vil advare dig."
@@ -717,6 +725,14 @@ translation = "Maskiner på dine tailnets, der leverer et website over HTTPS. Hv
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Tjek alle maskiner igen nu"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Vis alle websteder ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Vis færre"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

@@ -88,6 +88,11 @@ pub struct Config {
     /// Tailnets whose machine list is open. A new tailnet's list starts closed.
     #[serde(deserialize_with = "null_as_empty")]
     pub machines_open: Vec<String>,
+    /// Starred websites (full MagicDNS names), shown first.
+    #[serde(deserialize_with = "null_as_empty")]
+    pub favorite_sites: Vec<String>,
+    /// The Websites card shows every tile, not just the first rows.
+    pub sites_show_all: bool,
 }
 
 /// Reads `null` as an empty list. Older versions wrote `null` for empty lists,
@@ -115,6 +120,8 @@ impl Default for Config {
             update_notified: String::new(),
             find_sites: true,
             machines_open: Vec::new(),
+            favorite_sites: Vec::new(),
+            sites_show_all: false,
         }
     }
 }

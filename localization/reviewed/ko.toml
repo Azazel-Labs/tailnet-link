@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "375839d52a5f92fe3dc652a92031ad86b99fbc83111bc8a6420363e7589ec9b2"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "브라우저가 열리지 않았거나 다른 프로필로 열렸
 source = "Open the sign-in page again"
 translation = "로그인 페이지 다시 열기"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "즐겨찾기에 추가"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "즐겨찾기에서 제거"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "인증서를 신뢰할 수 없으므로 브라우저에 경고가 표시됩니다."
@@ -717,6 +725,14 @@ translation = "tailnet에서 HTTPS로 웹사이트를 제공하는 머신입니�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "지금 모든 머신 다시 확인"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "모든 웹사이트 보기({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "간단히 보기"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

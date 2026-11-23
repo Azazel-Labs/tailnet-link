@@ -148,6 +148,10 @@ sites-help = Zařízení ve vašich sítích tailnet, která poskytují web pře
 sites-checking = Kontroluje se { $done } z { $total }…
 sites-recheck-tooltip = Znovu zkontrolovat všechna zařízení
 site-untrusted = Jeho certifikát není důvěryhodný, takže vás prohlížeč upozorní.
+site-favorite-add = Přidat do oblíbených
+site-favorite-remove = Odebrat z oblíbených
+sites-show-all = Zobrazit všechny weby ({ $count })
+sites-show-fewer = Zobrazit méně
 
 ## Settings: port forwards
 

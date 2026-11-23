@@ -146,6 +146,10 @@ sites-help = Tailnetiesi koneet, jotka tarjoavat verkkosivuston HTTPS:n kautta. 
 sites-checking = Tarkistetaan { $done }/{ $total }…
 sites-recheck-tooltip = Tarkista kaikki koneet uudelleen nyt
 site-untrusted = Sen varmenteeseen ei luoteta, joten selain varoittaa sinua.
+site-favorite-add = Lisää suosikkeihin
+site-favorite-remove = Poista suosikeista
+sites-show-all = Näytä kaikki verkkosivustot ({ $count })
+sites-show-fewer = Näytä vähemmän
 
 ## Settings: port forwards
 

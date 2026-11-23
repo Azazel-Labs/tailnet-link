@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "2b1850953507a80aa821ff3fd351121f97ae9e349f5747c9078fb3afc228e3a6"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Het die blaaier nie oopgemaak nie, of die verkeerde profiel oopge
 source = "Open the sign-in page again"
 translation = "Maak die aanmeldbladsy weer oop"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Voeg by gunstelinge"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Verwyder uit gunstelinge"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Sy sertifikaat word nie vertrou nie, dus sal jou blaaier jou waarsku."
@@ -717,6 +725,14 @@ translation = "Masjiene in jou tailnets wat 'n webwerf oor HTTPS bedien. Elke ma
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Gaan nou weer elke masjien na"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Wys alle webwerwe ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Wys minder"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

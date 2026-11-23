@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "7ad0b2004d533146bc50b879fae1cd18f1d1e9f6aaee63ea9803ea0fff2f5bd0"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Przeglądarka się nie otworzyła lub otworzyła zły profil?"
 source = "Open the sign-in page again"
 translation = "Otwórz ponownie stronę logowania"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Dodaj do ulubionych"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Usuń z ulubionych"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Jej certyfikat nie jest zaufany, więc przeglądarka wyświetli ostrzeżenie."
@@ -717,6 +725,14 @@ translation = "Urządzenia w twoich sieciach tailnet, które udostępniają witr
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Sprawdź teraz ponownie wszystkie urządzenia"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Pokaż wszystkie witryny ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Pokaż mniej"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

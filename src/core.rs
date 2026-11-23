@@ -205,6 +205,8 @@ pub struct SiteStatus {
     pub tailnet: String,
     /// That tailnet routes right now, so the link works.
     pub routing: bool,
+    /// Starred, so it comes first.
+    pub favorite: bool,
 }
 
 impl SiteStatus {
@@ -706,6 +708,37 @@ impl Core {
         }
         if let Err(e) = g.cfg.save() {
             log::warn!("Couldn't save settings: {e}");
+        }
+    }
+
+    /// Stars a website, or takes its star away.
+    pub fn set_site_favorite(&self, host: &str, on: bool) {
+        {
+            let mut g = lock(&self.inner);
+            let list = &mut g.cfg.favorite_sites;
+            if on == list.iter().any(|h| h == host) {
+                return;
+            }
+            if on {
+                list.push(host.to_owned());
+            } else {
+                list.retain(|h| h != host);
+            }
+            if let Err(e) = g.cfg.save() {
+                log::warn!("Couldn't save settings: {e}");
+            }
+        }
+        self.changed();
+    }
+
+    /// Shows every website tile, or just the first rows.
+    pub fn set_sites_show_all(&self, on: bool) {
+        let mut g = lock(&self.inner);
+        if g.cfg.sites_show_all != on {
+            g.cfg.sites_show_all = on;
+            if let Err(e) = g.cfg.save() {
+                log::warn!("Couldn't save settings: {e}");
+            }
         }
     }
 
@@ -1352,9 +1385,12 @@ fn sites_of(g: &Inner, cache: &sites::Cache) -> Vec<SiteStatus> {
                 icon: cache.icon(&m.dns_name),
                 tailnet: e.st.label(),
                 routing: e.st.routing,
+                favorite: g.cfg.favorite_sites.contains(&m.dns_name),
             });
         }
     }
+    // Starred first; otherwise tailnet and machine order.
+    out.sort_by_key(|s| !s.favorite);
     out
 }
 

@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "2e467716de93271cd48a53d2b1be4322054976337ddb40b7dbdd945f235222d8"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "ブラウザーが開かない、または別のプロファイ�
 source = "Open the sign-in page again"
 translation = "サインイン ページをもう一度開く"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "お気に入りに追加"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "お気に入りから削除"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "証明書が信頼されていないため、ブラウザーに警告が表示されます。"
@@ -717,6 +725,14 @@ translation = "tailnet 内で HTTPS の Web サイトを提供しているマシ
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "すべてのマシンを今すぐ再確認"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "すべてのウェブサイトを表示（{ $count }）"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "表示を減らす"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

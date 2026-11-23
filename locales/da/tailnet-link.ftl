@@ -144,6 +144,10 @@ sites-help = Maskiner på dine tailnets, der leverer et website over HTTPS. Hver
 sites-checking = Tjekker { $done } af { $total }…
 sites-recheck-tooltip = Tjek alle maskiner igen nu
 site-untrusted = Certifikatet er ikke godkendt som pålideligt, så din browser vil advare dig.
+site-favorite-add = Føj til favoritter
+site-favorite-remove = Fjern fra favoritter
+sites-show-all = Vis alle websteder ({ $count })
+sites-show-fewer = Vis færre
 
 ## Settings: port forwards
 

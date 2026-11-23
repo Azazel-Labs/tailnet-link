@@ -145,6 +145,10 @@ sites-help = Mașinile din tailnet-urile tale care servesc un site prin HTTPS. F
 sites-checking = Se verifică { $done } din { $total }…
 sites-recheck-tooltip = Verifică acum din nou toate mașinile
 site-untrusted = Certificatul său nu este de încredere, așa că browserul va afișa un avertisment.
+site-favorite-add = Adaugă la favorite
+site-favorite-remove = Elimină din favorite
+sites-show-all = Afișează toate site-urile ({ $count })
+sites-show-fewer = Afișează mai puține
 
 ## Setări: redirecționări de porturi
 

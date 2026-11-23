@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "4d677343d1b98be18d5b166ec42c28c2545cd259afc9af9fa3335815bdaa6ee8"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "O navegador não abriu ou abriu no perfil errado?"
 source = "Open the sign-in page again"
 translation = "Abrir a página de login novamente"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Adicionar aos favoritos"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Remover dos favoritos"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "O certificado dele não é confiável, então o navegador vai mostrar um aviso."
@@ -717,6 +725,14 @@ translation = "Máquinas das suas tailnets que servem um site por HTTPS. Cada m�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Verificar todas as máquinas de novo agora"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Mostrar todos os sites ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Mostrar menos"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

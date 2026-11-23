@@ -1,8 +1,8 @@
 //! Icons drawn in code, so there are no image files to keep in sync.
 //!
 //! The mark is "fan-out": one machine (bottom left) with curved tails reaching
-//! out to several tailnets. The app icon draws it in colour on a dark tile; the
-//! tray icon draws it in one colour that shows the routing state.
+//! out to several tailnets. The app icon draws it in color on a dark tile; the
+//! tray icon draws it in one color that shows the routing state.
 
 pub type Rgba = [u8; 4];
 /// A point on the 64-unit grid.
@@ -13,7 +13,7 @@ pub const LOGIN: Rgba = [0xe6, 0xa1, 0x00, 0xff]; // needs login
 pub const OFF: Rgba = [0x8c, 0x93, 0x9d, 0xff]; // paused / connecting
 pub const BAD: Rgba = [0xd9, 0x3f, 0x3f, 0xff]; // problem
 
-/// App icon colours (the Azazel Labs palette).
+/// App icon colors (the Azazel Labs palette).
 const TILE: Rgba = [0x18, 0x18, 0x18, 0xff];
 const TEAL: Rgba = [0x00, 0xbf, 0xa5, 0xff];
 const BLUE: Rgba = [0x44, 0x8a, 0xff, 0xff];
@@ -22,7 +22,7 @@ const AMBER: Rgba = [0xff, 0xd7, 0x40, 0xff];
 
 /// Geometry on a 64-unit grid.
 const HOME: Pt = (15.0, 49.0);
-/// Each tail: quadratic Bézier control point, end point, app colour.
+/// Each tail: quadratic Bézier control point, end point, app color.
 const TAILS: [(Pt, Pt, Rgba); 3] =
     [((9.0, 24.0), (25.0, 11.0), BLUE), ((24.0, 22.0), (47.0, 17.0), PINK), ((35.0, 34.0), (53.0, 40.0), AMBER)];
 
@@ -83,7 +83,7 @@ fn quad(start: Pt, ctrl: Pt, end: Pt) -> Vec<Pt> {
         .collect()
 }
 
-/// The mark as layers, back to front. `tint` replaces every colour (tray glyph).
+/// The mark as layers, back to front. `tint` replaces every color (tray glyph).
 fn mark(w: &Weights, tint: Option<Rgba>) -> Vec<(Shape, Rgba)> {
     let col = |c: Rgba| tint.unwrap_or(c);
     let mut layers = Vec::new();
@@ -107,13 +107,13 @@ fn render(layers: &[(Shape, Rgba)], n: u32) -> Vec<u8> {
             let p = ((f64::from(x) + 0.5) * scale, (f64::from(y) + 0.5) * scale);
             // Straight-alpha "over" compositing of each layer onto the pixel.
             let (mut rgb, mut alpha) = ([0.0f64; 3], 0.0f64);
-            for (shape, colour) in layers {
-                let cover = (0.5 - shape.sd(p) / scale).clamp(0.0, 1.0) * f64::from(colour[3]) / 255.0;
+            for (shape, color) in layers {
+                let cover = (0.5 - shape.sd(p) / scale).clamp(0.0, 1.0) * f64::from(color[3]) / 255.0;
                 if cover <= 0.0 {
                     continue;
                 }
                 let out_alpha = cover + alpha * (1.0 - cover);
-                for (dst, src) in rgb.iter_mut().zip(*colour) {
+                for (dst, src) in rgb.iter_mut().zip(*color) {
                     *dst = (f64::from(src) * cover + *dst * alpha * (1.0 - cover)) / out_alpha;
                 }
                 alpha = out_alpha;
@@ -127,12 +127,12 @@ fn render(layers: &[(Shape, Rgba)], n: u32) -> Vec<u8> {
     px
 }
 
-/// Tray icon: the mark in one colour on a transparent background, n×n RGBA.
+/// Tray icon: the mark in one color on a transparent background, n×n RGBA.
 pub fn tray(c: Rgba, n: u32) -> Vec<u8> {
     render(&mark(&GLYPH, Some(c)), n)
 }
 
-/// App icon: the colour mark on a dark rounded tile, n×n RGBA.
+/// App icon: the color mark on a dark rounded tile, n×n RGBA.
 pub fn app(n: u32) -> Vec<u8> {
     let mut layers = vec![(Shape::RoundRect { size: 64.0, r: 14.0 }, TILE)];
     layers.extend(mark(&APP, None));

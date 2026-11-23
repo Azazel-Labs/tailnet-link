@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "339b8bd1b2b34d427be8c7cf9127f8748d1627fb1ba3dedf8e1b63aa7ca18dab"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Prohlížeč se neotevřel nebo otevřel nesprávný profil?"
 source = "Open the sign-in page again"
 translation = "Znovu otevřít přihlašovací stránku"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Přidat do oblíbených"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Odebrat z oblíbených"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Jeho certifikát není důvěryhodný, takže vás prohlížeč upozorní."
@@ -717,6 +725,14 @@ translation = "Zařízení ve vašich sítích tailnet, která poskytují web p�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Znovu zkontrolovat všechna zařízení"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Zobrazit všechny weby ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Zobrazit méně"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

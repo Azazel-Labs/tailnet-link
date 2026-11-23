@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "ed6917ff6bf3f9cc731c4aa16a6c8750744bab85c44b83dfced4a938169040e4"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Nem nyílt meg a böngésző, vagy rossz profilban nyílt meg?"
 source = "Open the sign-in page again"
 translation = "A bejelentkezési oldal újbóli megnyitása"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Hozzáadás a kedvencekhez"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Eltávolítás a kedvencek közül"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "A tanúsítványa nem megbízható, ezért a böngésző figyelmeztetni fogja."
@@ -717,6 +725,14 @@ translation = "A tailnetjeiben lévő gépek, amelyek HTTPS-en keresztül webhel
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Minden gép újraellenőrzése most"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Az összes webhely megjelenítése ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Kevesebb megjelenítése"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

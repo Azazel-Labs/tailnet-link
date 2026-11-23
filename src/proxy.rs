@@ -266,7 +266,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn recognises_our_pac_on_any_port() {
+    fn recognizes_our_pac_on_any_port() {
         assert!(is_tailnet_link_pac("http://127.0.0.1:1055/proxy.pac?v=1795182691"));
         assert!(is_tailnet_link_pac("http://127.0.0.1:49768/proxy.pac"));
         assert!(!is_tailnet_link_pac("http://127.0.0.1:1055/other.pac"));

@@ -150,6 +150,10 @@ sites-help = Geräte in Ihren Tailnets, die eine Website über HTTPS bereitstell
 sites-checking = Gerät { $done } von { $total } wird geprüft…
 sites-recheck-tooltip = Alle Geräte jetzt erneut prüfen
 site-untrusted = Das Zertifikat ist nicht vertrauenswürdig, daher zeigt Ihr Browser eine Warnung an.
+site-favorite-add = Zu Favoriten hinzufügen
+site-favorite-remove = Aus Favoriten entfernen
+sites-show-all = Alle Websites anzeigen ({ $count })
+sites-show-fewer = Weniger anzeigen
 
 ## Einstellungen: Portweiterleitungen
 

@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "d42ff43540b6cad314c20bf6f781cbd4c403f67e0d6d3fd2136a51a981a7fb86"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Браузер не открылся или открылся не
 source = "Open the sign-in page again"
 translation = "Снова открыть страницу входа"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Добавить в избранное"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Убрать из избранного"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Его сертификат не считается доверенным, поэтому браузер покажет предупреждение."
@@ -717,6 +725,14 @@ translation = "Устройства в ваших сетях tailnet, на ко�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Проверить все устройства заново"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Показать все сайты ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Показать меньше"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

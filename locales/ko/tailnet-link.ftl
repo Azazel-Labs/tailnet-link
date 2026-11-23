@@ -135,6 +135,10 @@ sites-help = tailnet에서 HTTPS로 웹사이트를 제공하는 머신입니다
 sites-checking = { $total }대 중 { $done }번째 확인 중…
 sites-recheck-tooltip = 지금 모든 머신 다시 확인
 site-untrusted = 인증서를 신뢰할 수 없으므로 브라우저에 경고가 표시됩니다.
+site-favorite-add = 즐겨찾기에 추가
+site-favorite-remove = 즐겨찾기에서 제거
+sites-show-all = 모든 웹사이트 보기({ $count })
+sites-show-fewer = 간단히 보기
 
 ## Settings: port forwards
 

@@ -89,9 +89,10 @@ You can also edit forwards by hand in Settings, one per line, for example
 
 - Overall status, **Pause all** and **Add a tailnet**.
 - **Websites** found on the machines, as tiles with each page's title and icon. Click one to open
-  it, or right-click to copy its address. A warning sign means the site's certificate isn't trusted
-  (often a self-signed one). Each machine is asked once a day, a few at a time; the refresh button
-  asks again now.
+  it, or right-click to copy its address. Click the star on a tile to make it a favorite: favorites
+  come first. The card shows two rows (more if you have more favorites) and a **Show all** link.
+  A warning sign means the site's certificate isn't trusted (often a self-signed one). Each machine
+  is asked once a day, a few at a time; the refresh button asks again now.
 - One card per tailnet, with its status, routed domains and this computer's name there. Sign in or
   log out, pause or resume, rename it, add extra domains, or remove it.
 - Each signed-in tailnet lists its **machines**, online first. The list starts folded away and
@@ -118,7 +119,7 @@ You can also edit forwards by hand in Settings, one per line, for example
 on/off; Open Tailnet Link…; Quit. Left-click the icon to open the window. Closing the window keeps
 Tailnet Link running in the tray (the menu bar on macOS).
 
-**Icon colours:** green = routing, amber = a tailnet needs sign-in, grey = paused or connecting,
+**Icon colors:** green = routing, amber = a tailnet needs sign-in, gray = paused or connecting,
 red = problem.
 
 ## The proxy setting is only on while it should be

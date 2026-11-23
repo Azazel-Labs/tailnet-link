@@ -150,6 +150,10 @@ sites-help = Equipos de tus tailnets que sirven un sitio web por HTTPS. Cada equ
 sites-checking = Revisando { $done } de { $total }…
 sites-recheck-tooltip = Volver a revisar todos los equipos ahora
 site-untrusted = Su certificado no es de confianza, así que tu navegador te mostrará una advertencia.
+site-favorite-add = Agregar a favoritos
+site-favorite-remove = Quitar de favoritos
+sites-show-all = Mostrar todos los sitios web ({ $count })
+sites-show-fewer = Mostrar menos
 
 ## Configuración: redirecciones de puertos
 

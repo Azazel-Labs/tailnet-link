@@ -145,6 +145,10 @@ sites-help = Masjiene in jou tailnets wat 'n webwerf oor HTTPS bedien. Elke masj
 sites-checking = Gaan { $done } van { $total } na…
 sites-recheck-tooltip = Gaan nou weer elke masjien na
 site-untrusted = Sy sertifikaat word nie vertrou nie, dus sal jou blaaier jou waarsku.
+site-favorite-add = Voeg by gunstelinge
+site-favorite-remove = Verwyder uit gunstelinge
+sites-show-all = Wys alle webwerwe ({ $count })
+sites-show-fewer = Wys minder
 
 ## Settings: port forwards
 

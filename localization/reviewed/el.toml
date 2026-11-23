@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "c7b75662ed0e0334ebcec63bc05220dbb3dc877b461b1258f66245531e084ce3"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Δεν άνοιξε το πρόγραμμα περιήγησης 
 source = "Open the sign-in page again"
 translation = "Ξανά άνοιγμα της σελίδας σύνδεσης"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Προσθήκη στα αγαπημένα"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Αφαίρεση από τα αγαπημένα"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Το πιστοποιητικό του δεν είναι αξιόπιστο, οπότε το πρόγραμμα περιήγησης θα σας προειδοποιήσει."
@@ -717,6 +725,14 @@ translation = "Μηχανήματα στα tailnet σας που εξυπηρε�
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Επανέλεγχος όλων των μηχανημάτων τώρα"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Εμφάνιση όλων των ιστοτόπων ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Εμφάνιση λιγότερων"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

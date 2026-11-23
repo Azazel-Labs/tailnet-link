@@ -149,6 +149,10 @@ sites-help = Mesin di tailnet Anda yang menyajikan situs web melalui HTTPS. Seti
 sites-checking = Memeriksa { $done } dari { $total }…
 sites-recheck-tooltip = Periksa ulang semua mesin sekarang
 site-untrusted = Sertifikatnya tidak tepercaya, jadi browser Anda akan menampilkan peringatan.
+site-favorite-add = Tambahkan ke favorit
+site-favorite-remove = Hapus dari favorit
+sites-show-all = Tampilkan semua situs web ({ $count })
+sites-show-fewer = Tampilkan lebih sedikit
 
 ## Pengaturan: penerusan port
 

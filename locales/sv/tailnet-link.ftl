@@ -144,6 +144,10 @@ sites-help = Datorer i dina tailnet som har en webbplats över HTTPS. Varje dato
 sites-checking = Kontrollerar { $done } av { $total }…
 sites-recheck-tooltip = Kontrollera alla datorer igen nu
 site-untrusted = Certifikatet är inte betrott, så webbläsaren kommer att varna dig.
+site-favorite-add = Lägg till i favoriter
+site-favorite-remove = Ta bort från favoriter
+sites-show-all = Visa alla webbplatser ({ $count })
+sites-show-fewer = Visa färre
 
 ## Settings: port forwards
 

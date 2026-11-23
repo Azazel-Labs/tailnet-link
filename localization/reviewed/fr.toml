@@ -1,7 +1,7 @@
 version = 2
 
 [readme]
-source = "210413169464598f95429456d5ecc75ba35a30fd2c9cab98d9971cfc01aa98b7"
+source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
 translation = "88d34fda4685e47e6261108493b75589687c31a7d01f49c0c31536dea5aef685"
 
 [messages.about-line]
@@ -698,6 +698,14 @@ translation = "Le navigateur ne s’est pas ouvert, ou avec le mauvais profil ?
 source = "Open the sign-in page again"
 translation = "Rouvrir la page de connexion"
 
+[messages.site-favorite-add]
+source = "Add to favorites"
+translation = "Ajouter aux favoris"
+
+[messages.site-favorite-remove]
+source = "Remove from favorites"
+translation = "Retirer des favoris"
+
 [messages.site-untrusted]
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Son certificat n’est pas reconnu, votre navigateur affichera donc un avertissement."
@@ -717,6 +725,14 @@ translation = "Les machines de vos tailnets qui servent un site web en HTTPS. Ch
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Revérifier toutes les machines maintenant"
+
+[messages.sites-show-all]
+source = "Show all websites ({ $count })"
+translation = "Afficher tous les sites web ({ $count })"
+
+[messages.sites-show-fewer]
+source = "Show fewer"
+translation = "Afficher moins"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

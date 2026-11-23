@@ -135,6 +135,10 @@ sites-help = 你的 tailnet 中透過 HTTPS 提供網站的裝置。每台裝置
 sites-checking = 正在檢查第 { $done } 台，共 { $total } 台…
 sites-recheck-tooltip = 立即重新檢查所有裝置
 site-untrusted = 它的憑證不受信任，因此瀏覽器會顯示警告。
+site-favorite-add = 加入我的最愛
+site-favorite-remove = 從我的最愛中移除
+sites-show-all = 顯示所有網站（{ $count }）
+sites-show-fewer = 收合
 
 ## Settings: port forwards
 
