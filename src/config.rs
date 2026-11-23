@@ -25,6 +25,23 @@ impl std::fmt::Display for Forward {
     }
 }
 
+/// A name of your own for an address in one of the tailnets, such as a server
+/// behind a subnet router: "wiki = 192.168.20.15". It works only through
+/// Tailnet Link (browsers and port forwards on this computer).
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Alias {
+    /// Lower case, e.g. wiki.
+    pub name: String,
+    /// An IP address or a machine's name, without a port.
+    pub target: String,
+}
+
+impl std::fmt::Display for Alias {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{} = {}", self.name, self.target)
+    }
+}
+
 /// One extra tailnet this app joins.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, Default)]
 #[serde(default)]
@@ -39,6 +56,9 @@ pub struct TailnetConfig {
     /// Any other names it serves.
     #[serde(deserialize_with = "null_as_empty")]
     pub extra_domains: Vec<String>,
+    /// Don't route the subnets its routers share (one overlaps a network this
+    /// computer is on, say).
+    pub ignore_subnets: bool,
 }
 
 impl TailnetConfig {
@@ -64,6 +84,9 @@ pub struct Config {
     pub tailnets: Vec<TailnetConfig>,
     #[serde(deserialize_with = "null_as_empty")]
     pub forwards: Vec<Forward>,
+    /// Names of your own for addresses in the tailnets.
+    #[serde(deserialize_with = "null_as_empty")]
+    pub names: Vec<Alias>,
     /// Master on/off switch.
     pub enabled: bool,
     /// System proxy setting: "on", "off", or "force" (replace an existing
@@ -110,6 +133,7 @@ impl Default for Config {
         Config {
             tailnets: Vec::new(),
             forwards: Vec::new(),
+            names: Vec::new(),
             enabled: true,
             system_proxy: "on".into(),
             hostname: default_hostname(),
@@ -338,6 +362,43 @@ pub fn forwards_text(fs: &[Forward]) -> String {
     fs.iter().map(ToString::to_string).collect::<Vec<_>>().join("\n")
 }
 
+/// Lines like "wiki = 192.168.20.15" or "ci = build-pc.example.ts.net".
+pub fn parse_names(text: &str) -> Result<Vec<Alias>, String> {
+    let ok = |s: &str| {
+        !s.is_empty()
+            && !s.starts_with(['.', '-'])
+            && !s.ends_with(['.', '-'])
+            && s.chars().all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '-' || c == '.')
+    };
+    let mut out: Vec<Alias> = Vec::new();
+    for (i, line) in text.lines().enumerate() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let n = i + 1;
+        let (left, right) = line.split_once('=').ok_or_else(|| tr!("names-line-format", line = n))?;
+        let name = left.trim().trim_end_matches('.').to_lowercase();
+        // An address can't be a name: it would hide the real one.
+        if !ok(&name) || name.parse::<std::net::IpAddr>().is_ok() {
+            return Err(tr!("names-line-name", line = n, value = left.trim()));
+        }
+        let target = crate::routes::normalize(right);
+        if target.parse::<std::net::IpAddr>().is_err() && !ok(&target) {
+            return Err(tr!("names-line-target", line = n, value = right.trim()));
+        }
+        if out.iter().any(|a| a.name == name) {
+            return Err(tr!("names-line-duplicate", line = n, value = name));
+        }
+        out.push(Alias { name, target });
+    }
+    Ok(out)
+}
+
+pub fn names_text(names: &[Alias]) -> String {
+    names.iter().map(ToString::to_string).collect::<Vec<_>>().join("\n")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -370,6 +431,17 @@ mod tests {
         assert_eq!(got, vec!["example.ts.net", "example.com", "other.ts.net"]);
         assert!(parse_domains("localhost").is_err());
         assert!(parse_domains("bad_domain.com").is_err());
+    }
+
+    #[test]
+    fn names_parse() {
+        let n = parse_names("# Office\nWiki = 192.168.20.15\n\nci = Build-PC.example.ts.net.\nv6 = [fd7a::1]").unwrap();
+        assert_eq!(names_text(&n), "wiki = 192.168.20.15\nci = build-pc.example.ts.net\nv6 = fd7a::1");
+        assert!(parse_names("wiki 192.168.20.15").is_err());
+        assert!(parse_names("10.0.0.1 = 192.168.20.15").is_err(), "an address can't be a name");
+        assert!(parse_names("team city = 192.168.20.15").is_err());
+        assert!(parse_names("a = http://x/").is_err());
+        assert!(parse_names("a = 1.2.3.4\nA = 1.2.3.5").is_err(), "duplicate");
     }
 
     #[test]

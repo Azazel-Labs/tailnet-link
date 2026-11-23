@@ -191,11 +191,21 @@ open-settings-folder = Deschide dosarul de setări
 about-line = { -app-name } { $version } · proxy local { $proxy } · PAC { $pac }
 settings-location = Setări în { $path }
 
+## Setări: nume
+
+names-heading = Nume
+names-help = Nume proprii pentru adrese din tailnet-urile tale, cum ar fi un server din spatele unui router de subrețea. Funcționează doar în browsere și în redirecționările de porturi de pe acest computer.
+edit-names = Editează numele
+# Păstrează „name = address” și exemplul așa cum sunt: asta se tastează.
+names-format-help = Câte unul pe linie: name = address, de exemplu wiki = 192.168.20.15. Adresa poate fi o adresă IP sau numele unei mașini. Deschide-l ca http://wiki:8080/, cu portul folosit de site.
+
 ## Rezultatele „Testează” din Depanare
 
 check-empty = Tastează numele unei mașini sau o adresă web.
 check-bad-port = { $input }: acesta nu este un port valid.
-check-not-routed = { $host } nu este rutat de { -app-name }: nu se termină cu domeniul niciunui tailnet care rutează acum, așa că merge direct (prin rețeaua obișnuită și prin propriul Tailscale).
+check-not-routed = { $host } nu este rutat de { -app-name }: nu este un nume, o adresă sau o subrețea a niciunui tailnet care rutează acum, așa că merge direct (prin rețeaua obișnuită și prin propriul Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } se află în mai multe tailnet-uri ({ $tailnets }), așa că nu este rutat. Folosește în schimb numele mașinii sau dezactivează subrețelele pentru unul dintre aceste tailnet-uri.
 check-gone = Acel tailnet tocmai a dispărut.
 check-not-running = { $tailnet } nu rulează.
 check-ok = { $address } funcționează: conectat prin { $tailnet } în { $ms } ms.
@@ -213,6 +223,10 @@ forwards-line-target = Linia { $line }: „{ $value }” trebuie să fie host:po
 forwards-line-duplicate = Linia { $line }: portul local { $port } este folosit de două ori.
 domain-invalid = „{ $domain }” nu este un domeniu; folosește ceva de genul example.ts.net.
 domain-characters = „{ $domain }” conține caractere pe care un domeniu nu le poate avea.
+names-line-format = Linia { $line }: scrie name = address.
+names-line-name = Linia { $line }: „{ $value }” nu poate fi un nume. Folosește litere, cifre, cratime și puncte.
+names-line-target = Linia { $line }: „{ $value }” nu este o adresă IP sau numele unei mașini.
+names-line-duplicate = Linia { $line }: numele { $value } apare de două ori.
 autostart-unsupported = Pornirea la conectare nu este acceptată pe acest sistem.
 
 ## Dialoguri
@@ -228,6 +242,8 @@ tailnet-name = Nume
 tailnet-name-hint = Afișat în această aplicație și în meniul din zona de notificare
 extra-domains = Domenii suplimentare (opțional)
 extra-domains-help = Domeniul propriu al tailnetului este rutat automat. Adaugă câte unul pe linie.
+route-subnets = Rutează subrețelele sale
+route-subnets-help = Rețele la care acest tailnet ajunge prin routerele sale de subrețea, cum ar fi o rețea în cloud. Dezactivează opțiunea dacă una dintre ele se suprapune cu o rețea în care se află acest computer.
 forward-dialog-title = Redirecționează un port
 forward-dialog-text = Primește un port pe acest computer care duce la { $host }. Ce port de pe acea mașină?
 port-preset-remote-desktop = Desktop la distanță

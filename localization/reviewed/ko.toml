@@ -56,6 +56,10 @@ translation = "취소"
 source = "Catalan"
 translation = "카탈로니아어"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host }은(는) 둘 이상의 tailnet({ $tailnets })에 있으므로 라우팅되지 않습니다. 대신 머신 이름을 사용하거나 해당 tailnet 중 하나에서 서브넷을 끄세요."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: 올바른 포트가 아닙니다."
@@ -78,12 +82,12 @@ translation = "해당 tailnet이 방금 사라졌습니다."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host }: { -app-name }에서 라우팅하지 않습니다. 현재 라우팅 중인 어떤 tailnet의 도메인으로도 끝나지 않으므로 직접 연결됩니다(일반 네트워크와 내 Tailscale을 통해).
+{ $host }: { -app-name }에서 라우팅하지 않습니다. 현재 라우팅 중인 어떤 tailnet의 이름, 주소, 서브넷도 아니므로 직접 연결됩니다(일반 네트워크와 내 Tailscale을 통해).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "네덜란드어"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "포워딩 편집"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "이름 편집"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "추가 작업"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "한 줄에 하나씩 name = address 형식으로 씁니다(예: wiki = 192.168.20.15). 주소는 IP 주소나 머신 이름일 수 있습니다. 웹사이트가 사용하는 포트를 붙여 http://wiki:8080/ 같은 주소로 엽니다."
+
+[messages.names-heading]
+source = "Names"
+translation = "이름"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "tailnet에 있는 주소에 직접 붙이는 이름입니다(예: 서브넷 라우터 뒤에 있는 서버). 이 컴퓨터의 브라우저와 포트 포워딩에서만 작동합니다."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "{ $line }번째 줄: 이름 { $value }이(가) 두 번 지정되었습니다."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "{ $line }번째 줄: name = address 형식으로 작성하세요."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "{ $line }번째 줄: “{ $value }”은(는) 이름으로 사용할 수 없습니다. 문자, 숫자, 하이픈, 점을 사용하세요."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "{ $line }번째 줄: “{ $value }”은(는) IP 주소나 머신 이름이 아닙니다."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "새 tailnet"
@@ -639,6 +675,14 @@ translation = "변경 사항을 취소합니다"
 [messages.romanian]
 source = "Romanian"
 translation = "루마니아어"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "서브넷 라우팅"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "이 tailnet이 서브넷 라우터를 통해 연결하는 네트워크입니다(예: 클라우드 네트워크). 이 컴퓨터가 연결된 네트워크와 겹치는 경우 끄세요."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

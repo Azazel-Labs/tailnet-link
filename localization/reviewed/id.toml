@@ -56,6 +56,10 @@ translation = "Batal"
 source = "Catalan"
 translation = "Bahasa Katala"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } ada di lebih dari satu tailnet ({ $tailnets }), jadi tidak dirutekan. Gunakan nama mesinnya, atau matikan subnet untuk salah satu tailnet tersebut."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: itu bukan port yang valid."
@@ -78,12 +82,12 @@ translation = "Tailnet itu baru saja hilang."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } tidak dirutekan oleh { -app-name }: alamat ini tidak berakhiran domain tailnet mana pun yang sedang merutekan, jadi lalu lintasnya berjalan langsung (melalui jaringan biasa dan Tailscale Anda sendiri).
+{ $host } tidak dirutekan oleh { -app-name }: ini bukan nama, alamat, atau subnet dari tailnet mana pun yang sedang merutekan, jadi lalu lintasnya berjalan langsung (melalui jaringan biasa dan Tailscale Anda sendiri).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Bahasa Belanda"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Edit penerusan"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Edit nama"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Tindakan lainnya"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Satu per baris: name = address, misalnya wiki = 192.168.20.15. Alamatnya bisa berupa alamat IP atau nama mesin. Buka sebagai http://wiki:8080/, dengan port yang dipakai situs web tersebut."
+
+[messages.names-heading]
+source = "Names"
+translation = "Nama"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Nama Anda sendiri untuk alamat di tailnet Anda, seperti server di balik router subnet. Nama ini hanya berfungsi di browser dan penerusan port di komputer ini."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Baris { $line }: nama { $value } muncul dua kali."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Baris { $line }: tulis name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Baris { $line }: “{ $value }” tidak bisa menjadi nama. Gunakan huruf, angka, tanda hubung, dan titik."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Baris { $line }: “{ $value }” bukan alamat IP atau nama mesin."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Tailnet baru"
@@ -639,6 +675,14 @@ translation = "Batalkan perubahan"
 [messages.romanian]
 source = "Romanian"
 translation = "Bahasa Rumania"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Rutekan subnetnya"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Jaringan yang dijangkau tailnet ini melalui router subnetnya, seperti jaringan cloud. Matikan ini jika salah satunya tumpang tindih dengan jaringan tempat komputer ini berada."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

@@ -190,11 +190,21 @@ open-settings-folder = Öppna inställningsmappen
 about-line = { -app-name } { $version } · lokal proxy { $proxy } · PAC { $pac }
 settings-location = Inställningar i { $path }
 
+## Settings: names
+
+names-heading = Namn
+names-help = Egna namn på adresser i dina tailnet, till exempel en server bakom en subnätsrouter. De fungerar bara i webbläsare och portvidarebefordringar på den här datorn.
+edit-names = Redigera namn
+# Behåll ”name = address” och exemplet som de är: det är det man skriver.
+names-format-help = Ett per rad: name = address, till exempel wiki = 192.168.20.15. Adressen kan vara en IP-adress eller en dators namn. Öppna det som http://wiki:8080/, med porten som webbplatsen använder.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Skriv ett datornamn eller en webbadress.
 check-bad-port = { $input }: det är ingen giltig port.
-check-not-routed = { $host } dirigeras inte av { -app-name }: adressen slutar inte på domänen för något tailnet som dirigerar just nu, så den går direkt (via ditt vanliga nätverk och ditt eget Tailscale).
+check-not-routed = { $host } dirigeras inte av { -app-name }: den är inte ett namn, en adress eller ett subnät i något tailnet som dirigerar just nu, så den går direkt (via ditt vanliga nätverk och ditt eget Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } finns i mer än ett tailnet ({ $tailnets }), så den dirigeras inte. Använd datorns namn i stället, eller stäng av subnät för ett av de tailneten.
 check-gone = Det tailnetet försvann precis.
 check-not-running = { $tailnet } körs inte.
 check-ok = { $address } fungerar: ansluten via { $tailnet } på { $ms } ms.
@@ -212,6 +222,10 @@ forwards-line-target = Rad { $line }: ”{ $value }” ska vara host:port.
 forwards-line-duplicate = Rad { $line }: den lokala porten { $port } används två gånger.
 domain-invalid = ”{ $domain }” är ingen domän; använd något i stil med example.ts.net.
 domain-characters = ”{ $domain }” innehåller tecken som en domän inte kan ha.
+names-line-format = Rad { $line }: skriv name = address.
+names-line-name = Rad { $line }: ”{ $value }” kan inte vara ett namn. Använd bokstäver, siffror, bindestreck och punkter.
+names-line-target = Rad { $line }: ”{ $value }” är varken en IP-adress eller en dators namn.
+names-line-duplicate = Rad { $line }: namnet { $value } förekommer två gånger.
 autostart-unsupported = Start vid inloggning stöds inte på det här systemet.
 
 ## Dialogs
@@ -227,6 +241,8 @@ tailnet-name = Namn
 tailnet-name-hint = Visas i appen och i menyn i systemfältet
 extra-domains = Extra domäner (valfritt)
 extra-domains-help = Tailnetets egen domän dirigeras automatiskt. Lägg till en per rad.
+route-subnets = Dirigera dess subnät
+route-subnets-help = Nätverk som det här tailnetet når via sina subnätsroutrar, till exempel ett molnnätverk. Stäng av det här om något av dem överlappar ett nätverk som den här datorn är ansluten till.
 forward-dialog-title = Vidarebefordra en port
 forward-dialog-text = Få en port på den här datorn som leder till { $host }. Vilken port på den datorn?
 port-preset-remote-desktop = Fjärrskrivbord

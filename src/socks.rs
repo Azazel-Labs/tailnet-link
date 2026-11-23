@@ -56,6 +56,14 @@ fn connect_request(host: &str, port: u16) -> io::Result<Vec<u8>> {
 fn reply_error(code: u8, host: &str, port: u16) -> io::Error {
     use io::ErrorKind as K;
     let (kind, msg) = match code {
+        // Tailscale's SOCKS5 server answers "general failure" whenever its connection fails.
+        1 => (
+            K::ConnectionRefused,
+            format!(
+                "{host} didn't accept a connection on port {port}: nothing is listening there, a firewall \
+                 blocked it, or the tailnet's access rules don't allow it"
+            ),
+        ),
         2 => (K::PermissionDenied, "connection not allowed by that tailnet's access rules".to_owned()),
         3 => (K::NetworkUnreachable, "network unreachable".into()),
         4 => (K::HostUnreachable, format!("{host} is unreachable (is it online in that tailnet?)")),

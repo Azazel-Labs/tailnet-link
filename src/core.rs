@@ -9,12 +9,14 @@ use std::sync::atomic::{AtomicU64, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
-use crate::config::{self, Config, Forward, TailnetConfig};
+use crate::config::{self, Alias, Config, Forward, TailnetConfig};
 use crate::i18n::tr;
-use crate::proxy::{self, PacState, Router};
+use crate::proxy::{self, PacRules, PacState, Router};
+use crate::routes::{Prefix, Reach};
 use crate::sites;
 use crate::sync::lock;
 use crate::sysproxy::{ProxyError, SystemProxy};
+use crate::thumbs;
 use crate::tsnet::{Node, SocksTarget};
 
 /// A machine in one of the tailnets.
@@ -28,13 +30,22 @@ pub struct Machine {
     pub online: bool,
     /// Its first Tailscale address (`IPv4` when it has one).
     pub ip: String,
+    /// Its tags from the tailnet's policy, e.g. tag:subnet-router.
+    pub tags: Vec<String>,
+    /// The subnets it routes for the tailnet, e.g. 192.168.0.0/16 (not an exit node's).
+    pub subnets: Vec<String>,
 }
 
 impl Machine {
-    /// Case-insensitive match on name, full name, OS or address.
+    /// Case-insensitive match on name, full name, OS, address, tag or subnet.
     pub fn matches(&self, query: &str) -> bool {
         let q = query.trim().to_lowercase();
-        q.is_empty() || [&self.dns_name, &self.os, &self.ip].iter().any(|f| f.to_lowercase().contains(&q))
+        q.is_empty()
+            || [&self.dns_name, &self.os, &self.ip]
+                .into_iter()
+                .chain(&self.tags)
+                .chain(&self.subnets)
+                .any(|f| f.to_lowercase().contains(&q))
     }
 }
 
@@ -52,7 +63,16 @@ fn machines_of(st: &crate::tsnet::Status) -> Vec<Machine> {
             let name = dns_name.split('.').next().unwrap_or(&dns_name).to_owned();
             let ips = p.ips.clone().unwrap_or_default();
             let ip = ips.iter().find(|i| !i.contains(':')).or(ips.first()).cloned().unwrap_or_default();
-            Some(Machine { name, dns_name, os: p.os.clone(), online: p.online, ip })
+            let tags = p.tags.clone().unwrap_or_default();
+            let subnets = p
+                .primary_routes
+                .iter()
+                .flatten()
+                .filter_map(|r| Prefix::parse(r))
+                .filter(|r| !r.is_default())
+                .map(|r| r.to_string())
+                .collect();
+            Some(Machine { name, dns_name, os: p.os.clone(), online: p.online, ip, tags, subnets })
         })
         .collect();
     out.sort_by(|a, b| b.online.cmp(&a.online).then_with(|| a.name.cmp(&b.name)));
@@ -82,6 +102,10 @@ pub struct TailnetStatus {
     pub self_name: String,
     pub domains: Vec<String>,
     pub extra: Vec<String>,
+    /// The subnets its routers share, e.g. 192.168.0.0/16.
+    pub subnets: Vec<String>,
+    /// The subnets aren't routed (the user turned them off).
+    pub ignore_subnets: bool,
     pub connected: bool,
     pub enabled: bool,
     pub routing: bool,
@@ -201,6 +225,8 @@ pub struct SiteStatus {
     pub trusted: bool,
     pub color: Option<[u8; 3]>,
     pub icon: Option<Arc<sites::Icon>>,
+    /// A picture of the page, for a starred site's large tile.
+    pub thumb: Option<Arc<sites::Icon>>,
     /// The tailnet's label.
     pub tailnet: String,
     /// That tailnet routes right now, so the link works.
@@ -263,7 +289,30 @@ struct Entry {
     node: Option<Arc<Node>>,
     st: TailnetStatus,
     open_url: String,
-    shields: bool,
+    /// Its prefs (shields up, accept subnets) are set for this connection.
+    prefs_set: bool,
+    /// Its machines' names and addresses, and its subnets.
+    reach: Reach,
+}
+
+impl Entry {
+    fn new(node: Option<Arc<Node>>, st: TailnetStatus) -> Entry {
+        Entry { node, st, open_url: String::new(), prefs_set: false, reach: Reach::default() }
+    }
+}
+
+/// Where a host goes.
+#[derive(Debug, PartialEq, Eq)]
+enum Route {
+    /// Through this tailnet, connecting to `dial` (a name of your own is
+    /// replaced by its address; anything else stays as it is).
+    To {
+        id: String,
+        dial: String,
+    },
+    /// More than one tailnet has this address, equally specifically (their labels).
+    Ambiguous(Vec<String>),
+    None,
 }
 
 struct Inner {
@@ -292,6 +341,8 @@ struct Inner {
 struct SiteState {
     cache: sites::Cache,
     progress: Option<(usize, usize)>,
+    /// Pictures of the starred websites.
+    thumbs: thumbs::Thumbs,
 }
 
 /// How long after starting the first machines are asked for websites.
@@ -329,7 +380,7 @@ pub struct Core {
 struct CoreRouter(std::sync::Weak<Core>);
 
 impl Router for CoreRouter {
-    fn route(&self, host: &str) -> Option<SocksTarget> {
+    fn route(&self, host: &str) -> Option<(SocksTarget, String)> {
         self.0.upgrade()?.socks_for(host)
     }
     fn show(&self) {
@@ -437,7 +488,7 @@ impl Core {
             system_setting: g.system_setting.clone(),
             update: g.update.clone(),
             update_check: g.update_check.clone(),
-            sites: if g.cfg.find_sites { sites_of(&g, &state.cache) } else { Vec::new() },
+            sites: if g.cfg.find_sites { sites_of(&g, &state) } else { Vec::new() },
             sites_checking: state.progress,
         }
     }
@@ -506,7 +557,11 @@ impl Core {
             })
             .map_err(|e| e.to_string())?;
 
-        lock(&self.sites).cache = sites::Cache::load();
+        {
+            let mut state = lock(&self.sites);
+            state.cache = sites::Cache::load();
+            state.thumbs = thumbs::Thumbs::load(&self.config().favorite_sites);
+        }
         let (wake, woken) = std::sync::mpsc::channel();
         *lock(&self.sites_wake) = Some(wake);
         let me = Arc::downgrade(self);
@@ -518,6 +573,7 @@ impl Core {
                 while !matches!(woken.recv_timeout(wait), Err(std::sync::mpsc::RecvTimeoutError::Disconnected)) {
                     let Some(core) = me.upgrade() else { return };
                     core.find_sites();
+                    core.take_thumbs();
                     drop(core);
                     wait = SITES_EVERY;
                 }
@@ -600,9 +656,10 @@ impl Core {
     /// Returns whether it has one.
     fn find_site(&self, proxy: &str, host: &str) -> bool {
         let reach = || {
-            let target = self.socks_for(host).ok_or_else(|| std::io::Error::from(std::io::ErrorKind::NotConnected))?;
+            let (target, dial) =
+                self.socks_for(host).ok_or_else(|| std::io::Error::from(std::io::ErrorKind::NotConnected))?;
             // Plain sockets with their own deadline, so a busy runtime can't stall it.
-            crate::socks::connect_blocking(&target, host, 443, SITES_CONNECT_TIMEOUT).map(drop)
+            crate::socks::connect_blocking(&target, &dial, 443, SITES_CONNECT_TIMEOUT).map(drop)
         };
         let outcome = sites::probe(proxy, host, reach);
         log::debug!("[sites] {host}: {outcome:?}");
@@ -611,6 +668,47 @@ impl Core {
         state.cache.record(host, outcome, sites::now());
         state.cache.save();
         found
+    }
+
+    /// Takes pictures of the starred websites that have none, or an old one,
+    /// one at a time, each in a headless browser (see [`thumbs`]).
+    fn take_thumbs(&self) {
+        let cfg = self.config();
+        lock(&self.sites).thumbs.keep_only(&cfg.favorite_sites);
+        for host in &cfg.favorite_sites {
+            let cfg = self.config();
+            if !cfg.find_sites || !cfg.enabled || !cfg.favorite_sites.contains(host) {
+                return;
+            }
+            if self.node_for(host).is_none() {
+                continue;
+            }
+            let browser = {
+                let mut state = lock(&self.sites);
+                if state.cache.site(host).is_none() || !state.thumbs.is_due(host) {
+                    continue;
+                }
+                state.thumbs.tried(host);
+                state.thumbs.browser()
+            };
+            let Some(browser) = browser else { return };
+            let started = Instant::now();
+            match thumbs::take(&browser, &cfg.listen, host, &format!("https://{host}/")) {
+                Ok(picture) => {
+                    log::info!("[thumbs] {host}: took a picture in {}s", started.elapsed().as_secs());
+                    let mut state = lock(&self.sites);
+                    // Unstarred while the picture was being taken: don't keep it.
+                    if self.config().favorite_sites.contains(host) {
+                        state.thumbs.store(host, picture);
+                    } else {
+                        state.thumbs.keep_only(&self.config().favorite_sites);
+                    }
+                    drop(state);
+                    self.changed();
+                }
+                Err(e) => log::info!("[thumbs] {host}: {e}"),
+            }
+        }
     }
 
     /// Asks every machine again now, instead of when its day is up.
@@ -728,6 +826,13 @@ impl Core {
                 log::warn!("Couldn't save settings: {e}");
             }
         }
+        if on {
+            // Take its picture now, not at the next round.
+            self.wake_sites();
+        } else {
+            let favorites = self.config().favorite_sites;
+            lock(&self.sites).thumbs.keep_only(&favorites);
+        }
         self.changed();
     }
 
@@ -778,6 +883,7 @@ impl Core {
             enabled: tc.enabled,
             domains: tc.domains(),
             extra: tc.extra_domains.clone(),
+            ignore_subnets: tc.ignore_subnets,
             ..Default::default()
         };
         log::info!("[{}] starting its Tailscale node", tc.id);
@@ -788,13 +894,11 @@ impl Core {
             }
             Err(e) => {
                 st.problem.clone_from(&e);
-                lock(&self.inner)
-                    .entries
-                    .insert(tc.id.clone(), Entry { node: None, st, open_url: String::new(), shields: false });
+                lock(&self.inner).entries.insert(tc.id.clone(), Entry::new(None, st));
                 return Err(e);
             }
         };
-        lock(&self.inner).entries.insert(tc.id.clone(), Entry { node, st, open_url: String::new(), shields: false });
+        lock(&self.inner).entries.insert(tc.id.clone(), Entry::new(node, st));
         Ok(())
     }
 
@@ -817,15 +921,17 @@ impl Core {
 
     // ---- Routing ----
 
-    /// The routing tailnet whose domain matches host (longest match wins).
+    /// The routing tailnet for a name or address (see [`route_in`]).
     pub fn node_for(&self, host: &str) -> Option<String> {
         node_for_in(&lock(&self.inner), host)
     }
 
-    fn socks_for(&self, host: &str) -> Option<SocksTarget> {
-        let id = self.node_for(host)?;
+    /// The SOCKS5 proxy of the tailnet that carries `host`, and the host to ask
+    /// it for (a name of your own becomes its address).
+    fn socks_for(&self, host: &str) -> Option<(SocksTarget, String)> {
         let g = lock(&self.inner);
-        g.entries.get(&id)?.node.as_ref().map(|n| n.socks())
+        let Route::To { id, dial } = route_in(&g, host) else { return None };
+        g.entries.get(&id)?.node.as_ref().map(|n| (n.socks(), dial))
     }
 
     /// Decides which tailnets route, rebuilds the PAC if the domains changed,
@@ -842,6 +948,8 @@ impl Core {
             e.st.name.clone_from(&tc.name);
             e.st.extra.clone_from(&tc.extra_domains);
             e.st.domains = tc.domains();
+            e.st.ignore_subnets = tc.ignore_subnets;
+            e.st.subnets = e.reach.subnets.iter().map(ToString::to_string).collect();
             let want = master && tc.enabled && e.st.connected && !e.st.domains.is_empty();
             if want {
                 for d in &e.st.domains {
@@ -873,15 +981,7 @@ impl Core {
     }
 
     fn rebuild_pac(&self, g: &mut Inner) {
-        let domains: Vec<String> = g
-            .cfg
-            .tailnets
-            .iter()
-            .filter_map(|t| g.entries.get(&t.id))
-            .filter(|e| e.st.routing)
-            .flat_map(|e| e.st.domains.clone())
-            .collect();
-        let pac = proxy::build_pac(&g.cfg.listen, &domains);
+        let pac = proxy::build_pac(&g.cfg.listen, &pac_rules_of(g));
         if pac == g.pac {
             return;
         }
@@ -944,16 +1044,17 @@ impl Core {
         };
         let connected = st.backend_state == "Running";
 
-        let needs_shields = connected && !lock(&self.inner).entries.get(id).is_some_and(|e| e.shields);
-        if needs_shields {
-            // Nothing in that tailnet may connect to this computer.
-            match node.set_shields_up() {
+        let needs_prefs = connected && !lock(&self.inner).entries.get(id).is_some_and(|e| e.prefs_set);
+        if needs_prefs {
+            // Nothing in that tailnet may connect to this computer, and the
+            // subnets its routers share can be reached.
+            match node.set_prefs() {
                 Ok(()) => {
                     if let Some(e) = lock(&self.inner).entries.get_mut(id) {
-                        e.shields = true;
+                        e.prefs_set = true;
                     }
                 }
-                Err(e) => log::warn!("[{id}] couldn't enable shields-up: {e}"),
+                Err(e) => log::warn!("[{id}] couldn't set shields-up and accept subnets: {e}"),
             }
         }
 
@@ -972,8 +1073,17 @@ impl Core {
         };
         let prev = e.st.clone();
         if !connected {
-            e.shields = false;
+            e.prefs_set = false;
         }
+        let reach = if connected { Reach::of(&st) } else { Reach::default() };
+        let reach_changed = reach != e.reach;
+        if reach.subnets != e.reach.subnets && !reach.subnets.is_empty() {
+            log::info!(
+                "[{id}] subnets: {}",
+                reach.subnets.iter().map(ToString::to_string).collect::<Vec<_>>().join(", ")
+            );
+        }
+        e.reach = reach;
         e.st.backend.clone_from(&st.backend_state);
         e.st.connected = connected;
         if let Some(s) = &st.self_node {
@@ -1000,7 +1110,8 @@ impl Core {
                 log::info!("[{id}] not connected ({})", st.backend_state);
             }
         }
-        let changed = prev.backend != e.st.backend
+        let changed = reach_changed
+            || prev.backend != e.st.backend
             || prev.connected != e.st.connected
             || prev.tailnet != e.st.tailnet
             || prev.self_name != e.st.self_name
@@ -1121,7 +1232,14 @@ impl Core {
         res
     }
 
-    pub fn update_tailnet(&self, id: &str, name: &str, enabled: bool, extra: Vec<String>) -> Result<(), String> {
+    pub fn update_tailnet(
+        &self,
+        id: &str,
+        name: &str,
+        enabled: bool,
+        extra: Vec<String>,
+        ignore_subnets: bool,
+    ) -> Result<(), String> {
         let res = {
             let mut g = lock(&self.inner);
             let Some(tc) = g.cfg.tailnets.iter_mut().find(|t| t.id == id) else {
@@ -1130,6 +1248,7 @@ impl Core {
             name.trim().clone_into(&mut tc.name);
             tc.enabled = enabled;
             tc.extra_domains = extra;
+            tc.ignore_subnets = ignore_subnets;
             let r = g.cfg.save();
             self.update_routing(&mut g);
             r
@@ -1140,7 +1259,7 @@ impl Core {
 
     pub fn set_tailnet_enabled(&self, id: &str, on: bool) -> Result<(), String> {
         let tc = self.config().tailnets.into_iter().find(|t| t.id == id).ok_or("unknown tailnet")?;
-        self.update_tailnet(id, &tc.name, on, tc.extra_domains)
+        self.update_tailnet(id, &tc.name, on, tc.extra_domains, tc.ignore_subnets)
     }
 
     /// Tries the system proxy setting again (after something else changed it).
@@ -1170,10 +1289,16 @@ impl Core {
     }
 
     /// Saves port forwards and the system-proxy mode and applies them live.
-    pub fn apply_global(self: &Arc<Self>, forwards: Vec<Forward>, sys_mode: &str) -> Result<(), String> {
+    pub fn apply_global(
+        self: &Arc<Self>,
+        forwards: Vec<Forward>,
+        names: Vec<Alias>,
+        sys_mode: &str,
+    ) -> Result<(), String> {
         {
             let mut g = lock(&self.inner);
             g.cfg.forwards = forwards;
+            g.cfg.names = names;
             sys_mode.clone_into(&mut g.cfg.system_proxy);
             g.cfg.validate()?;
             g.cfg.save()?;
@@ -1218,18 +1343,22 @@ impl Core {
     /// connection through that tailnet works. Blocks for up to 10 seconds.
     pub fn check(&self, input: &str) -> Result<String, String> {
         let (host, port) = parse_check_target(input)?;
-        let Some(id) = self.node_for(&host) else {
-            return Err(tr!("check-not-routed", host = host.as_str()));
-        };
-        let (label, target) = {
+        let (label, target, dial) = {
             let g = lock(&self.inner);
+            let (id, dial) = match route_in(&g, &host) {
+                Route::To { id, dial } => (id, dial),
+                Route::Ambiguous(tailnets) => {
+                    return Err(tr!("check-ambiguous", host = host.as_str(), tailnets = tailnets.join(", ")));
+                }
+                Route::None => return Err(tr!("check-not-routed", host = host.as_str())),
+            };
             let e = g.entries.get(&id).ok_or_else(|| tr!("check-gone"))?;
-            (e.st.label(), e.node.as_ref().map(|n| n.socks()))
+            (e.st.label(), e.node.as_ref().map(|n| n.socks()), dial)
         };
         let target = target.ok_or_else(|| tr!("check-not-running", tailnet = label.as_str()))?;
         let started = Instant::now();
         let res = self.rt.block_on(async {
-            tokio::time::timeout(Duration::from_secs(10), crate::socks::connect(&target, &host, port)).await
+            tokio::time::timeout(Duration::from_secs(10), crate::socks::connect(&target, &dial, port)).await
         });
         match res {
             Ok(Ok(_)) => Ok(tr!(
@@ -1330,20 +1459,99 @@ pub fn logout_all() {
 
 /// The routing tailnet whose domain matches host (longest match wins).
 fn node_for_in(g: &Inner, host: &str) -> Option<String> {
-    let host = host.trim_end_matches('.').to_lowercase();
-    let mut best: Option<(&String, usize)> = None;
-    for (id, e) in &g.entries {
-        if !e.st.routing {
-            continue;
+    match route_in(g, host) {
+        Route::To { id, .. } => Some(id),
+        _ => None,
+    }
+}
+
+/// The routing tailnets, in the order they were added.
+fn routing_entries(g: &Inner) -> impl Iterator<Item = (&String, &Entry)> {
+    g.cfg.tailnets.iter().filter_map(|t| g.entries.get_key_value(&t.id)).filter(|(_, e)| e.st.routing)
+}
+
+/// `host` is `domain` or ends in it.
+fn in_domain(host: &str, domain: &str) -> bool {
+    host == domain || host.strip_suffix(domain).is_some_and(|rest| rest.ends_with('.'))
+}
+
+/// Where a host goes. A name of your own goes where its target goes.
+fn route_in(g: &Inner, host: &str) -> Route {
+    let host = crate::routes::normalize(host);
+    if let Some(a) = g.cfg.names.iter().find(|a| a.name == host) {
+        return match route_target(g, &a.target) {
+            Route::To { id, .. } => Route::To { id, dial: a.target.clone() },
+            other => other,
+        };
+    }
+    route_target(g, &host)
+}
+
+/// An address goes to the tailnet that has it most specifically: a machine's
+/// own address, then the longest subnet. A tie is ambiguous, so it goes nowhere.
+/// A name goes to the tailnet whose domain it ends in (the longest wins), or
+/// else to the first tailnet that has a machine shared in under that name.
+fn route_target(g: &Inner, host: &str) -> Route {
+    let to = |id: &String| Route::To { id: id.clone(), dial: host.to_owned() };
+    if let Ok(ip) = host.parse::<std::net::IpAddr>() {
+        let mut best = 0;
+        let mut ids: Vec<&String> = Vec::new();
+        for (id, e) in routing_entries(g) {
+            let Some(c) = e.reach.claim(ip, !e.st.ignore_subnets) else { continue };
+            if c > best {
+                best = c;
+                ids.clear();
+            }
+            if c == best {
+                ids.push(id);
+            }
         }
+        return match ids.as_slice() {
+            [] => Route::None,
+            [id] => to(id),
+            _ => Route::Ambiguous(ids.iter().filter_map(|id| g.entries.get(*id)).map(|e| e.st.label()).collect()),
+        };
+    }
+    let mut best: Option<(&String, usize)> = None;
+    for (id, e) in routing_entries(g) {
         for d in &e.st.domains {
-            let matches = host == *d || host.ends_with(&format!(".{d}"));
-            if matches && best.is_none_or(|(_, l)| d.len() > l) {
+            if in_domain(host, d) && best.is_none_or(|(_, l)| d.len() > l) {
                 best = Some((id, d.len()));
             }
         }
     }
-    best.map(|(id, _)| id.clone())
+    if let Some((id, _)) = best {
+        return to(id);
+    }
+    routing_entries(g).find(|(_, e)| e.reach.hosts.contains(host)).map_or(Route::None, |(id, _)| to(id))
+}
+
+/// What the PAC sends to the app: the routing tailnets' domains; machines
+/// shared in from tailnets that aren't, the machines' addresses and the names
+/// of your own, each by its exact name; and the subnets their routers share.
+/// Ambiguous addresses and subnets are left out, so they go direct.
+fn pac_rules_of(g: &Inner) -> PacRules {
+    let mut rules = PacRules::default();
+    for (_, e) in routing_entries(g) {
+        rules.domains.extend(e.st.domains.iter().cloned());
+    }
+    let mut hosts = std::collections::BTreeSet::new();
+    let mut subnets: HashMap<Prefix, usize> = HashMap::new();
+    for (_, e) in routing_entries(g) {
+        let covered = |h: &str| rules.domains.iter().any(|d| in_domain(h, d));
+        hosts.extend(e.reach.hosts.iter().filter(|h| !covered(h)).cloned());
+        hosts.extend(e.reach.addrs.iter().map(ToString::to_string));
+        if !e.st.ignore_subnets {
+            for p in &e.reach.subnets {
+                *subnets.entry(*p).or_default() += 1;
+            }
+        }
+    }
+    hosts.extend(g.cfg.names.iter().map(|a| a.name.clone()));
+    rules.hosts = hosts.into_iter().filter(|h| matches!(route_in(g, h), Route::To { .. })).collect();
+    rules.subnets = subnets.into_iter().filter(|(_, n)| *n == 1).map(|(p, _)| p).collect();
+    rules.subnets.sort();
+    rules
 }
 
 /// "<https://name/path>", "name:port" or "name" -> (name, port). Without a port,
@@ -1371,7 +1579,8 @@ pub fn parse_check_target(input: &str) -> Result<(String, u16), String> {
 }
 
 /// The websites on the online machines, for `Status`.
-fn sites_of(g: &Inner, cache: &sites::Cache) -> Vec<SiteStatus> {
+fn sites_of(g: &Inner, state: &SiteState) -> Vec<SiteStatus> {
+    let cache = &state.cache;
     let mut out = Vec::new();
     for e in g.cfg.tailnets.iter().filter_map(|t| g.entries.get(&t.id)) {
         for m in e.st.machines.iter().filter(|m| m.online) {
@@ -1383,6 +1592,7 @@ fn sites_of(g: &Inner, cache: &sites::Cache) -> Vec<SiteStatus> {
                 trusted: site.trusted,
                 color: site.color,
                 icon: cache.icon(&m.dns_name),
+                thumb: state.thumbs.picture(&m.dns_name),
                 tailnet: e.st.label(),
                 routing: e.st.routing,
                 favorite: g.cfg.favorite_sites.contains(&m.dns_name),
@@ -1531,9 +1741,9 @@ pub(crate) mod tests {
         g.cfg.tailnets.push(tc.clone());
         g.entries.insert(
             id.into(),
-            Entry {
-                node: None,
-                st: TailnetStatus {
+            Entry::new(
+                None,
+                TailnetStatus {
                     id: id.into(),
                     name: id.into(),
                     backend: if connected { "Running".into() } else { "NeedsLogin".into() },
@@ -1541,10 +1751,98 @@ pub(crate) mod tests {
                     domains: tc.domains(),
                     ..Default::default()
                 },
-                open_url: String::new(),
-                shields: false,
-            },
+            ),
         );
+    }
+
+    /// Gives a fake tailnet machines (name, addresses) and subnets.
+    fn fake_reach(core: &Core, id: &str, machines: &[(&str, &[&str])], subnets: &[&str]) {
+        let mut g = lock(&core.inner);
+        let r = &mut g.entries.get_mut(id).unwrap().reach;
+        for (name, addrs) in machines {
+            r.hosts.insert((*name).to_owned());
+            r.addrs.extend(addrs.iter().map(|a| a.parse::<std::net::IpAddr>().unwrap()));
+        }
+        r.subnets.extend(subnets.iter().map(|s| Prefix::parse(s).unwrap()));
+    }
+
+    #[test]
+    fn routing_by_address_subnet_shared_name_and_own_name() {
+        let (_g, _d) = test_dir();
+        let core = Core::new(Config { system_proxy: "off".into(), ..Config::default() });
+        fake(&core, "work", "work.example.ts.net", true);
+        fake(&core, "home", "home.example.ts.net", true);
+        fake(&core, "lab", "lab.ts.net", true);
+        fake_reach(
+            &core,
+            "work",
+            &[("subnet-router.work.example.ts.net", &["100.64.0.10"]), ("guest.client.ts.net", &["100.64.0.11"])],
+            &["192.168.0.0/16", "10.0.0.0/8"],
+        );
+        fake_reach(
+            &core,
+            "home",
+            &[("nas.home.example.ts.net", &["100.99.0.1", "fd7a:115c:a1e0::1"])],
+            &["10.20.0.0/16"],
+        );
+        // The same subnet and the same address as work: ambiguous.
+        fake_reach(&core, "lab", &[("pc.lab.ts.net", &["100.64.0.10"])], &["192.168.0.0/16"]);
+        lock(&core.inner).cfg.names = vec![
+            Alias { name: "wiki".into(), target: "192.168.20.15".into() },
+            Alias { name: "nas".into(), target: "nas.home.example.ts.net".into() },
+            Alias { name: "nowhere".into(), target: "8.8.8.8".into() },
+        ];
+        route(&core);
+        let g = lock(&core.inner);
+        let to = |id: &str, dial: &str| Route::To { id: id.into(), dial: dial.into() };
+        assert_eq!(route_in(&g, "100.99.0.1"), to("home", "100.99.0.1"));
+        assert_eq!(route_in(&g, "[FD7A:115C:A1E0::1]"), to("home", "fd7a:115c:a1e0::1"));
+        assert_eq!(route_in(&g, "10.1.2.3"), to("work", "10.1.2.3"));
+        assert_eq!(route_in(&g, "10.20.1.2"), to("home", "10.20.1.2"), "the longer subnet wins");
+        assert!(matches!(route_in(&g, "192.168.20.15"), Route::Ambiguous(t) if t == ["work", "lab"]));
+        assert!(matches!(route_in(&g, "100.64.0.10"), Route::Ambiguous(_)));
+        assert_eq!(route_in(&g, "8.8.8.8"), Route::None);
+        assert_eq!(route_in(&g, "guest.client.ts.net"), to("work", "guest.client.ts.net"), "shared in");
+        assert_eq!(route_in(&g, "nas"), to("home", "nas.home.example.ts.net"));
+        assert_eq!(route_in(&g, "nowhere"), Route::None);
+
+        let rules = pac_rules_of(&g);
+        assert!(rules.hosts.contains(&"guest.client.ts.net".to_owned()));
+        assert!(!rules.hosts.contains(&"subnet-router.work.example.ts.net".to_owned()), "its domain covers it");
+        assert!(rules.hosts.contains(&"100.99.0.1".to_owned()) && rules.hosts.contains(&"nas".to_owned()));
+        assert!(!rules.hosts.contains(&"100.64.0.10".to_owned()), "ambiguous: left out");
+        assert!(!rules.hosts.contains(&"wiki".to_owned()) && !rules.hosts.contains(&"nowhere".to_owned()));
+        let subnets: Vec<String> = rules.subnets.iter().map(ToString::to_string).collect();
+        assert_eq!(subnets, ["10.0.0.0/8", "10.20.0.0/16"], "192.168.0.0/16 is claimed twice");
+        drop(g);
+
+        // Turning lab's subnets off settles 192.168.0.0/16 on work.
+        lock(&core.inner).cfg.tailnets[2].ignore_subnets = true;
+        route(&core);
+        let g = lock(&core.inner);
+        assert_eq!(route_in(&g, "wiki"), to("work", "192.168.20.15"));
+        assert!(pac_rules_of(&g).subnets.iter().any(|p| p.to_string() == "192.168.0.0/16"));
+        assert!(String::from_utf8(g.pac.clone()).unwrap().contains(r#"isInNet(host, "192.168.0.0", "255.255.0.0")"#));
+        drop(g);
+
+        // A tailnet that stops routing takes its addresses with it.
+        lock(&core.inner).cfg.tailnets[1].enabled = false;
+        route(&core);
+        assert_eq!(core.node_for("100.99.0.1"), None);
+        assert_eq!(core.node_for("10.20.1.2").as_deref(), Some("work"), "falls back to the wider subnet");
+    }
+
+    #[test]
+    fn check_reports_ambiguous_addresses() {
+        let (_g, _d) = test_dir();
+        let core = Core::new(Config::default());
+        fake(&core, "a", "a.ts.net", true);
+        fake(&core, "b", "b.ts.net", true);
+        fake_reach(&core, "a", &[], &["192.168.0.0/16"]);
+        fake_reach(&core, "b", &[], &["192.168.0.0/16"]);
+        route(&core);
+        let e = core.check("http://192.168.20.15:8080/").unwrap_err();
+        assert!(e.contains("more than one tailnet") && e.contains("a, b"), "{e}");
     }
 
     pub fn route(core: &Core) {
@@ -1650,7 +1948,8 @@ pub(crate) mod tests {
     fn machines_from_status() {
         let st: crate::tsnet::Status = serde_json::from_str(
             r#"{"BackendState":"Running","Peer":{
-                "k1":{"DNSName":"zeta.x.ts.net.","OS":"linux","Online":true,"TailscaleIPs":["fd7a::1","100.1.2.3"]},
+                "k1":{"DNSName":"zeta.x.ts.net.","OS":"linux","Online":true,"TailscaleIPs":["fd7a::1","100.1.2.3"],
+                      "Tags":["tag:subnet-router"],"PrimaryRoutes":["192.168.0.0/16","0.0.0.0/0"]},
                 "k2":{"DNSName":"Alpha.x.ts.net.","OS":"windows","Online":false,"TailscaleIPs":null},
                 "k3":{"DNSName":"","OS":"","Online":true},
                 "k4":{"DNSName":"beta.x.ts.net.","OS":"macOS","Online":true}}}"#,
@@ -1663,6 +1962,10 @@ pub(crate) mod tests {
         assert_eq!(m[2].dns_name, "alpha.x.ts.net");
         assert!(m[1].matches("ZETA") && m[1].matches("linux") && m[1].matches("100.1"));
         assert!(!m[1].matches("windows"));
+        assert_eq!(m[1].tags, ["tag:subnet-router"]);
+        assert_eq!(m[1].subnets, ["192.168.0.0/16"], "an exit node's route isn't listed");
+        assert!(m[1].matches("subnet-router") && m[1].matches("192.168"));
+        assert!(m[0].tags.is_empty() && m[0].subnets.is_empty());
         let none: crate::tsnet::Status = serde_json::from_str(r#"{"BackendState":"NeedsLogin","Peer":null}"#).unwrap();
         let machines = machines_of(&none);
         assert!(machines.is_empty(), "{machines:?}");

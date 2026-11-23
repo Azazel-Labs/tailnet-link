@@ -56,6 +56,10 @@ translation = "Ακύρωση"
 source = "Catalan"
 translation = "Καταλανικά"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "Το { $host } βρίσκεται σε περισσότερα από ένα tailnet ({ $tailnets }), οπότε δεν δρομολογείται. Χρησιμοποιήστε καλύτερα το όνομα του μηχανήματος ή απενεργοποιήστε τα υποδίκτυα για ένα από αυτά τα tailnet."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: δεν είναι έγκυρη θύρα."
@@ -78,12 +82,12 @@ translation = "Αυτό το tailnet μόλις εξαφανίστηκε."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-Το { $host } δεν δρομολογείται από το { -app-name }: δεν τελειώνει στον τομέα κανενός tailnet που δρομολογεί αυτή τη στιγμή, οπότε πηγαίνει απευθείας (μέσω του κανονικού σας δικτύου και του δικού σας Tailscale).
+Το { $host } δεν δρομολογείται από το { -app-name }: δεν είναι όνομα, διεύθυνση ή υποδίκτυο κανενός tailnet που δρομολογεί αυτή τη στιγμή, οπότε πηγαίνει απευθείας (μέσω του κανονικού σας δικτύου και του δικού σας Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Ολλανδικά"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Επεξεργασία προωθήσεων"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Επεξεργασία ονομάτων"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Περισσότερες ενέργειες"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Ένα ανά γραμμή: name = address, για παράδειγμα wiki = 192.168.20.15. Η διεύθυνση μπορεί να είναι διεύθυνση IP ή όνομα μηχανήματος. Ανοίξτε το ως http://wiki:8080/, με τη θύρα που χρησιμοποιεί ο ιστότοπος."
+
+[messages.names-heading]
+source = "Names"
+translation = "Ονόματα"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Δικά σας ονόματα για διευθύνσεις στα tailnet σας, όπως ένας διακομιστής πίσω από δρομολογητή υποδικτύου. Λειτουργούν μόνο στα προγράμματα περιήγησης και στις προωθήσεις θυρών σε αυτόν τον υπολογιστή."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Γραμμή { $line }: το όνομα { $value } εμφανίζεται δύο φορές."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Γραμμή { $line }: γράψτε name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Γραμμή { $line }: το «{ $value }» δεν μπορεί να είναι όνομα. Χρησιμοποιήστε γράμματα, ψηφία, παύλες και τελείες."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Γραμμή { $line }: το «{ $value }» δεν είναι διεύθυνση IP ούτε όνομα μηχανήματος."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Νέο tailnet"
@@ -639,6 +675,14 @@ translation = "Αναίρεση των αλλαγών"
 [messages.romanian]
 source = "Romanian"
 translation = "Ρουμανικά"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Δρομολόγηση των υποδικτύων του"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Δίκτυα στα οποία φτάνει αυτό το tailnet μέσω των δρομολογητών υποδικτύου του, όπως ένα δίκτυο cloud. Απενεργοποιήστε το αν κάποιο επικαλύπτεται με δίκτυο στο οποίο βρίσκεται αυτός ο υπολογιστής."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

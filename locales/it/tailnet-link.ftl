@@ -197,11 +197,21 @@ open-settings-folder = Apri la cartella delle impostazioni
 about-line = { -app-name } { $version } · proxy locale { $proxy } · PAC { $pac }
 settings-location = Impostazioni in { $path }
 
+## Impostazioni: nomi
+
+names-heading = Nomi
+names-help = Nomi personalizzati per indirizzi nei tuoi tailnet, come un server dietro un router di subnet. Funzionano solo nei browser e negli inoltri di porta su questo computer.
+edit-names = Modifica nomi
+# Lascia “name = address” e l'esempio così come sono: è ciò che si digita.
+names-format-help = Uno per riga: name = address, per esempio wiki = 192.168.20.15. L'indirizzo può essere un indirizzo IP o il nome di un dispositivo. Aprilo come http://wiki:8080/, con la porta usata dal sito web.
+
 ## Risultati di “Prova” in Risoluzione dei problemi
 
 check-empty = Digita un nome di dispositivo o un indirizzo web.
 check-bad-port = { $input }: non è una porta valida.
-check-not-routed = { $host } non viene instradato da { -app-name }: non termina con il dominio di nessun tailnet attivo in questo momento, quindi va diretto (attraverso la tua rete normale e il tuo Tailscale).
+check-not-routed = { $host } non viene instradato da { -app-name }: non è un nome, un indirizzo o una subnet di nessun tailnet attivo in questo momento, quindi va diretto (attraverso la tua rete normale e il tuo Tailscale).
+# $tailnets elenca i tailnet, separati da virgole.
+check-ambiguous = { $host } si trova in più di un tailnet ({ $tailnets }), quindi non viene instradato. Usa invece il nome del dispositivo, oppure disattiva le subnet per uno di quei tailnet.
 check-gone = Quel tailnet è appena scomparso.
 check-not-running = { $tailnet } non è in esecuzione.
 check-ok = { $address } funziona: connesso tramite { $tailnet } in { $ms } ms.
@@ -220,6 +230,10 @@ forwards-line-target = Riga { $line }: “{ $value }” deve essere host:port.
 forwards-line-duplicate = Riga { $line }: la porta locale { $port } è usata due volte.
 domain-invalid = “{ $domain }” non è un dominio; usa qualcosa come example.ts.net.
 domain-characters = “{ $domain }” contiene caratteri non ammessi in un dominio.
+names-line-format = Riga { $line }: scrivi name = address.
+names-line-name = Riga { $line }: “{ $value }” non può essere un nome. Usa lettere, cifre, trattini e punti.
+names-line-target = Riga { $line }: “{ $value }” non è un indirizzo IP né il nome di un dispositivo.
+names-line-duplicate = Riga { $line }: il nome { $value } compare due volte.
 autostart-unsupported = L'avvio all'accesso non è supportato su questo sistema.
 
 ## Finestre di dialogo
@@ -236,6 +250,8 @@ tailnet-name = Nome
 tailnet-name-hint = Mostrato in questa app e nel menu dell'area di notifica
 extra-domains = Domini aggiuntivi (facoltativi)
 extra-domains-help = Il dominio del tailnet viene instradato automaticamente. Aggiungine uno per riga.
+route-subnets = Instrada le sue subnet
+route-subnets-help = Reti che questo tailnet raggiunge tramite i suoi router di subnet, come una rete cloud. Disattiva questa opzione se una di esse si sovrappone a una rete a cui è collegato questo computer.
 forward-dialog-title = Inoltra una porta
 forward-dialog-text = Ottieni una porta su questo computer che conduce a { $host }. Quale porta su quel dispositivo?
 port-preset-remote-desktop = Desktop remoto

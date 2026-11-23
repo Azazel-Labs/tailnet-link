@@ -180,11 +180,21 @@ open-settings-folder = Mở thư mục cài đặt
 about-line = { -app-name } { $version } · proxy cục bộ { $proxy } · PAC { $pac }
 settings-location = Cài đặt nằm trong { $path }
 
+## Settings: names
+
+names-heading = Tên
+names-help = Tên do bạn tự đặt cho các địa chỉ trong tailnet của bạn, chẳng hạn một máy chủ phía sau bộ định tuyến mạng con. Chúng chỉ hoạt động trong trình duyệt và chuyển tiếp cổng trên máy tính này.
+edit-names = Sửa tên
+# Keep "name = address" and the example as they are: they are what you type.
+names-format-help = Mỗi dòng một mục: name = address, ví dụ wiki = 192.168.20.15. Địa chỉ có thể là địa chỉ IP hoặc tên một máy. Mở bằng http://wiki:8080/, kèm cổng mà trang web sử dụng.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Hãy nhập tên máy hoặc địa chỉ web.
 check-bad-port = { $input }: đó không phải là cổng hợp lệ.
-check-not-routed = { $host } không được { -app-name } định tuyến: nó không kết thúc bằng tên miền của tailnet nào đang định tuyến, nên sẽ đi trực tiếp (qua mạng thông thường và Tailscale của riêng bạn).
+check-not-routed = { $host } không được { -app-name } định tuyến: nó không phải tên, địa chỉ hay mạng con của tailnet nào đang định tuyến, nên sẽ đi trực tiếp (qua mạng thông thường và Tailscale của riêng bạn).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } nằm trong nhiều hơn một tailnet ({ $tailnets }), nên không được định tuyến. Hãy dùng tên máy thay thế, hoặc tắt mạng con cho một trong các tailnet đó.
 check-gone = Tailnet đó vừa biến mất.
 check-not-running = { $tailnet } không chạy.
 check-ok = { $address } hoạt động: đã kết nối qua { $tailnet } trong { $ms } ms.
@@ -202,6 +212,10 @@ forwards-line-target = Dòng { $line }: “{ $value }” phải có dạng host:
 forwards-line-duplicate = Dòng { $line }: cổng cục bộ { $port } bị dùng hai lần.
 domain-invalid = “{ $domain }” không phải tên miền; hãy dùng dạng như example.ts.net.
 domain-characters = “{ $domain }” chứa ký tự không được phép trong tên miền.
+names-line-format = Dòng { $line }: hãy viết name = address.
+names-line-name = Dòng { $line }: “{ $value }” không thể là tên. Hãy dùng chữ cái, chữ số, dấu gạch nối và dấu chấm.
+names-line-target = Dòng { $line }: “{ $value }” không phải địa chỉ IP hay tên máy.
+names-line-duplicate = Dòng { $line }: tên { $value } bị đặt hai lần.
 autostart-unsupported = Hệ thống này không hỗ trợ khởi động khi đăng nhập.
 
 ## Dialogs
@@ -217,6 +231,8 @@ tailnet-name = Tên
 tailnet-name-hint = Hiển thị trong ứng dụng này và menu khay hệ thống
 extra-domains = Tên miền bổ sung (tùy chọn)
 extra-domains-help = Tên miền riêng của tailnet được định tuyến tự động. Thêm mỗi dòng một tên miền.
+route-subnets = Định tuyến các mạng con của nó
+route-subnets-help = Các mạng mà tailnet này truy cập qua bộ định tuyến mạng con của nó, chẳng hạn mạng đám mây. Hãy tắt mục này nếu có mạng nào chồng lấn với mạng mà máy tính này đang kết nối.
 forward-dialog-title = Chuyển tiếp cổng
 forward-dialog-text = Tạo một cổng trên máy tính này dẫn tới { $host }. Bạn muốn dùng cổng nào trên máy đó?
 port-preset-remote-desktop = Máy tính Từ xa

@@ -56,6 +56,10 @@ translation = "Annuleren"
 source = "Catalan"
 translation = "Catalaans"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } zit in meer dan één tailnet ({ $tailnets }), dus het wordt niet gerouteerd. Gebruik in plaats daarvan de naam van de machine, of zet subnetten uit voor een van die tailnets."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: dat is geen geldige poort."
@@ -78,12 +82,12 @@ translation = "Dat tailnet is net verdwenen."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } wordt niet gerouteerd door { -app-name }: het eindigt niet op het domein van een tailnet dat nu routeert, dus het gaat rechtstreeks (via je normale netwerk en je eigen Tailscale).
+{ $host } wordt niet gerouteerd door { -app-name }: het is geen naam, adres of subnet van een tailnet dat nu routeert, dus het gaat rechtstreeks (via je normale netwerk en je eigen Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Nederlands"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Doorsturingen bewerken"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Namen bewerken"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Meer acties"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Eén per regel: name = address, bijvoorbeeld wiki = 192.168.20.15. Het adres kan een IP-adres of de naam van een machine zijn. Open het als http://wiki:8080/, met de poort die de website gebruikt."
+
+[messages.names-heading]
+source = "Names"
+translation = "Namen"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Eigen namen voor adressen in je tailnets, zoals een server achter een subnetrouter. Ze werken alleen in browsers en doorgestuurde poorten op deze computer."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Regel { $line }: de naam { $value } komt twee keer voor."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Regel { $line }: schrijf name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Regel { $line }: ‘{ $value }’ kan geen naam zijn. Gebruik letters, cijfers, koppeltekens en punten."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Regel { $line }: ‘{ $value }’ is geen IP-adres en geen naam van een machine."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Nieuw tailnet"
@@ -639,6 +675,14 @@ translation = "De wijzigingen ongedaan maken"
 [messages.romanian]
 source = "Romanian"
 translation = "Roemeens"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Subnetten routeren"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Netwerken die dit tailnet bereikt via zijn subnetrouters, zoals een cloudnetwerk. Zet dit uit als er een overlapt met een netwerk waarop deze computer zit."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

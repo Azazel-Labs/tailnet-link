@@ -194,11 +194,21 @@ open-settings-folder = Otevřít složku nastavení
 about-line = { -app-name } { $version } · místní proxy { $proxy } · PAC { $pac }
 settings-location = Nastavení je uloženo v { $path }
 
+## Settings: names
+
+names-heading = Názvy
+names-help = Vlastní názvy pro adresy ve vašich sítích tailnet, například pro server za směrovačem podsítě. Fungují jen v prohlížečích a přesměrováních portů na tomto počítači.
+edit-names = Upravit názvy
+# „name = address“ a příklad ponechte beze změny: to uživatel píše.
+names-format-help = Jeden na řádek: name = address, například wiki = 192.168.20.15. Adresa může být IP adresa nebo název zařízení. Otevřete ho jako http://wiki:8080/ s portem, který web používá.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Zadejte název zařízení nebo webovou adresu.
 check-bad-port = { $input }: to není platný port.
-check-not-routed = { -app-name } nesměruje { $host }: adresa nekončí doménou žádné sítě tailnet, která právě směruje, takže jde napřímo (přes vaši běžnou síť a váš vlastní Tailscale).
+check-not-routed = { -app-name } nesměruje { $host }: není to název, adresa ani podsíť žádné sítě tailnet, která právě směruje, takže jde napřímo (přes vaši běžnou síť a váš vlastní Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } je ve více sítích tailnet ({ $tailnets }), proto se nesměruje. Použijte raději název zařízení, nebo u jedné z těchto sítí vypněte podsítě.
 check-gone = Tato síť tailnet právě zmizela.
 check-not-running = Síť { $tailnet } neběží.
 check-ok = { $address } funguje: připojeno přes { $tailnet } za { $ms } ms.
@@ -216,6 +226,10 @@ forwards-line-target = Řádek { $line }: „{ $value }“ má mít tvar host:po
 forwards-line-duplicate = Řádek { $line }: místní port { $port } je použit dvakrát.
 domain-invalid = „{ $domain }“ není doména; použijte něco jako example.ts.net.
 domain-characters = „{ $domain }“ obsahuje znaky, které doména nesmí obsahovat.
+names-line-format = Řádek { $line }: zapište name = address.
+names-line-name = Řádek { $line }: „{ $value }“ nemůže být název. Použijte písmena, číslice, pomlčky a tečky.
+names-line-target = Řádek { $line }: „{ $value }“ není IP adresa ani název zařízení.
+names-line-duplicate = Řádek { $line }: název { $value } je uveden dvakrát.
 autostart-unsupported = Spouštění po přihlášení není v tomto systému podporováno.
 
 ## Dialogs
@@ -231,6 +245,8 @@ tailnet-name = Název
 tailnet-name-hint = Zobrazuje se v této aplikaci a v nabídce v oznamovací oblasti
 extra-domains = Další domény (volitelné)
 extra-domains-help = Vlastní doména sítě tailnet se směruje automaticky. Přidejte jednu na řádek.
+route-subnets = Směrovat její podsítě
+route-subnets-help = Sítě, do kterých se tato síť tailnet dostane přes své směrovače podsítí, například cloudová síť. Vypněte to, pokud se některá z nich překrývá se sítí, ve které je tento počítač.
 forward-dialog-title = Přesměrovat port
 forward-dialog-text = Získejte port na tomto počítači, který vede k { $host }. Který port na tom zařízení?
 port-preset-remote-desktop = Vzdálená plocha

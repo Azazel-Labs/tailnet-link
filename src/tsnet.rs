@@ -56,6 +56,13 @@ pub struct PeerStatus {
     pub online: bool,
     #[serde(rename = "TailscaleIPs", default)]
     pub ips: Option<Vec<String>>,
+    /// The subnets this machine routes for the tailnet (approved, and it's the
+    /// primary router for them), e.g. 192.168.0.0/16. An exit node lists 0.0.0.0/0.
+    #[serde(rename = "PrimaryRoutes", default)]
+    pub primary_routes: Option<Vec<String>>,
+    /// Its tags from the tailnet's policy, e.g. tag:server.
+    #[serde(rename = "Tags", default)]
+    pub tags: Option<Vec<String>>,
 }
 
 #[derive(Debug, Default, Clone, Deserialize)]
@@ -225,9 +232,16 @@ impl Node {
         self.local_api("POST", "logout", None).map(|_| ())
     }
 
-    /// Blocks every incoming connection from that tailnet to this computer.
-    pub fn set_shields_up(&self) -> Result<(), String> {
-        self.local_api("PATCH", "prefs", Some(r#"{"ShieldsUp":true,"ShieldsUpSet":true}"#)).map(|_| ())
+    /// Blocks every incoming connection from that tailnet to this computer, and
+    /// accepts the subnets its routers share, so their addresses can be reached
+    /// (Tailscale already does on Windows; Linux and macOS need asking).
+    pub fn set_prefs(&self) -> Result<(), String> {
+        self.local_api(
+            "PATCH",
+            "prefs",
+            Some(r#"{"ShieldsUp":true,"ShieldsUpSet":true,"RouteAll":true,"RouteAllSet":true}"#),
+        )
+        .map(|_| ())
     }
 }
 
@@ -261,7 +275,7 @@ mod tests {
         );
 
         // LocalAPI: our credentials are accepted (a wrong one is refused).
-        node.set_shields_up().expect("LocalAPI prefs with our credentials");
+        node.set_prefs().expect("LocalAPI prefs with our credentials");
         let bad = Node {
             sd: -1,
             loopback: node.loopback.clone(),

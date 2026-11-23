@@ -192,11 +192,21 @@ open-settings-folder = Avaa asetuskansio
 about-line = { -app-name } { $version } · paikallinen välityspalvelin { $proxy } · PAC { $pac }
 settings-location = Asetukset: { $path }
 
+## Settings: names
+
+names-heading = Nimet
+names-help = Omia nimiä tailnetiesi osoitteille, esimerkiksi aliverkkoreitittimen takana olevalle palvelimelle. Ne toimivat vain tämän tietokoneen selaimissa ja portin edelleenohjauksissa.
+edit-names = Muokkaa nimiä
+# Säilytä ”name = address” ja esimerkki sellaisinaan: ne kirjoitetaan juuri noin.
+names-format-help = Yksi riviä kohden: name = address, esimerkiksi wiki = 192.168.20.15. Osoite voi olla IP-osoite tai koneen nimi. Avaa se osoitteella http://wiki:8080/ ja sivuston käyttämällä portilla.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Kirjoita koneen nimi tai verkko-osoite.
 check-bad-port = { $input }: portti ei kelpaa.
-check-not-routed = { -app-name } ei reititä kohdetta { $host }: se ei pääty minkään juuri nyt reitittävän tailnetin verkkotunnukseen, joten se kulkee suoraan (tavallisen verkkosi ja oman Tailscalesi kautta).
+check-not-routed = { -app-name } ei reititä kohdetta { $host }: se ei ole minkään juuri nyt reitittävän tailnetin nimi, osoite tai aliverkko, joten se kulkee suoraan (tavallisen verkkosi ja oman Tailscalesi kautta).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } on useammassa kuin yhdessä tailnetissä ({ $tailnets }), joten sitä ei reititetä. Käytä mieluummin koneen nimeä tai poista aliverkot käytöstä yhdestä näistä tailneteista.
 check-gone = Tuo tailnet katosi juuri.
 check-not-running = Tailnet { $tailnet } ei ole käynnissä.
 check-ok = { $address } toimii: yhteys tailnetin { $tailnet } kautta, { $ms } ms.
@@ -214,6 +224,10 @@ forwards-line-target = Rivi { $line }: ”{ $value }” pitää olla muotoa host
 forwards-line-duplicate = Rivi { $line }: paikallinen portti { $port } on käytössä kahdesti.
 domain-invalid = ”{ $domain }” ei ole verkkotunnus; käytä esimerkiksi muotoa example.ts.net.
 domain-characters = ”{ $domain }” sisältää merkkejä, joita verkkotunnuksessa ei voi olla.
+names-line-format = Rivi { $line }: kirjoita name = address.
+names-line-name = Rivi { $line }: ”{ $value }” ei kelpaa nimeksi. Käytä kirjaimia, numeroita, yhdysmerkkejä ja pisteitä.
+names-line-target = Rivi { $line }: ”{ $value }” ei ole IP-osoite eikä koneen nimi.
+names-line-duplicate = Rivi { $line }: nimi { $value } on annettu kahdesti.
 autostart-unsupported = Käynnistystä sisäänkirjautumisen yhteydessä ei tueta tässä järjestelmässä.
 
 ## Dialogs
@@ -229,6 +243,8 @@ tailnet-name = Nimi
 tailnet-name-hint = Näkyy tässä sovelluksessa ja ilmaisinalueen valikossa
 extra-domains = Lisäverkkotunnukset (valinnainen)
 extra-domains-help = Tailnetin oma verkkotunnus reititetään automaattisesti. Lisää yksi riviä kohden.
+route-subnets = Reititä sen aliverkot
+route-subnets-help = Verkot, joihin tämä tailnet pääsee aliverkkoreitittimiensä kautta, esimerkiksi pilviverkko. Poista tämä käytöstä, jos jokin niistä menee päällekkäin sellaisen verkon kanssa, jossa tämä tietokone on.
 forward-dialog-title = Ohjaa portti edelleen
 forward-dialog-text = Saat tähän tietokoneeseen portin, joka johtaa kohteeseen { $host }. Mikä portti kyseisessä koneessa?
 port-preset-remote-desktop = Etätyöpöytä

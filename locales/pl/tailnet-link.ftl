@@ -194,11 +194,21 @@ open-settings-folder = Otwórz folder ustawień
 about-line = { -app-name } { $version } · lokalne proxy { $proxy } · PAC { $pac }
 settings-location = Ustawienia są w { $path }
 
+## Settings: names
+
+names-heading = Nazwy
+names-help = Własne nazwy adresów w twoich sieciach tailnet, na przykład serwera za routerem podsieci. Działają tylko w przeglądarkach i przekierowaniach portów na tym komputerze.
+edit-names = Edytuj nazwy
+# „name = address” i przykład zostają bez zmian: to wpisuje użytkownik.
+names-format-help = Jedna w wierszu: name = address, na przykład wiki = 192.168.20.15. Adres może być adresem IP lub nazwą urządzenia. Otwieraj ją jako http://wiki:8080/, z portem, którego używa witryna.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Wpisz nazwę urządzenia lub adres internetowy.
 check-bad-port = { $input }: to nie jest prawidłowy port.
-check-not-routed = { -app-name } nie obsługuje { $host }: adres nie kończy się domeną żadnej aktywnej teraz sieci tailnet, więc idzie bezpośrednio (przez zwykłą sieć i własny Tailscale).
+check-not-routed = { -app-name } nie obsługuje { $host }: to nie jest nazwa, adres ani podsieć żadnej aktywnej teraz sieci tailnet, więc idzie bezpośrednio (przez zwykłą sieć i własny Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } należy do więcej niż jednej sieci tailnet ({ $tailnets }), więc nie jest obsługiwany. Użyj zamiast tego nazwy urządzenia albo wyłącz podsieci w jednej z tych sieci.
 check-gone = Ta sieć tailnet właśnie zniknęła.
 check-not-running = Sieć { $tailnet } nie działa.
 check-ok = { $address } działa: połączono przez { $tailnet } w { $ms } ms.
@@ -216,6 +226,10 @@ forwards-line-target = Wiersz { $line }: „{ $value }” powinno mieć postać 
 forwards-line-duplicate = Wiersz { $line }: port lokalny { $port } występuje dwa razy.
 domain-invalid = „{ $domain }” nie jest domeną; użyj czegoś w rodzaju example.ts.net.
 domain-characters = „{ $domain }” zawiera znaki niedozwolone w domenie.
+names-line-format = Wiersz { $line }: wpisz name = address.
+names-line-name = Wiersz { $line }: „{ $value }” nie może być nazwą. Użyj liter, cyfr, łączników i kropek.
+names-line-target = Wiersz { $line }: „{ $value }” nie jest adresem IP ani nazwą urządzenia.
+names-line-duplicate = Wiersz { $line }: nazwa { $value } występuje dwa razy.
 autostart-unsupported = Uruchamianie po zalogowaniu nie jest obsługiwane w tym systemie.
 
 ## Dialogs
@@ -231,6 +245,8 @@ tailnet-name = Nazwa
 tailnet-name-hint = Wyświetlana w tej aplikacji i w menu w zasobniku
 extra-domains = Dodatkowe domeny (opcjonalnie)
 extra-domains-help = Własna domena sieci tailnet jest obsługiwana automatycznie. Dodaj po jednej w wierszu.
+route-subnets = Przekazuj ruch do jej podsieci
+route-subnets-help = Sieci, do których ta sieć tailnet dociera przez swoje routery podsieci, na przykład sieć w chmurze. Wyłącz to, jeśli któraś z nich nakłada się na sieć, w której jest ten komputer.
 forward-dialog-title = Przekieruj port
 forward-dialog-text = Uzyskaj port na tym komputerze prowadzący do { $host }. Który port na tamtym urządzeniu?
 port-preset-remote-desktop = Pulpit zdalny

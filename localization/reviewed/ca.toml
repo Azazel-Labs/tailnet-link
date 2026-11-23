@@ -56,6 +56,10 @@ translation = "Cancel·la"
 source = "Catalan"
 translation = "Català"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } és a més d’una tailnet ({ $tailnets }), de manera que no s’encamina. Fes servir el nom de la màquina, o desactiva les subxarxes d’una d’aquestes tailnets."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: aquest port no és vàlid."
@@ -78,12 +82,12 @@ translation = "Aquesta tailnet acaba de desaparèixer."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ -app-name } no encamina { $host }: no acaba amb el domini de cap tailnet que encamini ara mateix, de manera que va directe (per la teva xarxa normal i el teu propi Tailscale).
+{ -app-name } no encamina { $host }: no és un nom, una adreça ni una subxarxa de cap tailnet que encamini ara mateix, de manera que va directe (per la teva xarxa normal i el teu propi Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Neerlandès"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Edita les redireccions"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Edita els noms"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Més accions"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Un per línia: name = address, per exemple wiki = 192.168.20.15. L’adreça pot ser una adreça IP o el nom d’una màquina. Obre’l com a http://wiki:8080/, amb el port que fa servir el lloc web."
+
+[messages.names-heading]
+source = "Names"
+translation = "Noms"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Noms propis per a adreces de les teves tailnets, com ara un servidor darrere d’un encaminador de subxarxa. Només funcionen als navegadors i a les redireccions de ports d’aquest ordinador."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Línia { $line }: el nom { $value } apareix dues vegades."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Línia { $line }: escriu name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Línia { $line }: «{ $value }» no pot ser un nom. Fes servir lletres, xifres, guions i punts."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Línia { $line }: «{ $value }» no és una adreça IP ni el nom d’una màquina."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Tailnet nova"
@@ -639,6 +675,14 @@ translation = "Desfés els canvis"
 [messages.romanian]
 source = "Romanian"
 translation = "Romanès"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Encamina les seves subxarxes"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Xarxes a què arriba aquesta tailnet a través dels seus encaminadors de subxarxa, com ara una xarxa al núvol. Desactiva-ho si alguna se solapa amb una xarxa a què està connectat aquest ordinador."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

@@ -226,11 +226,21 @@ update-checking = Checking…
 update-up-to-date = You have the latest version
 update-check-failed = Couldn't check for updates
 
+## Settings: names
+
+names-heading = Names
+names-help = Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only.
+edit-names = Edit names
+# Keep "name = address" and the example as they are: they are what you type.
+names-format-help = One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Type a machine name or a web address.
 check-bad-port = { $input }: that's not a valid port.
-check-not-routed = { $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+check-not-routed = { $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets.
 check-gone = That tailnet just went away.
 check-not-running = { $tailnet } isn't running.
 check-ok = { $address } works: connected through { $tailnet } in { $ms } ms.
@@ -249,6 +259,10 @@ forwards-line-target = Line { $line }: “{ $value }” should be host:port.
 forwards-line-duplicate = Line { $line }: local port { $port } is used twice.
 domain-invalid = “{ $domain }” isn't a domain; use something like example.ts.net.
 domain-characters = “{ $domain }” contains characters a domain can't have.
+names-line-format = Line { $line }: write name = address.
+names-line-name = Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots.
+names-line-target = Line { $line }: “{ $value }” isn't an IP address or a machine's name.
+names-line-duplicate = Line { $line }: { $value } is named twice.
 autostart-unsupported = Starting at login isn't supported on this system.
 
 ## Dialogs
@@ -265,6 +279,8 @@ tailnet-name = Name
 tailnet-name-hint = Shown in this app and the tray menu
 extra-domains = Extra domains (optional)
 extra-domains-help = The tailnet's own domain is routed automatically. Add one per line.
+route-subnets = Route its subnets
+route-subnets-help = Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on.
 forward-dialog-title = Forward a port
 forward-dialog-text = Get a port on this computer that leads to { $host }. Which port on that machine?
 port-preset-remote-desktop = Remote Desktop

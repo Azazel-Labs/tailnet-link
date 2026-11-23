@@ -189,11 +189,21 @@ open-settings-folder = Instellingenmap openen
 about-line = { -app-name } { $version } · lokale proxy { $proxy } · PAC { $pac }
 settings-location = Instellingen in { $path }
 
+## Instellingen: namen
+
+names-heading = Namen
+names-help = Eigen namen voor adressen in je tailnets, zoals een server achter een subnetrouter. Ze werken alleen in browsers en doorgestuurde poorten op deze computer.
+edit-names = Namen bewerken
+# Laat ‘name = address’ en het voorbeeld staan: dat is wat je typt.
+names-format-help = Eén per regel: name = address, bijvoorbeeld wiki = 192.168.20.15. Het adres kan een IP-adres of de naam van een machine zijn. Open het als http://wiki:8080/, met de poort die de website gebruikt.
+
 ## Resultaten van 'Testen' in Probleemoplossing
 
 check-empty = Typ een machinenaam of een webadres.
 check-bad-port = { $input }: dat is geen geldige poort.
-check-not-routed = { $host } wordt niet gerouteerd door { -app-name }: het eindigt niet op het domein van een tailnet dat nu routeert, dus het gaat rechtstreeks (via je normale netwerk en je eigen Tailscale).
+check-not-routed = { $host } wordt niet gerouteerd door { -app-name }: het is geen naam, adres of subnet van een tailnet dat nu routeert, dus het gaat rechtstreeks (via je normale netwerk en je eigen Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } zit in meer dan één tailnet ({ $tailnets }), dus het wordt niet gerouteerd. Gebruik in plaats daarvan de naam van de machine, of zet subnetten uit voor een van die tailnets.
 check-gone = Dat tailnet is net verdwenen.
 check-not-running = { $tailnet } draait niet.
 check-ok = { $address } werkt: verbonden via { $tailnet } in { $ms } ms.
@@ -211,6 +221,10 @@ forwards-line-target = Regel { $line }: ‘{ $value }’ moet host:port zijn.
 forwards-line-duplicate = Regel { $line }: lokale poort { $port } wordt twee keer gebruikt.
 domain-invalid = ‘{ $domain }’ is geen domein; gebruik iets als example.ts.net.
 domain-characters = ‘{ $domain }’ bevat tekens die een domein niet mag hebben.
+names-line-format = Regel { $line }: schrijf name = address.
+names-line-name = Regel { $line }: ‘{ $value }’ kan geen naam zijn. Gebruik letters, cijfers, koppeltekens en punten.
+names-line-target = Regel { $line }: ‘{ $value }’ is geen IP-adres en geen naam van een machine.
+names-line-duplicate = Regel { $line }: de naam { $value } komt twee keer voor.
 autostart-unsupported = Starten bij inloggen wordt op dit systeem niet ondersteund.
 
 ## Dialoogvensters
@@ -226,6 +240,8 @@ tailnet-name = Naam
 tailnet-name-hint = Getoond in deze app en in het systeemvakmenu
 extra-domains = Extra domeinen (optioneel)
 extra-domains-help = Het eigen domein van het tailnet wordt automatisch gerouteerd. Voeg er één per regel toe.
+route-subnets = Subnetten routeren
+route-subnets-help = Netwerken die dit tailnet bereikt via zijn subnetrouters, zoals een cloudnetwerk. Zet dit uit als er een overlapt met een netwerk waarop deze computer zit.
 forward-dialog-title = Poort doorsturen
 forward-dialog-text = Krijg een poort op deze computer die naar { $host } leidt. Welke poort op die machine?
 port-preset-remote-desktop = Extern bureaublad

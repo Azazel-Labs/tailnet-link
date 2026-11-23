@@ -56,6 +56,10 @@ translation = "キャンセル"
 source = "Catalan"
 translation = "カタロニア語"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } は複数の tailnet ({ $tailnets }) に含まれるため、ルーティングされません。代わりにマシン名を使うか、いずれかの tailnet でサブネットをオフにしてください。"
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: 有効なポートではありません。"
@@ -78,12 +82,12 @@ translation = "その tailnet はたった今なくなりました。"
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } は { -app-name } でルーティングされません。現在ルーティング中のどの tailnet のドメインにも当てはまらないため、直接接続されます (通常のネットワークと自分の Tailscale を経由します)。
+{ $host } は { -app-name } でルーティングされません。現在ルーティング中のどの tailnet の名前、アドレス、サブネットにも当てはまらないため、直接接続されます (通常のネットワークと自分の Tailscale を経由します)。
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "オランダ語"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "転送を編集"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "名前を編集"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "その他の操作"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "1 行に 1 つずつ、name = address と書きます (例: wiki = 192.168.20.15)。アドレスには IP アドレスまたはマシン名を指定できます。http://wiki:8080/ のように、Web サイトが使うポートを付けて開きます。"
+
+[messages.names-heading]
+source = "Names"
+translation = "名前"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "tailnet 内のアドレスに付ける独自の名前です (サブネット ルーターの背後にあるサーバーなど)。このコンピューター上のブラウザーとポート転送でのみ使えます。"
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "{ $line } 行目: 名前 { $value } が 2 回使われています。"
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "{ $line } 行目: name = address の形式で書いてください。"
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "{ $line } 行目: 「{ $value }」は名前に使えません。英字、数字、ハイフン、ドットを使ってください。"
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "{ $line } 行目: 「{ $value }」は IP アドレスでもマシン名でもありません。"
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "新しい tailnet"
@@ -639,6 +675,14 @@ translation = "変更を取り消します"
 [messages.romanian]
 source = "Romanian"
 translation = "ルーマニア語"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "サブネットをルーティング"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "この tailnet がサブネット ルーター経由で到達するネットワーク (クラウド ネットワークなど) です。このコンピューターが接続しているネットワークと重なる場合はオフにしてください。"
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

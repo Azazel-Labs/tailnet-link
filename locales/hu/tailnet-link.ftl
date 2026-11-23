@@ -200,11 +200,21 @@ open-settings-folder = Beállításmappa megnyitása
 about-line = { -app-name } { $version } · helyi proxy { $proxy } · PAC { $pac }
 settings-location = Beállítások helye: { $path }
 
+## Beállítások: nevek
+
+names-heading = Nevek
+names-help = Saját nevek a tailnetjeiben lévő címekhez, például egy alhálózati útválasztó mögötti kiszolgálóhoz. Csak a böngészőkben és a porttovábbításokban működnek ezen a számítógépen.
+edit-names = Nevek szerkesztése
+# A „name = address” és a példa maradjon változatlan: ezeket kell begépelni.
+names-format-help = Soronként egy: name = address, például wiki = 192.168.20.15. A cím lehet IP-cím vagy egy gép neve. Így nyissa meg: http://wiki:8080/, a webhely által használt porttal.
+
 ## A hibaelhárítási „Teszt” eredményei
 
 check-empty = Írjon be egy gépnevet vagy webcímet.
 check-bad-port = { $input }: ez nem érvényes port.
-check-not-routed = { $host }: a { -app-name } nem irányítja át, mert egyik éppen útválasztást végző tailnet tartományára sem végződik. Ezért közvetlenül halad (a szokásos hálózatán és a saját Tailscale-kapcsolatán át).
+check-not-routed = { $host }: a { -app-name } nem irányítja át, mert nem neve, címe vagy alhálózata egyetlen éppen útválasztást végző tailnetnek sem. Ezért közvetlenül halad (a szokásos hálózatán és a saját Tailscale-kapcsolatán át).
+# $tailnets a tailneteket sorolja fel, vesszővel elválasztva.
+check-ambiguous = { $host } több tailnetben is szerepel ({ $tailnets }), ezért nincs átirányítva. Használja inkább a gép nevét, vagy kapcsolja ki az alhálózatokat az egyik ilyen tailnetben.
 check-gone = Ez a tailnet épp eltűnt.
 check-not-running = A(z) { $tailnet } tailnet nem fut.
 check-ok = { $address } működik: kapcsolódva a(z) { $tailnet } tailneten át, { $ms } ms alatt.
@@ -223,6 +233,10 @@ forwards-line-target = { $line }. sor: „{ $value }” helyett host:port formá
 forwards-line-duplicate = { $line }. sor: a(z) { $port } helyi port kétszer szerepel.
 domain-invalid = „{ $domain }” nem tartomány; adjon meg ilyesmit: example.ts.net.
 domain-characters = „{ $domain }” olyan karaktereket tartalmaz, amelyek tartománynévben nem fordulhatnak elő.
+names-line-format = { $line }. sor: írja így: name = address.
+names-line-name = { $line }. sor: „{ $value }” nem lehet név. Használjon betűket, számjegyeket, kötőjeleket és pontokat.
+names-line-target = { $line }. sor: „{ $value }” se nem IP-cím, se nem gépnév.
+names-line-duplicate = { $line }. sor: a(z) { $value } név kétszer szerepel.
 autostart-unsupported = A bejelentkezéskori indítás ezen a rendszeren nem támogatott.
 
 ## Párbeszédablakok
@@ -239,6 +253,8 @@ tailnet-name = Név
 tailnet-name-hint = Ebben az alkalmazásban és a tálcamenüben jelenik meg
 extra-domains = További tartományok (nem kötelező)
 extra-domains-help = A tailnet saját tartománya automatikusan át van irányítva. Soronként egyet adjon meg.
+route-subnets = Alhálózatainak útválasztása
+route-subnets-help = Hálózatok, amelyeket ez a tailnet az alhálózati útválasztóin keresztül ér el, például egy felhőhálózat. Kapcsolja ki, ha valamelyik átfedésben van egy olyan hálózattal, amelyen ez a számítógép van.
 forward-dialog-title = Porttovábbítás
 forward-dialog-text = Kapjon egy portot ezen a számítógépen, amely ide vezet: { $host }. A gép melyik portjára?
 port-preset-remote-desktop = Távoli asztal

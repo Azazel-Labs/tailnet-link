@@ -56,6 +56,10 @@ translation = "Mégse"
 source = "Catalan"
 translation = "Katalán"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } több tailnetben is szerepel ({ $tailnets }), ezért nincs átirányítva. Használja inkább a gép nevét, vagy kapcsolja ki az alhálózatokat az egyik ilyen tailnetben."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: ez nem érvényes port."
@@ -78,12 +82,12 @@ translation = "Ez a tailnet épp eltűnt."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host }: a { -app-name } nem irányítja át, mert egyik éppen útválasztást végző tailnet tartományára sem végződik. Ezért közvetlenül halad (a szokásos hálózatán és a saját Tailscale-kapcsolatán át).
+{ $host }: a { -app-name } nem irányítja át, mert nem neve, címe vagy alhálózata egyetlen éppen útválasztást végző tailnetnek sem. Ezért közvetlenül halad (a szokásos hálózatán és a saját Tailscale-kapcsolatán át).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Holland"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Továbbítások szerkesztése"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Nevek szerkesztése"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "További műveletek"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Soronként egy: name = address, például wiki = 192.168.20.15. A cím lehet IP-cím vagy egy gép neve. Így nyissa meg: http://wiki:8080/, a webhely által használt porttal."
+
+[messages.names-heading]
+source = "Names"
+translation = "Nevek"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Saját nevek a tailnetjeiben lévő címekhez, például egy alhálózati útválasztó mögötti kiszolgálóhoz. Csak a böngészőkben és a porttovábbításokban működnek ezen a számítógépen."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "{ $line }. sor: a(z) { $value } név kétszer szerepel."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "{ $line }. sor: írja így: name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "{ $line }. sor: „{ $value }” nem lehet név. Használjon betűket, számjegyeket, kötőjeleket és pontokat."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "{ $line }. sor: „{ $value }” se nem IP-cím, se nem gépnév."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Új tailnet"
@@ -639,6 +675,14 @@ translation = "A módosítások visszavonása"
 [messages.romanian]
 source = "Romanian"
 translation = "Román"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Alhálózatainak útválasztása"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Hálózatok, amelyeket ez a tailnet az alhálózati útválasztóin keresztül ér el, például egy felhőhálózat. Kapcsolja ki, ha valamelyik átfedésben van egy olyan hálózattal, amelyen ez a számítógép van."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

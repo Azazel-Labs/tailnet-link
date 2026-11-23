@@ -56,6 +56,10 @@ translation = "ยกเลิก"
 source = "Catalan"
 translation = "คาตาลัน"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } อยู่ใน tailnet มากกว่าหนึ่งรายการ ({ $tailnets }) จึงไม่ได้กำหนดเส้นทาง ให้ใช้ชื่อเครื่องแทน หรือปิดซับเน็ตของ tailnet รายการใดรายการหนึ่งในนั้น"
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: พอร์ตไม่ถูกต้อง"
@@ -78,12 +82,12 @@ translation = "tailnet นั้นเพิ่งหายไป"
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ -app-name } ไม่ได้กำหนดเส้นทางให้ { $host } เพราะไม่ได้ลงท้ายด้วยโดเมนของ tailnet ใดที่กำลังกำหนดเส้นทางอยู่ จึงไปโดยตรง (ผ่านเครือข่ายปกติและ Tailscale ของคุณเอง)
+{ -app-name } ไม่ได้กำหนดเส้นทางให้ { $host } เพราะไม่ใช่ชื่อ ที่อยู่ หรือซับเน็ตของ tailnet ใดที่กำลังกำหนดเส้นทางอยู่ จึงไปโดยตรง (ผ่านเครือข่ายปกติและ Tailscale ของคุณเอง)
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "ดัตช์"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "แก้ไขการส่งต่อ"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "แก้ไขชื่อ"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "การดำเนินการเพิ่มเติม"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "บรรทัดละหนึ่งรายการ: name = address เช่น wiki = 192.168.20.15 ที่อยู่อาจเป็นที่อยู่ IP หรือชื่อเครื่องก็ได้ เปิดเป็น http://wiki:8080/ โดยใส่พอร์ตที่เว็บไซต์ใช้"
+
+[messages.names-heading]
+source = "Names"
+translation = "ชื่อ"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "ชื่อที่คุณตั้งเองสำหรับที่อยู่ใน tailnet ของคุณ เช่น เซิร์ฟเวอร์ที่อยู่หลังซับเน็ตเราเตอร์ ใช้ได้เฉพาะในเบราว์เซอร์และการส่งต่อพอร์ตบนคอมพิวเตอร์เครื่องนี้เท่านั้น"
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "บรรทัด { $line }: ชื่อ { $value } ถูกตั้งไว้สองครั้ง"
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "บรรทัด { $line }: เขียนเป็น name = address"
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = 'บรรทัด { $line }: "{ $value }" ใช้เป็นชื่อไม่ได้ ให้ใช้ตัวอักษร ตัวเลข ขีดกลาง และจุด'
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = 'บรรทัด { $line }: "{ $value }" ไม่ใช่ที่อยู่ IP หรือชื่อเครื่อง'
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "tailnet ใหม่"
@@ -639,6 +675,14 @@ translation = "เลิกทำการเปลี่ยนแปลง"
 [messages.romanian]
 source = "Romanian"
 translation = "โรมาเนีย"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "กำหนดเส้นทางซับเน็ตของ tailnet นี้"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "เครือข่ายที่ tailnet นี้เข้าถึงผ่านซับเน็ตเราเตอร์ เช่น เครือข่ายบนคลาวด์ ปิดตัวเลือกนี้หากมีเครือข่ายใดซ้อนทับกับเครือข่ายที่คอมพิวเตอร์เครื่องนี้เชื่อมต่ออยู่"
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

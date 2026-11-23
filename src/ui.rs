@@ -13,7 +13,7 @@ use eframe::egui::{self, Margin, RichText, Stroke, vec2};
 use tray_icon::menu::{CheckMenuItem, Menu, MenuEvent, MenuId, MenuItem, PredefinedMenuItem};
 use tray_icon::{TrayIcon, TrayIconBuilder, TrayIconEvent};
 
-use crate::config::{self, forwards_text, parse_domains, parse_forwards};
+use crate::config::{self, forwards_text, names_text, parse_domains, parse_forwards, parse_names};
 use crate::core::{Core, ForwardStatus, Machine, SiteStatus, Status, SystemProxyState, TailnetStatus, UpdateCheck};
 use crate::i18n::{self, tr};
 use crate::icon;
@@ -49,6 +49,9 @@ enum Dialog {
         name: String,
         extra: String,
         enabled: bool,
+        /// The subnets its routers share ("" if none).
+        subnets: String,
+        route_subnets: bool,
     },
     ConfirmRemove {
         id: String,
@@ -102,6 +105,8 @@ pub struct Gui {
     logo: egui::TextureHandle,
     // Settings tab (edited locally until Save)
     forwards: String,
+    /// The Names editor's text.
+    names: String,
     sys_mode: usize,
     autostart: bool,
     /// The language setting: a catalog code, or "auto". Applied as soon as it's picked.
@@ -114,6 +119,8 @@ pub struct Gui {
     machine_query: String,
     /// Site icons as textures, by host, with the icon each was made from.
     site_icons: HashMap<String, (Arc<crate::sites::Icon>, egui::TextureHandle)>,
+    /// Pictures of the starred websites, as textures.
+    site_thumbs: HashMap<String, (Arc<crate::sites::Icon>, egui::TextureHandle)>,
     /// A short note at the bottom of the window ("Copied …").
     toast: Option<(String, std::time::Instant)>,
     // Tray
@@ -210,6 +217,7 @@ impl Gui {
             started: false,
             logo,
             forwards: forwards_text(&cfg.forwards),
+            names: names_text(&cfg.names),
             sys_mode: SYS_VALUES.iter().position(|v| *v == cfg.system_proxy).unwrap_or(0),
             autostart: crate::autostart::enabled(),
             language: cfg.language.clone(),
@@ -218,6 +226,7 @@ impl Gui {
             checking: false,
             machine_query: String::new(),
             site_icons: HashMap::new(),
+            site_thumbs: HashMap::new(),
             toast: None,
             tray: None,
             tray_version: u64::MAX,
@@ -307,12 +316,14 @@ impl Gui {
     fn settings_dirty(&self) -> bool {
         let cfg = self.core.config();
         parse_forwards(&self.forwards).map_or(true, |f| f != cfg.forwards)
+            || parse_names(&self.names).map_or(true, |n| n != cfg.names)
             || SYS_VALUES[self.sys_mode] != cfg.system_proxy
     }
 
     fn revert_settings(&mut self) {
         let cfg = self.core.config();
         self.forwards = forwards_text(&cfg.forwards);
+        self.names = names_text(&cfg.names);
         self.sys_mode = SYS_VALUES.iter().position(|v| *v == cfg.system_proxy).unwrap_or(0);
     }
 
@@ -917,6 +928,8 @@ impl Gui {
                                     name: t.name.clone(),
                                     extra: t.extra.join("\n"),
                                     enabled: t.enabled,
+                                    subnets: t.subnets.join(", "),
+                                    route_subnets: !t.ignore_subnets,
                                 };
                             }
                             if t.connected && ui.button(with_icon(icons::SIGN_OUT, &tr!("log-out-menu"))).clicked() {
@@ -953,7 +966,8 @@ impl Gui {
             let routes = if t.domains.is_empty() {
                 tr!("routes-after-sign-in")
             } else {
-                t.domains.iter().map(|d| format!("*.{d}")).collect::<Vec<_>>().join(", ")
+                let subnets = if t.ignore_subnets { &[][..] } else { &t.subnets[..] };
+                t.domains.iter().map(|d| format!("*.{d}")).chain(subnets.iter().cloned()).collect::<Vec<_>>().join(", ")
             };
             let self_name = if t.self_name.is_empty() {
                 tr!("hostname-after-sign-in", hostname = self.core.config().hostname)
@@ -1077,6 +1091,21 @@ impl Gui {
                     }
                 });
             });
+            // Its tags, and the subnets it routes, on a line of their own (they can be long).
+            if !m.tags.is_empty() || !m.subnets.is_empty() {
+                let mut parts = Vec::new();
+                if !m.tags.is_empty() {
+                    parts.push(with_icon(icons::TAG, &m.tags.join(", ")));
+                }
+                if !m.subnets.is_empty() {
+                    parts.push(with_icon(icons::ARROWS_SPLIT, &m.subnets.join(", ")));
+                }
+                ui.horizontal(|ui| {
+                    // Lined up with the name, past the status dot.
+                    ui.add_space(14.0);
+                    ui.add(egui::Label::new(muted(parts.join("    ")).size(12.0)).wrap());
+                });
+            }
         });
     }
 
@@ -1115,22 +1144,36 @@ impl Gui {
             }
             ui.add_space(4.0);
             let width = ui.available_width();
-            let columns = (((width + TILE_GAP) / (TILE_MIN_WIDTH + TILE_GAP)).floor() as usize).max(1);
-            let tile_width = (width - TILE_GAP * (columns - 1) as f32) / columns as f32;
+            let fit = |min: f32| {
+                let columns = (((width + TILE_GAP) / (min + TILE_GAP)).floor() as usize).max(1);
+                (columns, (width - TILE_GAP * (columns - 1) as f32) / columns as f32)
+            };
+            // Starred sites with a picture get large tiles, always all shown, above the rest.
+            let (large, small): (Vec<&SiteStatus>, Vec<&SiteStatus>) =
+                shown.iter().partition(|x| x.favorite && x.thumb.is_some());
+            let (large_columns, large_width) = fit(LARGE_TILE_MIN_WIDTH);
+            let (columns, tile_width) = fit(TILE_MIN_WIDTH);
             // The first rows, unless asked for all (or searching). Starred sites come
             // first, and there are always enough rows for all of them.
             let searching = !self.machine_query.trim().is_empty();
             let show_all = self.core.config().sites_show_all;
-            let starred = shown.iter().filter(|x| x.favorite).count();
+            let starred = small.iter().filter(|x| x.favorite).count();
             let limit = columns * SITES_ROWS.max(starred.div_ceil(columns));
-            let folds = !searching && shown.len() > limit;
-            let visible = if folds && !show_all { &shown[..limit] } else { &shown[..] };
+            let folds = !searching && small.len() > limit;
+            let visible = if folds && !show_all { &small[..limit] } else { &small[..] };
             ui.scope(|ui| {
                 ui.spacing_mut().item_spacing = vec2(TILE_GAP, TILE_GAP);
+                for row in large.chunks(large_columns) {
+                    ui.horizontal_top(|ui| {
+                        for site in row {
+                            self.site_tile(ui, site, large_width, true);
+                        }
+                    });
+                }
                 for row in visible.chunks(columns) {
                     ui.horizontal(|ui| {
                         for site in row {
-                            self.site_tile(ui, site, tile_width);
+                            self.site_tile(ui, site, tile_width, false);
                         }
                     });
                 }
@@ -1150,10 +1193,15 @@ impl Gui {
         ui.add_space(4.0);
     }
 
-    /// One site: its icon (or first letter), its name, and where it is.
-    fn site_tile(&mut self, ui: &mut egui::Ui, site: &SiteStatus, width: f32) {
+    /// One site: its icon (or first letter), its name, and where it is. A
+    /// `large` tile shows a picture of the page above that.
+    fn site_tile(&mut self, ui: &mut egui::Ui, site: &SiteStatus, width: f32, large: bool) {
         let sense = if site.routing { egui::Sense::click() } else { egui::Sense::hover() };
-        let (rect, response) = ui.allocate_exact_size(vec2(width, TILE_HEIGHT), sense);
+        let thumb = if large { self.site_thumb_texture(ui.ctx(), site) } else { None };
+        let picture_height = thumb.map_or(0.0, |(_, [w, h])| (width * h / w.max(1.0)).min(width * 0.625));
+        let (rect, response) = ui.allocate_exact_size(vec2(width, TILE_HEIGHT + picture_height), sense);
+        // The icon, name and place go in the bottom row.
+        let caption = egui::Rect::from_min_max(egui::pos2(rect.left(), rect.bottom() - TILE_HEIGHT), rect.max);
         // Made after the tile, so it gets the clicks over it.
         let star_rect =
             egui::Rect::from_center_size(egui::pos2(rect.right() - 18.0, rect.top() + 16.0), vec2(24.0, 24.0));
@@ -1175,8 +1223,21 @@ impl Gui {
                 Stroke::new(1.0, if hovered { theme::PANEL_EDGE } else { theme::BORDER }),
                 egui::StrokeKind::Inside,
             );
+            if let Some((texture, _)) = thumb {
+                let picture = egui::Rect::from_min_max(rect.min, egui::pos2(rect.right(), caption.top())).shrink(1.0);
+                let uv = egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0));
+                let corners = egui::CornerRadius { nw: 9, ne: 9, sw: 0, se: 0 };
+                painter.add(
+                    egui::epaint::RectShape::filled(picture, corners, egui::Color32::WHITE).with_texture(texture, uv),
+                );
+                painter.hline(picture.x_range(), caption.top(), Stroke::new(1.0, theme::BORDER));
+                // A dark disc behind the star, so it shows on any page.
+                if site.favorite || pointer_in {
+                    painter.circle_filled(star_rect.center(), 12.0, egui::Color32::from_black_alpha(140));
+                }
+            }
             let plate = egui::Rect::from_center_size(
-                egui::pos2(rect.left() + 10.0 + PLATE_SIZE / 2.0, rect.center().y),
+                egui::pos2(rect.left() + 10.0 + PLATE_SIZE / 2.0, caption.center().y),
                 vec2(PLATE_SIZE, PLATE_SIZE),
             );
             let tint =
@@ -1220,14 +1281,14 @@ impl Gui {
                 format!("{} · {}", site.machine, site.tailnet)
             };
             let detail = line(RichText::new(place).size(12.0).color(theme::MUTED));
-            let top = rect.center().y - (title.size().y + detail.size().y + 2.0) / 2.0;
+            let top = caption.center().y - (title.size().y + detail.size().y + 2.0) / 2.0;
             painter.galley(egui::pos2(left, top), title.clone(), theme::STRONG);
             painter.galley(egui::pos2(left, top + title.size().y + 2.0), detail, theme::MUTED);
             // Always shown when starred; otherwise an outline while the pointer is on the tile.
             if site.favorite || pointer_in {
                 let (fill, edge) = if site.favorite {
                     (Some(STAR_GOLD), STAR_GOLD)
-                } else if star.hovered() {
+                } else if star.hovered() || thumb.is_some() {
                     (None, theme::STRONG)
                 } else {
                     (None, theme::MUTED)
@@ -1275,6 +1336,22 @@ impl Gui {
         });
     }
 
+    /// The picture of a starred site's page as a texture (made once per picture), and its size.
+    fn site_thumb_texture(&mut self, ctx: &egui::Context, site: &SiteStatus) -> Option<(egui::TextureId, [f32; 2])> {
+        let pic = site.thumb.as_ref()?;
+        let size = [pic.size[0] as f32, pic.size[1] as f32];
+        if let Some((made_from, texture)) = self.site_thumbs.get(&site.host)
+            && Arc::ptr_eq(made_from, pic)
+        {
+            return Some((texture.id(), size));
+        }
+        let image = egui::ColorImage::from_rgba_unmultiplied(pic.size, &pic.rgba);
+        let texture = ctx.load_texture(format!("site-thumb-{}", site.host), image, egui::TextureOptions::LINEAR);
+        let id = texture.id();
+        self.site_thumbs.insert(site.host.clone(), (Arc::clone(pic), texture));
+        Some((id, size))
+    }
+
     /// The site's icon as a texture, made once per icon.
     fn site_texture(&mut self, ctx: &egui::Context, site: &SiteStatus) -> Option<egui::TextureId> {
         let icon = site.icon.as_ref()?;
@@ -1298,6 +1375,8 @@ impl Gui {
 }
 
 const TILE_MIN_WIDTH: f32 = 200.0;
+/// A starred site's tile with a picture of its page.
+const LARGE_TILE_MIN_WIDTH: f32 = 280.0;
 const TILE_HEIGHT: f32 = 60.0;
 const TILE_GAP: f32 = 8.0;
 /// Rows of tiles shown until "Show all" is clicked.
@@ -1354,6 +1433,8 @@ impl Gui {
             ui.add_space(4.0);
             self.forwards_section(ui, s);
             ui.add_space(4.0);
+            self.names_section(ui);
+            ui.add_space(4.0);
             self.proxy_section(ui);
             ui.add_space(4.0);
             self.troubleshooting_section(ui, s);
@@ -1383,6 +1464,23 @@ impl Gui {
                     .hint_text("auto = build-pc.capybara-iguana.ts.net:3389"),
             );
             ui.add(egui::Label::new(muted(tr!("forwards-format-help")).size(12.0)).wrap());
+        });
+    }
+
+    fn names_section(&mut self, ui: &mut egui::Ui) {
+        theme::card().show(ui, |ui| {
+            ui.set_width(ui.available_width());
+            theme::section_heading(ui, icons::TAG, &tr!("names-heading"), Some(&tr!("names-help")));
+            ui.label(RichText::new(tr!("edit-names")).strong());
+            ui.add(
+                egui::TextEdit::multiline(&mut self.names)
+                    .code_editor()
+                    .desired_rows(2)
+                    .desired_width(f32::INFINITY)
+                    .margin(Margin::symmetric(10, 8))
+                    .hint_text("wiki = 192.168.20.15"),
+            );
+            ui.add(egui::Label::new(muted(tr!("names-format-help")).size(12.0)).wrap());
         });
     }
 
@@ -1638,14 +1736,15 @@ impl Gui {
     }
 
     fn save_settings(&mut self) {
-        match parse_forwards(&self.forwards) {
+        match parse_forwards(&self.forwards).and_then(|f| Ok((f, parse_names(&self.names)?))) {
             Err(e) => self.dialog = Dialog::Error(e),
-            Ok(fwds) => {
-                if let Err(e) = self.core.apply_global(fwds, SYS_VALUES[self.sys_mode]) {
+            Ok((fwds, names)) => {
+                if let Err(e) = self.core.apply_global(fwds, names, SYS_VALUES[self.sys_mode]) {
                     self.dialog = Dialog::Error(e);
                 } else {
                     // "auto" ports were just assigned: show them.
                     self.forwards = forwards_text(&self.core.config().forwards);
+                    self.names = names_text(&self.core.config().names);
                     self.toast(tr!("settings-saved"));
                 }
             }
@@ -1694,7 +1793,7 @@ impl Gui {
                     });
                 });
             }
-            Dialog::Edit { id, label, name, extra, enabled } => {
+            Dialog::Edit { id, label, name, extra, enabled, subnets, route_subnets } => {
                 let title = tr!("edit-title", tailnet = label.as_str());
                 let mut save = false;
                 dialog(ctx, None, &title, |ui| {
@@ -1716,6 +1815,21 @@ impl Gui {
                             .margin(Margin::symmetric(10, 8))
                             .hint_text("internal.example.com"),
                     );
+                    // Only a tailnet with subnets (or with them turned off) has anything to choose.
+                    if !subnets.is_empty() || !*route_subnets {
+                        ui.add_space(4.0);
+                        let label = tr!("route-subnets");
+                        ui.horizontal(|ui| {
+                            theme::toggle(ui, route_subnets, &label);
+                            ui.label(RichText::new(&label).strong());
+                        });
+                        let help = if subnets.is_empty() {
+                            tr!("route-subnets-help")
+                        } else {
+                            format!("{} {}", subnets, tr!("route-subnets-help"))
+                        };
+                        ui.add(egui::Label::new(muted(help).size(12.0)).wrap());
+                    }
                     actions(ui, |ui| {
                         save |= ui
                             .add(theme::primary_button(tr!("save")).min_size(vec2(88.0, theme::BUTTON_HEIGHT)))
@@ -1724,7 +1838,9 @@ impl Gui {
                     });
                 });
                 if save {
-                    match parse_domains(extra).and_then(|d| self.core.update_tailnet(id, name, *enabled, d)) {
+                    match parse_domains(extra)
+                        .and_then(|d| self.core.update_tailnet(id, name, *enabled, d, !*route_subnets))
+                    {
                         Ok(()) => close = true,
                         Err(e) => next = Some(Dialog::Error(e)),
                     }

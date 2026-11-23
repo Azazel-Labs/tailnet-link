@@ -56,6 +56,10 @@ translation = "Annuler"
 source = "Catalan"
 translation = "Catalan"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } se trouve dans plusieurs tailnets ({ $tailnets }), il n’est donc pas routé. Utilisez plutôt le nom de la machine, ou désactivez les sous-réseaux de l’un de ces tailnets."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input } : ce n’est pas un port valide."
@@ -78,12 +82,12 @@ translation = "Ce tailnet vient de disparaître."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } n’est pas routé par { -app-name } : il ne se termine par le domaine d’aucun tailnet actif en ce moment, il passe donc en direct (par votre réseau habituel et votre propre Tailscale).
+{ $host } n’est pas routé par { -app-name } : ce n’est ni un nom, ni une adresse, ni un sous-réseau d’un tailnet actif en ce moment, il passe donc en direct (par votre réseau habituel et votre propre Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Néerlandais"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Modifier les redirections"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Modifier les noms"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Plus d’actions"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Un par ligne : name = address, par exemple wiki = 192.168.20.15. L’adresse peut être une adresse IP ou le nom d’une machine. Ouvrez-le avec http://wiki:8080/, en indiquant le port utilisé par le site web."
+
+[messages.names-heading]
+source = "Names"
+translation = "Noms"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Vos propres noms pour des adresses de vos tailnets, comme un serveur derrière un routeur de sous-réseau. Ils ne fonctionnent que dans les navigateurs et les redirections de port de cet ordinateur."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Ligne { $line } : le nom { $value } apparaît deux fois."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Ligne { $line } : écrivez name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Ligne { $line } : « { $value } » ne peut pas être un nom. Utilisez des lettres, des chiffres, des tirets et des points."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Ligne { $line } : « { $value } » n’est ni une adresse IP ni le nom d’une machine."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Nouveau tailnet"
@@ -639,6 +675,14 @@ translation = "Annuler les modifications"
 [messages.romanian]
 source = "Romanian"
 translation = "Roumain"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Router ses sous-réseaux"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Réseaux que ce tailnet atteint via ses routeurs de sous-réseau, comme un réseau cloud. Désactivez cette option si l’un d’eux chevauche un réseau auquel cet ordinateur est connecté."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

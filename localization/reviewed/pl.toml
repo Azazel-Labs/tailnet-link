@@ -56,6 +56,10 @@ translation = "Anuluj"
 source = "Catalan"
 translation = "Kataloński"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } należy do więcej niż jednej sieci tailnet ({ $tailnets }), więc nie jest obsługiwany. Użyj zamiast tego nazwy urządzenia albo wyłącz podsieci w jednej z tych sieci."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: to nie jest prawidłowy port."
@@ -78,12 +82,12 @@ translation = "Ta sieć tailnet właśnie zniknęła."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ -app-name } nie obsługuje { $host }: adres nie kończy się domeną żadnej aktywnej teraz sieci tailnet, więc idzie bezpośrednio (przez zwykłą sieć i własny Tailscale).
+{ -app-name } nie obsługuje { $host }: to nie jest nazwa, adres ani podsieć żadnej aktywnej teraz sieci tailnet, więc idzie bezpośrednio (przez zwykłą sieć i własny Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Niderlandzki"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Edytuj przekierowania"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Edytuj nazwy"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Więcej działań"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Jedna w wierszu: name = address, na przykład wiki = 192.168.20.15. Adres może być adresem IP lub nazwą urządzenia. Otwieraj ją jako http://wiki:8080/, z portem, którego używa witryna."
+
+[messages.names-heading]
+source = "Names"
+translation = "Nazwy"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Własne nazwy adresów w twoich sieciach tailnet, na przykład serwera za routerem podsieci. Działają tylko w przeglądarkach i przekierowaniach portów na tym komputerze."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Wiersz { $line }: nazwa { $value } występuje dwa razy."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Wiersz { $line }: wpisz name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Wiersz { $line }: „{ $value }” nie może być nazwą. Użyj liter, cyfr, łączników i kropek."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Wiersz { $line }: „{ $value }” nie jest adresem IP ani nazwą urządzenia."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Nowa sieć tailnet"
@@ -639,6 +675,14 @@ translation = "Cofnij zmiany"
 [messages.romanian]
 source = "Romanian"
 translation = "Rumuński"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Przekazuj ruch do jej podsieci"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Sieci, do których ta sieć tailnet dociera przez swoje routery podsieci, na przykład sieć w chmurze. Wyłącz to, jeśli któraś z nich nakłada się na sieć, w której jest ten komputer."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

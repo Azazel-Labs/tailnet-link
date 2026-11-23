@@ -180,11 +180,21 @@ open-settings-folder = 설정 폴더 열기
 about-line = { -app-name } { $version } · 로컬 프록시 { $proxy } · PAC { $pac }
 settings-location = 설정 위치: { $path }
 
+## Settings: names
+
+names-heading = 이름
+names-help = tailnet에 있는 주소에 직접 붙이는 이름입니다(예: 서브넷 라우터 뒤에 있는 서버). 이 컴퓨터의 브라우저와 포트 포워딩에서만 작동합니다.
+edit-names = 이름 편집
+# Keep "name = address" and the example as they are: they are what you type.
+names-format-help = 한 줄에 하나씩 name = address 형식으로 씁니다(예: wiki = 192.168.20.15). 주소는 IP 주소나 머신 이름일 수 있습니다. 웹사이트가 사용하는 포트를 붙여 http://wiki:8080/ 같은 주소로 엽니다.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = 머신 이름이나 웹 주소를 입력하세요.
 check-bad-port = { $input }: 올바른 포트가 아닙니다.
-check-not-routed = { $host }: { -app-name }에서 라우팅하지 않습니다. 현재 라우팅 중인 어떤 tailnet의 도메인으로도 끝나지 않으므로 직접 연결됩니다(일반 네트워크와 내 Tailscale을 통해).
+check-not-routed = { $host }: { -app-name }에서 라우팅하지 않습니다. 현재 라우팅 중인 어떤 tailnet의 이름, 주소, 서브넷도 아니므로 직접 연결됩니다(일반 네트워크와 내 Tailscale을 통해).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host }은(는) 둘 이상의 tailnet({ $tailnets })에 있으므로 라우팅되지 않습니다. 대신 머신 이름을 사용하거나 해당 tailnet 중 하나에서 서브넷을 끄세요.
 check-gone = 해당 tailnet이 방금 사라졌습니다.
 check-not-running = { $tailnet }: 실행 중이 아닙니다.
 check-ok = { $address } 정상: { $tailnet } 경유로 { $ms }ms 만에 연결되었습니다.
@@ -202,6 +212,10 @@ forwards-line-target = { $line }번째 줄: “{ $value }”은(는) host:port �
 forwards-line-duplicate = { $line }번째 줄: 로컬 포트 { $port }이(가) 두 번 사용되었습니다.
 domain-invalid = “{ $domain }”은(는) 도메인이 아닙니다. example.ts.net 같은 형식을 사용하세요.
 domain-characters = “{ $domain }”에 도메인에 쓸 수 없는 문자가 있습니다.
+names-line-format = { $line }번째 줄: name = address 형식으로 작성하세요.
+names-line-name = { $line }번째 줄: “{ $value }”은(는) 이름으로 사용할 수 없습니다. 문자, 숫자, 하이픈, 점을 사용하세요.
+names-line-target = { $line }번째 줄: “{ $value }”은(는) IP 주소나 머신 이름이 아닙니다.
+names-line-duplicate = { $line }번째 줄: 이름 { $value }이(가) 두 번 지정되었습니다.
 autostart-unsupported = 이 시스템에서는 로그인 시 시작을 지원하지 않습니다.
 
 ## Dialogs
@@ -217,6 +231,8 @@ tailnet-name = 이름
 tailnet-name-hint = 이 앱과 트레이 메뉴에 표시됩니다
 extra-domains = 추가 도메인(선택 사항)
 extra-domains-help = tailnet 자체 도메인은 자동으로 라우팅됩니다. 한 줄에 하나씩 추가하세요.
+route-subnets = 서브넷 라우팅
+route-subnets-help = 이 tailnet이 서브넷 라우터를 통해 연결하는 네트워크입니다(예: 클라우드 네트워크). 이 컴퓨터가 연결된 네트워크와 겹치는 경우 끄세요.
 forward-dialog-title = 포트 포워딩
 forward-dialog-text = 이 컴퓨터에 { $host }(으)로 이어지는 포트를 만듭니다. 해당 머신의 어느 포트에 연결할까요?
 port-preset-remote-desktop = 원격 데스크톱

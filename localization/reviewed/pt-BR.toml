@@ -56,6 +56,10 @@ translation = "Cancelar"
 source = "Catalan"
 translation = "Catalão"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } está em mais de uma tailnet ({ $tailnets }), então não é roteado. Use o nome da máquina ou desative as sub-redes de uma dessas tailnets."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: essa não é uma porta válida."
@@ -78,12 +82,12 @@ translation = "Essa tailnet acabou de desaparecer."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } não é roteado pelo { -app-name }: não termina no domínio de nenhuma tailnet que esteja roteando agora, então vai direto (pela sua rede normal e pelo seu próprio Tailscale).
+{ $host } não é roteado pelo { -app-name }: não é um nome, endereço ou sub-rede de nenhuma tailnet que esteja roteando agora, então vai direto (pela sua rede normal e pelo seu próprio Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Neerlandês"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Editar encaminhamentos"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Editar nomes"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Mais ações"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Um por linha: name = address, por exemplo wiki = 192.168.20.15. O endereço pode ser um endereço IP ou o nome de uma máquina. Abra como http://wiki:8080/, com a porta que o site usa."
+
+[messages.names-heading]
+source = "Names"
+translation = "Nomes"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Nomes próprios para endereços nas suas tailnets, como um servidor atrás de um roteador de sub-rede. Eles só funcionam nos navegadores e encaminhamentos de porta deste computador."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Linha { $line }: o nome { $value } aparece duas vezes."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Linha { $line }: escreva name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Linha { $line }: “{ $value }” não pode ser um nome. Use letras, dígitos, hifens e pontos."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Linha { $line }: “{ $value }” não é um endereço IP nem o nome de uma máquina."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Nova tailnet"
@@ -639,6 +675,14 @@ translation = "Desfazer as alterações"
 [messages.romanian]
 source = "Romanian"
 translation = "Romeno"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Rotear as sub-redes dela"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Redes que esta tailnet alcança pelos roteadores de sub-rede dela, como uma rede na nuvem. Desative se alguma se sobrepuser a uma rede em que este computador está."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

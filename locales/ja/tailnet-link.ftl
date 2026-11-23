@@ -180,11 +180,21 @@ open-settings-folder = 設定フォルダーを開く
 about-line = { -app-name } { $version } · ローカル プロキシ { $proxy } · PAC { $pac }
 settings-location = 設定の保存先: { $path }
 
+## Settings: names
+
+names-heading = 名前
+names-help = tailnet 内のアドレスに付ける独自の名前です (サブネット ルーターの背後にあるサーバーなど)。このコンピューター上のブラウザーとポート転送でのみ使えます。
+edit-names = 名前を編集
+# Keep "name = address" and the example as they are: they are what you type.
+names-format-help = 1 行に 1 つずつ、name = address と書きます (例: wiki = 192.168.20.15)。アドレスには IP アドレスまたはマシン名を指定できます。http://wiki:8080/ のように、Web サイトが使うポートを付けて開きます。
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = マシン名または Web アドレスを入力してください。
 check-bad-port = { $input }: 有効なポートではありません。
-check-not-routed = { $host } は { -app-name } でルーティングされません。現在ルーティング中のどの tailnet のドメインにも当てはまらないため、直接接続されます (通常のネットワークと自分の Tailscale を経由します)。
+check-not-routed = { $host } は { -app-name } でルーティングされません。現在ルーティング中のどの tailnet の名前、アドレス、サブネットにも当てはまらないため、直接接続されます (通常のネットワークと自分の Tailscale を経由します)。
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } は複数の tailnet ({ $tailnets }) に含まれるため、ルーティングされません。代わりにマシン名を使うか、いずれかの tailnet でサブネットをオフにしてください。
 check-gone = その tailnet はたった今なくなりました。
 check-not-running = { $tailnet } は実行されていません。
 check-ok = { $address } に接続できました: { $tailnet } 経由、{ $ms } ms。
@@ -202,6 +212,10 @@ forwards-line-target = { $line } 行目: 「{ $value }」は host:port の形式
 forwards-line-duplicate = { $line } 行目: ローカル ポート { $port } が 2 回使われています。
 domain-invalid = 「{ $domain }」はドメインではありません。example.ts.net のような形式で入力してください。
 domain-characters = 「{ $domain }」にはドメインに使えない文字が含まれています。
+names-line-format = { $line } 行目: name = address の形式で書いてください。
+names-line-name = { $line } 行目: 「{ $value }」は名前に使えません。英字、数字、ハイフン、ドットを使ってください。
+names-line-target = { $line } 行目: 「{ $value }」は IP アドレスでもマシン名でもありません。
+names-line-duplicate = { $line } 行目: 名前 { $value } が 2 回使われています。
 autostart-unsupported = このシステムではログイン時の起動はサポートされていません。
 
 ## Dialogs
@@ -217,6 +231,8 @@ tailnet-name = 名前
 tailnet-name-hint = このアプリとトレイ メニューに表示されます
 extra-domains = 追加のドメイン (省略可)
 extra-domains-help = tailnet 自体のドメインは自動的にルーティングされます。1 行に 1 つずつ追加してください。
+route-subnets = サブネットをルーティング
+route-subnets-help = この tailnet がサブネット ルーター経由で到達するネットワーク (クラウド ネットワークなど) です。このコンピューターが接続しているネットワークと重なる場合はオフにしてください。
 forward-dialog-title = ポートを転送
 forward-dialog-text = このコンピューター上に、{ $host } につながるポートを用意します。そのマシンのどのポートに接続しますか?
 port-preset-remote-desktop = リモート デスクトップ

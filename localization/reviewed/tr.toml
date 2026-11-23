@@ -56,6 +56,10 @@ translation = "İptal"
 source = "Catalan"
 translation = "Katalanca"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } birden fazla tailnet'te bulunuyor ({ $tailnets }), bu yüzden yönlendirilmiyor. Bunun yerine makinenin adını kullanın veya bu tailnet'lerden biri için alt ağları kapatın."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: bu geçerli bir port değil."
@@ -78,12 +82,12 @@ translation = "Bu tailnet az önce kayboldu."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host }, { -app-name } tarafından yönlendirilmiyor: şu anda yönlendirme yapan hiçbir tailnet'in alan adıyla bitmiyor, bu yüzden doğrudan gidiyor (normal ağınız ve kendi Tailscale'iniz üzerinden).
+{ $host }, { -app-name } tarafından yönlendirilmiyor: şu anda yönlendirme yapan hiçbir tailnet'in adı, adresi veya alt ağı değil, bu yüzden doğrudan gidiyor (normal ağınız ve kendi Tailscale'iniz üzerinden).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Felemenkçe"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Yönlendirmeleri düzenle"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Adları düzenle"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Diğer işlemler"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Her satıra bir tane: name = address, örneğin wiki = 192.168.20.15. Adres bir IP adresi veya bir makinenin adı olabilir. Web sitesinin kullandığı portla birlikte http://wiki:8080/ şeklinde açın."
+
+[messages.names-heading]
+source = "Names"
+translation = "Adlar"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Tailnet'lerinizdeki adresler için kendi adlarınız; örneğin bir alt ağ yönlendiricisinin arkasındaki bir sunucu için. Yalnızca bu bilgisayardaki tarayıcılarda ve port yönlendirmelerinde çalışır."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Satır { $line }: { $value } adı iki kez verilmiş."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Satır { $line }: name = address biçiminde yazın."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Satır { $line }: “{ $value }” bir ad olamaz. Harf, rakam, kısa çizgi ve nokta kullanın."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Satır { $line }: “{ $value }” bir IP adresi veya makine adı değil."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Yeni tailnet"
@@ -639,6 +675,14 @@ translation = "Değişiklikleri geri al"
 [messages.romanian]
 source = "Romanian"
 translation = "Rumence"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Alt ağlarını yönlendir"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Bu tailnet'in alt ağ yönlendiricileri üzerinden ulaştığı ağlar; örneğin bir bulut ağı. Bunlardan biri bu bilgisayarın bağlı olduğu bir ağla çakışıyorsa bunu kapatın."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

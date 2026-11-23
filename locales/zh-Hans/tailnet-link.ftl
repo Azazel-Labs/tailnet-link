@@ -180,11 +180,21 @@ open-settings-folder = 打开设置文件夹
 about-line = { -app-name } { $version } · 本地代理 { $proxy } · PAC { $pac }
 settings-location = 设置位于 { $path }
 
+## Settings: names
+
+names-heading = 名称
+names-help = 为 tailnet 中的地址自定义名称，例如子网路由器后面的服务器。这些名称只在本机的浏览器和端口转发中有效。
+edit-names = 编辑名称
+# Keep "name = address" and the example as they are: they are what you type.
+names-format-help = 每行一个：name = address，例如 wiki = 192.168.20.15。地址可以是 IP 地址或设备名称。打开时使用 http://wiki:8080/ 这样的地址，并带上网站使用的端口。
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = 请输入设备名称或网址。
 check-bad-port = { $input }：不是有效的端口。
-check-not-routed = { -app-name } 不会路由 { $host }：它不以任何正在路由的 tailnet 的域名结尾，因此会直连（经过你的普通网络和你自己的 Tailscale）。
+check-not-routed = { -app-name } 不会路由 { $host }：它不是任何正在路由的 tailnet 的名称、地址或子网，因此会直连（经过你的普通网络和你自己的 Tailscale）。
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } 位于多个 tailnet 中（{ $tailnets }），因此不会被路由。请改用设备名称，或为其中一个 tailnet 关闭子网。
 check-gone = 该 tailnet 刚刚消失了。
 check-not-running = { $tailnet } 未在运行。
 check-ok = { $address } 可用：已经由 { $tailnet } 连接，用时 { $ms } 毫秒。
@@ -202,6 +212,10 @@ forwards-line-target = 第 { $line } 行：“{ $value }”应为 host:port。
 forwards-line-duplicate = 第 { $line } 行：本地端口 { $port } 被使用了两次。
 domain-invalid = “{ $domain }”不是域名；请使用类似 example.ts.net 的格式。
 domain-characters = “{ $domain }”包含域名中不允许的字符。
+names-line-format = 第 { $line } 行：请写成 name = address。
+names-line-name = 第 { $line } 行：“{ $value }”不能用作名称。请使用字母、数字、连字符和点。
+names-line-target = 第 { $line } 行：“{ $value }”不是 IP 地址或设备名称。
+names-line-duplicate = 第 { $line } 行：名称 { $value } 出现了两次。
 autostart-unsupported = 此系统不支持登录时启动。
 
 ## Dialogs
@@ -217,6 +231,8 @@ tailnet-name = 名称
 tailnet-name-hint = 显示在此应用和托盘菜单中
 extra-domains = 额外域名（可选）
 extra-domains-help = tailnet 自身的域名会自动路由。每行添加一个。
+route-subnets = 路由其子网
+route-subnets-help = 此 tailnet 通过其子网路由器访问的网络，例如云网络。如果其中某个网络与本机所在的网络重叠，请关闭此项。
 forward-dialog-title = 转发端口
 forward-dialog-text = 在本机上获得一个通往 { $host } 的端口。要连接那台设备的哪个端口？
 port-preset-remote-desktop = 远程桌面

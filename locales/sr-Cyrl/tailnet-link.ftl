@@ -192,11 +192,21 @@ open-settings-folder = Отвори фасциклу подешавања
 about-line = { -app-name } { $version } · локални прокси { $proxy } · PAC { $pac }
 settings-location = Подешавања се налазе у { $path }
 
+## Settings: names
+
+names-heading = Имена
+names-help = Ваша сопствена имена за адресе у вашим мрежама tailnet, на пример за сервер иза рутера подмреже. Раде само у прегледачима и прослеђивањима портова на овом рачунару.
+edit-names = Уреди имена
+# „name = address“ и пример остају непромењени: то корисник уноси.
+names-format-help = Једно по реду: name = address, на пример wiki = 192.168.20.15. Адреса може бити IP адреса или име уређаја. Отворите га као http://wiki:8080/, са портом који сајт користи.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Унесите име уређаја или веб адресу.
 check-bad-port = { $input }: то није важећи порт.
-check-not-routed = { -app-name } не рутира { $host }: адреса се не завршава доменом ниједне мреже tailnet која тренутно рутира, па иде директно (кроз вашу уобичајену мрежу и ваш Tailscale).
+check-not-routed = { -app-name } не рутира { $host }: то није име, адреса ни подмрежа ниједне мреже tailnet која тренутно рутира, па иде директно (кроз вашу уобичајену мрежу и ваш Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } се налази у више мрежа tailnet ({ $tailnets }), па се не рутира. Уместо тога користите име уређаја или искључите подмреже за једну од тих мрежа.
 check-gone = Та мрежа tailnet је управо нестала.
 check-not-running = Мрежа { $tailnet } није покренута.
 check-ok = { $address } ради: повезано преко { $tailnet } за { $ms } мс.
@@ -214,6 +224,10 @@ forwards-line-target = Ред { $line }: „{ $value }“ треба да буд
 forwards-line-duplicate = Ред { $line }: локални порт { $port } је наведен двапут.
 domain-invalid = „{ $domain }“ није домен; користите нешто попут example.ts.net.
 domain-characters = „{ $domain }“ садржи знакове који нису дозвољени у домену.
+names-line-format = Ред { $line }: упишите name = address.
+names-line-name = Ред { $line }: „{ $value }“ не може бити име. Користите слова, цифре, цртице и тачке.
+names-line-target = Ред { $line }: „{ $value }“ није ни IP адреса ни име уређаја.
+names-line-duplicate = Ред { $line }: име { $value } је наведено двапут.
 autostart-unsupported = Покретање при пријављивању није подржано на овом систему.
 
 ## Dialogs
@@ -229,6 +243,8 @@ tailnet-name = Назив
 tailnet-name-hint = Приказује се у овој апликацији и у менију системске палете
 extra-domains = Додатни домени (опционо)
 extra-domains-help = Сопствени домен мреже tailnet рутира се аутоматски. Додајте по један у сваки ред.
+route-subnets = Рутирај њене подмреже
+route-subnets-help = Мреже до којих ова мрежа tailnet стиже преко својих рутера подмреже, на пример мрежа у облаку. Искључите ово ако се нека од њих преклапа са мрежом на којој је овај рачунар.
 forward-dialog-title = Прослеђивање порта
 forward-dialog-text = Добијте порт на овом рачунару који води до { $host }. Који порт на том уређају?
 port-preset-remote-desktop = Удаљена радна површина

@@ -56,6 +56,10 @@ translation = "Avbryt"
 source = "Catalan"
 translation = "Katalanska"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } finns i mer än ett tailnet ({ $tailnets }), så den dirigeras inte. Använd datorns namn i stället, eller stäng av subnät för ett av de tailneten."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: det är ingen giltig port."
@@ -78,12 +82,12 @@ translation = "Det tailnetet försvann precis."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } dirigeras inte av { -app-name }: adressen slutar inte på domänen för något tailnet som dirigerar just nu, så den går direkt (via ditt vanliga nätverk och ditt eget Tailscale).
+{ $host } dirigeras inte av { -app-name }: den är inte ett namn, en adress eller ett subnät i något tailnet som dirigerar just nu, så den går direkt (via ditt vanliga nätverk och ditt eget Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Nederländska"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Redigera vidarebefordringar"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Redigera namn"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Fler åtgärder"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Ett per rad: name = address, till exempel wiki = 192.168.20.15. Adressen kan vara en IP-adress eller en dators namn. Öppna det som http://wiki:8080/, med porten som webbplatsen använder."
+
+[messages.names-heading]
+source = "Names"
+translation = "Namn"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Egna namn på adresser i dina tailnet, till exempel en server bakom en subnätsrouter. De fungerar bara i webbläsare och portvidarebefordringar på den här datorn."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Rad { $line }: namnet { $value } förekommer två gånger."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Rad { $line }: skriv name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Rad { $line }: ”{ $value }” kan inte vara ett namn. Använd bokstäver, siffror, bindestreck och punkter."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Rad { $line }: ”{ $value }” är varken en IP-adress eller en dators namn."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Nytt tailnet"
@@ -639,6 +675,14 @@ translation = "Ångra ändringarna"
 [messages.romanian]
 source = "Romanian"
 translation = "Rumänska"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Dirigera dess subnät"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Nätverk som det här tailnetet når via sina subnätsroutrar, till exempel ett molnnätverk. Stäng av det här om något av dem överlappar ett nätverk som den här datorn är ansluten till."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

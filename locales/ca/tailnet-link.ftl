@@ -189,11 +189,21 @@ open-settings-folder = Obre la carpeta de configuració
 about-line = { -app-name } { $version } · proxy local { $proxy } · PAC { $pac }
 settings-location = Configuració a { $path }
 
+## Configuració: noms
+
+names-heading = Noms
+names-help = Noms propis per a adreces de les teves tailnets, com ara un servidor darrere d’un encaminador de subxarxa. Només funcionen als navegadors i a les redireccions de ports d’aquest ordinador.
+edit-names = Edita els noms
+# Mantén «name = address» i l’exemple tal com són: és el que s’escriu.
+names-format-help = Un per línia: name = address, per exemple wiki = 192.168.20.15. L’adreça pot ser una adreça IP o el nom d’una màquina. Obre’l com a http://wiki:8080/, amb el port que fa servir el lloc web.
+
 ## Resultats de «Prova» a Resolució de problemes
 
 check-empty = Escriu el nom d’una màquina o una adreça web.
 check-bad-port = { $input }: aquest port no és vàlid.
-check-not-routed = { -app-name } no encamina { $host }: no acaba amb el domini de cap tailnet que encamini ara mateix, de manera que va directe (per la teva xarxa normal i el teu propi Tailscale).
+check-not-routed = { -app-name } no encamina { $host }: no és un nom, una adreça ni una subxarxa de cap tailnet que encamini ara mateix, de manera que va directe (per la teva xarxa normal i el teu propi Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } és a més d’una tailnet ({ $tailnets }), de manera que no s’encamina. Fes servir el nom de la màquina, o desactiva les subxarxes d’una d’aquestes tailnets.
 check-gone = Aquesta tailnet acaba de desaparèixer.
 check-not-running = { $tailnet } no s’està executant.
 check-ok = { $address } funciona: connectat per { $tailnet } en { $ms } ms.
@@ -211,6 +221,10 @@ forwards-line-target = Línia { $line }: «{ $value }» hauria de ser host:port.
 forwards-line-duplicate = Línia { $line }: el port local { $port } s’utilitza dues vegades.
 domain-invalid = «{ $domain }» no és un domini; fes servir alguna cosa com example.ts.net.
 domain-characters = «{ $domain }» conté caràcters que un domini no pot tenir.
+names-line-format = Línia { $line }: escriu name = address.
+names-line-name = Línia { $line }: «{ $value }» no pot ser un nom. Fes servir lletres, xifres, guions i punts.
+names-line-target = Línia { $line }: «{ $value }» no és una adreça IP ni el nom d’una màquina.
+names-line-duplicate = Línia { $line }: el nom { $value } apareix dues vegades.
 autostart-unsupported = Aquest sistema no admet l’inici en iniciar la sessió.
 
 ## Diàlegs
@@ -226,6 +240,8 @@ tailnet-name = Nom
 tailnet-name-hint = Es mostra en aquesta aplicació i al menú de la safata
 extra-domains = Dominis addicionals (opcional)
 extra-domains-help = El domini propi de la tailnet s’encamina automàticament. Afegeix-ne un per línia.
+route-subnets = Encamina les seves subxarxes
+route-subnets-help = Xarxes a què arriba aquesta tailnet a través dels seus encaminadors de subxarxa, com ara una xarxa al núvol. Desactiva-ho si alguna se solapa amb una xarxa a què està connectat aquest ordinador.
 forward-dialog-title = Redirigeix un port
 forward-dialog-text = Obtén un port en aquest ordinador que porta a { $host }. Quin port d’aquella màquina?
 port-preset-remote-desktop = Escriptori remot

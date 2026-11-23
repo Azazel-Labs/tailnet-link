@@ -200,11 +200,21 @@ open-settings-folder = Ayarlar klasörünü aç
 about-line = { -app-name } { $version } · yerel proxy { $proxy } · PAC { $pac }
 settings-location = Ayarların konumu: { $path }
 
+## Ayarlar: adlar
+
+names-heading = Adlar
+names-help = Tailnet'lerinizdeki adresler için kendi adlarınız; örneğin bir alt ağ yönlendiricisinin arkasındaki bir sunucu için. Yalnızca bu bilgisayardaki tarayıcılarda ve port yönlendirmelerinde çalışır.
+edit-names = Adları düzenle
+# “name = address” ve örnek olduğu gibi kalmalı: bunlar yazılan değerlerdir.
+names-format-help = Her satıra bir tane: name = address, örneğin wiki = 192.168.20.15. Adres bir IP adresi veya bir makinenin adı olabilir. Web sitesinin kullandığı portla birlikte http://wiki:8080/ şeklinde açın.
+
 ## Sorun giderme'deki "Test et" sonuçları
 
 check-empty = Bir makine adı veya web adresi yazın.
 check-bad-port = { $input }: bu geçerli bir port değil.
-check-not-routed = { $host }, { -app-name } tarafından yönlendirilmiyor: şu anda yönlendirme yapan hiçbir tailnet'in alan adıyla bitmiyor, bu yüzden doğrudan gidiyor (normal ağınız ve kendi Tailscale'iniz üzerinden).
+check-not-routed = { $host }, { -app-name } tarafından yönlendirilmiyor: şu anda yönlendirme yapan hiçbir tailnet'in adı, adresi veya alt ağı değil, bu yüzden doğrudan gidiyor (normal ağınız ve kendi Tailscale'iniz üzerinden).
+# $tailnets, virgülle ayrılmış tailnet'leri listeler.
+check-ambiguous = { $host } birden fazla tailnet'te bulunuyor ({ $tailnets }), bu yüzden yönlendirilmiyor. Bunun yerine makinenin adını kullanın veya bu tailnet'lerden biri için alt ağları kapatın.
 check-gone = Bu tailnet az önce kayboldu.
 check-not-running = { $tailnet } adlı tailnet çalışmıyor.
 check-ok = { $address } çalışıyor: { $tailnet } üzerinden { $ms } ms içinde bağlandı.
@@ -223,6 +233,10 @@ forwards-line-target = Satır { $line }: “{ $value }” host:port biçiminde o
 forwards-line-duplicate = Satır { $line }: { $port } yerel portu iki kez kullanılmış.
 domain-invalid = “{ $domain }” bir alan adı değil; example.ts.net gibi bir şey kullanın.
 domain-characters = “{ $domain }” bir alan adında bulunamayacak karakterler içeriyor.
+names-line-format = Satır { $line }: name = address biçiminde yazın.
+names-line-name = Satır { $line }: “{ $value }” bir ad olamaz. Harf, rakam, kısa çizgi ve nokta kullanın.
+names-line-target = Satır { $line }: “{ $value }” bir IP adresi veya makine adı değil.
+names-line-duplicate = Satır { $line }: { $value } adı iki kez verilmiş.
 autostart-unsupported = Oturum açıldığında başlatma bu sistemde desteklenmiyor.
 
 ## İletişim kutuları
@@ -239,6 +253,8 @@ tailnet-name = Ad
 tailnet-name-hint = Bu uygulamada ve tepsi menüsünde gösterilir
 extra-domains = Ek alan adları (isteğe bağlı)
 extra-domains-help = Tailnet'in kendi alan adı otomatik olarak yönlendirilir. Her satıra bir tane ekleyin.
+route-subnets = Alt ağlarını yönlendir
+route-subnets-help = Bu tailnet'in alt ağ yönlendiricileri üzerinden ulaştığı ağlar; örneğin bir bulut ağı. Bunlardan biri bu bilgisayarın bağlı olduğu bir ağla çakışıyorsa bunu kapatın.
 forward-dialog-title = Port yönlendir
 forward-dialog-text = Bu bilgisayarda { $host } makinesine giden bir port alın. O makinedeki hangi port?
 port-preset-remote-desktop = Uzak Masaüstü

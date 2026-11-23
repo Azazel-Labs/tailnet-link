@@ -56,6 +56,10 @@ translation = "Annuller"
 source = "Catalan"
 translation = "Catalansk"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } findes på mere end ét tailnet ({ $tailnets }), så den dirigeres ikke. Brug maskinens navn i stedet, eller slå subnets fra for et af de tailnets."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: det er ikke en gyldig port."
@@ -78,12 +82,12 @@ translation = "Det tailnet forsvandt lige."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } dirigeres ikke af { -app-name }: den ender ikke på domænet for noget tailnet, der dirigerer lige nu, så den går direkte (gennem dit normale netværk og dit eget Tailscale).
+{ $host } dirigeres ikke af { -app-name }: den er ikke et navn, en adresse eller et subnet på noget tailnet, der dirigerer lige nu, så den går direkte (gennem dit normale netværk og dit eget Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Hollandsk"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Rediger videresendelser"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Rediger navne"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Flere handlinger"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Ét pr. linje: name = address, f.eks. wiki = 192.168.20.15. Adressen kan være en IP-adresse eller en maskines navn. Åbn det som http://wiki:8080/ med den port, websitet bruger."
+
+[messages.names-heading]
+source = "Names"
+translation = "Navne"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Dine egne navne til adresser på dine tailnets, f.eks. en server bag en subnet-router. De virker kun i browsere og portvideresendelser på denne computer."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Linje { $line }: navnet { $value } findes to gange."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Linje { $line }: skriv name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = 'Linje { $line }: "{ $value }" kan ikke være et navn. Brug bogstaver, cifre, bindestreger og punktummer.'
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = 'Linje { $line }: "{ $value }" er hverken en IP-adresse eller en maskines navn.'
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Nyt tailnet"
@@ -639,6 +675,14 @@ translation = "Fortryd ændringerne"
 [messages.romanian]
 source = "Romanian"
 translation = "Rumænsk"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Dirigér dets subnets"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Netværk, som dette tailnet når via sine subnet-routere, f.eks. et cloudnetværk. Slå det fra, hvis et af dem overlapper et netværk, som denne computer er på."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

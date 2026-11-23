@@ -56,6 +56,10 @@ translation = "Откажи"
 source = "Catalan"
 translation = "Каталонски"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } се налази у више мрежа tailnet ({ $tailnets }), па се не рутира. Уместо тога користите име уређаја или искључите подмреже за једну од тих мрежа."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: то није важећи порт."
@@ -78,12 +82,12 @@ translation = "Та мрежа tailnet је управо нестала."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ -app-name } не рутира { $host }: адреса се не завршава доменом ниједне мреже tailnet која тренутно рутира, па иде директно (кроз вашу уобичајену мрежу и ваш Tailscale).
+{ -app-name } не рутира { $host }: то није име, адреса ни подмрежа ниједне мреже tailnet која тренутно рутира, па иде директно (кроз вашу уобичајену мрежу и ваш Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Холандски"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Уреди прослеђивања"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Уреди имена"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Још радњи"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Једно по реду: name = address, на пример wiki = 192.168.20.15. Адреса може бити IP адреса или име уређаја. Отворите га као http://wiki:8080/, са портом који сајт користи."
+
+[messages.names-heading]
+source = "Names"
+translation = "Имена"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Ваша сопствена имена за адресе у вашим мрежама tailnet, на пример за сервер иза рутера подмреже. Раде само у прегледачима и прослеђивањима портова на овом рачунару."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Ред { $line }: име { $value } је наведено двапут."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Ред { $line }: упишите name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Ред { $line }: „{ $value }“ не може бити име. Користите слова, цифре, цртице и тачке."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Ред { $line }: „{ $value }“ није ни IP адреса ни име уређаја."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Нова мрежа tailnet"
@@ -639,6 +675,14 @@ translation = "Поништи измене"
 [messages.romanian]
 source = "Romanian"
 translation = "Румунски"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Рутирај њене подмреже"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Мреже до којих ова мрежа tailnet стиже преко својих рутера подмреже, на пример мрежа у облаку. Искључите ово ако се нека од њих преклапа са мрежом на којој је овај рачунар."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

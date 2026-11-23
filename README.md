@@ -67,9 +67,22 @@ Under the hood:
   ([libtailscale](https://github.com/tailscale/libtailscale), in userspace).
 - **One local port serves them all** (127.0.0.1:1055, or a free one if that's taken). The proxy reads
   the name in each request and sends it through the tailnet that owns it.
-- The **system proxy setting** points at a PAC file that lists only those tailnets' domains. Anything
-  else never touches the app.
+- The **system proxy setting** points at a PAC file that lists only what those tailnets reach: their
+  domains, their machines' addresses (`100.x.y.z`), machines shared in from other tailnets, and the
+  subnets their subnet routers share (for example a cloud network, `192.168.0.0/16`). Anything else
+  never touches the app.
+- An address in two of your tailnets at once (two tailnets sharing the same private range, say) is
+  ambiguous, so it isn't routed. **Test a name or address** says so. Turning off one tailnet's
+  subnets settles it.
 - HTTPS works end to end with the real certificates. The proxy never sees inside it.
+- `ping` and other tools that look names up themselves don't go through a proxy, so they can't reach
+  these tailnets. Test a machine in **Settings → Test a name or address** instead.
+
+### Names of your own
+
+A server behind a subnet router has only an address. In **Settings → Names**, give it a name, one per
+line: `wiki = 192.168.20.15`. Then `http://wiki:8080/` opens it in your browser, and port
+forwards can use the name too. Names work only on this computer, through Tailnet Link.
 
 ### Apps that ignore proxies
 
@@ -90,11 +103,15 @@ You can also edit forwards by hand in Settings, one per line, for example
 - Overall status, **Pause all** and **Add a tailnet**.
 - **Websites** found on the machines, as tiles with each page's title and icon. Click one to open
   it, or right-click to copy its address. Click the star on a tile to make it a favorite: favorites
-  come first. The card shows two rows (more if you have more favorites) and a **Show all** link.
+  come first, as large tiles with a picture of the page. The picture is taken once a day by Edge,
+  Chrome, Chromium or Brave, whichever is installed, running hidden in a throwaway profile and only
+  through Tailnet Link, so a site that needs a sign-in shows its sign-in page. The card shows two
+  rows (more if you have more favorites) and a **Show all** link.
   A warning sign means the site's certificate isn't trusted (often a self-signed one). Each machine
   is asked once a day, a few at a time; the refresh button asks again now.
-- One card per tailnet, with its status, routed domains and this computer's name there. Sign in or
-  log out, pause or resume, rename it, add extra domains, or remove it.
+- One card per tailnet, with its status, routed domains and subnets, and this computer's name there.
+  Sign in or log out, pause or resume, rename it, add extra domains, turn its subnets off, or remove
+  it.
 - Each signed-in tailnet lists its **machines**, online first. The list starts folded away and
   remembers whether you opened it. Search filters them by name, OS or address. For each machine you can **open** it in your browser, **copy** its name, or **forward a
   port** to it.
@@ -110,6 +127,7 @@ You can also edit forwards by hand in Settings, one per line, for example
   interface **language**.
 - **Port forwards**, each with its local address, a copy button, and which tailnet carries it (or
   why it can't).
+- **Names** of your own for addresses in your tailnets, such as `wiki = 192.168.20.15`.
 - The **system proxy setting**.
 - **Test a name or address** shows which tailnet routes it and tries to connect through it. It's the
   quickest way to find out why a page won't load.

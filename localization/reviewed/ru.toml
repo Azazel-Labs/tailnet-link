@@ -56,6 +56,10 @@ translation = "Отмена"
 source = "Catalan"
 translation = "Каталанский"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } входит в несколько сетей tailnet ({ $tailnets }), поэтому не маршрутизируется. Используйте вместо этого имя устройства или отключите подсети в одной из этих сетей."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: недопустимый порт."
@@ -78,12 +82,12 @@ translation = "Эта сеть tailnet только что исчезла."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ -app-name } не маршрутизирует { $host }: адрес не оканчивается доменом ни одной из активных сейчас сетей tailnet, поэтому идёт напрямую (через вашу обычную сеть и ваш собственный Tailscale).
+{ -app-name } не маршрутизирует { $host }: это не имя, не адрес и не подсеть ни одной из активных сейчас сетей tailnet, поэтому трафик идёт напрямую (через вашу обычную сеть и ваш собственный Tailscale).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Нидерландский"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Изменить переадресации"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Изменить имена"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Другие действия"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "По одному в строке: name = address, например wiki = 192.168.20.15. Адресом может быть IP-адрес или имя устройства. Открывайте его как http://wiki:8080/, указав порт, который использует сайт."
+
+[messages.names-heading]
+source = "Names"
+translation = "Имена"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Собственные имена для адресов в ваших сетях tailnet, например для сервера за маршрутизатором подсети. Они работают только в браузерах и переадресациях портов на этом компьютере."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Строка { $line }: имя { $value } указано дважды."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Строка { $line }: используйте формат name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Строка { $line }: «{ $value }» не может быть именем. Используйте буквы, цифры, дефисы и точки."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Строка { $line }: «{ $value }» — не IP-адрес и не имя устройства."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Новая сеть tailnet"
@@ -639,6 +675,14 @@ translation = "Отменить изменения"
 [messages.romanian]
 source = "Romanian"
 translation = "Румынский"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Маршрутизировать её подсети"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Сети, к которым эта сеть tailnet имеет доступ через свои маршрутизаторы подсетей, например облачная сеть. Отключите, если одна из них пересекается с сетью, к которой подключён этот компьютер."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

@@ -56,6 +56,10 @@ translation = "取消"
 source = "Catalan"
 translation = "加泰罗尼亚语"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } 位于多个 tailnet 中（{ $tailnets }），因此不会被路由。请改用设备名称，或为其中一个 tailnet 关闭子网。"
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }：不是有效的端口。"
@@ -78,12 +82,12 @@ translation = "该 tailnet 刚刚消失了。"
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ -app-name } 不会路由 { $host }：它不以任何正在路由的 tailnet 的域名结尾，因此会直连（经过你的普通网络和你自己的 Tailscale）。
+{ -app-name } 不会路由 { $host }：它不是任何正在路由的 tailnet 的名称、地址或子网，因此会直连（经过你的普通网络和你自己的 Tailscale）。
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "荷兰语"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "编辑转发"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "编辑名称"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "更多操作"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "每行一个：name = address，例如 wiki = 192.168.20.15。地址可以是 IP 地址或设备名称。打开时使用 http://wiki:8080/ 这样的地址，并带上网站使用的端口。"
+
+[messages.names-heading]
+source = "Names"
+translation = "名称"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "为 tailnet 中的地址自定义名称，例如子网路由器后面的服务器。这些名称只在本机的浏览器和端口转发中有效。"
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "第 { $line } 行：名称 { $value } 出现了两次。"
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "第 { $line } 行：请写成 name = address。"
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "第 { $line } 行：“{ $value }”不能用作名称。请使用字母、数字、连字符和点。"
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "第 { $line } 行：“{ $value }”不是 IP 地址或设备名称。"
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "新 tailnet"
@@ -639,6 +675,14 @@ translation = "撤消更改"
 [messages.romanian]
 source = "Romanian"
 translation = "罗马尼亚语"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "路由其子网"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "此 tailnet 通过其子网路由器访问的网络，例如云网络。如果其中某个网络与本机所在的网络重叠，请关闭此项。"
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

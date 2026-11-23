@@ -60,7 +60,15 @@ pub fn config() -> Config {
 }
 
 fn machine(name: &str, domain: &str, os: &str, online: bool, ip: &str) -> Machine {
-    Machine { name: name.into(), dns_name: format!("{name}.{domain}"), os: os.into(), online, ip: ip.into() }
+    Machine {
+        name: name.into(),
+        dns_name: format!("{name}.{domain}"),
+        os: os.into(),
+        online,
+        ip: ip.into(),
+        tags: Vec::new(),
+        subnets: Vec::new(),
+    }
 }
 
 fn home() -> TailnetStatus {
@@ -163,6 +171,7 @@ fn site(machine: &str, domain: &str, tailnet: &str, title: &str, color: Option<[
         trusted,
         color,
         icon: None,
+        thumb: None,
         tailnet: tailnet.into(),
         routing: true,
         favorite: false,

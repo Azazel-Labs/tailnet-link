@@ -197,11 +197,21 @@ open-settings-folder = Buka folder pengaturan
 about-line = { -app-name } { $version } · proksi lokal { $proxy } · PAC { $pac }
 settings-location = Pengaturan di { $path }
 
+## Pengaturan: nama
+
+names-heading = Nama
+names-help = Nama Anda sendiri untuk alamat di tailnet Anda, seperti server di balik router subnet. Nama ini hanya berfungsi di browser dan penerusan port di komputer ini.
+edit-names = Edit nama
+# Biarkan "name = address" dan contohnya apa adanya: itulah yang diketik.
+names-format-help = Satu per baris: name = address, misalnya wiki = 192.168.20.15. Alamatnya bisa berupa alamat IP atau nama mesin. Buka sebagai http://wiki:8080/, dengan port yang dipakai situs web tersebut.
+
 ## Hasil "Uji" di Pemecahan masalah
 
 check-empty = Ketik nama mesin atau alamat web.
 check-bad-port = { $input }: itu bukan port yang valid.
-check-not-routed = { $host } tidak dirutekan oleh { -app-name }: alamat ini tidak berakhiran domain tailnet mana pun yang sedang merutekan, jadi lalu lintasnya berjalan langsung (melalui jaringan biasa dan Tailscale Anda sendiri).
+check-not-routed = { $host } tidak dirutekan oleh { -app-name }: ini bukan nama, alamat, atau subnet dari tailnet mana pun yang sedang merutekan, jadi lalu lintasnya berjalan langsung (melalui jaringan biasa dan Tailscale Anda sendiri).
+# $tailnets berisi daftar tailnet, dipisahkan koma.
+check-ambiguous = { $host } ada di lebih dari satu tailnet ({ $tailnets }), jadi tidak dirutekan. Gunakan nama mesinnya, atau matikan subnet untuk salah satu tailnet tersebut.
 check-gone = Tailnet itu baru saja hilang.
 check-not-running = { $tailnet } tidak berjalan.
 check-ok = { $address } berfungsi: terhubung melalui { $tailnet } dalam { $ms } ms.
@@ -220,6 +230,10 @@ forwards-line-target = Baris { $line }: “{ $value }” seharusnya host:port.
 forwards-line-duplicate = Baris { $line }: port lokal { $port } digunakan dua kali.
 domain-invalid = “{ $domain }” bukan domain; gunakan sesuatu seperti example.ts.net.
 domain-characters = “{ $domain }” berisi karakter yang tidak boleh ada dalam domain.
+names-line-format = Baris { $line }: tulis name = address.
+names-line-name = Baris { $line }: “{ $value }” tidak bisa menjadi nama. Gunakan huruf, angka, tanda hubung, dan titik.
+names-line-target = Baris { $line }: “{ $value }” bukan alamat IP atau nama mesin.
+names-line-duplicate = Baris { $line }: nama { $value } muncul dua kali.
 autostart-unsupported = Memulai saat masuk tidak didukung di sistem ini.
 
 ## Dialog
@@ -236,6 +250,8 @@ tailnet-name = Nama
 tailnet-name-hint = Ditampilkan di aplikasi ini dan menu baki
 extra-domains = Domain tambahan (opsional)
 extra-domains-help = Domain milik tailnet itu sendiri dirutekan secara otomatis. Tambahkan satu per baris.
+route-subnets = Rutekan subnetnya
+route-subnets-help = Jaringan yang dijangkau tailnet ini melalui router subnetnya, seperti jaringan cloud. Matikan ini jika salah satunya tumpang tindih dengan jaringan tempat komputer ini berada.
 forward-dialog-title = Teruskan port
 forward-dialog-text = Dapatkan port di komputer ini yang mengarah ke { $host }. Port mana di mesin itu?
 port-preset-remote-desktop = Desktop Jarak Jauh

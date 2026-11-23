@@ -180,11 +180,21 @@ open-settings-folder = 開啟設定資料夾
 about-line = { -app-name } { $version } · 本機代理伺服器 { $proxy } · PAC { $pac }
 settings-location = 設定位於 { $path }
 
+## Settings: names
+
+names-heading = 名稱
+names-help = 為 tailnet 中的位址自訂名稱，例如子網路路由器後面的伺服器。這些名稱只在這台電腦的瀏覽器和連接埠轉送中有效。
+edit-names = 編輯名稱
+# Keep "name = address" and the example as they are: they are what you type.
+names-format-help = 每行一個：name = address，例如 wiki = 192.168.20.15。位址可以是 IP 位址或裝置名稱。開啟時請使用 http://wiki:8080/ 這樣的網址，並加上網站使用的連接埠。
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = 請輸入裝置名稱或網址。
 check-bad-port = { $input }：不是有效的連接埠。
-check-not-routed = { -app-name } 不會路由 { $host }：它不屬於任何正在路由之 tailnet 的網域，因此會直接連線（透過你的一般網路和你自己的 Tailscale）。
+check-not-routed = { -app-name } 不會路由 { $host }：它不是任何正在路由之 tailnet 的名稱、位址或子網路，因此會直接連線（透過你的一般網路和你自己的 Tailscale）。
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } 位於多個 tailnet 中（{ $tailnets }），因此不會路由。請改用裝置名稱，或為其中一個 tailnet 關閉子網路。
 check-gone = 該 tailnet 剛剛消失了。
 check-not-running = { $tailnet } 未在執行。
 check-ok = { $address } 可正常使用：已經由 { $tailnet } 連線，耗時 { $ms } 毫秒。
@@ -202,6 +212,10 @@ forwards-line-target = 第 { $line } 行：「{ $value }」應為 host:port。
 forwards-line-duplicate = 第 { $line } 行：本機連接埠 { $port } 被使用了兩次。
 domain-invalid = 「{ $domain }」不是網域；請使用類似 example.ts.net 的格式。
 domain-characters = 「{ $domain }」包含網域不允許的字元。
+names-line-format = 第 { $line } 行：請寫成 name = address。
+names-line-name = 第 { $line } 行：「{ $value }」不能當作名稱。請使用字母、數字、連字號和點。
+names-line-target = 第 { $line } 行：「{ $value }」不是 IP 位址或裝置名稱。
+names-line-duplicate = 第 { $line } 行：名稱 { $value } 出現了兩次。
 autostart-unsupported = 此系統不支援登入時啟動。
 
 ## Dialogs
@@ -217,6 +231,8 @@ tailnet-name = 名稱
 tailnet-name-hint = 顯示在這個應用程式和系統匣選單中
 extra-domains = 額外網域（選填）
 extra-domains-help = tailnet 本身的網域會自動路由。每行新增一個。
+route-subnets = 路由其子網路
+route-subnets-help = 這個 tailnet 透過其子網路路由器連到的網路，例如雲端網路。如果其中某個網路與這台電腦所在的網路重疊，請關閉此選項。
 forward-dialog-title = 轉送連接埠
 forward-dialog-text = 在這台電腦上取得一個通往 { $host } 的連接埠。要連到那台裝置的哪個連接埠？
 port-preset-remote-desktop = 遠端桌面

@@ -56,6 +56,10 @@ translation = "Hủy"
 source = "Catalan"
 translation = "Tiếng Catalan"
 
+[messages.check-ambiguous]
+source = "{ $host } is in more than one tailnet ({ $tailnets }), so it isn't routed. Use the machine's name instead, or turn off subnets for one of those tailnets."
+translation = "{ $host } nằm trong nhiều hơn một tailnet ({ $tailnets }), nên không được định tuyến. Hãy dùng tên máy thay thế, hoặc tắt mạng con cho một trong các tailnet đó."
+
 [messages.check-bad-port]
 source = "{ $input }: that's not a valid port."
 translation = "{ $input }: đó không phải là cổng hợp lệ."
@@ -78,12 +82,12 @@ translation = "Tailnet đó vừa biến mất."
 
 [messages.check-not-routed]
 source = """
-{ $host } isn't routed by { -app-name }: it doesn't end in the domain of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
+{ $host } isn't routed by { -app-name }: it isn't a name, address or subnet of any tailnet that's routing right now, so it goes direct (through your normal network and your own Tailscale).
 
 # reference -app-name
 Tailnet Link"""
 translation = """
-{ $host } không được { -app-name } định tuyến: nó không kết thúc bằng tên miền của tailnet nào đang định tuyến, nên sẽ đi trực tiếp (qua mạng thông thường và Tailscale của riêng bạn).
+{ $host } không được { -app-name } định tuyến: nó không phải tên, địa chỉ hay mạng con của tailnet nào đang định tuyến, nên sẽ đi trực tiếp (qua mạng thông thường và Tailscale của riêng bạn).
 
 # reference -app-name
 Tailnet Link"""
@@ -179,6 +183,10 @@ translation = "Tiếng Hà Lan"
 [messages.edit-forwards]
 source = "Edit forwards"
 translation = "Sửa chuyển tiếp"
+
+[messages.edit-names]
+source = "Edit names"
+translation = "Sửa tên"
 
 [messages.edit-tailnet-menu]
 source = "Rename or add domains…"
@@ -432,6 +440,34 @@ Tailnet Link"""
 source = "More actions"
 translation = "Thao tác khác"
 
+[messages.names-format-help]
+source = "One per line: name = address, for example wiki = 192.168.20.15. The address can be an IP address or a machine's name. Open it as http://wiki:8080/, with the port the website uses."
+translation = "Mỗi dòng một mục: name = address, ví dụ wiki = 192.168.20.15. Địa chỉ có thể là địa chỉ IP hoặc tên một máy. Mở bằng http://wiki:8080/, kèm cổng mà trang web sử dụng."
+
+[messages.names-heading]
+source = "Names"
+translation = "Tên"
+
+[messages.names-help]
+source = "Names of your own for addresses in your tailnets, such as a server behind a subnet router. They work in browsers and port forwards on this computer only."
+translation = "Tên do bạn tự đặt cho các địa chỉ trong tailnet của bạn, chẳng hạn một máy chủ phía sau bộ định tuyến mạng con. Chúng chỉ hoạt động trong trình duyệt và chuyển tiếp cổng trên máy tính này."
+
+[messages.names-line-duplicate]
+source = "Line { $line }: { $value } is named twice."
+translation = "Dòng { $line }: tên { $value } bị đặt hai lần."
+
+[messages.names-line-format]
+source = "Line { $line }: write name = address."
+translation = "Dòng { $line }: hãy viết name = address."
+
+[messages.names-line-name]
+source = "Line { $line }: “{ $value }” can't be a name. Use letters, digits, hyphens and dots."
+translation = "Dòng { $line }: “{ $value }” không thể là tên. Hãy dùng chữ cái, chữ số, dấu gạch nối và dấu chấm."
+
+[messages.names-line-target]
+source = "Line { $line }: “{ $value }” isn't an IP address or a machine's name."
+translation = "Dòng { $line }: “{ $value }” không phải địa chỉ IP hay tên máy."
+
 [messages.new-tailnet]
 source = "New tailnet"
 translation = "Tailnet mới"
@@ -639,6 +675,14 @@ translation = "Hủy các thay đổi"
 [messages.romanian]
 source = "Romanian"
 translation = "Tiếng Romania"
+
+[messages.route-subnets]
+source = "Route its subnets"
+translation = "Định tuyến các mạng con của nó"
+
+[messages.route-subnets-help]
+source = "Networks this tailnet reaches through its subnet routers, such as a cloud network. Turn this off if one overlaps a network this computer is on."
+translation = "Các mạng mà tailnet này truy cập qua bộ định tuyến mạng con của nó, chẳng hạn mạng đám mây. Hãy tắt mục này nếu có mạng nào chồng lấn với mạng mà máy tính này đang kết nối."
 
 [messages.routes-after-sign-in]
 source = "Found after you sign in"

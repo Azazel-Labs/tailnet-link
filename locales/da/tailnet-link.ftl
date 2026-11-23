@@ -190,11 +190,21 @@ open-settings-folder = Åbn mappen med indstillinger
 about-line = { -app-name } { $version } · lokal proxy { $proxy } · PAC { $pac }
 settings-location = Indstillinger i { $path }
 
+## Settings: names
+
+names-heading = Navne
+names-help = Dine egne navne til adresser på dine tailnets, f.eks. en server bag en subnet-router. De virker kun i browsere og portvideresendelser på denne computer.
+edit-names = Rediger navne
+# Behold "name = address" og eksemplet, som de er: det er dem, man skriver.
+names-format-help = Ét pr. linje: name = address, f.eks. wiki = 192.168.20.15. Adressen kan være en IP-adresse eller en maskines navn. Åbn det som http://wiki:8080/ med den port, websitet bruger.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Skriv et maskinnavn eller en webadresse.
 check-bad-port = { $input }: det er ikke en gyldig port.
-check-not-routed = { $host } dirigeres ikke af { -app-name }: den ender ikke på domænet for noget tailnet, der dirigerer lige nu, så den går direkte (gennem dit normale netværk og dit eget Tailscale).
+check-not-routed = { $host } dirigeres ikke af { -app-name }: den er ikke et navn, en adresse eller et subnet på noget tailnet, der dirigerer lige nu, så den går direkte (gennem dit normale netværk og dit eget Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } findes på mere end ét tailnet ({ $tailnets }), så den dirigeres ikke. Brug maskinens navn i stedet, eller slå subnets fra for et af de tailnets.
 check-gone = Det tailnet forsvandt lige.
 check-not-running = { $tailnet } kører ikke.
 check-ok = { $address } virker: forbundet gennem { $tailnet } på { $ms } ms.
@@ -212,6 +222,10 @@ forwards-line-target = Linje { $line }: "{ $value }" skal være host:port.
 forwards-line-duplicate = Linje { $line }: den lokale port { $port } bruges to gange.
 domain-invalid = "{ $domain }" er ikke et domæne; brug noget i stil med example.ts.net.
 domain-characters = "{ $domain }" indeholder tegn, som et domæne ikke kan have.
+names-line-format = Linje { $line }: skriv name = address.
+names-line-name = Linje { $line }: "{ $value }" kan ikke være et navn. Brug bogstaver, cifre, bindestreger og punktummer.
+names-line-target = Linje { $line }: "{ $value }" er hverken en IP-adresse eller en maskines navn.
+names-line-duplicate = Linje { $line }: navnet { $value } findes to gange.
 autostart-unsupported = Start ved login understøttes ikke på dette system.
 
 ## Dialogs
@@ -227,6 +241,8 @@ tailnet-name = Navn
 tailnet-name-hint = Vises i denne app og i menuen i meddelelsesområdet
 extra-domains = Ekstra domæner (valgfrit)
 extra-domains-help = Tailnettets eget domæne dirigeres automatisk. Tilføj ét pr. linje.
+route-subnets = Dirigér dets subnets
+route-subnets-help = Netværk, som dette tailnet når via sine subnet-routere, f.eks. et cloudnetværk. Slå det fra, hvis et af dem overlapper et netværk, som denne computer er på.
 forward-dialog-title = Videresend en port
 forward-dialog-text = Få en port på denne computer, der fører til { $host }. Hvilken port på den maskine?
 port-preset-remote-desktop = Fjernskrivebord

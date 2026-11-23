@@ -197,11 +197,21 @@ open-settings-folder = Einstellungsordner öffnen
 about-line = { -app-name } { $version } · lokaler Proxy { $proxy } · PAC { $pac }
 settings-location = Einstellungen in { $path }
 
+## Einstellungen: Namen
+
+names-heading = Namen
+names-help = Eigene Namen für Adressen in Ihren Tailnets, etwa für einen Server hinter einem Subnetz-Router. Sie funktionieren nur in Browsern und Portweiterleitungen auf diesem Computer.
+edit-names = Namen bearbeiten
+# „name = address“ und das Beispiel bleiben unverändert: Das ist die Eingabe.
+names-format-help = Einer pro Zeile: name = address, zum Beispiel wiki = 192.168.20.15. Die Adresse kann eine IP-Adresse oder der Name eines Geräts sein. Öffnen Sie ihn als http://wiki:8080/, mit dem Port, den die Website verwendet.
+
 ## Ergebnisse von „Testen“ in der Fehlerbehebung
 
 check-empty = Geben Sie einen Gerätenamen oder eine Webadresse ein.
 check-bad-port = { $input }: Das ist kein gültiger Port.
-check-not-routed = { $host } wird nicht von { -app-name } weitergeleitet: Es endet nicht auf die Domain eines gerade aktiven Tailnets und geht daher direkt (über Ihr normales Netzwerk und Ihr eigenes Tailscale).
+check-not-routed = { $host } wird nicht von { -app-name } weitergeleitet: Es ist weder Name noch Adresse noch Subnetz eines gerade aktiven Tailnets und geht daher direkt (über Ihr normales Netzwerk und Ihr eigenes Tailscale).
+# $tailnets listet die Tailnets auf, durch Kommas getrennt.
+check-ambiguous = { $host } liegt in mehr als einem Tailnet ({ $tailnets }) und wird daher nicht weitergeleitet. Verwenden Sie stattdessen den Namen des Geräts, oder schalten Sie die Subnetze für eines dieser Tailnets aus.
 check-gone = Dieses Tailnet ist gerade verschwunden.
 check-not-running = { $tailnet } läuft nicht.
 check-ok = { $address } funktioniert: verbunden über { $tailnet } in { $ms } ms.
@@ -220,6 +230,10 @@ forwards-line-target = Zeile { $line }: „{ $value }“ sollte host:port sein.
 forwards-line-duplicate = Zeile { $line }: Lokaler Port { $port } wird doppelt verwendet.
 domain-invalid = „{ $domain }“ ist keine Domain; verwenden Sie etwa example.ts.net.
 domain-characters = „{ $domain }“ enthält Zeichen, die in einer Domain nicht erlaubt sind.
+names-line-format = Zeile { $line }: Schreiben Sie name = address.
+names-line-name = Zeile { $line }: „{ $value }“ kann kein Name sein. Verwenden Sie Buchstaben, Ziffern, Bindestriche und Punkte.
+names-line-target = Zeile { $line }: „{ $value }“ ist weder eine IP-Adresse noch der Name eines Geräts.
+names-line-duplicate = Zeile { $line }: Der Name { $value } kommt doppelt vor.
 autostart-unsupported = Der Start bei der Anmeldung wird auf diesem System nicht unterstützt.
 
 ## Dialoge
@@ -236,6 +250,8 @@ tailnet-name = Name
 tailnet-name-hint = Wird in dieser App und im Infobereich-Menü angezeigt
 extra-domains = Zusätzliche Domains (optional)
 extra-domains-help = Die eigene Domain des Tailnets wird automatisch weitergeleitet. Eine pro Zeile hinzufügen.
+route-subnets = Seine Subnetze weiterleiten
+route-subnets-help = Netzwerke, die dieses Tailnet über seine Subnetz-Router erreicht, etwa ein Cloud-Netzwerk. Schalten Sie dies aus, wenn sich eines davon mit einem Netzwerk überschneidet, in dem dieser Computer ist.
 forward-dialog-title = Port weiterleiten
 forward-dialog-text = Erhalten Sie einen Port auf diesem Computer, der zu { $host } führt. Welcher Port auf diesem Gerät?
 port-preset-remote-desktop = Remotedesktop

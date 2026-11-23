@@ -194,11 +194,21 @@ open-settings-folder = Открыть папку настроек
 about-line = { -app-name } { $version } · локальный прокси { $proxy } · PAC { $pac }
 settings-location = Настройки хранятся в { $path }
 
+## Settings: names
+
+names-heading = Имена
+names-help = Собственные имена для адресов в ваших сетях tailnet, например для сервера за маршрутизатором подсети. Они работают только в браузерах и переадресациях портов на этом компьютере.
+edit-names = Изменить имена
+# «name = address» и пример оставьте как есть: это то, что вводит пользователь.
+names-format-help = По одному в строке: name = address, например wiki = 192.168.20.15. Адресом может быть IP-адрес или имя устройства. Открывайте его как http://wiki:8080/, указав порт, который использует сайт.
+
 ## Results of "Test" in Troubleshooting
 
 check-empty = Введите имя устройства или веб-адрес.
 check-bad-port = { $input }: недопустимый порт.
-check-not-routed = { -app-name } не маршрутизирует { $host }: адрес не оканчивается доменом ни одной из активных сейчас сетей tailnet, поэтому идёт напрямую (через вашу обычную сеть и ваш собственный Tailscale).
+check-not-routed = { -app-name } не маршрутизирует { $host }: это не имя, не адрес и не подсеть ни одной из активных сейчас сетей tailnet, поэтому трафик идёт напрямую (через вашу обычную сеть и ваш собственный Tailscale).
+# $tailnets lists the tailnets, separated by commas.
+check-ambiguous = { $host } входит в несколько сетей tailnet ({ $tailnets }), поэтому не маршрутизируется. Используйте вместо этого имя устройства или отключите подсети в одной из этих сетей.
 check-gone = Эта сеть tailnet только что исчезла.
 check-not-running = Сеть { $tailnet } не запущена.
 check-ok = { $address } работает: подключение через { $tailnet } за { $ms } мс.
@@ -216,6 +226,10 @@ forwards-line-target = Строка { $line }: «{ $value }» должно им�
 forwards-line-duplicate = Строка { $line }: локальный порт { $port } указан дважды.
 domain-invalid = «{ $domain }» — не домен; укажите, например, example.ts.net.
 domain-characters = «{ $domain }» содержит символы, недопустимые в домене.
+names-line-format = Строка { $line }: используйте формат name = address.
+names-line-name = Строка { $line }: «{ $value }» не может быть именем. Используйте буквы, цифры, дефисы и точки.
+names-line-target = Строка { $line }: «{ $value }» — не IP-адрес и не имя устройства.
+names-line-duplicate = Строка { $line }: имя { $value } указано дважды.
 autostart-unsupported = Автозапуск при входе в систему не поддерживается в этой системе.
 
 ## Dialogs
@@ -231,6 +245,8 @@ tailnet-name = Название
 tailnet-name-hint = Отображается в приложении и в меню в трее
 extra-domains = Дополнительные домены (необязательно)
 extra-domains-help = Собственный домен сети tailnet маршрутизируется автоматически. Добавляйте по одному на строку.
+route-subnets = Маршрутизировать её подсети
+route-subnets-help = Сети, к которым эта сеть tailnet имеет доступ через свои маршрутизаторы подсетей, например облачная сеть. Отключите, если одна из них пересекается с сетью, к которой подключён этот компьютер.
 forward-dialog-title = Переадресация порта
 forward-dialog-text = Получите порт на этом компьютере, ведущий к { $host }. Какой порт на том устройстве?
 port-preset-remote-desktop = Удалённый рабочий стол
