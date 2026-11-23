@@ -30,6 +30,7 @@ A Tailscale-lel egyszerre csak egy tailnetbe lehet bejelentkezni. Ha az otthoni 
 - **Alapból zárt.** Minden további csomópont „shields up” módban csatlakozik: Ön eléri azokat a tailneteket, de onnan semmi sem érheti el az Ön számítógépét.
 - **Csak az ő forgalmuk megy rajta át.** A többi tailnet címei a Tailnet Linken keresztül mennek, minden más közvetlenül, pontosan úgy, mint eddig.
 - **A proxyt figyelmen kívül hagyó alkalmazásokkal is működik.** A Távoli asztal, az SSH és az adatbázis-kliensek egyetlen kattintással helyi portot kapnak, amely a géphez vezet.
+- **A terminálban is működik.** Írja a `tl`-t a curl, a git, az ssh vagy a ping elé, vagy futtassa önmagában a `tl`-t, és olyan shellt kap, amelyben a tailnetjei nevei működnek.
 - **Rendet rak maga után.** A rendszer proxybeállítása csak addig aktív, amíg útválasztás folyik, és kilépéskor, szüneteltetéskor, összeomláskor vagy áramszünet után visszaáll.
 - **Beszéli az Ön nyelvét.** A felület 31 nyelven érhető el.
 
@@ -44,6 +45,18 @@ A Tailscale-lel egyszerre csak egy tailnetbe lehet bejelentkezni. Ha az otthoni 
 A böngészők és a legtöbb eszköz követi a rendszer proxybeállítását, a Távoli asztal, az adatbázis-kliensek és a hasonló alkalmazások viszont nem. Ezekhez kattintson a gép melletti csatlakozó gombra, és válasszon portot: a program kiválaszt és megjegyez egy szabad helyi portot, Ön pedig a `127.0.0.1:<port>` címre csatlakozik. Windowson a Távoli asztal továbbításaihoz saját **Távoli asztal megnyitása** gomb is tartozik.
 
 ![A Távoli asztal továbbítása utáni párbeszédablak: másolható helyi cím és a Távoli asztalt megnyitó gomb](../images/forward.png)
+
+## Terminálban
+
+A parancssori eszközök nem olvassák a rendszer proxybeállítását. Írja az alkalmazással együtt telepített `tl`-t egy parancs elé, vagy futtassa önmagában a `tl`-t, és olyan shellt kap, amelyben a tailnetjei nevei működnek. A **Tailnetek** lap terminál gombja is ilyet nyit meg.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+Így működik a curl, a git, az npm, a pip és a legtöbb más eszköz, és ugyanígy az ssh, az scp és az sftp is. A `tl ping` a Tailscale saját pingjét használja. A részletek az [angol README-ben](../../README.md#in-a-terminal-tl) találhatók.
 
 ## Letöltés és platformok
 

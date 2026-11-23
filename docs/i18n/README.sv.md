@@ -30,6 +30,7 @@ Med Tailscale kan du bara vara inloggad i ett tailnet åt gången. Har ditt heml
 - **Låst som standard.** Varje extra nod ansluter med sköldarna uppe: du når de tailneten, men inget i dem når din dator.
 - **Bara deras trafik går igenom.** Adresser i dina andra tailnet går via Tailnet Link. Allt annat går direkt, precis som förut.
 - **Fungerar med appar som ignorerar proxyn.** Fjärrskrivbord, SSH och databasklienter får med ett klick en lokal port som leder till datorn.
+- **Fungerar även i terminalen.** Sätt `tl` framför curl, git, ssh eller ping, eller kör bara `tl` för ett skal där namnen i dina tailnet fungerar.
 - **Städar efter sig.** Systemets proxyinställning är bara på medan något dirigeras, och återställs vid avslut, paus, krasch eller strömavbrott.
 - **Talar ditt språk.** Gränssnittet finns på 31 språk.
 
@@ -44,6 +45,18 @@ Med Tailscale kan du bara vara inloggad i ett tailnet åt gången. Har ditt heml
 Webbläsare och de flesta verktyg följer systemets proxyinställning. Fjärrskrivbord, databasklienter och liknande appar gör det inte. Klicka då på kontaktknappen vid en dator och välj en port: en ledig lokal port väljs och behålls, och du ansluter till `127.0.0.1:<port>`. På Windows får vidarebefordringar för Fjärrskrivbord en egen knapp, **Öppna Fjärrskrivbord**.
 
 ![Dialogen efter vidarebefordring av Fjärrskrivbord: en lokal adress att kopiera och en knapp som öppnar Fjärrskrivbord](../images/forward.png)
+
+## I en terminal
+
+Kommandoradsverktyg läser inte systemets proxyinställning. Sätt `tl`, som installeras med appen, framför ett kommando, eller kör bara `tl` för ett skal där namnen i dina tailnet fungerar. Terminalknappen på fliken **Tailnet** öppnar ett sådant skal.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip och de flesta andra verktyg fungerar så, och det gör även ssh, scp och sftp. `tl ping` använder Tailscales egen ping. Detaljerna finns i [den engelska README-filen](../../README.md#in-a-terminal-tl).
 
 ## Plattformar och nedladdning
 

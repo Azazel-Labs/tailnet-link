@@ -30,6 +30,7 @@ Tailscale 一次只能登入一個 tailnet。如果你的家用實驗室、公�
 - **預設就很安全。** 每個額外節點都以 Shields Up 模式加入：你可以連到那些 tailnet，但其中的任何裝置都無法連到你的電腦。
 - **只有相關流量會經過它。** 只有其他 tailnet 中的位址會經過 Tailnet Link，其餘流量一如往常直接連線。
 - **支援忽略代理伺服器的應用程式。** 遠端桌面、SSH 和資料庫用戶端只要按一下，就能取得通往裝置的本機連接埠。
+- **終端機裡也能用。** 在 curl、git、ssh 或 ping 前加上 `tl`，或者單獨執行 `tl`，開啟一個可使用你的 tailnet 中名稱的 shell。
 - **自動收拾善後。** 系統代理伺服器設定只在路由時開啟，結束、暫停、當機或停電後都會恢復原狀。
 - **說你的語言。** 介面已翻譯成 31 種語言。
 
@@ -44,6 +45,18 @@ Tailscale 一次只能登入一個 tailnet。如果你的家用實驗室、公�
 瀏覽器和大多數工具都會遵循系統代理伺服器設定，但遠端桌面、資料庫用戶端等應用程式不會。對於這類應用程式，按一下裝置旁的插頭按鈕並選擇連接埠：系統會挑選並保留一個可用的本機連接埠，你只要連到 `127.0.0.1:<port>` 即可。在 Windows 上，遠端桌面轉送還會有專屬的 **開啟遠端桌面** 按鈕。
 
 ![轉送遠端桌面後的對話方塊：可複製的本機位址，以及開啟遠端桌面的按鈕](../images/forward.png)
+
+## 在終端機中使用
+
+命令列工具不會讀取系統代理伺服器設定。在命令前加上隨應用程式一起安裝的 `tl`，或者單獨執行 `tl`，開啟一個可使用你的 tailnet 中名稱的 shell。**Tailnet** 分頁上的終端機按鈕也能開啟這樣的 shell。
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl、git、npm、pip 和大多數其他工具都能這樣使用，ssh、scp 和 sftp 也一樣。`tl ping` 使用 Tailscale 本身的 ping。詳細說明請參閱 [英文 README](../../README.md#in-a-terminal-tl)。
 
 ## 支援平台與下載
 

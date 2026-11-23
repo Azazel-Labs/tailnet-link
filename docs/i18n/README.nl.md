@@ -30,6 +30,7 @@ Met Tailscale ben je bij één tailnet tegelijk ingelogd. Hebben je homelab, je 
 - **Standaard afgeschermd.** Elke extra node doet mee met shields up: jij bereikt die tailnets, maar niets daarin kan jouw computer bereiken.
 - **Alleen hun verkeer gaat erdoor.** Adressen in je andere tailnets lopen via Tailnet Link. Al het andere gaat rechtstreeks, precies zoals voorheen.
 - **Werkt met apps die proxy's negeren.** Extern bureaublad, SSH en databaseclients krijgen met één klik een lokale poort die naar de machine leidt.
+- **Werkt ook in de terminal.** Zet `tl` voor curl, git, ssh of ping, of start `tl` los voor een shell waarin de namen uit je tailnets werken.
 - **Ruimt zelf op.** De proxyinstelling van het systeem staat alleen aan zolang er iets gerouteerd wordt, en wordt teruggezet bij afsluiten, pauzeren, een crash of stroomuitval.
 - **Spreekt jouw taal.** De interface is vertaald in 31 talen.
 
@@ -44,6 +45,18 @@ Met Tailscale ben je bij één tailnet tegelijk ingelogd. Hebben je homelab, je 
 Browsers en de meeste tools volgen de proxyinstelling van het systeem. Extern bureaublad, databaseclients en vergelijkbare apps doen dat niet. Klik daarvoor op de stekkerknop naast een machine en kies een poort: er wordt een vrije lokale poort gekozen en vastgehouden, en je maakt verbinding met `127.0.0.1:<port>`. Op Windows krijgen doorsturingen voor Extern bureaublad een eigen knop **Extern bureaublad openen**.
 
 ![Tailnet Link](../images/forward.png)
+
+## In een terminal
+
+Opdrachtregeltools lezen de proxyinstelling van het systeem niet. Zet `tl`, dat met de app wordt geïnstalleerd, voor een opdracht, of start `tl` los voor een shell waarin de namen uit je tailnets werken. De terminalknop in het tabblad **Tailnets** opent er een.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip en de meeste andere tools werken zo, net als ssh, scp en sftp. `tl ping` gebruikt de eigen ping van Tailscale. De details staan in de [Engelse README](../../README.md#in-a-terminal-tl).
 
 ## Platforms en download
 

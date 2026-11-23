@@ -44,6 +44,8 @@ Windows, macOS or Linux. It's free and open source.
   Everything else goes direct, exactly as before.
 - **Works with apps that ignore proxies.** Remote Desktop, SSH and database clients get a local port
   that leads to the machine, in one click.
+- **Works in the terminal too.** Put `tl` in front of curl, git, ssh or ping, or run `tl` on its own
+  for a shell where your tailnets' names work.
 - **Cleans up after itself.** The system proxy setting is only on while something is routing, and is
   put back on quit, pause, crash or power cut.
 - **Speaks your language.** The interface is translated into 31 languages.
@@ -109,7 +111,8 @@ tl ping build-pc.capybara-iguana.ts.net
 ```
 
 Run `tl` on its own for a shell where every command works that way. Its prompt starts with `(tl)`,
-and `exit` leaves it. The **terminal button** on the Tailnets tab opens a new terminal window with that shell.
+and `exit` leaves it. The **terminal button** on the Tailnets tab opens a new terminal window with
+that shell.
 
 - **Most tools** follow the standard proxy variables that `tl` sets (`HTTPS_PROXY` and the rest):
   curl, wget, git, npm, pip, cargo, Go, Python and Node.js. Your tailnets' names go through them, and

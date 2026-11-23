@@ -30,6 +30,7 @@ Tailscale hanya mengizinkan Anda masuk ke satu tailnet dalam satu waktu. Jika la
 - **Terkunci secara bawaan.** Setiap node tambahan bergabung dengan shields up: Anda dapat menjangkau tailnet tersebut, tetapi tidak ada apa pun di sana yang dapat menjangkau komputer Anda.
 - **Hanya lalu lintas mereka yang lewat.** Alamat di tailnet Anda yang lain melewati Tailnet Link. Selebihnya berjalan langsung, persis seperti sebelumnya.
 - **Bekerja dengan aplikasi yang mengabaikan proksi.** Desktop Jarak Jauh, SSH, dan klien basis data mendapat port lokal yang mengarah ke mesin, dengan sekali klik.
+- **Juga bekerja di terminal.** Tambahkan `tl` di depan curl, git, ssh, atau ping, atau jalankan `tl` saja untuk membuka shell tempat nama-nama di tailnet Anda berfungsi.
 - **Membereskan jejaknya sendiri.** Pengaturan proksi sistem hanya aktif selama ada yang dirutekan, dan dikembalikan saat keluar, dijeda, mogok, atau listrik padam.
 - **Berbicara dalam bahasa Anda.** Antarmukanya diterjemahkan ke 31 bahasa.
 
@@ -44,6 +45,18 @@ Tailscale hanya mengizinkan Anda masuk ke satu tailnet dalam satu waktu. Jika la
 Browser dan sebagian besar alat mengikuti pengaturan proksi sistem, tetapi Desktop Jarak Jauh, klien basis data, dan aplikasi sejenis tidak. Untuk aplikasi tersebut, klik tombol colokan di samping mesin dan pilih port: port lokal yang kosong dipilih dan disimpan, lalu Anda terhubung ke `127.0.0.1:<port>`. Di Windows, penerusan Desktop Jarak Jauh punya tombol **Buka Desktop Jarak Jauh** tersendiri.
 
 ![Dialog setelah meneruskan Desktop Jarak Jauh: alamat lokal untuk disalin dan tombol untuk membuka Desktop Jarak Jauh](../images/forward.png)
+
+## Di terminal
+
+Alat baris perintah tidak membaca pengaturan proksi sistem. Tambahkan `tl`, yang terinstal bersama aplikasi, di depan perintah, atau jalankan `tl` saja untuk membuka shell tempat nama-nama di tailnet Anda berfungsi. Tombol terminal di tab **Tailnet** juga membuka shell seperti itu.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip, dan sebagian besar alat lain bekerja dengan cara ini, begitu pula ssh, scp, dan sftp. `tl ping` menggunakan ping milik Tailscale sendiri. Detailnya ada di [README bahasa Inggris](../../README.md#in-a-terminal-tl).
 
 ## Unduhan dan platform
 

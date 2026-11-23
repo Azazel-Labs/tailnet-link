@@ -30,6 +30,7 @@ Tailscale chỉ cho bạn đăng nhập vào một tailnet mỗi lúc. Nếu ph�
 - **An toàn ngay từ đầu.** Mỗi nút bổ sung tham gia với chế độ Shields Up: bạn truy cập được các tailnet đó, nhưng không gì trong đó truy cập được máy tính của bạn.
 - **Chỉ lưu lượng liên quan mới đi qua.** Chỉ địa chỉ trong các tailnet khác mới đi qua Tailnet Link. Mọi thứ khác vẫn đi trực tiếp như trước.
 - **Hoạt động với cả ứng dụng bỏ qua proxy.** Máy tính Từ xa, SSH và trình khách cơ sở dữ liệu có ngay một cổng cục bộ dẫn tới máy, chỉ với một cú nhấp.
+- **Dùng được cả trong terminal.** Thêm `tl` vào trước curl, git, ssh hay ping, hoặc chạy riêng `tl` để mở một shell dùng được tên trong các tailnet của bạn.
 - **Tự dọn dẹp.** Cài đặt proxy hệ thống chỉ bật khi đang định tuyến, và được khôi phục khi thoát, tạm dừng, gặp sự cố hay mất điện.
 - **Nói ngôn ngữ của bạn.** Giao diện đã được dịch sang 31 ngôn ngữ.
 
@@ -44,6 +45,18 @@ Tailscale chỉ cho bạn đăng nhập vào một tailnet mỗi lúc. Nếu ph�
 Trình duyệt và hầu hết công cụ đều tuân theo cài đặt proxy hệ thống. Máy tính Từ xa, trình khách cơ sở dữ liệu và các ứng dụng tương tự thì không. Với những ứng dụng này, hãy nhấp nút phích cắm cạnh một máy và chọn cổng: một cổng cục bộ còn trống sẽ được chọn và giữ cố định, và bạn chỉ cần kết nối tới `127.0.0.1:<port>`. Trên Windows, các chuyển tiếp Máy tính Từ xa còn có nút **Mở Máy tính Từ xa** riêng.
 
 ![Hộp thoại sau khi chuyển tiếp Máy tính Từ xa: một địa chỉ cục bộ để sao chép và nút mở Máy tính Từ xa](../images/forward.png)
+
+## Trong terminal
+
+Các công cụ dòng lệnh không đọc cài đặt proxy hệ thống. Thêm `tl`, được cài cùng ứng dụng, vào trước một lệnh, hoặc chạy riêng `tl` để mở một shell dùng được tên trong các tailnet của bạn. Nút terminal trong thẻ **Tailnet** cũng mở một shell như vậy.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip và hầu hết các công cụ khác đều hoạt động theo cách này, ssh, scp và sftp cũng vậy. `tl ping` dùng lệnh ping riêng của Tailscale. Xem chi tiết trong [README tiếng Anh](../../README.md#in-a-terminal-tl).
 
 ## Nền tảng và tải xuống
 

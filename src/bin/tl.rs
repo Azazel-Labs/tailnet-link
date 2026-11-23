@@ -648,9 +648,11 @@ enum Kind {
     Other,
 }
 
+/// The kind of shell a program name or path is (a Windows path too, on any system).
 fn kind_of(name: &str) -> Kind {
-    let stem = Path::new(name).file_stem().map(|s| s.to_string_lossy().to_ascii_lowercase()).unwrap_or_default();
-    match stem.as_str() {
+    let file = name.rsplit(['/', '\\']).next().unwrap_or(name).to_ascii_lowercase();
+    let stem = file.strip_suffix(".exe").unwrap_or(&file);
+    match stem {
         "bash" => Kind::Bash,
         "zsh" => Kind::Zsh,
         "fish" => Kind::Fish,
@@ -820,7 +822,8 @@ fn shell() -> Result<i32, String> {
         }
         Kind::Fish => {
             let init = format!(
-                "{}functions -c fish_prompt __tl_fish_prompt; function fish_prompt; printf '(tl) '; __tl_fish_prompt; end",
+                "{}if functions -q fish_prompt; functions -c fish_prompt __tl_fish_prompt; \
+                 function fish_prompt; printf '(tl) '; __tl_fish_prompt; end; end",
                 fish_functions()
             );
             cmd.arg("-C").arg(init);

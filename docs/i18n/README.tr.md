@@ -30,6 +30,7 @@ Windows, macOS veya Linux için **[en son sürümü indirin](https://github.com/
 - **Varsayılan olarak kilitli.** Her ek düğüm "shields up" ile katılır: o tailnet'lere siz erişebilirsiniz, ama onlardaki hiçbir şey bilgisayarınıza erişemez.
 - **Yalnızca onların trafiği geçer.** Diğer tailnet'lerinizdeki adresler Tailnet Link üzerinden gider. Geri kalan her şey eskisi gibi doğrudan gider.
 - **Proxy'yi yok sayan uygulamalarla da çalışır.** Uzak Masaüstü, SSH ve veritabanı istemcileri tek tıklamayla makineye giden yerel bir port alır.
+- **Terminalde de çalışır.** curl, git, ssh veya ping komutlarının başına `tl` ekleyin ya da tailnet'lerinizdeki adların çalıştığı bir kabuk için yalnızca `tl` komutunu çalıştırın.
 - **Arkasını toplar.** Sistem proxy ayarı yalnızca bir şey yönlendirilirken açıktır; çıkışta, duraklatmada, çökmede veya elektrik kesintisinde eski haline getirilir.
 - **Sizin dilinizi konuşur.** Arayüz 31 dile çevrilmiştir.
 
@@ -44,6 +45,18 @@ Windows, macOS veya Linux için **[en son sürümü indirin](https://github.com/
 Tarayıcılar ve çoğu araç sistem proxy ayarına uyar; Uzak Masaüstü, veritabanı istemcileri ve benzeri uygulamalar uymaz. Bunlar için bir makinenin yanındaki fiş düğmesine tıklayın ve bir port seçin: boş bir yerel port seçilip saklanır, siz de `127.0.0.1:<port>` adresine bağlanırsınız. Windows'ta Uzak Masaüstü yönlendirmelerinin kendi **Uzak Masaüstü'nü aç** düğmesi vardır.
 
 ![Uzak Masaüstü yönlendirildikten sonraki iletişim kutusu: kopyalanacak yerel adres ve Uzak Masaüstü'nü açan düğme](../images/forward.png)
+
+## Terminalde
+
+Komut satırı araçları sistem proxy ayarını okumaz. Uygulamayla birlikte yüklenen `tl` komutunu bir komutun başına ekleyin ya da tailnet'lerinizdeki adların çalıştığı bir kabuk için yalnızca `tl` komutunu çalıştırın. **Tailnet'ler** sekmesindeki terminal düğmesi de böyle bir kabuk açar.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip ve diğer araçların çoğu bu şekilde çalışır; ssh, scp ve sftp de öyle. `tl ping`, Tailscale'in kendi ping'ini kullanır. Ayrıntılar [İngilizce README](../../README.md#in-a-terminal-tl) dosyasındadır.
 
 ## İndirme ve platformlar
 

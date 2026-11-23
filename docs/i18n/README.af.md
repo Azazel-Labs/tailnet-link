@@ -30,6 +30,7 @@ Met Tailscale kan jy net by een tailnet op 'n slag aangemeld wees. As jou tuisla
 - **By verstek toegesluit.** Elke ekstra nodus sluit aan met die skilde op: jy kan daardie tailnets bereik, maar niks daarin kan jou rekenaar bereik nie.
 - **Net hul verkeer gaan daardeur.** Adresse in jou ander tailnets gaan deur Tailnet Link. Alles anders gaan direk, presies soos voorheen.
 - **Werk met apps wat instaanbedieners ignoreer.** Remote Desktop, SSH en databasiskliënte kry met een klik 'n plaaslike poort wat na die masjien lei.
+- **Werk ook in die terminaal.** Sit `tl` voor curl, git, ssh of ping, of voer `tl` op sy eie uit vir 'n shell waar jou tailnets se name werk.
 - **Ruim self op.** Die stelsel se instaanbedienerinstelling is net aan terwyl iets geroeteer word, en word teruggesit wanneer jy afsluit, pouseer, of as die app ineenstort of die krag uitgaan.
 - **Praat jou taal.** Die koppelvlak is in 31 tale vertaal.
 
@@ -44,6 +45,18 @@ Met Tailscale kan jy net by een tailnet op 'n slag aangemeld wees. As jou tuisla
 Blaaiers en die meeste gereedskap volg die stelsel se instaanbedienerinstelling. Remote Desktop, databasiskliënte en soortgelyke apps doen dit nie. Klik dan op die propknoppie langs 'n masjien en kies 'n poort: 'n vrye plaaslike poort word gekies en behou, en jy koppel aan `127.0.0.1:<poort>`. Op Windows kry Remote Desktop-aanstuurings hul eie **Maak Remote Desktop oop**-knoppie.
 
 ![Die dialoog ná die aanstuur van Remote Desktop: 'n plaaslike adres om te kopieer en 'n knoppie wat Remote Desktop oopmaak](../images/forward.png)
+
+## In 'n terminaal
+
+Opdragreëlgereedskap lees nie die stelsel se instaanbedienerinstelling nie. Sit `tl`, wat saam met die app geïnstalleer word, voor 'n opdrag, of voer `tl` op sy eie uit vir 'n shell waar jou tailnets se name werk. Die terminaalknoppie op die **Tailnets**-oortjie maak een oop.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip en die meeste ander gereedskap werk so, en ssh, scp en sftp ook. `tl ping` gebruik Tailscale se eie ping. Die besonderhede is in [die Engelse README](../../README.md#in-a-terminal-tl).
 
 ## Platforms en aflaai
 

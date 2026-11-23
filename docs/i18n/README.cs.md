@@ -30,6 +30,7 @@ Tailscale vám dovolí být přihlášeni jen k jedné síti tailnet najednou. P
 - **Ve výchozím stavu uzamčeno.** Každý další uzel se připojuje se zapnutou volbou Shields Up: vy se k těmto sítím tailnet dostanete, ale nic z nich se nedostane k vašemu počítači.
 - **Prochází jím jen jejich provoz.** Adresy v ostatních sítích tailnet jdou přes Tailnet Link. Vše ostatní jde napřímo, přesně jako dřív.
 - **Funguje s aplikacemi, které ignorují proxy.** Vzdálená plocha, SSH a databázoví klienti jedním kliknutím získají místní port, který vede k zařízení.
+- **Funguje i v terminálu.** Napište `tl` před curl, git, ssh nebo ping, nebo spusťte samotné `tl` a získáte shell, ve kterém fungují názvy z vašich sítí tailnet.
 - **Uklízí po sobě.** Systémové nastavení proxy je zapnuté jen tehdy, když se něco směruje, a obnoví se při ukončení, pozastavení, pádu i výpadku proudu.
 - **Mluví vaším jazykem.** Rozhraní je přeloženo do 31 jazyků.
 
@@ -46,6 +47,18 @@ Pod kapotou běží pro každou síť tailnet samostatný uzel Tailscale, jeden 
 Prohlížeče a většina nástrojů se řídí systémovým nastavením proxy, Vzdálená plocha, databázoví klienti a podobné aplikace ale ne. Pro ně klikněte na tlačítko se zástrčkou u zařízení a vyberte port: zvolí se a zachová volný místní port a vy se připojíte k `127.0.0.1:<port>`. Ve Windows mají přesměrování pro Vzdálenou plochu vlastní tlačítko **Otevřít Vzdálenou plochu**.
 
 ![Tailnet Link](../images/forward.png)
+
+## V terminálu
+
+Nástroje příkazového řádku systémové nastavení proxy nečtou. Napište `tl`, který se instaluje spolu s aplikací, před příkaz, nebo spusťte samotné `tl` a získáte shell, ve kterém fungují názvy z vašich sítí tailnet. Takový shell otevře i tlačítko terminálu na kartě **Sítě tailnet**.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+Takto fungují curl, git, npm, pip i většina dalších nástrojů a také ssh, scp a sftp. `tl ping` používá vlastní ping služby Tailscale. Podrobnosti najdete v [anglickém README](../../README.md#in-a-terminal-tl).
 
 ## Platformy a stažení
 

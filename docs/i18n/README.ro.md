@@ -30,6 +30,7 @@ Tailscale te lasă să fii autentificat într-un singur tailnet odată. Dacă la
 - **Blocat implicit.** Fiecare nod suplimentar intră cu scuturile ridicate: tu ajungi la acele tailneturi, dar nimic din ele nu poate ajunge la computerul tău.
 - **Doar traficul lor trece prin el.** Adresele din celelalte tailneturi trec prin Tailnet Link. Restul merge direct, exact ca înainte.
 - **Funcționează cu aplicațiile care ignoră proxyul.** Desktop la distanță, SSH și clienții de baze de date primesc dintr-un clic un port local care duce la mașină.
+- **Funcționează și în terminal.** Pune `tl` în fața lui curl, git, ssh sau ping, sau rulează doar `tl` pentru un shell în care funcționează numele din tailneturile tale.
 - **Face ordine după el.** Setarea proxy a sistemului este activă doar cât timp ceva rutează și este restabilită la ieșire, la întrerupere, la blocare sau la o pană de curent.
 - **Vorbește limba ta.** Interfața este tradusă în 31 de limbi.
 
@@ -44,6 +45,18 @@ Tailscale te lasă să fii autentificat într-un singur tailnet odată. Dacă la
 Browserele și majoritatea instrumentelor respectă setarea proxy a sistemului. Desktop la distanță, clienții de baze de date și aplicațiile similare, nu. Pentru acestea, dă clic pe butonul cu ștecher de lângă o mașină și alege un port: se alege și se păstrează un port local liber, iar tu te conectezi la `127.0.0.1:<port>`. Pe Windows, redirecționările pentru Desktop la distanță au propriul buton **Deschide Desktop la distanță**.
 
 ![Tailnet Link](../images/forward.png)
+
+## Într-un terminal
+
+Instrumentele din linia de comandă nu citesc setarea proxy a sistemului. Pune `tl`, instalat odată cu aplicația, în fața unei comenzi, sau rulează doar `tl` pentru un shell în care funcționează numele din tailneturile tale. Butonul de terminal din fila **Tailneturi** deschide unul.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip și majoritatea celorlalte instrumente funcționează așa, la fel și ssh, scp și sftp. `tl ping` folosește ping-ul propriu al Tailscale. Detaliile se află în [README-ul în engleză](../../README.md#in-a-terminal-tl).
 
 ## Platforme și descărcare
 

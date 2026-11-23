@@ -30,6 +30,7 @@ Med Tailscale kan du bare være logget på ett tailnet om gangen. Har hjemmelabe
 - **Låst ned som standard.** Hver ekstra node kobler seg til med skjoldene oppe: du når de tailnettene, men ingenting i dem når datamaskinen din.
 - **Bare trafikken deres går gjennom.** Adresser i de andre tailnettene dine går gjennom Tailnet Link. Alt annet går direkte, akkurat som før.
 - **Fungerer med apper som ignorerer proxyer.** Eksternt skrivebord, SSH og databaseklienter får med ett klikk en lokal port som leder til maskinen.
+- **Fungerer også i terminalen.** Sett `tl` foran curl, git, ssh eller ping, eller kjør `tl` alene for et skall der navnene i tailnettene dine virker.
 - **Rydder opp etter seg.** Systemets proxy-innstilling er bare på mens noe rutes, og settes tilbake ved avslutning, pause, krasj eller strømbrudd.
 - **Snakker språket ditt.** Grensesnittet finnes på 31 språk.
 
@@ -44,6 +45,18 @@ Med Tailscale kan du bare være logget på ett tailnet om gangen. Har hjemmelabe
 Nettlesere og de fleste verktøy følger systemets proxy-innstilling. Eksternt skrivebord, databaseklienter og lignende apper gjør det ikke. Klikk da på støpselknappen ved en maskin og velg en port: en ledig lokal port velges og beholdes, og du kobler til `127.0.0.1:<port>`. På Windows får videresendinger for Eksternt skrivebord sin egen knapp, **Åpne Eksternt skrivebord**.
 
 ![Dialogen etter videresending av Eksternt skrivebord: en lokal adresse å kopiere og en knapp som åpner Eksternt skrivebord](../images/forward.png)
+
+## I en terminal
+
+Kommandolinjeverktøy leser ikke systemets proxy-innstilling. Sett `tl`, som installeres sammen med appen, foran en kommando, eller kjør `tl` alene for et skall der navnene i tailnettene dine virker. Terminalknappen i fanen **Tailnets** åpner et slikt skall.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip og de fleste andre verktøy fungerer slik, og det gjør også ssh, scp og sftp. `tl ping` bruker Tailscales egen ping. Detaljene står i [den engelske README-filen](../../README.md#in-a-terminal-tl).
 
 ## Plattformer og nedlasting
 

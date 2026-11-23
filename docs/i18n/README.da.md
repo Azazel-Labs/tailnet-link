@@ -30,6 +30,7 @@ Med Tailscale kan du kun være logget ind på ét tailnet ad gangen. Har dit hje
 - **Låst ned som standard.** Hver ekstra node tilslutter sig med skjoldene oppe: du kan nå de tailnets, men intet i dem kan nå din computer.
 - **Kun deres trafik går igennem.** Adresser i dine andre tailnets går gennem Tailnet Link. Alt andet går direkte, præcis som før.
 - **Virker med apps, der ignorerer proxyer.** Fjernskrivebord, SSH og databaseklienter får med ét klik en lokal port, der fører til maskinen.
+- **Virker også i terminalen.** Sæt `tl` foran curl, git, ssh eller ping, eller kør `tl` alene for at få en shell, hvor navnene i dine tailnets virker.
 - **Rydder op efter sig.** Systemets proxyindstilling er kun slået til, mens noget dirigeres, og sættes tilbage ved afslutning, pause, nedbrud eller strømsvigt.
 - **Taler dit sprog.** Brugerfladen findes på 31 sprog.
 
@@ -44,6 +45,18 @@ Med Tailscale kan du kun være logget ind på ét tailnet ad gangen. Har dit hje
 Browsere og de fleste værktøjer følger systemets proxyindstilling. Fjernskrivebord, databaseklienter og lignende apps gør ikke. Klik så på stikknappen ved en maskine, og vælg en port: en ledig lokal port vælges og beholdes, og du forbinder til `127.0.0.1:<port>`. På Windows får videresendelser til Fjernskrivebord deres egen knap, **Åbn Fjernskrivebord**.
 
 ![Dialogen efter videresendelse af Fjernskrivebord: en lokal adresse at kopiere og en knap, der åbner Fjernskrivebord](../images/forward.png)
+
+## I en terminal
+
+Kommandolinjeværktøjer læser ikke systemets proxyindstilling. Sæt `tl`, som installeres sammen med appen, foran en kommando, eller kør `tl` alene for at få en shell, hvor navnene i dine tailnets virker. Terminalknappen på fanen **Tailnets** åbner en.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip og de fleste andre værktøjer virker på den måde, og det gør ssh, scp og sftp også. `tl ping` bruger Tailscales egen ping. Detaljerne står i [den engelske README](../../README.md#in-a-terminal-tl).
 
 ## Platforme og download
 

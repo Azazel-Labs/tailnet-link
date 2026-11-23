@@ -30,6 +30,7 @@ Tailscale pozwala być zalogowanym tylko do jednej sieci tailnet naraz. Jeśli d
 - **Domyślnie zabezpieczony.** Każdy dodatkowy węzeł dołącza z włączoną opcją Shields Up: Ty masz dostęp do tych sieci tailnet, a nic z nich nie ma dostępu do Twojego komputera.
 - **Przechodzi przez niego tylko ich ruch.** Adresy w pozostałych sieciach tailnet idą przez Tailnet Link. Cała reszta idzie bezpośrednio, dokładnie jak wcześniej.
 - **Działa z aplikacjami, które ignorują proxy.** Pulpit zdalny, SSH i klienty baz danych jednym kliknięciem dostają lokalny port prowadzący do urządzenia.
+- **Działa też w terminalu.** Dodaj `tl` przed curl, git, ssh lub ping albo uruchom samo `tl`, aby dostać powłokę, w której działają nazwy z Twoich sieci tailnet.
 - **Sprząta po sobie.** Systemowe ustawienie proxy jest włączone tylko wtedy, gdy coś przekazuje ruch, i zostaje przywrócone po zamknięciu, wstrzymaniu, awarii lub zaniku zasilania.
 - **Mówi Twoim językiem.** Interfejs jest przetłumaczony na 31 języków.
 
@@ -46,6 +47,18 @@ Pod spodem każda sieć tailnet działa jako osobny węzeł Tailscale, jeden lok
 Przeglądarki i większość narzędzi stosują się do systemowego ustawienia proxy, ale Pulpit zdalny, klienty baz danych i podobne aplikacje nie. Dla nich kliknij przycisk z wtyczką obok urządzenia i wybierz port: wolny port lokalny zostanie wybrany i zachowany, a Ty łączysz się z `127.0.0.1:<port>`. W systemie Windows przekierowania Pulpitu zdalnego mają własny przycisk **Otwórz Pulpit zdalny**.
 
 ![Tailnet Link](../images/forward.png)
+
+## W terminalu
+
+Narzędzia wiersza poleceń nie odczytują systemowego ustawienia proxy. Dodaj `tl`, instalowane razem z aplikacją, przed poleceniem albo uruchom samo `tl`, aby dostać powłokę, w której działają nazwy z Twoich sieci tailnet. Przycisk terminala na karcie **Sieci tailnet** otwiera taką powłokę.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+W ten sposób działają curl, git, npm, pip i większość innych narzędzi, a także ssh, scp i sftp. `tl ping` korzysta z własnego pinga Tailscale. Szczegóły znajdziesz w [README po angielsku](../../README.md#in-a-terminal-tl).
 
 ## Platformy i pobieranie
 

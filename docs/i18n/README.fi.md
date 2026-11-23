@@ -30,6 +30,7 @@ Tailscalessa voit olla kirjautuneena vain yhteen tailnetiin kerrallaan. Jos koti
 - **Lukittu oletuksena.** Jokainen lisäsolmu liittyy kilvet ylhäällä: sinä pääset noihin tailneteihin, mutta mikään niissä ei pääse tietokoneellesi.
 - **Vain niiden liikenne kulkee sen kautta.** Muiden tailnetiesi osoitteet kulkevat Tailnet Linkin kautta. Kaikki muu kulkee suoraan, aivan kuten ennenkin.
 - **Toimii välityspalvelimen ohittavien sovellusten kanssa.** Etätyöpöytä, SSH ja tietokantaohjelmat saavat yhdellä napsautuksella paikallisen portin, joka johtaa koneeseen.
+- **Toimii myös päätteessä.** Lisää `tl` komentojen curl, git, ssh tai ping eteen, tai suorita pelkkä `tl`, niin saat komentotulkin, jossa tailnetiesi nimet toimivat.
 - **Siivoaa jälkensä.** Järjestelmän välityspalvelinasetus on käytössä vain, kun jotain reititetään, ja se palautetaan, kun sovellus suljetaan, keskeytetään tai kaatuu tai sähköt katkeavat.
 - **Puhuu kieltäsi.** Käyttöliittymä on käännetty 31 kielelle.
 
@@ -44,6 +45,18 @@ Tailscalessa voit olla kirjautuneena vain yhteen tailnetiin kerrallaan. Jos koti
 Selaimet ja useimmat työkalut noudattavat järjestelmän välityspalvelinasetusta. Etätyöpöytä, tietokantaohjelmat ja vastaavat sovellukset eivät. Napsauta silloin koneen vieressä olevaa pistokepainiketta ja valitse portti: vapaa paikallinen portti valitaan ja säilytetään, ja yhdistät osoitteeseen `127.0.0.1:<portti>`. Windowsissa Etätyöpöydän edelleenohjauksilla on oma **Avaa Etätyöpöytä** -painike.
 
 ![Ikkuna Etätyöpöydän edelleenohjauksen jälkeen: kopioitava paikallinen osoite ja painike, joka avaa Etätyöpöydän](../images/forward.png)
+
+## Päätteessä
+
+Komentorivityökalut eivät lue järjestelmän välityspalvelinasetusta. Lisää sovelluksen mukana asentuva `tl` komennon eteen, tai suorita pelkkä `tl`, niin saat komentotulkin, jossa tailnetiesi nimet toimivat. **Tailnetit**-välilehden päätepainike avaa sellaisen.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+Näin toimivat curl, git, npm, pip ja useimmat muut työkalut sekä ssh, scp ja sftp. `tl ping` käyttää Tailscalen omaa pingiä. Yksityiskohdat löytyvät [englanninkielisestä README-tiedostosta](../../README.md#in-a-terminal-tl).
 
 ## Alustat ja lataus
 

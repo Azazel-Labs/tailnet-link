@@ -30,6 +30,7 @@ Tailscale només et deixa tenir la sessió iniciada en una tailnet cada vegada. 
 - **Protegit per defecte.** Cada node addicional s’hi uneix amb els escuts alçats: tu pots accedir a aquelles tailnets, però res d’elles no pot arribar al teu ordinador.
 - **Només hi passa el seu trànsit.** Les adreces de les altres tailnets passen per Tailnet Link. Tota la resta va directa, igual que abans.
 - **Funciona amb aplicacions que ignoren el proxy.** L’Escriptori remot, SSH i els clients de bases de dades obtenen amb un clic un port local que porta a la màquina.
+- **També funciona al terminal.** Posa `tl` davant de curl, git, ssh o ping, o executa `tl` sol per obrir un intèrpret d’ordres on funcionen els noms de les teves tailnets.
 - **Ho deixa tot com estava.** La configuració del proxy del sistema només està activada mentre s’encamina alguna cosa, i es restaura en sortir, en posar-ho en pausa, si falla o si s’interromp el corrent.
 - **Parla la teva llengua.** La interfície està traduïda a 31 idiomes.
 
@@ -44,6 +45,18 @@ Tailscale només et deixa tenir la sessió iniciada en una tailnet cada vegada. 
 Els navegadors i la majoria d’eines segueixen la configuració del proxy del sistema. L’Escriptori remot, els clients de bases de dades i aplicacions semblants, no. Per a aquestes, fes clic al botó de l’endoll al costat d’una màquina i tria un port: es tria i es conserva un port local lliure, i et connectes a `127.0.0.1:<port>`. A Windows, les redireccions de l’Escriptori remot tenen el seu propi botó **Obre l’Escriptori remot**.
 
 ![Tailnet Link](../images/forward.png)
+
+## En un terminal
+
+Les eines de línia d’ordres no llegeixen la configuració del proxy del sistema. Posa `tl`, que s’instal·la amb l’aplicació, davant d’una ordre, o executa `tl` sol per obrir un intèrpret d’ordres on funcionen els noms de les teves tailnets. El botó del terminal de la pestanya **Tailnets** n’obre un.
+
+```sh
+tl curl http://wiki.capybara-iguana.ts.net/
+tl ssh admin@build-pc.capybara-iguana.ts.net
+tl ping build-pc.capybara-iguana.ts.net
+```
+
+curl, git, npm, pip i la majoria de les altres eines funcionen així, i també ssh, scp i sftp. `tl ping` fa servir el ping propi de Tailscale. Els detalls són al [README en anglès](../../README.md#in-a-terminal-tl).
 
 ## Plataformes i baixada
 
