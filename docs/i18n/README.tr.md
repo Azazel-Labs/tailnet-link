@@ -25,7 +25,7 @@ Windows, macOS veya Linux için **[en son sürümü indirin](https://github.com/
 
 - **Hesap değiştirmeye son.** İhtiyacınız kadar tailnet ekleyin ve hepsini aynı anda kullanın. Kendi tailnet'inizin bağlantısı hiç kesilmez.
 - **Yapılandıracak bir şey yok.** Oturum açın, tailnet'in alan adı sizin için bulunur. Makinelerini herhangi bir tarayıcıda adlarıyla açın.
-- **Makinelerinizdeki web sitelerini bulur.** HTTPS sayfası sunan makineler, sayfanın adı ve simgesiyle kutucuklar olarak görünür ve tek tıkla açılır. Her makine günde en fazla bir kez denetlenir.
+- **Makinelerinizdeki web sitelerini bulur.** HTTPS sayfası sunan makineler, sayfanın adı ve simgesiyle bir listede görünür ve tek tıkla açılır. Kullandıklarınıza yıldız ekleyin; sayfanın resmiyle kutucuklara dönüşürler. Her makine günde en fazla bir kez denetlenir.
 - **Tailscale ile çatışmaz.** VPN bağdaştırıcısı yok, rota yok, DNS değişikliği yok. Her ek tailnet uygulamanın içinde ayrı bir düğüm olarak çalışır; bu yüzden ne Tailscale uygulamasıyla ne de birbiriyle çakışır.
 - **Varsayılan olarak kilitli.** Her ek düğüm "shields up" ile katılır: o tailnet'lere siz erişebilirsiniz, ama onlardaki hiçbir şey bilgisayarınıza erişemez.
 - **Yalnızca onların trafiği geçer.** Diğer tailnet'lerinizdeki adresler Tailnet Link üzerinden gider. Geri kalan her şey eskisi gibi doğrudan gider.

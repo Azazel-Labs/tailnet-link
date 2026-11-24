@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "6317275fdaa793b273b93f2e1faf28a01cc87440db8a6ffde58763f345d5a570"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "783e9eebd33a96519c4c9c357783947464cadcec708c3d8525c6c270e10cc4ae"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Xóa khỏi mục yêu thích"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Chứng chỉ của trang này không được tin cậy, vì vậy trình duyệt sẽ cảnh báo bạn."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Tất cả trang web · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Đang kiểm tra { $done }/{ $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Gắn sao cho một trang web trong danh sách bên dưới để ghim nó ở đây."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Trang web"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Các máy trong tailnet của bạn có phục vụ trang web qua HTTPS. Mỗi máy được kiểm tra tối đa một lần mỗi ngày."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Trang web · { $shown }/{ $total } khớp"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Kiểm tra lại tất cả các máy ngay"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Hiện tất cả trang web ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Hiện ít hơn"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

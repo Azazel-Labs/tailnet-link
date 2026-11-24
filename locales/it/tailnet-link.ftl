@@ -155,8 +155,9 @@ sites-recheck-tooltip = Ricontrolla ora tutti i dispositivi
 site-untrusted = Il suo certificato non è attendibile, quindi il browser mostrerà un avviso.
 site-favorite-add = Aggiungi ai preferiti
 site-favorite-remove = Rimuovi dai preferiti
-sites-show-all = Mostra tutti i siti web ({ $count })
-sites-show-fewer = Mostra meno
+sites-all = Tutti i siti web · { $count }
+sites-matching = Siti web · { $shown } di { $total } corrispondenti
+sites-favorites-hint = Aggiungi una stella a un sito nell’elenco qui sotto per fissarlo qui.
 
 ## Impostazioni: port forwarding
 

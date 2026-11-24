@@ -140,8 +140,9 @@ sites-recheck-tooltip = すべてのマシンを今すぐ再確認
 site-untrusted = 証明書が信頼されていないため、ブラウザーに警告が表示されます。
 site-favorite-add = お気に入りに追加
 site-favorite-remove = お気に入りから削除
-sites-show-all = すべてのウェブサイトを表示（{ $count }）
-sites-show-fewer = 表示を減らす
+sites-all = すべての Web サイト · { $count }
+sites-matching = Web サイト · { $total } 件中 { $shown } 件が一致
+sites-favorites-hint = 下の一覧で Web サイトに星を付けると、ここにピン留めされます。
 
 ## Settings: port forwards
 

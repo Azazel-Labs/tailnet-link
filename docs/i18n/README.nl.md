@@ -25,7 +25,7 @@ Met Tailscale ben je bij één tailnet tegelijk ingelogd. Hebben je homelab, je 
 
 - **Nooit meer van account wisselen.** Voeg zoveel tailnets toe als je nodig hebt en gebruik ze allemaal tegelijk. Je eigen tailnet verbreekt nooit de verbinding.
 - **Niets in te stellen.** Log in en het domein van het tailnet wordt voor je gevonden. Open de machines op naam in elke browser.
-- **Vindt de websites op je machines.** Machines die een HTTPS-pagina aanbieden, verschijnen als tegels met de naam en het pictogram van de pagina, op één klik afstand. Elke machine wordt hooguit één keer per dag gecontroleerd.
+- **Vindt de websites op je machines.** Machines die een HTTPS-pagina aanbieden, verschijnen in een lijst met de naam en het pictogram van de pagina, op één klik afstand. Geef de websites die je gebruikt een ster, dan worden ze tegels met een afbeelding van de pagina. Elke machine wordt hooguit één keer per dag gecontroleerd.
 - **Zit Tailscale niet in de weg.** Geen VPN-adapter, geen routes, geen DNS-wijzigingen. Elk extra tailnet draait als een aparte node in de app, dus niets botst met de Tailscale-app of met elkaar.
 - **Standaard afgeschermd.** Elke extra node doet mee met shields up: jij bereikt die tailnets, maar niets daarin kan jouw computer bereiken.
 - **Alleen hun verkeer gaat erdoor.** Adressen in je andere tailnets lopen via Tailnet Link. Al het andere gaat rechtstreeks, precies zoals voorheen.

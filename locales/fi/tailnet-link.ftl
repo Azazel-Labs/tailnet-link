@@ -151,8 +151,9 @@ sites-recheck-tooltip = Tarkista kaikki koneet uudelleen nyt
 site-untrusted = Sen varmenteeseen ei luoteta, joten selain varoittaa sinua.
 site-favorite-add = Lisää suosikkeihin
 site-favorite-remove = Poista suosikeista
-sites-show-all = Näytä kaikki verkkosivustot ({ $count })
-sites-show-fewer = Näytä vähemmän
+sites-all = Kaikki verkkosivustot · { $count }
+sites-matching = Verkkosivustot · { $shown }/{ $total } vastaa hakua
+sites-favorites-hint = Merkitse sivusto tähdellä alla olevassa luettelossa, niin se kiinnitetään tähän.
 
 ## Settings: port forwards
 

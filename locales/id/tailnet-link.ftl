@@ -154,8 +154,9 @@ sites-recheck-tooltip = Periksa ulang semua mesin sekarang
 site-untrusted = Sertifikatnya tidak tepercaya, jadi browser Anda akan menampilkan peringatan.
 site-favorite-add = Tambahkan ke favorit
 site-favorite-remove = Hapus dari favorit
-sites-show-all = Tampilkan semua situs web ({ $count })
-sites-show-fewer = Tampilkan lebih sedikit
+sites-all = Semua situs web · { $count }
+sites-matching = Situs web · { $shown } dari { $total } cocok
+sites-favorites-hint = Beri bintang pada situs web di daftar di bawah untuk menyematkannya di sini.
 
 ## Pengaturan: penerusan port
 

@@ -155,8 +155,9 @@ sites-recheck-tooltip = Revérifier toutes les machines maintenant
 site-untrusted = Son certificat n’est pas reconnu, votre navigateur affichera donc un avertissement.
 site-favorite-add = Ajouter aux favoris
 site-favorite-remove = Retirer des favoris
-sites-show-all = Afficher tous les sites web ({ $count })
-sites-show-fewer = Afficher moins
+sites-all = Tous les sites web · { $count }
+sites-matching = Sites web · { $shown } sur { $total } correspondent
+sites-favorites-hint = Ajoutez une étoile à un site dans la liste ci-dessous pour l’épingler ici.
 
 ## Paramètres : redirections de port
 

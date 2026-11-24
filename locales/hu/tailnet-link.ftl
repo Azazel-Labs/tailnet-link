@@ -157,8 +157,9 @@ sites-recheck-tooltip = Minden gép újraellenőrzése most
 site-untrusted = A tanúsítványa nem megbízható, ezért a böngésző figyelmeztetni fogja.
 site-favorite-add = Hozzáadás a kedvencekhez
 site-favorite-remove = Eltávolítás a kedvencek közül
-sites-show-all = Az összes webhely megjelenítése ({ $count })
-sites-show-fewer = Kevesebb megjelenítése
+sites-all = Az összes webhely · { $count }
+sites-matching = Webhelyek · { $shown } találat, összesen { $total }
+sites-favorites-hint = Jelöljön meg csillaggal egy webhelyet az alábbi listában, hogy ide kitűzze.
 
 ## Beállítások: porttovábbítások
 

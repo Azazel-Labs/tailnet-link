@@ -25,7 +25,7 @@ Tailscale pozwala być zalogowanym tylko do jednej sieci tailnet naraz. Jeśli d
 
 - **Koniec z przełączaniem kont.** Dodaj tyle sieci tailnet, ile potrzebujesz, i korzystaj ze wszystkich naraz. Twoja własna sieć tailnet nigdy się nie rozłącza.
 - **Nic do konfigurowania.** Zaloguj się, a domena sieci tailnet zostanie znaleziona za Ciebie. Otwieraj jej urządzenia po nazwie w dowolnej przeglądarce.
-- **Znajduje witryny na Twoich urządzeniach.** Urządzenia udostępniające stronę przez HTTPS pojawiają się jako kafelki z nazwą i ikoną strony, o jedno kliknięcie. Każde urządzenie jest sprawdzane najwyżej raz dziennie.
+- **Znajduje witryny na Twoich urządzeniach.** Urządzenia udostępniające stronę przez HTTPS pojawiają się na liście z nazwą i ikoną strony, o jedno kliknięcie. Oznacz gwiazdką te, których używasz, a staną się kafelkami z obrazem strony. Każde urządzenie jest sprawdzane najwyżej raz dziennie.
 - **Nie wchodzi w drogę Tailscale.** Żadnej karty VPN, tras ani zmian DNS. Każda dodatkowa sieć tailnet działa jako osobny węzeł wewnątrz aplikacji, więc nic nie koliduje ani z aplikacją Tailscale, ani ze sobą nawzajem.
 - **Domyślnie zabezpieczony.** Każdy dodatkowy węzeł dołącza z włączoną opcją Shields Up: Ty masz dostęp do tych sieci tailnet, a nic z nich nie ma dostępu do Twojego komputera.
 - **Przechodzi przez niego tylko ich ruch.** Adresy w pozostałych sieciach tailnet idą przez Tailnet Link. Cała reszta idzie bezpośrednio, dokładnie jak wcześniej.

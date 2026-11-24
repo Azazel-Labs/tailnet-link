@@ -157,8 +157,9 @@ sites-recheck-tooltip = Tüm makineleri şimdi yeniden denetle
 site-untrusted = Sertifikasına güvenilmiyor, bu yüzden tarayıcınız sizi uyaracak.
 site-favorite-add = Sık kullanılanlara ekle
 site-favorite-remove = Sık kullanılanlardan kaldır
-sites-show-all = Tüm web sitelerini göster ({ $count })
-sites-show-fewer = Daha az göster
+sites-all = Tüm web siteleri · { $count }
+sites-matching = Web siteleri · { $shown }/{ $total } eşleşiyor
+sites-favorites-hint = Buraya sabitlemek için aşağıdaki listede bir web sitesine yıldız ekleyin.
 
 ## Ayarlar: port yönlendirmeleri
 

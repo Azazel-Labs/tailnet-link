@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "afd09e2bc5286056d1ce86cf6c4bcf8d64261df76dcc9eb7cc53c28923c60203"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "215565b389f117a564c3354cb5f455d3e98d4241893f4acfafddf429b83c8f7d"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Elimină din favorite"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Certificatul său nu este de încredere, așa că browserul va afișa un avertisment."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Toate site-urile · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Se verifică { $done } din { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Marchează cu stea un site din lista de mai jos pentru a-l fixa aici."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Site-uri"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Mașinile din tailnet-urile tale care servesc un site prin HTTPS. Fiecare mașină este verificată cel mult o dată pe zi."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Site-uri · { $shown } din { $total } corespund"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Verifică acum din nou toate mașinile"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Afișează toate site-urile ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Afișează mai puține"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

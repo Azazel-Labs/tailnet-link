@@ -155,8 +155,9 @@ sites-recheck-tooltip = Alle Geräte jetzt erneut prüfen
 site-untrusted = Das Zertifikat ist nicht vertrauenswürdig, daher zeigt Ihr Browser eine Warnung an.
 site-favorite-add = Zu Favoriten hinzufügen
 site-favorite-remove = Aus Favoriten entfernen
-sites-show-all = Alle Websites anzeigen ({ $count })
-sites-show-fewer = Weniger anzeigen
+sites-all = Alle Websites · { $count }
+sites-matching = Websites · { $shown } von { $total } passen
+sites-favorites-hint = Markieren Sie eine Website in der Liste unten mit einem Stern, um sie hier anzuheften.
 
 ## Einstellungen: Portweiterleitungen
 

@@ -25,7 +25,7 @@ O Tailscale só deixa você ficar conectado a uma tailnet por vez. Se o seu home
 
 - **Chega de trocar de conta.** Adicione quantas tailnets precisar e use todas ao mesmo tempo. Sua própria tailnet nunca desconecta.
 - **Nada para configurar.** Faça login e o domínio da tailnet é encontrado para você. Abra as máquinas dela pelo nome em qualquer navegador.
-- **Encontra os sites nas suas máquinas.** Máquinas que servem uma página HTTPS aparecem como blocos com o nome e o ícone da página, a um clique. Cada máquina é verificada no máximo uma vez por dia.
+- **Encontra os sites nas suas máquinas.** Máquinas que servem uma página HTTPS aparecem em uma lista com o nome e o ícone da página, a um clique. Marque com estrela as que você usa e elas viram blocos com uma imagem da página. Cada máquina é verificada no máximo uma vez por dia.
 - **Não briga com o Tailscale.** Sem adaptador de VPN, sem rotas, sem mudanças de DNS. Cada tailnet extra roda como um nó separado dentro do aplicativo, sem conflito com o aplicativo do Tailscale nem entre si.
 - **Protegido por padrão.** Cada nó extra entra com os escudos levantados: você acessa essas tailnets, e nada nelas consegue acessar o seu computador.
 - **Só o tráfego delas passa por ele.** Endereços das suas outras tailnets passam pelo Tailnet Link. Todo o resto vai direto, exatamente como antes.

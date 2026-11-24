@@ -150,8 +150,9 @@ sites-recheck-tooltip = Verifică acum din nou toate mașinile
 site-untrusted = Certificatul său nu este de încredere, așa că browserul va afișa un avertisment.
 site-favorite-add = Adaugă la favorite
 site-favorite-remove = Elimină din favorite
-sites-show-all = Afișează toate site-urile ({ $count })
-sites-show-fewer = Afișează mai puține
+sites-all = Toate site-urile · { $count }
+sites-matching = Site-uri · { $shown } din { $total } corespund
+sites-favorites-hint = Marchează cu stea un site din lista de mai jos pentru a-l fixa aici.
 
 ## Setări: redirecționări de porturi
 

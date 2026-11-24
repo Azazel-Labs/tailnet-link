@@ -154,8 +154,9 @@ sites-recheck-tooltip = ตรวจสอบทุกเครื่องอ�
 site-untrusted = ใบรับรองของเว็บไซต์นี้ไม่น่าเชื่อถือ เบราว์เซอร์จึงจะแสดงคำเตือน
 site-favorite-add = เพิ่มในรายการโปรด
 site-favorite-remove = นำออกจากรายการโปรด
-sites-show-all = แสดงเว็บไซต์ทั้งหมด ({ $count })
-sites-show-fewer = แสดงน้อยลง
+sites-all = เว็บไซต์ทั้งหมด · { $count }
+sites-matching = เว็บไซต์ · ตรงกัน { $shown } จาก { $total }
+sites-favorites-hint = ติดดาวเว็บไซต์ในรายการด้านล่างเพื่อปักหมุดไว้ที่นี่
 
 ## การตั้งค่า: การส่งต่อพอร์ต
 

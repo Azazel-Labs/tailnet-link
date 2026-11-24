@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "aa368f6c2573b34f7c5496455138893a8d59d5ef91b30ef8283e8f7a2329e40e"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "dd8e07f2512809a74a1580dd7fe21d7f56f1c3e0d157d775a718a160a1ab520e"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Fjern fra favoritter"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Sertifikatet er ikke klarert, så nettleseren vil advare deg."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Alle nettsteder · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Sjekker { $done } av { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Gi et nettsted en stjerne i listen nedenfor for å feste det her."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Nettsteder"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Maskiner i tailnettene dine som har et nettsted over HTTPS. Hver maskin sjekkes høyst én gang om dagen."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Nettsteder · { $shown } av { $total } samsvarer"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Sjekk alle maskinene på nytt nå"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Vis alle nettsteder ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Vis færre"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

@@ -114,8 +114,8 @@ pub struct Config {
     /// Starred websites (full MagicDNS names), shown first.
     #[serde(deserialize_with = "null_as_empty")]
     pub favorite_sites: Vec<String>,
-    /// The Websites card shows every tile, not just the first rows.
-    pub sites_show_all: bool,
+    /// The Websites card's list of every website is open (it starts closed).
+    pub sites_open: bool,
 }
 
 /// Reads `null` as an empty list. Older versions wrote `null` for empty lists,
@@ -145,7 +145,7 @@ impl Default for Config {
             find_sites: true,
             machines_open: Vec::new(),
             favorite_sites: Vec::new(),
-            sites_show_all: false,
+            sites_open: false,
         }
     }
 }

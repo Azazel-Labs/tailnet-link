@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "778de82ed32885c45b42a56673c714efe97f78ae065a5522856ccbb893b23c50"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "fccc0661423ac8afff67b6d285e8bc25dbc2e4d83320677d95f46ca2c2d0da9f"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "お気に入りから削除"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "証明書が信頼されていないため、ブラウザーに警告が表示されます。"
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "すべての Web サイト · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "確認中 ({ $total } 台中 { $done } 台目)…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "下の一覧で Web サイトに星を付けると、ここにピン留めされます。"
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Web サイト"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "tailnet 内で HTTPS の Web サイトを提供しているマシンです。各マシンの確認は 1 日 1 回までです。"
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Web サイト · { $total } 件中 { $shown } 件が一致"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "すべてのマシンを今すぐ再確認"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "すべてのウェブサイトを表示（{ $count }）"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "表示を減らす"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

@@ -25,7 +25,7 @@ Med Tailscale kan du bara vara inloggad i ett tailnet åt gången. Har ditt heml
 
 - **Inga fler kontobyten.** Lägg till så många tailnet du behöver och använd alla på en gång. Ditt eget tailnet kopplas aldrig ner.
 - **Inget att konfigurera.** Logga in, så hittas tailnetets domän åt dig. Öppna dess datorer med namn i valfri webbläsare.
-- **Hittar webbplatserna på dina datorer.** Datorer som serverar en HTTPS-sida visas som rutor med sidans namn och ikon, bara ett klick bort. Varje dator kontrolleras högst en gång om dagen.
+- **Hittar webbplatserna på dina datorer.** Datorer som serverar en HTTPS-sida visas i en lista med sidans namn och ikon, bara ett klick bort. Stjärnmarkera dem du använder så blir de rutor med en bild av sidan. Varje dator kontrolleras högst en gång om dagen.
 - **Krockar inte med Tailscale.** Ingen VPN-adapter, inga rutter, inga DNS-ändringar. Varje extra tailnet körs som en separat nod inuti appen.
 - **Låst som standard.** Varje extra nod ansluter med sköldarna uppe: du når de tailneten, men inget i dem når din dator.
 - **Bara deras trafik går igenom.** Adresser i dina andra tailnet går via Tailnet Link. Allt annat går direkt, precis som förut.

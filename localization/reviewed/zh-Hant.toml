@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "4e76dde2b9756d22baf017a5a87d90a9734801d3502b2270888a87d6496c1a36"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "b51df1aca6785d12f8f9bd1179420982497dbf23c6912b71b90699f92752d5b3"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "從我的最愛中移除"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "它的憑證不受信任，因此瀏覽器會顯示警告。"
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "所有網站 · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "正在檢查第 { $done } 台，共 { $total } 台…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "在下方清單中為網站加上星號，即可將其釘選在這裡。"
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "網站"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "你的 tailnet 中透過 HTTPS 提供網站的裝置。每台裝置每天最多檢查一次。"
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "網站 · { $total } 個中有 { $shown } 個符合"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "立即重新檢查所有裝置"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "顯示所有網站（{ $count }）"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "收合"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

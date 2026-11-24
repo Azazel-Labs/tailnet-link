@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "8534c648e267a6a3023abd2bab5a12db4e4fca2f8ff47249a4b8c9d12d71b3b1"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "ebcf4f24eb7e9c22f5cf0da89385b5906d8d30bada780402931a5d1cc13ae485"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Treu dels preferits"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "El seu certificat no és de confiança, així que el navegador t’avisarà."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Tots els llocs web · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "S’està comprovant { $done } de { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Marca un lloc web amb una estrella a la llista de sota per fixar-lo aquí."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Llocs web"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Màquines de les teves tailnets que serveixen un lloc web per HTTPS. Cada màquina es comprova com a màxim un cop al dia."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Llocs web · { $shown } de { $total } coincideixen"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Torna a comprovar totes les màquines ara"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Mostra tots els llocs web ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Mostra’n menys"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

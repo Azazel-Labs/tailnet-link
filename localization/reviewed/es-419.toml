@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "17b931239c85320f7491c164345b19df8e85f516e26b1ca72583d5496f2acca1"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "ff96926d34e1cc2624d0e7a7fbebc920855c75a503d5a27e377e6e68482c8f3b"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Quitar de favoritos"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Su certificado no es de confianza, así que tu navegador te mostrará una advertencia."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Todos los sitios web · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Revisando { $done } de { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Marca un sitio web con una estrella en la lista de abajo para fijarlo aquí."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Sitios web"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Equipos de tus tailnets que sirven un sitio web por HTTPS. Cada equipo se revisa como máximo una vez al día."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Sitios web · { $shown } de { $total } coinciden"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Volver a revisar todos los equipos ahora"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Mostrar todos los sitios web ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Mostrar menos"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

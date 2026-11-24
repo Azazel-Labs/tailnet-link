@@ -25,7 +25,7 @@ Met Tailscale kan jy net by een tailnet op 'n slag aangemeld wees. As jou tuisla
 
 - **Geen rekeningwisseling meer nie.** Voeg soveel tailnets by as wat jy nodig het en gebruik hulle almal gelyk. Jou eie tailnet ontkoppel nooit.
 - **Niks om op te stel nie.** Meld aan, en die tailnet se domein word vir jou gevind. Maak sy masjiene volgens naam in enige blaaier oop.
-- **Vind die webwerwe op jou masjiene.** Masjiene wat 'n HTTPS-bladsy bedien, verskyn as teëls met die bladsy se naam en ikoon, net een klik weg. Elke masjien word hoogstens een keer per dag nagegaan.
+- **Vind die webwerwe op jou masjiene.** Masjiene wat 'n HTTPS-bladsy bedien, word gelys met die bladsy se naam en ikoon, net een klik weg. Gee dié wat jy gebruik 'n ster, en hulle word teëls met 'n prent van die bladsy. Elke masjien word hoogstens een keer per dag nagegaan.
 - **Baklei nie met Tailscale nie.** Geen VPN-adapter, geen roetes, geen DNS-veranderinge nie. Elke ekstra tailnet loop as 'n aparte nodus binne die app.
 - **By verstek toegesluit.** Elke ekstra nodus sluit aan met die skilde op: jy kan daardie tailnets bereik, maar niks daarin kan jou rekenaar bereik nie.
 - **Net hul verkeer gaan daardeur.** Adresse in jou ander tailnets gaan deur Tailnet Link. Alles anders gaan direk, presies soos voorheen.

@@ -149,8 +149,9 @@ sites-recheck-tooltip = Kontrollera alla datorer igen nu
 site-untrusted = Certifikatet är inte betrott, så webbläsaren kommer att varna dig.
 site-favorite-add = Lägg till i favoriter
 site-favorite-remove = Ta bort från favoriter
-sites-show-all = Visa alla webbplatser ({ $count })
-sites-show-fewer = Visa färre
+sites-all = Alla webbplatser · { $count }
+sites-matching = Webbplatser · { $shown } av { $total } matchar
+sites-favorites-hint = Stjärnmarkera en webbplats i listan nedan för att fästa den här.
 
 ## Settings: port forwards
 

@@ -140,8 +140,9 @@ sites-recheck-tooltip = 立即重新檢查所有裝置
 site-untrusted = 它的憑證不受信任，因此瀏覽器會顯示警告。
 site-favorite-add = 加入我的最愛
 site-favorite-remove = 從我的最愛中移除
-sites-show-all = 顯示所有網站（{ $count }）
-sites-show-fewer = 收合
+sites-all = 所有網站 · { $count }
+sites-matching = 網站 · { $total } 個中有 { $shown } 個符合
+sites-favorites-hint = 在下方清單中為網站加上星號，即可將其釘選在這裡。
 
 ## Settings: port forwards
 

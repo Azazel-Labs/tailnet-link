@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "1af64d8406b3232708953056b2ab0ce97e6166cd462628b93dd227456cdd65c0"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "91b92af276be623b40d3cd47a9f2914c247b4357346d00ad4567cf5f5a9ce3fd"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Вилучити з обраного"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Його сертифікат не є довіреним, тому браузер покаже попередження."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Усі сайти · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Перевірка: { $done } з { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Позначте сайт зірочкою в списку нижче, щоб закріпити його тут."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Сайти"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Пристрої у ваших мережах tailnet, на яких працює сайт через HTTPS. Кожен пристрій перевіряється не частіше ніж раз на день."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Сайти · знайдено { $shown } з { $total }"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Перевірити всі пристрої знову"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Показати всі сайти ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Показати менше"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

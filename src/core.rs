@@ -861,11 +861,11 @@ impl Core {
         self.changed();
     }
 
-    /// Shows every website tile, or just the first rows.
-    pub fn set_sites_show_all(&self, on: bool) {
+    /// Opens or closes the Websites card's list of every website.
+    pub fn set_sites_open(&self, open: bool) {
         let mut g = lock(&self.inner);
-        if g.cfg.sites_show_all != on {
-            g.cfg.sites_show_all = on;
+        if g.cfg.sites_open != open {
+            g.cfg.sites_open = open;
             if let Err(e) = g.cfg.save() {
                 log::warn!("Couldn't save settings: {e}");
             }

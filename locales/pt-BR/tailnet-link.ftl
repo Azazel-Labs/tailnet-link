@@ -148,8 +148,9 @@ sites-recheck-tooltip = Verificar todas as máquinas de novo agora
 site-untrusted = O certificado dele não é confiável, então o navegador vai mostrar um aviso.
 site-favorite-add = Adicionar aos favoritos
 site-favorite-remove = Remover dos favoritos
-sites-show-all = Mostrar todos os sites ({ $count })
-sites-show-fewer = Mostrar menos
+sites-all = Todos os sites · { $count }
+sites-matching = Sites · { $shown } de { $total } correspondem
+sites-favorites-hint = Marque um site com estrela na lista abaixo para fixá-lo aqui.
 
 ## Configurações: encaminhamentos de porta
 

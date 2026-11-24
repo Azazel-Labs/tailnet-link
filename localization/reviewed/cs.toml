@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "218fd2ce4e5ee38f4c8169f1f821ea3d04c31083e9486a3e365fb6d4fe8b3e86"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "0b5dd841ecb51857a45f28e2cf00eaa519bb9fbc74c4c5875b04e98644ffedd3"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Odebrat z oblíbených"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Jeho certifikát není důvěryhodný, takže vás prohlížeč upozorní."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Všechny weby · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Kontroluje se { $done } z { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Označte web hvězdičkou v seznamu níže a připnete ho sem."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Weby"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Zařízení ve vašich sítích tailnet, která poskytují web přes HTTPS. Každé zařízení se kontroluje nejvýše jednou denně."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Weby · vyhovuje { $shown } z { $total }"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Znovu zkontrolovat všechna zařízení"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Zobrazit všechny weby ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Zobrazit méně"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

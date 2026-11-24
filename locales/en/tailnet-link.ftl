@@ -172,8 +172,10 @@ site-untrusted = Its certificate isn't trusted, so your browser will warn you.
 site-favorite-add = Add to favorites
 site-favorite-remove = Remove from favorites
 # $count is how many websites there are.
-sites-show-all = Show all websites ({ $count })
-sites-show-fewer = Show fewer
+sites-all = All websites · { $count }
+# $shown websites match the search, out of $total.
+sites-matching = Websites · { $shown } of { $total } match
+sites-favorites-hint = Star a website in the list below to pin it here.
 
 ## Settings: port forwards
 

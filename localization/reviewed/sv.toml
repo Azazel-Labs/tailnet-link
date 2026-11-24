@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "37f6f6eb1593d3dce864972576da743801f0a9915b17f04295a8a3c8a26476c9"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "de90772b1173074fcf8f39b27a3f082e251db7ef059aad75fbcb5dcd7462d3a1"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Ta bort från favoriter"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Certifikatet är inte betrott, så webbläsaren kommer att varna dig."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Alla webbplatser · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Kontrollerar { $done } av { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Stjärnmarkera en webbplats i listan nedan för att fästa den här."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Webbplatser"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Datorer i dina tailnet som har en webbplats över HTTPS. Varje dator kontrolleras högst en gång om dagen."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Webbplatser · { $shown } av { $total } matchar"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Kontrollera alla datorer igen nu"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Visa alla webbplatser ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Visa färre"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

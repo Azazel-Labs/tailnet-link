@@ -150,8 +150,9 @@ sites-recheck-tooltip = Gaan nou weer elke masjien na
 site-untrusted = Sy sertifikaat word nie vertrou nie, dus sal jou blaaier jou waarsku.
 site-favorite-add = Voeg by gunstelinge
 site-favorite-remove = Verwyder uit gunstelinge
-sites-show-all = Wys alle webwerwe ({ $count })
-sites-show-fewer = Wys minder
+sites-all = Alle webwerwe · { $count }
+sites-matching = Webwerwe · { $shown } van { $total } pas
+sites-favorites-hint = Gee ’n webwerf in die lys hieronder ’n ster om dit hier vas te pen.
 
 ## Settings: port forwards
 

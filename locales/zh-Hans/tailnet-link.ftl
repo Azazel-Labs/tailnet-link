@@ -140,8 +140,9 @@ sites-recheck-tooltip = 立即重新检查所有设备
 site-untrusted = 它的证书不受信任，因此浏览器会显示警告。
 site-favorite-add = 添加到收藏
 site-favorite-remove = 从收藏中移除
-sites-show-all = 显示所有网站（{ $count }）
-sites-show-fewer = 收起
+sites-all = 所有网站 · { $count }
+sites-matching = 网站 · { $total } 个中 { $shown } 个匹配
+sites-favorites-hint = 在下方列表中为网站加星标，即可将其固定在这里。
 
 ## Settings: port forwards
 

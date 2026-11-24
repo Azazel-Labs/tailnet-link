@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "53b99ffd3f70e4db1cedda2363e7ce47fa965110fdb618c4920bc0ca9bc7df31"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "bbfadf715e8f75364e69e2ae148523049b64ebfd6876c1e64749321ec4167aff"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Αφαίρεση από τα αγαπημένα"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Το πιστοποιητικό του δεν είναι αξιόπιστο, οπότε το πρόγραμμα περιήγησης θα σας προειδοποιήσει."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Όλοι οι ιστότοποι · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Έλεγχος { $done } από { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Βάλτε αστέρι σε έναν ιστότοπο στη λίστα παρακάτω για να τον καρφιτσώσετε εδώ."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Ιστότοποι"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Μηχανήματα στα tailnet σας που εξυπηρετούν έναν ιστότοπο μέσω HTTPS. Κάθε μηχάνημα ελέγχεται το πολύ μία φορά την ημέρα."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Ιστότοποι · { $shown } από { $total } ταιριάζουν"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Επανέλεγχος όλων των μηχανημάτων τώρα"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Εμφάνιση όλων των ιστοτόπων ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Εμφάνιση λιγότερων"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

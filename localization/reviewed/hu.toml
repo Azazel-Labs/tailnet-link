@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "788017070a51c638128fdefb7ddd2cc5eb9cf9c9599930c9713faee41445aec0"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "d3b9f1ca960a03ebeebdc2de9692386498e0d9f61b914a99f30ed740b3c45df7"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Eltávolítás a kedvencek közül"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "A tanúsítványa nem megbízható, ezért a böngésző figyelmeztetni fogja."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Az összes webhely · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Ellenőrzés: { $done } / { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Jelöljön meg csillaggal egy webhelyet az alábbi listában, hogy ide kitűzze."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Webhelyek"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "A tailnetjeiben lévő gépek, amelyek HTTPS-en keresztül webhelyet szolgálnak ki. Minden gépet legfeljebb naponta egyszer ellenőriz az alkalmazás."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Webhelyek · { $shown } találat, összesen { $total }"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Minden gép újraellenőrzése most"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Az összes webhely megjelenítése ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Kevesebb megjelenítése"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

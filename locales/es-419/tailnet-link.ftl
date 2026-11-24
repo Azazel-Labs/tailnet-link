@@ -155,8 +155,9 @@ sites-recheck-tooltip = Volver a revisar todos los equipos ahora
 site-untrusted = Su certificado no es de confianza, así que tu navegador te mostrará una advertencia.
 site-favorite-add = Agregar a favoritos
 site-favorite-remove = Quitar de favoritos
-sites-show-all = Mostrar todos los sitios web ({ $count })
-sites-show-fewer = Mostrar menos
+sites-all = Todos los sitios web · { $count }
+sites-matching = Sitios web · { $shown } de { $total } coinciden
+sites-favorites-hint = Marca un sitio web con una estrella en la lista de abajo para fijarlo aquí.
 
 ## Configuración: redirecciones de puertos
 

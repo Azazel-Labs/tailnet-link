@@ -25,7 +25,7 @@ Tailscale chỉ cho bạn đăng nhập vào một tailnet mỗi lúc. Nếu ph�
 
 - **Không còn phải chuyển tài khoản.** Thêm bao nhiêu tailnet tùy ý và dùng tất cả cùng lúc. Tailnet của riêng bạn không bao giờ bị ngắt.
 - **Không cần cấu hình.** Chỉ cần đăng nhập, tên miền của tailnet sẽ được tìm tự động. Mở máy theo tên trong bất kỳ trình duyệt nào.
-- **Tìm các trang web trên máy của bạn.** Những máy đang phục vụ trang HTTPS hiện thành ô với tên và biểu tượng của trang, chỉ cách một cú nhấp. Mỗi máy được kiểm tra tối đa một lần mỗi ngày.
+- **Tìm các trang web trên máy của bạn.** Những máy đang phục vụ trang HTTPS hiện trong danh sách với tên và biểu tượng của trang, chỉ cách một cú nhấp. Gắn sao cho những trang bạn dùng, chúng sẽ thành ô kèm hình ảnh của trang. Mỗi máy được kiểm tra tối đa một lần mỗi ngày.
 - **Không xung đột với Tailscale.** Không có bộ điều hợp VPN, không thêm tuyến, không đổi DNS. Mỗi tailnet bổ sung chạy như một nút riêng bên trong ứng dụng, nên không đụng chạm tới ứng dụng Tailscale hay lẫn nhau.
 - **An toàn ngay từ đầu.** Mỗi nút bổ sung tham gia với chế độ Shields Up: bạn truy cập được các tailnet đó, nhưng không gì trong đó truy cập được máy tính của bạn.
 - **Chỉ lưu lượng liên quan mới đi qua.** Chỉ địa chỉ trong các tailnet khác mới đi qua Tailnet Link. Mọi thứ khác vẫn đi trực tiếp như trước.

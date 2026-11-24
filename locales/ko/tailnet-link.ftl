@@ -140,8 +140,9 @@ sites-recheck-tooltip = 지금 모든 머신 다시 확인
 site-untrusted = 인증서를 신뢰할 수 없으므로 브라우저에 경고가 표시됩니다.
 site-favorite-add = 즐겨찾기에 추가
 site-favorite-remove = 즐겨찾기에서 제거
-sites-show-all = 모든 웹사이트 보기({ $count })
-sites-show-fewer = 간단히 보기
+sites-all = 모든 웹사이트 · { $count }
+sites-matching = 웹사이트 · { $total }개 중 { $shown }개 일치
+sites-favorites-hint = 아래 목록에서 웹사이트에 별표를 표시하면 여기에 고정됩니다.
 
 ## Settings: port forwards
 

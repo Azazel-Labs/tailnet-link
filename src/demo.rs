@@ -53,6 +53,7 @@ pub fn config() -> Config {
         forwards: parse_forwards(FORWARDS).unwrap_or_default(),
         hostname: "ana-laptop".into(),
         machines_open: vec!["home".into(), "studio".into()],
+        sites_open: true,
         // English unless asked, so screenshots don't follow this computer's language.
         language: std::env::var("TAILNET_LINK_DEMO_LANGUAGE").unwrap_or_else(|_| "en".into()),
         ..Config::default()
@@ -180,12 +181,34 @@ fn site(machine: &str, domain: &str, tailnet: &str, title: &str, color: Option<[
 
 fn sites() -> Vec<SiteStatus> {
     let wiki = site("wiki", STUDIO, "Lantern Studio", "Lantern Wiki", Some([22, 128, 92]), true);
+    let nas = site("nas", HOME, "Home lab", "Storage Manager", Some([38, 99, 235]), true);
     vec![
-        SiteStatus { favorite: true, ..wiki },
-        site("nas", HOME, "Home lab", "Storage Manager", Some([38, 99, 235]), true),
+        // One favorite with a picture of its page, one still waiting for it.
+        SiteStatus { favorite: true, thumb: Some(page_picture([22, 128, 92])), ..wiki },
+        SiteStatus { favorite: true, ..nas },
         site("pi-hole", HOME, "Home lab", "Pi-hole Admin", Some([150, 18, 30]), false),
         site("render-01", STUDIO, "Lantern Studio", "", None, true),
     ]
+}
+
+/// A made-up page for a favorite's tile: a colored bar, a sidebar and lines of text.
+fn page_picture(brand: [u8; 3]) -> std::sync::Arc<crate::sites::Icon> {
+    let (width, height) = (crate::thumbs::WIDTH as usize, 300);
+    let mut rgba = Vec::with_capacity(width * height * 4);
+    for y in 0..height {
+        for x in 0..width {
+            let text = y >= 70 && (y - 70) % 26 < 9 && (140..440 - (y * 37 % 120)).contains(&x);
+            let color = match () {
+                () if y < 36 => brand,
+                () if x < 112 => [232, 236, 240],
+                () if (52..62).contains(&y) && (140..300).contains(&x) => [60, 64, 70],
+                () if text => [196, 200, 206],
+                () => [250, 251, 252],
+            };
+            rgba.extend_from_slice(&[color[0], color[1], color[2], 255]);
+        }
+    }
+    std::sync::Arc::new(crate::sites::Icon { size: [width, height], rgba })
 }
 
 /// Keeps the real mouse and keyboard out of the capture.

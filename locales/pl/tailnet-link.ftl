@@ -153,8 +153,9 @@ sites-recheck-tooltip = Sprawdź teraz ponownie wszystkie urządzenia
 site-untrusted = Jej certyfikat nie jest zaufany, więc przeglądarka wyświetli ostrzeżenie.
 site-favorite-add = Dodaj do ulubionych
 site-favorite-remove = Usuń z ulubionych
-sites-show-all = Pokaż wszystkie witryny ({ $count })
-sites-show-fewer = Pokaż mniej
+sites-all = Wszystkie witryny · { $count }
+sites-matching = Witryny · pasuje: { $shown } z { $total }
+sites-favorites-hint = Oznacz witrynę gwiazdką na liście poniżej, aby przypiąć ją tutaj.
 
 ## Settings: port forwards
 

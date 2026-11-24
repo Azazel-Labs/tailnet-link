@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "ebc853a34761b9c4c66dd7953a46c24240680914532af2ad22331c23a929d1d0"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "9f4e755381ef05bbd24b5fbe7db1e18bc9808d0bd81546d539c36bc794cbba08"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Уклони из омиљених"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Његов сертификат није поуздан, па ће вас прегледач упозорити."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Сви веб-сајтови · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Провера: { $done } од { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Означите веб-сајт звездицом на листи испод да бисте га закачили овде."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Веб-сајтови"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Уређаји у вашим мрежама tailnet који пружају веб-сајт преко HTTPS-а. Сваки уређај се проверава највише једном дневно."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Веб-сајтови · пронађено { $shown } од { $total }"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Поново провери све уређаје сада"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Прикажи све веб-сајтове ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Прикажи мање"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

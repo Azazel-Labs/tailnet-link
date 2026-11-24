@@ -1117,7 +1117,8 @@ impl Gui {
         });
     }
 
-    /// The websites the machines serve, as tiles. Hidden until there's one to show.
+    /// The websites the machines serve: the favorites as tiles, then every website
+    /// in a list that opens. Hidden until there's one to show.
     fn sites_card(&mut self, ui: &mut egui::Ui, s: &Status) {
         let shown: Vec<&SiteStatus> = s.sites.iter().filter(|x| x.matches(&self.machine_query)).collect();
         if shown.is_empty() && s.sites_checking.is_none() {
@@ -1147,66 +1148,62 @@ impl Gui {
                     }
                 });
             });
-            if shown.is_empty() {
+            if s.sites.is_empty() {
                 return;
             }
-            ui.add_space(4.0);
-            let width = ui.available_width();
-            let fit = |min: f32| {
-                let columns = (((width + TILE_GAP) / (min + TILE_GAP)).floor() as usize).max(1);
-                (columns, (width - TILE_GAP * (columns - 1) as f32) / columns as f32)
-            };
-            // Starred sites with a picture get large tiles, always all shown, above the rest.
-            let (large, small): (Vec<&SiteStatus>, Vec<&SiteStatus>) =
-                shown.iter().partition(|x| x.favorite && x.thumb.is_some());
-            let (large_columns, large_width) = fit(LARGE_TILE_MIN_WIDTH);
-            let (columns, tile_width) = fit(TILE_MIN_WIDTH);
-            // The first rows, unless asked for all (or searching). Starred sites come
-            // first, and there are always enough rows for all of them.
             let searching = !self.machine_query.trim().is_empty();
-            let show_all = self.core.config().sites_show_all;
-            let starred = small.iter().filter(|x| x.favorite).count();
-            let limit = columns * SITES_ROWS.max(starred.div_ceil(columns));
-            let folds = !searching && small.len() > limit;
-            let visible = if folds && !show_all { &small[..limit] } else { &small[..] };
-            ui.scope(|ui| {
-                ui.spacing_mut().item_spacing = vec2(TILE_GAP, TILE_GAP);
-                for row in large.chunks(large_columns) {
-                    ui.horizontal_top(|ui| {
-                        for site in row {
-                            self.site_tile(ui, site, large_width, true);
-                        }
-                    });
-                }
-                for row in visible.chunks(columns) {
-                    ui.horizontal(|ui| {
-                        for site in row {
-                            self.site_tile(ui, site, tile_width, false);
-                        }
-                    });
-                }
-            });
-            if folds {
-                let (icon, label) = if show_all {
-                    (icons::CARET_UP, tr!("sites-show-fewer"))
-                } else {
-                    (icons::CARET_DOWN, tr!("sites-show-all", count = shown.len()))
-                };
-                let toggle = egui::Button::new(muted(with_icon(icon, &label))).frame(false);
-                if ui.add(toggle).on_hover_cursor(egui::CursorIcon::PointingHand).clicked() {
-                    self.core.set_sites_show_all(!show_all);
-                }
+            // The favorites, as tiles with a picture of the page.
+            let favorites: Vec<&SiteStatus> = shown.iter().copied().filter(|x| x.favorite).collect();
+            if !favorites.is_empty() {
+                ui.add_space(4.0);
+                let width = ui.available_width();
+                let columns = (((width + TILE_GAP) / (TILE_MIN_WIDTH + TILE_GAP)).floor() as usize).max(1);
+                let tile_width = (width - TILE_GAP * (columns - 1) as f32) / columns as f32;
+                ui.scope(|ui| {
+                    ui.spacing_mut().item_spacing = vec2(TILE_GAP, TILE_GAP);
+                    for row in favorites.chunks(columns) {
+                        ui.horizontal_top(|ui| {
+                            for site in row {
+                                self.site_tile(ui, site, tile_width);
+                            }
+                        });
+                    }
+                });
+            } else if !searching && !s.sites.iter().any(|x| x.favorite) {
+                ui.label(muted(tr!("sites-favorites-hint")).size(12.0));
+            }
+            ui.add_space(4.0);
+            // Every website, closed until opened, and remembered. A search opens it
+            // when something matches, without changing what's remembered.
+            let title = if searching {
+                tr!("sites-matching", shown = shown.len(), total = s.sites.len())
+            } else {
+                tr!("sites-all", count = s.sites.len())
+            };
+            let saved = self.core.config().sites_open;
+            let open = if searching { !shown.is_empty() } else { saved };
+            let header = egui::CollapsingHeader::new(RichText::new(title).strong().color(theme::MUTED))
+                .id_salt("sites-list")
+                .open(Some(open))
+                .show(ui, |ui| {
+                    ui.spacing_mut().item_spacing.y = 4.0;
+                    for site in &shown {
+                        self.site_row(ui, site);
+                    }
+                });
+            if !searching && header.header_response.clicked() {
+                self.core.set_sites_open(!saved);
             }
         });
         ui.add_space(4.0);
     }
 
-    /// One site: its icon (or first letter), its name, and where it is. A
-    /// `large` tile shows a picture of the page above that.
-    fn site_tile(&mut self, ui: &mut egui::Ui, site: &SiteStatus, width: f32, large: bool) {
+    /// A favorite: a picture of its page (its icon, large, until there's one),
+    /// with its icon, name and place below.
+    fn site_tile(&mut self, ui: &mut egui::Ui, site: &SiteStatus, width: f32) {
         let sense = if site.routing { egui::Sense::click() } else { egui::Sense::hover() };
-        let thumb = if large { self.site_thumb_texture(ui.ctx(), site) } else { None };
-        let picture_height = thumb.map_or(0.0, |(_, [w, h])| (width * h / w.max(1.0)).min(width * 0.625));
+        let thumb = self.site_thumb_texture(ui.ctx(), site);
+        let picture_height = (width * PICTURE_ASPECT).round();
         let (rect, response) = ui.allocate_exact_size(vec2(width, TILE_HEIGHT + picture_height), sense);
         // The icon, name and place go in the bottom row.
         let caption = egui::Rect::from_min_max(egui::pos2(rect.left(), rect.bottom() - TILE_HEIGHT), rect.max);
@@ -1218,8 +1215,7 @@ impl Gui {
         response.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Link, site.routing, site.label()));
         let texture = self.site_texture(ui.ctx(), site);
         if ui.is_rect_visible(rect) {
-            let pointer_in = response.hovered() || star.hovered();
-            let hovered = site.routing && pointer_in;
+            let hovered = site.routing && (response.hovered() || star.hovered());
             let mut painter = ui.painter_at(rect);
             if !site.routing {
                 painter.set_opacity(0.45);
@@ -1231,49 +1227,34 @@ impl Gui {
                 Stroke::new(1.0, if hovered { theme::PANEL_EDGE } else { theme::BORDER }),
                 egui::StrokeKind::Inside,
             );
-            if let Some((texture, _)) = thumb {
-                let picture = egui::Rect::from_min_max(rect.min, egui::pos2(rect.right(), caption.top())).shrink(1.0);
-                let uv = egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0));
-                let corners = egui::CornerRadius { nw: 9, ne: 9, sw: 0, se: 0 };
+            let picture = egui::Rect::from_min_max(rect.min, egui::pos2(rect.right(), caption.top())).shrink(1.0);
+            let corners = egui::CornerRadius { nw: 9, ne: 9, sw: 0, se: 0 };
+            if let Some((texture, [w, h])) = thumb {
+                // Fills the space, cut to fit rather than stretched (from the top:
+                // a page's top says the most).
+                let (shape, space) = (h / w.max(1.0), picture.height() / picture.width().max(1.0));
+                let uv_max =
+                    if shape > space { egui::pos2(1.0, space / shape) } else { egui::pos2(shape / space, 1.0) };
+                let uv = egui::Rect::from_min_max(egui::pos2(0.0, 0.0), uv_max);
                 painter.add(
                     egui::epaint::RectShape::filled(picture, corners, egui::Color32::WHITE).with_texture(texture, uv),
                 );
-                painter.hline(picture.x_range(), caption.top(), Stroke::new(1.0, theme::BORDER));
                 // A dark disc behind the star, so it shows on any page.
-                if site.favorite || pointer_in {
-                    painter.circle_filled(star_rect.center(), 12.0, egui::Color32::from_black_alpha(140));
-                }
+                painter.circle_filled(star_rect.center(), 12.0, egui::Color32::from_black_alpha(140));
+            } else {
+                painter.rect_filled(picture, corners, site_tint(site).gamma_multiply(0.22));
+                let plate = egui::Rect::from_center_size(picture.center(), vec2(PICTURE_PLATE, PICTURE_PLATE));
+                paint_plate(&painter, plate, site, texture);
             }
+            painter.hline(picture.x_range(), caption.top(), Stroke::new(1.0, theme::BORDER));
             let plate = egui::Rect::from_center_size(
                 egui::pos2(rect.left() + 10.0 + PLATE_SIZE / 2.0, caption.center().y),
                 vec2(PLATE_SIZE, PLATE_SIZE),
             );
-            let tint =
-                site.color.map_or_else(|| avatar_color(&site.host), |[r, g, b]| egui::Color32::from_rgb(r, g, b));
-            if let Some(texture) = texture {
-                painter.rect_filled(plate, 8, site.color.map_or(PLATE_PLAIN, |_| tint));
-                let image = egui::Rect::from_center_size(plate.center(), vec2(ICON_DRAW_SIZE, ICON_DRAW_SIZE));
-                let uv = egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0));
-                painter.image(texture, image, uv, egui::Color32::WHITE);
-            } else {
-                painter.rect_filled(plate, 8, tint);
-                let letter: String = site
-                    .label()
-                    .chars()
-                    .find(|c| c.is_alphanumeric())
-                    .map(|c| c.to_uppercase().collect())
-                    .unwrap_or_default();
-                painter.text(
-                    plate.center(),
-                    egui::Align2::CENTER_CENTER,
-                    letter,
-                    egui::FontId::proportional(20.0),
-                    readable_on(tint),
-                );
-            }
+            paint_plate(&painter, plate, site, texture);
             let left = plate.right() + 10.0;
-            // Room on the right for the star and the warning sign.
-            let text_width = (rect.right() - 32.0 - left).max(10.0);
+            // Room on the right for the warning sign.
+            let text_width = (rect.right() - 28.0 - left).max(10.0);
             let line = |text: RichText| {
                 egui::WidgetText::from(text).into_galley(
                     ui,
@@ -1283,26 +1264,12 @@ impl Gui {
                 )
             };
             let title = line(RichText::new(site.label()).strong().color(theme::STRONG));
-            let place = if site.title.is_empty() {
-                site.tailnet.clone()
-            } else {
-                format!("{} · {}", site.machine, site.tailnet)
-            };
-            let detail = line(RichText::new(place).size(12.0).color(theme::MUTED));
+            let detail = line(RichText::new(site_place(site)).size(12.0).color(theme::MUTED));
             let top = caption.center().y - (title.size().y + detail.size().y + 2.0) / 2.0;
             painter.galley(egui::pos2(left, top), title.clone(), theme::STRONG);
             painter.galley(egui::pos2(left, top + title.size().y + 2.0), detail, theme::MUTED);
-            // Always shown when starred; otherwise an outline while the pointer is on the tile.
-            if site.favorite || pointer_in {
-                let (fill, edge) = if site.favorite {
-                    (Some(STAR_GOLD), STAR_GOLD)
-                } else if star.hovered() || thumb.is_some() {
-                    (None, theme::STRONG)
-                } else {
-                    (None, theme::MUTED)
-                };
-                paint_star(&painter, star_rect.center(), 7.5, fill, Stroke::new(1.3, edge));
-            }
+            let edge = if star.hovered() { theme::STRONG } else { STAR_GOLD };
+            paint_star(&painter, star_rect.center(), 7.5, Some(STAR_GOLD), Stroke::new(1.3, edge));
             if !site.trusted {
                 painter.text(
                     egui::pos2(rect.right() - 11.0, rect.bottom() - 8.0),
@@ -1322,9 +1289,9 @@ impl Gui {
         } else {
             response.on_hover_text(tr!("not-routing-tooltip"))
         };
-        let star_tip = if site.favorite { tr!("site-favorite-remove") } else { tr!("site-favorite-add") };
+        let star_tip = tr!("site-favorite-remove");
         if star.on_hover_cursor(egui::CursorIcon::PointingHand).on_hover_text(&star_tip).clicked() {
-            self.core.set_site_favorite(&site.host, !site.favorite);
+            self.core.set_site_favorite(&site.host, false);
         }
         if response.clicked() {
             let _ = open::that_detached(&url);
@@ -1339,8 +1306,72 @@ impl Gui {
                 self.copy(ui.ctx(), &url);
             }
             if ui.button(with_icon(icons::STAR, &star_tip)).clicked() {
-                self.core.set_site_favorite(&site.host, !site.favorite);
+                self.core.set_site_favorite(&site.host, false);
             }
+        });
+    }
+
+    /// One website in the list: its icon, name and place, a star to make it a
+    /// favorite, and buttons to copy or open it.
+    fn site_row(&mut self, ui: &mut egui::Ui, site: &SiteStatus) {
+        let url = site.url();
+        let texture = self.site_texture(ui.ctx(), site);
+        theme::row_frame(false).show(ui, |ui| {
+            ui.set_width(ui.available_width());
+            ui.horizontal(|ui| {
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                    ui.spacing_mut().item_spacing.x = 2.0;
+                    let tip = if site.favorite { tr!("site-favorite-remove") } else { tr!("site-favorite-add") };
+                    if star_button(ui, site.favorite).on_hover_text(tip).clicked() {
+                        self.core.set_site_favorite(&site.host, !site.favorite);
+                    }
+                    if ui
+                        .add(theme::icon_button(icons::COPY))
+                        .on_hover_text(tr!("copy-address", address = url.as_str()))
+                        .clicked()
+                    {
+                        self.copy(ui.ctx(), &url);
+                    }
+                    if ui
+                        .add_enabled(site.routing, theme::icon_button(icons::ARROW_SQUARE_OUT))
+                        .on_hover_text(tr!("open-in-browser", url = url.as_str()))
+                        .on_disabled_hover_text(tr!("not-routing-tooltip"))
+                        .clicked()
+                    {
+                        let _ = open::that_detached(&url);
+                    }
+                    // The rest of the row, cut short to leave room for the buttons.
+                    ui.with_layout(egui::Layout::left_to_right(egui::Align::Center), |ui| {
+                        ui.spacing_mut().item_spacing.x = 8.0;
+                        let (plate, _) = ui.allocate_exact_size(vec2(ROW_PLATE, ROW_PLATE), egui::Sense::hover());
+                        let mut painter = ui.painter().clone();
+                        if !site.routing {
+                            painter.set_opacity(0.45);
+                        }
+                        paint_plate(&painter, plate, site, texture);
+                        let name = RichText::new(site.label()).strong().color(if site.routing {
+                            theme::STRONG
+                        } else {
+                            theme::MUTED
+                        });
+                        let sense = if site.routing { egui::Sense::click() } else { egui::Sense::hover() };
+                        let name = ui.add(egui::Label::new(name).sense(sense).truncate());
+                        if site.routing
+                            && name
+                                .on_hover_cursor(egui::CursorIcon::PointingHand)
+                                .on_hover_text(tr!("open-in-browser", url = url.as_str()))
+                                .clicked()
+                        {
+                            let _ = open::that_detached(&url);
+                        }
+                        if !site.trusted {
+                            ui.label(RichText::new(icons::WARNING).size(13.0).color(Tone::Warn.color()))
+                                .on_hover_text(tr!("site-untrusted"));
+                        }
+                        ui.add(egui::Label::new(muted(site_place(site)).size(12.0)).truncate());
+                    });
+                });
+            });
         });
     }
 
@@ -1382,16 +1413,71 @@ impl Gui {
     }
 }
 
-const TILE_MIN_WIDTH: f32 = 200.0;
-/// A starred site's tile with a picture of its page.
-const LARGE_TILE_MIN_WIDTH: f32 = 280.0;
+/// A favorite's tile is at least this wide.
+const TILE_MIN_WIDTH: f32 = 220.0;
+/// The height of a tile's bottom row: icon, name and place.
 const TILE_HEIGHT: f32 = 60.0;
+/// A tile's picture is this high for its width (the shape of the page pictures).
+const PICTURE_ASPECT: f32 = 0.625;
 const TILE_GAP: f32 = 8.0;
-/// Rows of tiles shown until "Show all" is clicked.
-const SITES_ROWS: usize = 2;
 const STAR_GOLD: egui::Color32 = egui::Color32::from_rgb(250, 200, 60);
 const PLATE_SIZE: f32 = 40.0;
-const ICON_DRAW_SIZE: f32 = 32.0;
+/// The icon shown in place of a page picture that isn't there (yet).
+const PICTURE_PLATE: f32 = 64.0;
+const ROW_PLATE: f32 = 24.0;
+
+/// A site's icon on its color, or the first letter of its name.
+fn paint_plate(painter: &egui::Painter, plate: egui::Rect, site: &SiteStatus, icon: Option<egui::TextureId>) {
+    let tint = site_tint(site);
+    let corners = (plate.width() * 0.2).round() as u8;
+    if let Some(icon) = icon {
+        painter.rect_filled(plate, corners, if site.color.is_some() { tint } else { PLATE_PLAIN });
+        let image = egui::Rect::from_center_size(plate.center(), plate.size() * 0.8);
+        let uv = egui::Rect::from_min_max(egui::pos2(0.0, 0.0), egui::pos2(1.0, 1.0));
+        painter.image(icon, image, uv, egui::Color32::WHITE);
+    } else {
+        painter.rect_filled(plate, corners, tint);
+        let letter: String =
+            site.label().chars().find(|c| c.is_alphanumeric()).map(|c| c.to_uppercase().collect()).unwrap_or_default();
+        painter.text(
+            plate.center(),
+            egui::Align2::CENTER_CENTER,
+            letter,
+            egui::FontId::proportional(plate.height() / 2.0),
+            readable_on(tint),
+        );
+    }
+}
+
+/// The site's theme color, or a steady one picked from its name.
+fn site_tint(site: &SiteStatus) -> egui::Color32 {
+    site.color.map_or_else(|| avatar_color(&site.host), |[r, g, b]| egui::Color32::from_rgb(r, g, b))
+}
+
+/// Where a site is: its machine and tailnet (just the tailnet when it's named after its machine).
+fn site_place(site: &SiteStatus) -> String {
+    if site.title.is_empty() { site.tailnet.clone() } else { format!("{} · {}", site.machine, site.tailnet) }
+}
+
+/// A star that's filled when `on`, as a button.
+fn star_button(ui: &mut egui::Ui, on: bool) -> egui::Response {
+    let (rect, response) = ui.allocate_exact_size(vec2(30.0, 28.0), egui::Sense::click());
+    if ui.is_rect_visible(rect) {
+        if response.hovered() {
+            ui.painter().rect_filled(rect, 4, ui.visuals().widgets.hovered.weak_bg_fill);
+        }
+        let (fill, edge) = if on {
+            (Some(STAR_GOLD), STAR_GOLD)
+        } else if response.hovered() {
+            (None, theme::STRONG)
+        } else {
+            (None, theme::MUTED)
+        };
+        paint_star(ui.painter(), rect.center(), 7.5, fill, Stroke::new(1.3, edge));
+    }
+    response.on_hover_cursor(egui::CursorIcon::PointingHand)
+}
+
 /// A five-pointed star, outlined, and filled when `fill` is given.
 fn paint_star(painter: &egui::Painter, center: egui::Pos2, radius: f32, fill: Option<egui::Color32>, edge: Stroke) {
     let points: Vec<egui::Pos2> = (0..10u8)

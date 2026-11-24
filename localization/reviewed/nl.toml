@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "c0012417a5a319f96b3c7fcb37eca4fd437445188d223c7aa6557759a0a365b4"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "9df72645bba40c6687cdd98f94eb462afbff3c0dbadf7a521df7a355458d4d33"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Verwijderen uit favorieten"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Het certificaat wordt niet vertrouwd, dus je browser geeft een waarschuwing."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Alle websites · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "{ $done } van { $total } controleren…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Geef een website in de lijst hieronder een ster om hem hier vast te zetten."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Websites"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Machines in je tailnets die een website via HTTPS aanbieden. Elke machine wordt hooguit één keer per dag gecontroleerd."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Websites · { $shown } van { $total } komen overeen"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Alle machines nu opnieuw controleren"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Alle websites tonen ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Minder tonen"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

@@ -148,8 +148,9 @@ sites-recheck-tooltip = Verificar novamente todas as máquinas agora
 site-untrusted = O certificado não é fidedigno, por isso o browser vai mostrar um aviso.
 site-favorite-add = Adicionar aos favoritos
 site-favorite-remove = Remover dos favoritos
-sites-show-all = Mostrar todos os sites ({ $count })
-sites-show-fewer = Mostrar menos
+sites-all = Todos os sites · { $count }
+sites-matching = Sites · { $shown } de { $total } correspondem
+sites-favorites-hint = Marque um site com uma estrela na lista abaixo para o afixar aqui.
 
 ## Definições: reencaminhamentos de portas
 

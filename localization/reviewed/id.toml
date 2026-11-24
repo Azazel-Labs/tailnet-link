@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "712160c8e989c2cfa0b02abd27a9caa567d9abc06f4df540b6b963bb57649e81"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "c030798d0c22336d834e856c2f2df7a8ce1ea975c2116e31280f69e43f3ab521"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Hapus dari favorit"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Sertifikatnya tidak tepercaya, jadi browser Anda akan menampilkan peringatan."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Semua situs web · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Memeriksa { $done } dari { $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Beri bintang pada situs web di daftar di bawah untuk menyematkannya di sini."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Situs web"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Mesin di tailnet Anda yang menyajikan situs web melalui HTTPS. Setiap mesin diperiksa paling banyak sekali sehari."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Situs web · { $shown } dari { $total } cocok"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Periksa ulang semua mesin sekarang"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Tampilkan semua situs web ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Tampilkan lebih sedikit"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

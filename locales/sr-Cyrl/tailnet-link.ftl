@@ -151,8 +151,9 @@ sites-recheck-tooltip = Поново провери све уређаје сад
 site-untrusted = Његов сертификат није поуздан, па ће вас прегледач упозорити.
 site-favorite-add = Додај у омиљене
 site-favorite-remove = Уклони из омиљених
-sites-show-all = Прикажи све веб-сајтове ({ $count })
-sites-show-fewer = Прикажи мање
+sites-all = Сви веб-сајтови · { $count }
+sites-matching = Веб-сајтови · пронађено { $shown } од { $total }
+sites-favorites-hint = Означите веб-сајт звездицом на листи испод да бисте га закачили овде.
 
 ## Settings: port forwards
 

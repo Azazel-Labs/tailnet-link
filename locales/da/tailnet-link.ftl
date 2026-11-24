@@ -149,8 +149,9 @@ sites-recheck-tooltip = Tjek alle maskiner igen nu
 site-untrusted = Certifikatet er ikke godkendt som pålideligt, så din browser vil advare dig.
 site-favorite-add = Føj til favoritter
 site-favorite-remove = Fjern fra favoritter
-sites-show-all = Vis alle websteder ({ $count })
-sites-show-fewer = Vis færre
+sites-all = Alle websteder · { $count }
+sites-matching = Websteder · { $shown } af { $total } matcher
+sites-favorites-hint = Giv et websted en stjerne på listen nedenfor for at fastgøre det her.
 
 ## Settings: port forwards
 

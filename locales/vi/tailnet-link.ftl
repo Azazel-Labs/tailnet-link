@@ -140,8 +140,9 @@ sites-recheck-tooltip = Kiểm tra lại tất cả các máy ngay
 site-untrusted = Chứng chỉ của trang này không được tin cậy, vì vậy trình duyệt sẽ cảnh báo bạn.
 site-favorite-add = Thêm vào mục yêu thích
 site-favorite-remove = Xóa khỏi mục yêu thích
-sites-show-all = Hiện tất cả trang web ({ $count })
-sites-show-fewer = Hiện ít hơn
+sites-all = Tất cả trang web · { $count }
+sites-matching = Trang web · { $shown }/{ $total } khớp
+sites-favorites-hint = Gắn sao cho một trang web trong danh sách bên dưới để ghim nó ở đây.
 
 ## Settings: port forwards
 

@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
-translation = "613f8cfd575cf139bfcd7d7d19876cb28fe1f3096df201bea3c2acf5a2a12d94"
+source = "31a12f1892d3259fee0a215f53312ae802eb3f3b3d0df3eeedea9b6f3cde515a"
+translation = "21b16f664f9601de93cad7f0d11c7d832e1a1528c7d9791004345a9f678c55bd"
 
 [messages.about-line]
 source = """
@@ -778,9 +778,17 @@ translation = "Poista suosikeista"
 source = "Its certificate isn't trusted, so your browser will warn you."
 translation = "Sen varmenteeseen ei luoteta, joten selain varoittaa sinua."
 
+[messages.sites-all]
+source = "All websites · { $count }"
+translation = "Kaikki verkkosivustot · { $count }"
+
 [messages.sites-checking]
 source = "Checking { $done } of { $total }…"
 translation = "Tarkistetaan { $done }/{ $total }…"
+
+[messages.sites-favorites-hint]
+source = "Star a website in the list below to pin it here."
+translation = "Merkitse sivusto tähdellä alla olevassa luettelossa, niin se kiinnitetään tähän."
 
 [messages.sites-heading]
 source = "Websites"
@@ -790,17 +798,13 @@ translation = "Verkkosivustot"
 source = "Machines in your tailnets that serve a website over HTTPS. Each machine is checked at most once a day."
 translation = "Tailnetiesi koneet, jotka tarjoavat verkkosivuston HTTPS:n kautta. Jokainen kone tarkistetaan enintään kerran päivässä."
 
+[messages.sites-matching]
+source = "Websites · { $shown } of { $total } match"
+translation = "Verkkosivustot · { $shown }/{ $total } vastaa hakua"
+
 [messages.sites-recheck-tooltip]
 source = "Check every machine again now"
 translation = "Tarkista kaikki koneet uudelleen nyt"
-
-[messages.sites-show-all]
-source = "Show all websites ({ $count })"
-translation = "Näytä kaikki verkkosivustot ({ $count })"
-
-[messages.sites-show-fewer]
-source = "Show fewer"
-translation = "Näytä vähemmän"
 
 [messages.spanish-latin-america]
 source = "Latin American Spanish"

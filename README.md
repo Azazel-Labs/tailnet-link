@@ -24,7 +24,7 @@ just open.
 **[Download the latest release](https://github.com/Azazel-Labs/tailnet-link/releases/latest)** for
 Windows, macOS or Linux. It's free and open source.
 
-![The Tailnets tab with two tailnets routing, tiles for the websites found on their machines, and the machines listed](docs/images/tailnets.png)
+![The Tailnets tab with two tailnets routing, favorite websites as tiles above a list of every website found on their machines, and the machines listed](docs/images/tailnets.png)
 
 *Screenshots use made-up tailnets; every name and address in them is invented.*
 
@@ -34,8 +34,9 @@ Windows, macOS or Linux. It's free and open source.
   own tailnet never disconnects.
 - **Nothing to configure.** Sign in, and the tailnet's domain is found for you. Open its machines by
   name in any browser.
-- **Finds the websites on your machines.** Machines that serve an HTTPS page show up as tiles with
-  the page's name and icon, one click away. Each machine is checked at most once a day.
+- **Finds the websites on your machines.** Machines that serve an HTTPS page are listed with the
+  page's name and icon, one click away. Star the ones you use and they become tiles with a picture of
+  the page. Each machine is checked at most once a day.
 - **Doesn't fight Tailscale.** No VPN adapter, no routes, no DNS changes. Each extra tailnet runs as
   a separate node inside the app, so nothing clashes with the Tailscale app or with each other.
 - **Locked down by default.** Every extra node joins with shields up: you can reach those tailnets,
@@ -152,12 +153,13 @@ Mac, link it from the app: `sudo ln -s "/Applications/Tailnet Link.app/Contents/
 - Overall status, **Pause all** and **Add a tailnet**.
 - A **terminal** button, next to the machine search, that opens a terminal where your tailnets' names
   work (see [`tl`](#in-a-terminal-tl)).
-- **Websites** found on the machines, as tiles with each page's title and icon. Click one to open
-  it, or right-click to copy its address. Click the star on a tile to make it a favorite: favorites
-  come first, as large tiles with a picture of the page. The picture is taken once a day by Edge,
-  Chrome, Chromium or Brave, whichever is installed, running hidden in a throwaway profile and only
-  through Tailnet Link, so a site that needs a sign-in shows its sign-in page. The card shows two
-  rows (more if you have more favorites) and a **Show all** link.
+- **Websites** found on the machines, with each page's title and icon. Your favorites are tiles
+  with a picture of the page; every website is in the **All websites** list below them, which opens
+  and closes (searching opens it). Click the star in the list to make a site a favorite, or click the
+  star on its tile to stop. Click a tile or a name to open the site, or right-click a tile to copy
+  its address. The picture is taken once a day by Edge, Chrome, Chromium or Brave, whichever is
+  installed, running hidden in a throwaway profile and only through Tailnet Link, so a site that
+  needs a sign-in shows its sign-in page; until then the tile shows the site's icon.
   A warning sign means the site's certificate isn't trusted (often a self-signed one). Each machine
   is asked once a day, a few at a time; the refresh button asks again now.
 - One card per tailnet, with its status, routed domains and subnets, and this computer's name there.
@@ -256,6 +258,7 @@ Everything lives in the app's config folder:
 - `config.json`: your tailnets, port forwards and settings
 - `nodes/<id>/`: each tailnet's login (Remove deletes it)
 - `sites.json`: which machines have a website, so each is only asked again after a day
+- `thumbs/`: the pictures of your favorite websites
 - `tailnet-link.log`: the log, including the details of any crash
 - `proxy-state.json` (macOS/Linux, only while the proxy setting is on): what to restore
 

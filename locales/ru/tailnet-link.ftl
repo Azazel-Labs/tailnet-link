@@ -153,8 +153,9 @@ sites-recheck-tooltip = Проверить все устройства зано�
 site-untrusted = Его сертификат не считается доверенным, поэтому браузер покажет предупреждение.
 site-favorite-add = Добавить в избранное
 site-favorite-remove = Убрать из избранного
-sites-show-all = Показать все сайты ({ $count })
-sites-show-fewer = Показать меньше
+sites-all = Все сайты · { $count }
+sites-matching = Сайты · найдено { $shown } из { $total }
+sites-favorites-hint = Отметьте сайт звёздочкой в списке ниже, чтобы закрепить его здесь.
 
 ## Settings: port forwards
 

@@ -29,8 +29,14 @@ pub const ICON_SIZE: u32 = 64;
 const MAX_PAGE: u64 = 256 * 1024;
 const MAX_ICON: u64 = 512 * 1024;
 const MAX_REDIRECTS: usize = 5;
-/// Icon links tried per site, before /favicon.ico.
-const MAX_ICON_TRIES: usize = 2;
+const MAX_MANIFEST: u64 = 64 * 1024;
+/// Icon links tried per site from its page, and again from its web app manifest.
+const MAX_ICON_TRIES: usize = 3;
+/// Tried when nothing the site declares works.
+const FALLBACK_ICONS: [&str; 2] = ["/favicon.ico", "/apple-touch-icon.png"];
+/// Raised when the way icons are found gets better: sites saved by an older
+/// version without an icon are asked again at once instead of in a day.
+const ICON_FINDER: u32 = 2;
 const MAX_TITLE_CHARS: usize = 80;
 
 /// A website one machine serves.
@@ -79,6 +85,8 @@ struct Answer {
 #[derive(Default, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Cache {
+    /// The [`ICON_FINDER`] that saved it.
+    icon_finder: u32,
     machines: BTreeMap<String, Answer>,
     #[serde(skip)]
     icons: HashMap<String, Arc<Icon>>,
@@ -90,6 +98,7 @@ impl Cache {
         let mut c: Cache = std::fs::read(path()).ok().and_then(|b| serde_json::from_slice(&b).ok()).unwrap_or_default();
         let now = now();
         c.machines.retain(|_, a| a.checked + FORGET_AFTER.as_secs() > now);
+        c.upgrade();
         let hosts: Vec<String> = c.machines.keys().cloned().collect();
         for h in hosts {
             c.decode_icon(&h);
@@ -132,6 +141,19 @@ impl Cache {
 
     pub fn icon(&self, host: &str) -> Option<Arc<Icon>> {
         self.icons.get(host).cloned()
+    }
+
+    /// Sites found by an older icon finder that got no icon are asked again now.
+    fn upgrade(&mut self) {
+        if self.icon_finder >= ICON_FINDER {
+            return;
+        }
+        for a in self.machines.values_mut() {
+            if a.site.as_ref().is_some_and(|s| s.icon.is_empty()) {
+                a.due = 0;
+            }
+        }
+        self.icon_finder = ICON_FINDER;
     }
 
     /// Makes every machine due, for "Check again".
@@ -227,14 +249,14 @@ pub fn probe(proxy: &str, host: &str, reach: impl FnOnce() -> io::Result<()>) ->
         let status = resp.status().as_u16();
         if (300..400).contains(&status) {
             let location = resp.headers().get("location").and_then(|v| v.to_str().ok()).unwrap_or("");
-            match resolve(&url, &origin, location) {
-                Some(next) => {
-                    url = next;
-                    continue;
-                }
-                // Off to a sign-in page elsewhere, say: still a website.
-                None => return Outcome::Site(Site { trusted, ..Site::default() }),
+            if let Some(next) = resolve(&url, &origin, location) {
+                url = next;
+                continue;
             }
+            // Off to a sign-in page elsewhere, say: still a website, and its own
+            // icon may still be at the usual place.
+            let icon = find_icon(&agent, &url, &origin, &Page::default());
+            return Outcome::Site(Site { trusted, icon, ..Site::default() });
         }
         // A sign-in wall counts; a missing page or a broken backend doesn't.
         if !(status < 300 || status == 401 || status == 403) {
@@ -252,20 +274,120 @@ pub fn probe(proxy: &str, host: &str, reach: impl FnOnce() -> io::Result<()>) ->
         } else {
             Page::default()
         };
-        let mut site = Site { title: page.name(), trusted, color: page.color, icon: String::new() };
-        let mut links: Vec<String> = page.icons.iter().take(MAX_ICON_TRIES).cloned().collect();
-        links.push("/favicon.ico".into());
-        links.dedup();
-        for link in links {
-            if let Some(icon) = fetch_icon(&agent, &url, &origin, &link) {
-                site.icon = icon;
-                break;
-            }
-        }
-        return Outcome::Site(site);
+        let icon = find_icon(&agent, &url, &origin, &page);
+        return Outcome::Site(Site { title: page.name(), trusted, color: page.color, icon });
     }
     // Redirects going round in circles on the machine itself: still a website.
-    Outcome::Site(Site { trusted, ..Site::default() })
+    let icon = find_icon(&agent, &origin, &origin, &Page::default());
+    Outcome::Site(Site { trusted, icon, ..Site::default() })
+}
+
+/// The site's icon as a PNG, base64 ("" if none could be read): the icons its
+/// page links to, then the ones its web app manifest lists, then the usual places.
+fn find_icon(agent: &ureq::Agent, url: &str, origin: &str, page: &Page) -> String {
+    let try_all = |base: &str, links: &[String]| {
+        links.iter().take(MAX_ICON_TRIES).find_map(|link| {
+            let icon = fetch_icon(agent, base, origin, link);
+            if icon.is_none() {
+                log::debug!("[sites] {origin}: no icon at {link}");
+            }
+            icon
+        })
+    };
+    if let Some(icon) = try_all(url, &page.icons) {
+        return icon;
+    }
+    if let Some(manifest) = page.manifest.as_deref().and_then(|m| resolve(url, origin, m))
+        && let Some(icons) = manifest_icons(agent, &manifest)
+        && let Some(icon) = try_all(&manifest, &icons)
+    {
+        return icon;
+    }
+    let fallbacks: Vec<String> =
+        FALLBACK_ICONS.iter().map(|s| (*s).to_owned()).filter(|f| !page.icons.contains(f)).collect();
+    try_all(origin, &fallbacks).unwrap_or_default()
+}
+
+/// Downloads `url` (on the machine itself, following its redirects there) and
+/// returns up to `max` bytes of a 200 answer.
+fn fetch(agent: &ureq::Agent, url: &str, origin: &str, accept: &str, max: u64) -> Option<Vec<u8>> {
+    let mut url = url.to_owned();
+    for _ in 0..=MAX_REDIRECTS {
+        let mut resp = agent.get(&url).header("Accept", accept).call().ok()?;
+        let status = resp.status().as_u16();
+        if (300..400).contains(&status) {
+            let location = resp.headers().get("location").and_then(|v| v.to_str().ok()).unwrap_or("");
+            url = resolve(&url, origin, location)?;
+            continue;
+        }
+        if status != 200 {
+            return None;
+        }
+        let mut body = Vec::new();
+        resp.body_mut().as_reader().take(max).read_to_end(&mut body).ok()?;
+        return Some(body);
+    }
+    None
+}
+
+/// The icons a web app manifest lists, best first.
+fn manifest_icons(agent: &ureq::Agent, url: &str) -> Option<Vec<String>> {
+    let origin = origin_of(url)?;
+    let body = fetch(agent, url, origin, "application/manifest+json,application/json,*/*;q=0.5", MAX_MANIFEST)?;
+    Some(parse_manifest(&body))
+}
+
+/// `https://host` of an https URL.
+fn origin_of(url: &str) -> Option<&str> {
+    let rest = url.get(8..)?;
+    Some(&url[..8 + rest.find(['/', '?', '#']).unwrap_or(rest.len())])
+}
+
+fn parse_manifest(json: &[u8]) -> Vec<String> {
+    #[derive(Deserialize)]
+    struct Manifest {
+        #[serde(default)]
+        icons: Vec<ManifestIcon>,
+    }
+    #[derive(Deserialize)]
+    struct ManifestIcon {
+        #[serde(default)]
+        src: String,
+        #[serde(default)]
+        sizes: String,
+        #[serde(default)]
+        purpose: String,
+    }
+    let Ok(m) = serde_json::from_slice::<Manifest>(json) else { return Vec::new() };
+    let mut icons: Vec<(String, u32)> = m
+        .icons
+        .into_iter()
+        // A monochrome icon is a silhouette for the system to color in.
+        .filter(|i| {
+            let mono = i.purpose.split_whitespace().all(|p| p.eq_ignore_ascii_case("monochrome"));
+            !i.src.is_empty() && (i.purpose.trim().is_empty() || !mono)
+        })
+        .map(|i| {
+            let any = i.sizes.split_whitespace().any(|s| s.eq_ignore_ascii_case("any"));
+            let size = if any || is_svg_link(&i.src) { Some(SCALABLE) } else { largest_size(&i.sizes) };
+            (i.src, size.unwrap_or(0))
+        })
+        .collect();
+    icons.sort_by_key(|(_, size)| std::cmp::Reverse(*size));
+    icons.into_iter().map(|(s, _)| s).collect()
+}
+
+/// The size an icon that scales (SVG) ranks as: after pictures big enough for a
+/// tile, before small favicons. An SVG that uses text draws without it (no fonts).
+const SCALABLE: u32 = 96;
+
+fn is_svg_link(href: &str) -> bool {
+    href.split(['?', '#']).next().unwrap_or("").to_ascii_lowercase().ends_with(".svg")
+}
+
+/// The largest width in a `sizes` attribute ("16x16 32x32").
+fn largest_size(sizes: &str) -> Option<u32> {
+    sizes.split_whitespace().filter_map(|s| s.split_once(['x', 'X']).and_then(|(w, _)| w.parse::<u32>().ok())).max()
 }
 
 /// An HTTPS client that only talks through the app's proxy and follows no redirects.
@@ -295,26 +417,46 @@ fn fetch_icon(agent: &ureq::Agent, base: &str, origin: &str, link: &str) -> Opti
         base64::engine::general_purpose::STANDARD.decode(payload.trim()).ok()?
     } else {
         let url = resolve(base, origin, link)?;
-        let mut resp = agent.get(&url).header("Accept", "image/png,image/x-icon,image/*;q=0.8").call().ok()?;
-        if resp.status().as_u16() != 200 {
-            return None;
-        }
-        let mut body = Vec::new();
-        resp.body_mut().as_reader().take(MAX_ICON).read_to_end(&mut body).ok()?;
-        body
+        fetch(agent, &url, origin, "image/png,image/svg+xml,image/x-icon,image/*;q=0.8", MAX_ICON)?
     };
     icon_png(&bytes)
 }
 
-/// Decodes a PNG or ICO, scales it down to `ICON_SIZE` if larger, and re-encodes it as a PNG, base64.
+/// Decodes an icon (PNG, ICO, JPEG, GIF, `WebP`, BMP or SVG), scales it to fit
+/// `ICON_SIZE`, and re-encodes it as a PNG, base64.
 fn icon_png(bytes: &[u8]) -> Option<String> {
-    let mut img = image::load_from_memory(bytes).ok()?;
-    if img.width() > ICON_SIZE || img.height() > ICON_SIZE {
-        img = img.resize(ICON_SIZE, ICON_SIZE, image::imageops::FilterType::Triangle);
+    let img = match image::load_from_memory(bytes) {
+        Ok(mut img) => {
+            if img.width() > ICON_SIZE || img.height() > ICON_SIZE {
+                img = img.resize(ICON_SIZE, ICON_SIZE, image::imageops::FilterType::Triangle);
+            }
+            img.to_rgba8()
+        }
+        Err(_) => svg_icon(bytes)?,
+    };
+    // A blank picture (fully transparent) is no icon: the letter shows instead.
+    if img.pixels().all(|p| p[3] == 0) {
+        return None;
     }
     let mut out = io::Cursor::new(Vec::new());
-    image::DynamicImage::ImageRgba8(img.to_rgba8()).write_to(&mut out, image::ImageFormat::Png).ok()?;
+    image::DynamicImage::ImageRgba8(img).write_to(&mut out, image::ImageFormat::Png).ok()?;
     Some(base64::engine::general_purpose::STANDARD.encode(out.into_inner()))
+}
+
+/// Draws an SVG icon `ICON_SIZE` on its longer side.
+fn svg_icon(bytes: &[u8]) -> Option<image::RgbaImage> {
+    let tree = resvg::usvg::Tree::from_data(bytes, &resvg::usvg::Options::default()).ok()?;
+    let size = tree.size();
+    let scale = ICON_SIZE as f32 / size.width().max(size.height());
+    let (w, h) = ((size.width() * scale).round().max(1.0) as u32, (size.height() * scale).round().max(1.0) as u32);
+    let mut pixmap = resvg::tiny_skia::Pixmap::new(w, h)?;
+    resvg::render(&tree, resvg::tiny_skia::Transform::from_scale(scale, scale), &mut pixmap.as_mut());
+    // tiny-skia keeps colors premultiplied by their alpha; images don't.
+    let rgba = pixmap.pixels().iter().flat_map(|p| {
+        let c = p.demultiply();
+        [c.red(), c.green(), c.blue(), c.alpha()]
+    });
+    image::RgbaImage::from_raw(w, h, rgba.collect())
 }
 
 /// `href` resolved against `base`, if it stays on the same machine (`origin`, `https://host`).
@@ -365,6 +507,8 @@ struct Page {
     color: Option<[u8; 3]>,
     /// Icon links, best first.
     icons: Vec<String>,
+    /// Its web app manifest link.
+    manifest: Option<String>,
 }
 
 impl Page {
@@ -415,20 +559,20 @@ impl Page {
                     let get = |k: &str| a.iter().find(|(n, _)| n == k).map_or("", |(_, v)| v.as_str());
                     let rel = get("rel").to_ascii_lowercase();
                     let href = get("href");
-                    let svg = get("type").contains("svg")
-                        || href.split(['?', '#']).next().unwrap_or("").to_ascii_lowercase().ends_with(".svg");
-                    if href.is_empty() || svg {
+                    if href.is_empty() {
+                        continue;
+                    }
+                    if rel.split_whitespace().any(|r| r == "manifest") {
+                        page.manifest.get_or_insert_with(|| href.to_owned());
                         continue;
                     }
                     let touch = rel.split_whitespace().any(|r| r.starts_with("apple-touch-icon"));
                     if !touch && !rel.split_whitespace().any(|r| r == "icon") {
                         continue;
                     }
-                    let declared = get("sizes")
-                        .split_whitespace()
-                        .filter_map(|s| s.split_once(['x', 'X']).and_then(|(w, _)| w.parse::<u32>().ok()))
-                        .max();
-                    let size = declared.unwrap_or(if touch { 180 } else { 16 });
+                    let svg = get("type").contains("svg") || is_svg_link(href);
+                    let size =
+                        if svg { SCALABLE } else { largest_size(get("sizes")).unwrap_or(if touch { 180 } else { 16 }) };
                     icons.push((href.to_owned(), size));
                 }
                 "body" => break,
@@ -437,8 +581,10 @@ impl Page {
         }
         // The window is dark, so a dark-mode color suits it better.
         page.color = dark_color.or(page.color);
+        // Stable: of icons the same size, the page's first comes first.
         icons.sort_by_key(|(_, size)| std::cmp::Reverse(*size));
         page.icons = icons.into_iter().map(|(h, _)| h).collect();
+        page.icons.dedup();
         page
     }
 
@@ -576,13 +722,19 @@ mod tests {
             <link rel="apple-touch-icon" href="touch.png">
             <link rel=icon href=/fav16.png>
             <link rel="mask-icon" href="/mask.png">
+            <link rel="manifest" href="/site.webmanifest">
             </head><body><link rel="icon" href="/late.png" sizes="512x512"></body></html>"##,
         );
         assert_eq!(page.title, "Sign in & more · Grafana");
         assert_eq!(page.app_name, "Grafana");
         assert_eq!(page.name(), "Grafana");
         assert_eq!(page.color, Some([10, 11, 12]), "dark-mode color preferred");
-        assert_eq!(page.icons, ["touch.png", "/favicon-32.png", "/fav16.png"], "largest first; no SVG, no body");
+        assert_eq!(
+            page.icons,
+            ["touch.png", "/logo.svg", "/favicon-32.png", "/fav16.png"],
+            "big pictures, then SVG, then small ones; nothing from the body"
+        );
+        assert_eq!(page.manifest.as_deref(), Some("/site.webmanifest"));
     }
 
     #[test]
@@ -642,7 +794,48 @@ mod tests {
         let icon = decode_png(&icon_png(png.get_ref()).unwrap()).unwrap();
         assert_eq!(icon.size, [64, 32], "fits ICON_SIZE, keeps its shape");
         assert_eq!(icon.rgba.len(), 64 * 32 * 4);
-        assert!(icon_png(b"<svg></svg>").is_none());
+        assert!(icon_png(b"<svg></svg>").is_none(), "nothing drawn");
+        assert!(icon_png(b"not an image").is_none());
+    }
+
+    #[test]
+    fn svg_icons_are_drawn() {
+        let svg = br##"<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10"><rect width="20" height="10" fill="#f00"/></svg>"##;
+        let icon = decode_png(&icon_png(svg).unwrap()).unwrap();
+        assert_eq!(icon.size, [64, 32], "fits ICON_SIZE, keeps its shape");
+        assert_eq!(&icon.rgba[..4], [255, 0, 0, 255]);
+    }
+
+    #[test]
+    fn reads_a_web_app_manifest() {
+        let json = br#"{"name": "Jellyfin", "icons": [
+            {"src": "small.png", "sizes": "48x48"},
+            {"src": "/big.png", "sizes": "192x192 512x512", "type": "image/png"},
+            {"src": "mono.png", "sizes": "1024x1024", "purpose": "monochrome"},
+            {"src": "logo.svg", "sizes": "any"},
+            {"src": "both.png", "sizes": "256x256", "purpose": "maskable monochrome"},
+            {"sizes": "64x64"}
+        ]}"#;
+        assert_eq!(parse_manifest(json), ["/big.png", "both.png", "logo.svg", "small.png"]);
+        assert_eq!(parse_manifest(b"<html>"), Vec::<String>::new());
+        assert_eq!(parse_manifest(b"{}"), Vec::<String>::new());
+        assert_eq!(origin_of("https://a.example.ts.net/x/m.json?v=1"), Some("https://a.example.ts.net"));
+        assert_eq!(origin_of("https://a.example.ts.net"), Some("https://a.example.ts.net"));
+    }
+
+    #[test]
+    fn a_better_icon_finder_asks_sites_without_icons_again() {
+        let mut c = Cache::default();
+        c.record("plain.x.ts.net", Outcome::Site(Site::default()), 1000);
+        c.record("iconic.x.ts.net", Outcome::Site(Site { icon: "x".into(), ..Site::default() }), 1000);
+        c.record("none.x.ts.net", Outcome::None, 1000);
+        c.upgrade();
+        assert!(c.is_due("plain.x.ts.net", 1001));
+        assert!(!c.is_due("iconic.x.ts.net", 1001) && !c.is_due("none.x.ts.net", 1001));
+        // Once only.
+        c.record("plain.x.ts.net", Outcome::Site(Site::default()), 1002);
+        c.upgrade();
+        assert!(!c.is_due("plain.x.ts.net", 1003));
     }
 
     #[test]

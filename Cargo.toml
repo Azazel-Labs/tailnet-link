@@ -90,8 +90,10 @@ serde_json = "1"
 dirs = "7"
 httparse = "1"
 png = "0.18"
-# Site icons on the Tailnets tab: PNG and ICO in, PNG out.
-image = { version = "0.25", default-features = false, features = ["png", "ico"] }
+# Site icons on the Tailnets tab: the common image formats in, PNG out.
+image = { version = "0.25", default-features = false, features = ["png", "ico", "jpeg", "gif", "webp", "bmp"] }
+# SVG website icons. No text or system fonts: icons are shapes.
+resvg = { version = "0.50", default-features = false }
 base64 = "0.23"
 rand = "0.10"
 log = "0.4"
