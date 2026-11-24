@@ -1,8 +1,8 @@
 version = 2
 
 [readme]
-source = "f0690790aff0f05ee341db8e02e07c4e48596f37c4f878ab4744e1fe76078760"
-translation = "65a4c156d65355c3345df68dd5e3f5750de1e9d4af2dbecd9575398eda38028b"
+source = "7bf10962088ebfa6645a3e7ab9a1f197a4fd43c32e069bd00da61a68fba580b1"
+translation = "10f4e99b870563dbb10a125938ad50136229c0176eddae7fbbfb924d3e822937"
 
 [messages.about-line]
 source = """
