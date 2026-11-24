@@ -1,9 +1,10 @@
 name: Auto release
 
-# After CI passes on a push to main, commit messages drive releases:
-#   - #release in any commit since the last version tag tags the next version and starts the Release workflow;
-#   - #patch, #minor or #major in those commits says how far the version moves (the highest wins;
-#     patch when none says).
+# After CI passes on a push to main, the next version is tagged and the Release workflow starts:
+#   - every push releases, a patch unless a commit since the last version tag says otherwise;
+#   - #minor or #major in those commits moves the version further (the highest wins);
+#   - #norelease in the pushed commit itself skips that push (the next push releases it all);
+#   - #release and #patch still work and change nothing.
 # A tag counts only on a line by itself or with other tags (e.g. "#minor #release");
 # tags mentioned mid-sentence are ignored.
 #
@@ -63,7 +64,7 @@ jobs:
           # Tags count only on a line of nothing but tags, so prose that mentions
           # "#major" (like the commit adding this workflow) doesn't bump anything.
           tag_lines() {
-            git log --format=%B "$@" | grep -iE '^[[:space:]]*(#(patch|minor|major|release)[[:space:]]*)+$' || true
+            git log --format=%B "$@" | grep -iE '^[[:space:]]*(#(patch|minor|major|release|norelease)[[:space:]]*)+$' || true
           }
           # The last version released: the highest version tag, a prerelease sorting before its release.
           # Its commit needn't be on main, so it's found by name, not by walking back from HEAD.
@@ -71,12 +72,17 @@ jobs:
           current="${last#v}"
           # No release yet: the first is Cargo.toml's version as it stands.
           [ -n "$current" ] || current="$(sed -n '/^\[workspace\.package\]/,/^\[/ s/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
-          lines="$(tag_lines ${last:+"$last"..}HEAD)"
-          if ! grep -qiw -- '#release' <<< "$lines"; then
-            echo "No #release since ${last:-the start}; nothing to do"
+          if [ -n "$last" ] && [ -z "$(git rev-list "$last"..HEAD)" ]; then
+            echo "Nothing new since $last; nothing to do"
             echo "release=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          if tag_lines -1 HEAD | grep -qiw -- '#norelease'; then
+            echo "#norelease on $SHA; skipping"
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          lines="$(tag_lines ${last:+"$last"..}HEAD)"
           IFS=. read -r major minor patch <<< "${current%%-*}"
           if [ -z "$last" ]; then version="$current"
           elif grep -qiw -- '#major' <<< "$lines"; then version="$((major + 1)).0.0"

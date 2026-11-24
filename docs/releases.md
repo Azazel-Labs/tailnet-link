@@ -8,26 +8,29 @@ Tailnet Link: Release …**.
 
 After CI passes on a push to `main`, the
 [Auto release workflow](https://github.com/Azazel-Labs/tailnet-link/actions/workflows/auto-release.yml)
-reads the commit messages:
+tags the next version, which starts the Release workflow below. Every push that
+passes CI releases. Commit messages say how far the version moves:
 
 | Tag in a commit message | Effect |
 | --- | --- |
-| `#release` | Tags the next version, which starts the Release workflow below. Counts commits since the last version tag. |
-| `#patch`, `#minor`, `#major` | How far that release moves the version from the last tag; the largest wins, and patch when none says. On its own it does nothing: it waits for a `#release`. |
+| (none) | A patch release: 1.0.0 to 1.0.1. |
+| `#minor`, `#major` | Moves the version further: 1.0.0 to 1.1.0 or 2.0.0. Counts every commit since the last version tag, and the largest wins. |
+| `#norelease` | In the pushed commit itself, skips that push. Its changes go out with the next push that releases. |
+| `#release`, `#patch` | Still accepted; they change nothing. |
 
 Put tags on a line of their own, alone or together, usually the last line of the
 message. A tag inside a sentence is ignored, so describing these tags in a commit
 message is safe.
 
-A `#minor #release` line releases 1.0.0 to 1.1.0. Leave out `#release` to let changes
-collect; the bump lines count once a later push releases.
+When several pushes land while a release builds, releases run one at a time, and
+a push that main has already moved past is left to the newer push's run.
 
 Nothing is committed anywhere: the tag goes on your commit on `main`, and each
 release build writes the tag's version into Cargo.toml and Cargo.lock before it
 builds. So there's never a bot commit to pull, no bot branch off `main`, and the
 bot isn't listed as a contributor. `main`'s Cargo.toml keeps the version it was
 last given by hand; the version tags are what count. If CI fails, nothing happens;
-the tags still count once a later push passes CI.
+the next push that passes CI releases everything since the last version tag.
 
 ## Publish a version manually
 
