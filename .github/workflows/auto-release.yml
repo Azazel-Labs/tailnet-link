@@ -8,8 +8,9 @@ name: Auto release
 # tags mentioned mid-sentence are ignored.
 #
 # Nothing is committed anywhere. The tag goes on main's commit and the release builds write the
-# tag's version into Cargo.toml before building, so there's never a bot commit to pull first, no
-# branch of the bot's off main, and the bot isn't counted among the repository's contributors.
+# tag's version into Cargo.toml before building, so there's never a release commit to pull first or
+# a branch off main. The tag is made as whoever pushed the commit that released, not as a bot, so
+# versions show on GitHub as theirs.
 # main's Cargo.toml keeps whatever version it was last given by hand; the version tags are what count.
 #
 # Pushes made with GITHUB_TOKEN don't start workflows, so release.yml is called from here
@@ -90,11 +91,15 @@ jobs:
         if: steps.plan.outputs.release == 'true'
         env:
           VERSION: ${{ steps.plan.outputs.version }}
+          # Whoever pushed the commit that released, by their GitHub noreply address, so the version
+          # shows as theirs on GitHub without their email in the tag.
+          RELEASER: ${{ github.event.workflow_run.actor.login }}
+          RELEASER_ID: ${{ github.event.workflow_run.actor.id }}
         run: |
           # The tag goes on main's own commit. The release builds write the version into Cargo.toml
-          # themselves, so there's no commit of the bot's: nothing off main, and no bot contributor.
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # themselves, so nothing is committed and nothing branches off main.
+          git config user.name "$RELEASER"
+          git config user.email "$RELEASER_ID+$RELEASER@users.noreply.github.com"
           git tag -a "v$VERSION" -m "Tailnet Link $VERSION"
           # Only the tag is pushed. It fails rather than replaces a version tag that's already there.
           git push origin "refs/tags/v$VERSION"
