@@ -1,4 +1,4 @@
 allow-unwrap-in-tests = true
 allow-expect-in-tests = true
 allow-dbg-in-tests = true
-doc-valid-idents = ["MagicDNS", "LocalAPI", "SOCKS5", "AppIndicator", "GitHub", "macOS", "..."]
+doc-valid-idents = ["MagicDNS", "LocalAPI", "SOCKS5", "AppIndicator", "DevTools", "GitHub", "macOS", "..."]

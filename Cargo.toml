@@ -95,6 +95,8 @@ image = { version = "0.25", default-features = false, features = ["png", "ico", 
 # SVG website icons. No text or system fonts: icons are shapes.
 resvg = { version = "0.50", default-features = false }
 base64 = "0.23"
+# Talks to the headless browser that takes the websites' pictures (DevTools, on 127.0.0.1).
+tungstenite = { version = "0.30", default-features = false, features = ["handshake"] }
 rand = "0.10"
 log = "0.4"
 open = "5"
