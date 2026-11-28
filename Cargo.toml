@@ -3,7 +3,7 @@ members = ["xtask"]
 default-members = ["."]
 
 [workspace.package]
-version = "0.4.0"
+version = "0.7.2"
 edition = "2024"
 rust-version = "1.95"
 license = "MIT-0"

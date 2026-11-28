@@ -4389,7 +4389,7 @@ dependencies = [
 
 [[package]]
 name = "tailnet-link"
-version = "0.4.0"
+version = "0.7.2"
 dependencies = [
  "base64",
  "dirs",

@@ -4,51 +4,42 @@ Release tooling is Rust: `cargo xtask`. You need Rust and Git, with push access 
 the repository. VS Code provides the same commands under **Tasks: Run Task →
 Tailnet Link: Release …**.
 
-## Release from commit messages
+## Release by raising the version
 
-After CI passes on a push to `main`, the
+The version in Cargo.toml's `[workspace.package]` is the one source of truth. After
+CI passes on a push to `main`, the
 [Auto release workflow](https://github.com/Azazel-Labs/tailnet-link/actions/workflows/auto-release.yml)
-tags the next version, which starts the Release workflow below. Every push that
-passes CI releases. Commit messages say how far the version moves:
+reads it: if no `vX.Y.Z` tag has that version yet, it tags the commit, which starts
+the Release workflow below; otherwise it does nothing. So to release `0.8.0`:
 
-| Tag in a commit message | Effect |
-| --- | --- |
-| (none) | A patch release: 1.0.0 to 1.0.1. |
-| `#minor`, `#major` | Moves the version further: 1.0.0 to 1.1.0 or 2.0.0. Counts every commit since the last version tag, and the largest wins. |
-| `#norelease` | In the pushed commit itself, skips that push. Its changes go out with the next push that releases. |
-| `#release`, `#patch` | Still accepted; they change nothing. |
+```sh
+cargo xtask release prepare 0.8.0
+git commit -am "Release 0.8.0"
+git push origin main
+```
 
-Put tags on a line of their own, alone or together, usually the last line of the
-message. A tag inside a sentence is ignored, so describing these tags in a commit
-message is safe.
-
-When several pushes land while a release builds, releases run one at a time, and
-a push that main has already moved past is left to the newer push's run.
-
-Nothing is committed anywhere: the tag goes on your commit on `main`, and each
-release build writes the tag's version into Cargo.toml and Cargo.lock before it
-builds. So there's never a bot commit to pull, no bot branch off `main`, and the
-bot isn't listed as a contributor. `main`'s Cargo.toml keeps the version it was
-last given by hand; the version tags are what count. If CI fails, nothing happens;
-the next push that passes CI releases everything since the last version tag.
+`release prepare` updates the workspace version and the lockfile without upgrading
+third-party dependencies. Leave the version alone to let changes collect; they go
+out with the next version pushed. When several pushes land while a release builds,
+releases run one at a time, and a push that main has already moved past is left to
+the newer push's run. Nothing is committed back to `main`, and if CI fails nothing
+is tagged: the next push that passes releases the version then. A version behind
+the newest tag fails the workflow rather than releasing.
 
 ## Publish a version manually
 
-Start on `main`, with everything you intend to release committed and pushed. For
-example, to release `0.4.0`:
+To tag by hand instead, set and push the version as above, then, on a clean `main`
+at the same commit as `origin/main`:
 
 ```sh
-cargo xtask release publish 0.4.0
+cargo xtask release publish 0.8.0
 ```
 
-Publish requires a clean `main` at the same commit as `origin/main`, creates an
-annotated `v0.4.0` tag, and pushes that tag. It never force-pushes or replaces a
-version tag. You don't need to set the version in Cargo.toml first; the builds do.
-If you want `main` to show it too, `cargo xtask release prepare 0.4.0` updates the
-workspace version and the lockfile without upgrading third-party dependencies.
+Publish creates an annotated `v0.8.0` tag and pushes it. It never force-pushes or
+replaces a version tag.
 
 Follow the [Release workflow](https://github.com/Azazel-Labs/tailnet-link/actions/workflows/release.yml).
-It writes the tag's version into Cargo.toml, runs the full CI (formatting, strict
+It checks that Cargo.toml has the tag's version, runs the full CI (formatting, strict
 Clippy, tests and the Windows smoke test), then builds:
 
 | Job | Output |

@@ -1,19 +1,11 @@
 name: Auto release
 
-# After CI passes on a push to main, the next version is tagged and the Release workflow starts:
-#   - every push releases, a patch unless a commit since the last version tag says otherwise;
-#   - #minor or #major in those commits moves the version further (the highest wins);
-#   - #norelease in the pushed commit itself skips that push (the next push releases it all);
-#   - #release and #patch still work and change nothing.
-# A tag counts only on a line by itself or with other tags (e.g. "#minor #release");
-# tags mentioned mid-sentence are ignored.
+# After CI passes on a push to main, Cargo.toml's [workspace.package] version decides: if no vX.Y.Z tag has it yet,
+# that commit is tagged with it and the Release workflow starts; otherwise nothing happens. So the version in
+# Cargo.toml is the one source of truth, and raising it (cargo xtask release prepare X.Y.Z) and pushing is what
+# releases; pushes in between go out with the next version. Nothing is committed back to main.
 #
-# Nothing is committed anywhere. The tag goes on main's commit and the release builds write the
-# tag's version into Cargo.toml before building, so there's never a release commit to pull first or
-# a branch off main. The tag is made as whoever pushed the commit that released, not as a bot, so
-# versions show on GitHub as theirs.
-# main's Cargo.toml keeps whatever version it was last given by hand; the version tags are what count.
-#
+# The tag is made as whoever pushed the commit that released, not as a bot, so versions show on GitHub as theirs.
 # Pushes made with GITHUB_TOKEN don't start workflows, so release.yml is called from here
 # rather than started by the tag.
 on:
@@ -29,10 +21,6 @@ concurrency:
 
 permissions:
   contents: read
-
-env:
-  CARGO_TERM_COLOR: always
-  CARGO_INCREMENTAL: 0
 
 jobs:
   version:
@@ -61,36 +49,28 @@ jobs:
             echo "main has moved past $SHA; skipping"
             exit 0
           fi
-          # Tags count only on a line of nothing but tags, so prose that mentions
-          # "#major" (like the commit adding this workflow) doesn't bump anything.
-          tag_lines() {
-            git log --format=%B "$@" | grep -iE '^[[:space:]]*(#(patch|minor|major|release|norelease)[[:space:]]*)+$' || true
-          }
-          # The last version released: the highest version tag, a prerelease sorting before its release.
-          # Its commit needn't be on main, so it's found by name, not by walking back from HEAD.
-          last="$(git -c versionsort.suffix=- tag --list 'v[0-9]*' --sort=-v:refname | head -1)"
-          current="${last#v}"
-          # No release yet: the first is Cargo.toml's version as it stands.
-          [ -n "$current" ] || current="$(sed -n '/^\[workspace\.package\]/,/^\[/ s/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
-          if [ -n "$last" ] && [ -z "$(git rev-list "$last"..HEAD)" ]; then
-            echo "Nothing new since $last; nothing to do"
+          version="$(sed -n '/^\[workspace\.package\]/,/^\[/ s/^version = "\([^"]*\)".*/\1/p' Cargo.toml | head -1)"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Cargo.toml's [workspace.package] version, '$version', isn't X.Y.Z"; exit 1
+          fi
+          # A version behind the newest release is a mistake (pre-releases of the newest X.Y.Z are fine).
+          newest="$(git tag --list 'v[0-9]*' --sort=-v:refname | head -1)"
+          newest="${newest#v}"; newest="${newest%%-*}"
+          if [ -n "$newest" ] && [ "$newest" != "${version%%-*}" ] &&
+             [ "$(printf '%s\n%s\n' "$newest" "${version%%-*}" | sort -V | tail -1)" = "$newest" ]; then
+            echo "::error::Cargo.toml says $version, behind the newest release, v$newest. Raise it with cargo xtask release prepare."
+            exit 1
+          fi
+          if [[ "$version" == *-* ]] && git rev-parse -q --verify "refs/tags/v${version%%-*}" >/dev/null; then
+            echo "::error::Cargo.toml says $version, a pre-release of v${version%%-*}, which is already out."
+            exit 1
+          fi
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "v$version is already released; nothing to do"
             echo "release=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          if tag_lines -1 HEAD | grep -qiw -- '#norelease'; then
-            echo "#norelease on $SHA; skipping"
-            echo "release=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          lines="$(tag_lines ${last:+"$last"..}HEAD)"
-          IFS=. read -r major minor patch <<< "${current%%-*}"
-          if [ -z "$last" ]; then version="$current"
-          elif grep -qiw -- '#major' <<< "$lines"; then version="$((major + 1)).0.0"
-          elif grep -qiw -- '#minor' <<< "$lines"; then version="$major.$((minor + 1)).0"
-          elif [[ "$current" == *-* ]]; then version="${current%%-*}"   # 0.9.0-rc.1 -> 0.9.0
-          else version="$major.$minor.$((patch + 1))"; fi
-
-          echo "Releasing ${last:-nothing yet} -> v$version"
+          echo "Releasing v$version"
           echo "release=true" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - name: Tag
@@ -102,8 +82,6 @@ jobs:
           RELEASER: ${{ github.event.workflow_run.actor.login }}
           RELEASER_ID: ${{ github.event.workflow_run.actor.id }}
         run: |
-          # The tag goes on main's own commit. The release builds write the version into Cargo.toml
-          # themselves, so nothing is committed and nothing branches off main.
           git config user.name "$RELEASER"
           git config user.email "$RELEASER_ID+$RELEASER@users.noreply.github.com"
           git tag -a "v$VERSION" -m "Tailnet Link $VERSION"

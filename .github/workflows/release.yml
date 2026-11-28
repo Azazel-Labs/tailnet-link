@@ -47,10 +47,9 @@ jobs:
           ref: refs/tags/${{ env.VERSION }}
       - name: Install toolchain (from rust-toolchain.toml)
         run: rustup toolchain install
-      # Tags sit on main's commits, whose Cargo.toml keeps the version last set by hand. Each build
-      # writes the tag's version in before building; doing it here too checks that it can.
+      # The tag's commit must already carry its version in Cargo.toml and Cargo.lock.
       - name: Validate version tag
-        run: cargo fetch --locked && cargo xtask release prepare "$VERSION"
+        run: cargo xtask release validate "$VERSION"
       - id: decide
         run: |
           if [[ "$VERSION" == *-* ]]; then echo "prerelease=true"; else echo "prerelease=false"; fi >> "$GITHUB_OUTPUT"
@@ -81,8 +80,6 @@ jobs:
           key: x86_64-pc-windows-gnu
       - name: Install NSIS and MinGW
         run: sudo apt-get update -q && sudo apt-get install -y -q nsis gcc-mingw-w64-x86-64
-      - name: Set the version from the tag
-        run: cargo fetch --locked && cargo xtask release prepare "$VERSION"
       - name: Build exe + installer
         run: bash packaging/windows/build-installer.sh "$VERSION" dist
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -112,8 +109,6 @@ jobs:
           key: linux-release
       - name: Install Linux build dependencies
         run: sudo apt-get update -q && sudo apt-get install -y -q $LINUX_DEPS
-      - name: Set the version from the tag
-        run: cargo fetch --locked && cargo xtask release prepare "$VERSION"
       - name: Build .deb
         run: bash packaging/linux/package-deb.sh "$VERSION" dist
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -141,8 +136,6 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: macos-universal
-      - name: Set the version from the tag
-        run: cargo fetch --locked && cargo xtask release prepare "$VERSION"
       - name: Build universal .app (.dmg + .zip)
         run: bash packaging/macos/package-macos.sh "$VERSION" dist
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
